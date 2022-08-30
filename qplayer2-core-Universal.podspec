@@ -11,7 +11,7 @@ Pod::Spec.new do |spec|
 
 
   spec.name         = "qplayer2-core"
-  spec.version      = "0.0.2"
+  spec.version      = "0.0.8"
   spec.summary      = "Pili iOS video player SDK, RTMP, HLS video streaming supported."
 
 
@@ -27,7 +27,7 @@ Pod::Spec.new do |spec|
 
   spec.license      = "Apache License, Version 2.0"
   spec.author       = { "pili" => "pili-coresdk@qiniu.com" }
-  spec.source       = { :http => "https://sdk-release.qnsdk.com/qplayer2_core-Universal-v#{spec.version}.zip" }
+  spec.source       = { :http => "https://sdk-release.qnsdk.com/qplayer2-core-v#{spec.version}.zip" }
 
   spec.subspec "universal" do |ss1|
     ss1.vendored_frameworks = ["Pod/Library-Universal/qplayer2_core.framework"]
