@@ -676,8 +676,6 @@ QIPlayerAuthenticationListener
         self.activityIndicatorView.frame = CGRectMake(playerWidth/2 - 20, playerHeight/2 - 20, 40, 40);
     }
     
-//    self.activityIndicatorView.center = self.player.controlHandler.playerView.center;
-//    self.activityIndicatorView.center = self.myRenderView.center;
 }
 
 
