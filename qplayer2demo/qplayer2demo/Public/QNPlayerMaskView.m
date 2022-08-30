@@ -200,7 +200,7 @@ QIPlayerAuthenticationListener
                 }
             }
             else if (type == 700){
-                [self.player.controlHandler setBackgroundPlay:selected];
+                [self.player.controlHandler setBackgroundPlayEnable:selected];
                 if (selected) {
                     [[QDataHandle shareInstance] setSelConfiguraKey:@"后台播放" selIndex:0];
                 }

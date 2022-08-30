@@ -529,10 +529,10 @@ QIPlayerRenderListener
         }
         else if ([configureModel.configuraKey containsString:@"后台播放"]){
             if (index == 0) {
-                [self.playerContext.controlHandler setBackgroundPlay:YES];
+                [self.playerContext.controlHandler setBackgroundPlayEnable:YES];
             }
             else{
-                [self.playerContext.controlHandler setBackgroundPlay:NO];
+                [self.playerContext.controlHandler setBackgroundPlayEnable:NO];
             }
         }
     }

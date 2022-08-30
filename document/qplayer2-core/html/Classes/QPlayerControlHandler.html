@@ -70,8 +70,6 @@
 		
 		<option value="//api/name/fps">fps</option>
 		
-		<option value="//api/name/isBackgroundPlay">isBackgroundPlay</option>
-		
 		<option value="//api/name/playerSpeed">playerSpeed</option>
 		
 	</optgroup>
@@ -111,6 +109,8 @@
 		<option value="//api/name/addPlayerVideoDecodeTypeListener:">- addPlayerVideoDecodeTypeListener:</option>
 		
 		<option value="//api/name/forceAuthenticationFromNetwork">- forceAuthenticationFromNetwork</option>
+		
+		<option value="//api/name/getBackgroundPlayEnable">- getBackgroundPlayEnable</option>
 		
 		<option value="//api/name/getCurrentQuality:urlType:">- getCurrentQuality:urlType:</option>
 		
@@ -188,7 +188,7 @@
 		
 		<option value="//api/name/seek:">- seek:</option>
 		
-		<option value="//api/name/setBackgroundPlay:">- setBackgroundPlay:</option>
+		<option value="//api/name/setBackgroundPlayEnable:">- setBackgroundPlayEnable:</option>
 		
 		<option value="//api/name/setDecoderType:">- setDecoderType:</option>
 		
@@ -622,52 +622,6 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/isBackgroundPlay" title="isBackgroundPlay"></a>
-	<h3 class="method-title"><code><a href="#//api/name/isBackgroundPlay">&nbsp;&nbsp;isBackgroundPlay</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>当前是否支持后台播放</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) BOOL isBackgroundPlay</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>当前是否支持后台播放</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
 	<a name="//api/name/initWithContext:" title="initWithContext:"></a>
 	<h3 class="method-title"><code><a href="#//api/name/initWithContext:">&ndash;&nbsp;initWithContext:</a></code>
 </h3>
@@ -1022,6 +976,57 @@
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/getBackgroundPlayEnable" title="getBackgroundPlayEnable"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getBackgroundPlayEnable">&ndash;&nbsp;getBackgroundPlayEnable</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>获取当前是否支持后台播放</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)getBackgroundPlayEnable</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true: 支持后台播放 false: 支持后台播放</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>获取当前是否支持后台播放</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/setSpeed:" title="setSpeed:"></a>
 	<h3 class="method-title"><code><a href="#//api/name/setSpeed:">&ndash;&nbsp;setSpeed:</a></code>
 </h3>
@@ -1254,8 +1259,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/setBackgroundPlay:" title="setBackgroundPlay:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/setBackgroundPlay:">&ndash;&nbsp;setBackgroundPlay:</a></code>
+	<a name="//api/name/setBackgroundPlayEnable:" title="setBackgroundPlayEnable:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/setBackgroundPlayEnable:">&ndash;&nbsp;setBackgroundPlayEnable:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -1270,7 +1275,7 @@
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)setBackgroundPlay:(BOOL)<em>backgroundPlay</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)setBackgroundPlayEnable:(BOOL)<em>enable</em></code></div>
 
 		    
 			
@@ -1279,7 +1284,7 @@
 				<table class="argument-def parameter-def">
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>backgroundPlay</code></th>
+						<th scope="row" class="argument-name"><code>enable</code></th>
 						<td><p>yes后台播放，no后台播放暂停</p></td>
 					</tr>
 				
