@@ -1,4 +1,4 @@
-# 0.0.8 ReleaseNote
+# 1.0.1 ReleaseNote
 #### 新增能力
 
 - | 能力                  | 亮点                                                         | 备注                             |
