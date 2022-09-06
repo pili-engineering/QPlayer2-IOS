@@ -25,7 +25,6 @@
         CGFloat playerWidth = CGRectGetWidth(frame);
         CGFloat playerHeight = CGRectGetHeight(frame);
         
-//        self.buttomView = [[QNButtomView alloc]initWithFrame:CGRectMake(8, playerHeight - 28, playerWidth - 16, 28) player:player playerFrame:frame isLiving:isLiving];
         self.buttomView = [[QNButtonView alloc]initWithShortVideoFrame:CGRectMake(8, playerHeight - 28, playerWidth - 16, 28) player:player playerFrame:frame isLiving:isLiving];
         [self addSubview:_buttomView];
         [self.buttomView playButtonClickCallBack:^(BOOL selectedState) {
@@ -45,6 +44,7 @@
     [self.buttomView setPlayButtonState:state];
 }
 -(void)setPlayer:(QPlayerContext *)player{
+    _player = player;
     if (self.buttomView) {
         self.buttomView.player = player;
     }

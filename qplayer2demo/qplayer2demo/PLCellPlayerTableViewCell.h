@@ -7,16 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "QNPlayerModel.h"
 
 @interface PLCellPlayerTableViewCell : UITableViewCell
 
 @property (nonatomic, copy) NSString *url;
-@property (nonatomic, strong) QPlayerContext *player;
+@property (nonatomic, weak) QPlayerContext *player;
 @property (nonatomic, strong) UILabel *URLLabel;
 @property (nonatomic, strong) UILabel *stateLabel;
 @property (nonatomic, assign) BOOL state;
-@property (nonatomic, strong) RenderView *playerView;
+@property (nonatomic, weak) RenderView *playerView;
 @property (nonatomic, strong) QMediaModel *model;
 
 

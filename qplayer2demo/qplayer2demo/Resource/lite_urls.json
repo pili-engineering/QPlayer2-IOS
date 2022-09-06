@@ -1,6 +1,5 @@
 [
     {
-        "name": "",
         "isLive": 0,
         "streamElements": [
             {
@@ -11,7 +10,7 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             },
             {
                 "userType": "",
@@ -21,7 +20,7 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             },
             {
                 "userType": "",
@@ -31,7 +30,7 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             },
             {
                 "userType": "",
@@ -41,13 +40,13 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     },
     
     {
-        "name": "",
+         
         "isLive": 0,
         "streamElements": [
             {
@@ -58,12 +57,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     },
     {
-        "name": "",
+         
         "isLive": 0,
         "streamElements": [
             {
@@ -74,12 +73,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     },
     {
-        "name": "",
+         
         "isLive": 0,
         "streamElements": [
             {
@@ -90,12 +89,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     },
     {
-        "name": "",
+         
         "isLive": 0,
         "streamElements": [
             {
@@ -106,12 +105,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     },
     {
-        "name": "音画同步-H264-60FPS",
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -122,12 +121,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     },
     {
-        "name": "",
+         
         "isLive": 0,
         "streamElements": [
             {
@@ -138,7 +137,7 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     }

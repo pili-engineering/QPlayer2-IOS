@@ -75,7 +75,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    if (!self.maskView) {
+    if (!self.maskView && _player != nil) {
         [self addPlayerMaskView:_player];
     }
     // Configure the view for the selected state
@@ -87,8 +87,12 @@
     
 }
 -(void)setPlayer:(QPlayerContext *)player{
+    _player = player;
     if (!self.maskView) {
-        [self addPlayerMaskView:player];
+        if (player != nil) {
+            
+            [self addPlayerMaskView:player];
+        }
     }else{
         self.maskView.player = player;
     }
