@@ -65,7 +65,7 @@ QIPlayerAuthenticationListener
 
 @property (nonatomic, assign) QPlayerDecoder decoderType;
 @property (nonatomic, assign) BOOL seeking;
-@property (nonatomic, strong) RenderView *myRenderView;
+@property (nonatomic, weak) RenderView *myRenderView;
 @end
 
 @implementation QNPlayerMaskView

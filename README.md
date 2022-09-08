@@ -9,7 +9,7 @@ Qplayer2是一款跨平台的播放器SDK,除了基础的播放器能力外，�
  Platform | Build Status
  -------- | ------------
  Android | https://github.com/pili-engineering/QPlayer2-Android 
- IOS | Last Version: 1.0.1 
+ IOS | Last Version: 1.0.2 
  Windows | 敬请期待 
  Mac | 敬请期待 
 ### qplayer2-core 功能列表
@@ -42,7 +42,7 @@ Qplayer2是一款跨平台的播放器SDK,除了基础的播放器能力外，�
 ##### 引入依赖
 
 ```groovy
-pod 'qplayer2-core', '1.0.1'
+pod 'qplayer2-core', '1.0.2'
 ```
 
 
@@ -71,7 +71,7 @@ pod 'qplayer2-core', '1.0.1'
 ##### Demo介绍
 
 1. demo工程内的 长视频播放页 是基于 qplayer2-core来实现的
-3. 体验demo下载：http://fir.qnsdk.com/5fv8?release_id=6311a4e10d81cc40120417cf
+3. 体验demo下载：http://fir.qnsdk.com/5fv8?release_id=6319981eb2eb463571a998db
 
 
 

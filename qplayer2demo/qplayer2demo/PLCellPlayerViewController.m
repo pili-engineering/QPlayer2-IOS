@@ -170,7 +170,7 @@ QIPlayerRenderListener
     //设置为软解
 //    [player.controlHandler setDecoderType:QPLAYER_DECODER_SETTING_SOFT_PRIORITY];
     self.player = player;
-    [self.myRenderView attachRenderHandler:self.player.renderHandler];
+    [self.myRenderView attachPlayerContext:self.player.renderHandler];
     
     
     QMediaModel *model = [[QMediaModel alloc] init];
