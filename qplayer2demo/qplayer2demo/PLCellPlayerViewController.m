@@ -65,15 +65,16 @@ QIMediaItemCommandNotAllowListener
        BOOL aa =  [item.controlHandler stop];
         NSLog(@"----%d",aa);
     }
+    _toastView = nil;
+    _currentCell = nil;
     [_playerModels removeAllObjects];
     [_cacheArray removeAllObjects];
     [self.player.controlHandler playerRelease];
-    [self.myRenderView renderViewRelease];
     self.myRenderView = nil;
     self.player = nil;
     _playerModels = nil;
     _cacheArray = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 
 
@@ -130,17 +131,18 @@ QIMediaItemCommandNotAllowListener
     _playerModels = [NSMutableArray array];
    
     for (NSDictionary *dic in urlArray) {
-        QMediaModel *modle = [[QMediaModel alloc] init];
-        [modle setValuesForKeysWithDictionary:dic];
-            
-        NSMutableArray <QStreamElement*> *streams = [NSMutableArray array];
+
+        QMediaModel *modle = [[QMediaModel alloc]init:[NSString stringWithFormat:@"%@",[dic valueForKey:@"isLive"]].intValue  == 0? NO : YES];
         for (NSDictionary *elDic in dic[@"streamElements"]) {
-            QStreamElement *subModle = [[QStreamElement alloc] init];
-            [subModle setValuesForKeysWithDictionary:elDic];
-            [streams addObject:subModle];
+            [modle addStreamElements:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"userType"]]
+                             urlType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"urlType"]].intValue
+                             url:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"url"]]
+                             quality:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"quality"]].intValue
+                             isSelected:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"isSelected"]].intValue == 0?NO : YES
+                             backupUrl:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"backupUrl"]]
+                             referer:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"referer"]]
+                             renderType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"renderType"]].intValue];
         }
-        
-        modle.streamElements = streams;
         [_playerModels addObject:modle];
     }
     
@@ -162,7 +164,6 @@ QIMediaItemCommandNotAllowListener
     [self playerContextAllCallBack];
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onUIApplicationWillEnterForeground:) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)setUpPlayer{
@@ -182,7 +183,8 @@ QIMediaItemCommandNotAllowListener
     //设置为软解
 //    [player.controlHandler setDecoderType:QPLAYER_DECODER_SETTING_SOFT_PRIORITY];
     self.player = player;
-    [self.myRenderView attachPlayerContext:self.player.renderHandler];
+
+    [self.myRenderView attachPlayerContext:self.player];
     
     
     QMediaModel *model = [[QMediaModel alloc] init];
@@ -432,13 +434,13 @@ QIMediaItemCommandNotAllowListener
     NSArray *realCacheArray = [self getRealCacheIndexArray:model];
     
     NSMutableArray *delArray = [NSMutableArray array];
-    NSMutableArray *addArray = [NSMutableArray array];
 
     for (int i = 0; i < _cacheArray.count; i ++) {//
         QMediaItemContext *model0 = _cacheArray[i];
         int index = (int)[self indexPlayerModelsOf:model0];
         if (![realCacheArray containsObject:@(index)]) {// _cacheArray 独有
             [delArray addObject:model0];
+            [model0.controlHandler stop];
 
         }
     }
@@ -452,7 +454,8 @@ QIMediaItemCommandNotAllowListener
     }
 
     [_cacheArray removeObjectsInArray:delArray];
-    
+    [delArray removeAllObjects];
+    delArray = nil;
 }
 
 // 前 1 后 3
@@ -496,16 +499,16 @@ QIMediaItemCommandNotAllowListener
 }
 
 
-- (void)addActivityIndicatorView {
-    if (self.activityIndicatorView) {
-        return;
-    }
-    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    activityIndicatorView.center = CGPointMake(CGRectGetMidX(self.myRenderView.bounds), CGRectGetMidY(self.myRenderView.bounds));
-    [self.myRenderView addSubview:activityIndicatorView];
-    [activityIndicatorView stopAnimating];
-    self.activityIndicatorView = activityIndicatorView;
-}
+//- (void)addActivityIndicatorView {
+//    if (self.activityIndicatorView) {
+//        return;
+//    }
+//    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//    activityIndicatorView.center = CGPointMake(CGRectGetMidX(self.myRenderView.bounds), CGRectGetMidY(self.myRenderView.bounds));
+//    [self.myRenderView addSubview:activityIndicatorView];
+//    [activityIndicatorView stopAnimating];
+//    self.activityIndicatorView = activityIndicatorView;
+//}
 
 - (UIImage *)originImage:(UIImage *)image scaleToSize:(CGSize)size{
     UIGraphicsBeginImageContext(size);
@@ -519,27 +522,7 @@ QIMediaItemCommandNotAllowListener
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)onUIApplicationWillEnterForeground:(NSNotification *)note{
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    NSError* error = nil;
-    if ([session setActive:YES error:&error] == NO)
-    {
-        NSLog(@"%@",error); //发生错误
-        return;
-    }else{
-        if ([session setCategory:AVAudioSessionCategoryPlayback error:&error] == NO) {
-            
-            NSLog(@"%@",error); //发生错误
-            return;
-        }else{
-            
-            [self.player.controlHandler pauseRender];
-            [self.player.controlHandler resumeRender];
-           
-        }
-        
-    }
-}
+
 
 
 @end
