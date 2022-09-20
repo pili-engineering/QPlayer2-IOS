@@ -16,7 +16,7 @@
 @property (nonatomic, strong) UILabel *stateLabel;
 @property (nonatomic, assign) BOOL state;
 @property (nonatomic, weak) RenderView *playerView;
-@property (nonatomic, strong) QMediaModel *model;
+@property (nonatomic, weak) QMediaModel *model;
 
 
 
