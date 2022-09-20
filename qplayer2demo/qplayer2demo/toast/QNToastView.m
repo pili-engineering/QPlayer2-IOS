@@ -72,7 +72,11 @@ static pthread_rwlock_t w_plock;
         });
     });
 }
-
+-(void)dealloc{
+    
+    [arr removeAllObjects];
+    arr = nil;
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
