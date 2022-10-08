@@ -37,6 +37,7 @@ static NSString *listIdentifier = @"listCell";
     [self saveConfigurations];
 }
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 

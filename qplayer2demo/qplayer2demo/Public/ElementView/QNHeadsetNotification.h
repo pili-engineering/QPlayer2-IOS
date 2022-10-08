@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///添加监听
 ///@param player 播放器
 - (void)addNotificationsPlayer:(QPlayerContext*)player;
+-(void)removeNotificationsPlayer;
 @end
 
 NS_ASSUME_NONNULL_END

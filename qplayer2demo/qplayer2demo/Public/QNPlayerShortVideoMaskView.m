@@ -27,10 +27,11 @@
         
         self.buttomView = [[QNButtonView alloc]initWithShortVideoFrame:CGRectMake(8, playerHeight - 28, playerWidth - 16, 28) player:player playerFrame:frame isLiving:isLiving];
         [self addSubview:_buttomView];
+        __weak typeof(self) weakSelf = self;
         [self.buttomView playButtonClickCallBack:^(BOOL selectedState) {
-            if(self.player.controlHandler.currentPlayerState == QPLAYER_STATE_COMPLETED){
-                if (self.delegate != nil && [self.delegate respondsToSelector:@selector(reOpenPlayPlayerMaskView:)]) {
-                    [self.delegate reOpenPlayPlayerMaskView:self];
+            if(weakSelf.player.controlHandler.currentPlayerState == QPLAYER_STATE_COMPLETED){
+                if (weakSelf.delegate != nil && [weakSelf.delegate respondsToSelector:@selector(reOpenPlayPlayerMaskView:)]) {
+                    [weakSelf.delegate reOpenPlayPlayerMaskView:weakSelf];
                 }
             }
         }];

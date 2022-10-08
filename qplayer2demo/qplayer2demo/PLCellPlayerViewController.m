@@ -79,6 +79,7 @@ QIMediaItemCommandNotAllowListener
 
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
 //    self.navigationController.navigationBar.barTintColor = PL_SEGMENT_BG_COLOR;
@@ -88,7 +89,6 @@ QIMediaItemCommandNotAllowListener
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.cacheArray = [NSMutableArray array];
     
     // Do any additional setup after loading the view.
@@ -178,7 +178,7 @@ QIMediaItemCommandNotAllowListener
 //    NSString *path = [documentsDir stringByAppendingPathComponent:@"me"];
     
 
-    self.myRenderView = [[RenderView alloc]init];
+    self.myRenderView = [[RenderView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
     QPlayerContext *player = [[QPlayerContext alloc]initPlayerAPPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
     //设置为软解
 //    [player.controlHandler setDecoderType:QPLAYER_DECODER_SETTING_SOFT_PRIORITY];
@@ -372,7 +372,7 @@ QIMediaItemCommandNotAllowListener
             }
             NSLog(@"预加载--播放缓存---%@",item.controlHandler.media_model.streamElements[0].url);
             
-        }else{
+        }else if(_currentCell != nil){
             QMediaModel *model = [[QMediaModel alloc] init];
             model.streamElements = cell.model.streamElements;
             model.isLive = _playerModels.firstObject.isLive;
@@ -452,7 +452,6 @@ QIMediaItemCommandNotAllowListener
             [self AddToCash:_playerModels[index]];
         }
     }
-
     [_cacheArray removeObjectsInArray:delArray];
     [delArray removeAllObjects];
     delArray = nil;

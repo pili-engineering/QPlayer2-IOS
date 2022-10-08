@@ -65,7 +65,7 @@ QIPlayerAuthenticationListener
 
 @property (nonatomic, assign) QPlayerDecoder decoderType;
 @property (nonatomic, assign) BOOL seeking;
-@property (nonatomic, weak) RenderView *myRenderView;
+//@property (nonatomic, weak) RenderView *myRenderView;
 @end
 
 @implementation QNPlayerMaskView
@@ -74,40 +74,43 @@ QIPlayerAuthenticationListener
 
 #pragma mark - basic
 
-- (id)initWithFrame:(CGRect)frame player:(QPlayerContext *)player isLiving:(BOOL)isLiving renderView:(RenderView *)view{
+
+
+
+- (id)initWithFrame:(CGRect)frame player:(QPlayerView *)player isLiving:(BOOL)isLiving{
     if (self = [super initWithFrame:frame]) {
         self.player = player;
         
         [self.player.controlHandler addPlayerQualityListener:self];
         [self.player.controlHandler addPlayerAuthenticationListener:self];
         self.isLiving = isLiving;
-        self.myRenderView = view;
+//        self.myRenderView = view;
         CGFloat playerWidth = CGRectGetWidth(frame);
         CGFloat playerHeight = CGRectGetHeight(frame);
         
         self.buttonView = [[QNButtonView alloc]initWithFrame:CGRectMake(8, playerHeight - 28, playerWidth - 16, 28) player:player playerFrame:frame isLiving:isLiving];
         
         [self addSubview:_buttonView];
-        
+        __weak typeof(self) weakSelf = self;
         [self.buttonView playButtonClickCallBack:^(BOOL selectedState) {
-            if(self.player.controlHandler.currentPlayerState == QPLAYER_STATE_COMPLETED){
-                if (self.delegate != nil && [self.delegate respondsToSelector:@selector(reOpenPlayPlayerMaskView:)]) {
-                    [self.delegate reOpenPlayPlayerMaskView:self];
+            if(weakSelf.player.controlHandler.currentPlayerState == QPLAYER_STATE_COMPLETED){
+                if (weakSelf.delegate != nil && [weakSelf.delegate respondsToSelector:@selector(reOpenPlayPlayerMaskView:)]) {
+                    [weakSelf.delegate reOpenPlayPlayerMaskView:weakSelf];
                 }
             }
         }];
         
         [self.buttonView changeScreenSizeButtonClickCallBack:^(BOOL selectedState) {
-            if (self.delegate != nil && [self.delegate respondsToSelector:@selector(playerMaskView:isLandscape:)]) {
-                [self.delegate playerMaskView:self isLandscape:selectedState];
+            if (weakSelf.delegate != nil && [weakSelf.delegate respondsToSelector:@selector(playerMaskView:isLandscape:)]) {
+                [weakSelf.delegate playerMaskView:weakSelf isLandscape:selectedState];
             }
-            [self changeFrame:self.frame isFull:selectedState];
+            [weakSelf changeFrame:weakSelf.frame isFull:selectedState];
         }];
         [self.buttonView sliderStartCallBack:^(BOOL seeking) {
-                    self.seeking = seeking;
+            weakSelf.seeking = seeking;
         }];
         [self.buttonView sliderEndCallBack:^(BOOL seeking) {
-                    self.seeking = seeking;
+            weakSelf.seeking = seeking;
         }];
         // 音量调整/快进快退
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panAction:)];
@@ -145,7 +148,7 @@ QIPlayerAuthenticationListener
         
         [self hideInterfaceView];
         
-        [[QNHeadsetNotification alloc]addNotificationsPlayer:player];
+//        [[QNHeadsetNotification alloc]addNotificationsPlayer:player];
 
         // 展示转码的动画
         self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(playerWidth/2 - 20, playerHeight/2 - 20, 40, 40)];
@@ -161,27 +164,27 @@ QIPlayerAuthenticationListener
         [self addSubview:_showSettingViewButton];
         _settingView = [[QNPlayerSettingsView alloc]initChangePlayerViewCallBack:^(ChangeButtonType type, NSString * _Nonnull startPosition,BOOL selected) {
             if (type < 5) {
-                [self.player.renderHandler setRenderRatio:(QPlayerRenderRatio)(type + 1)];
+                [weakSelf.player.renderHandler setRenderRatio:(QPlayerRenderRatio)(type + 1)];
                 
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"Render ratio" selIndex:(int)type];
             }else if(type < 104){
-                [self.player.renderHandler setBlindType:(QPlayerBlind)(type - 100)];
+                [weakSelf.player.renderHandler setBlindType:(QPlayerBlind)(type - 100)];
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"色盲模式" selIndex:(int)(type - 100)];
             }else if(type < 204){
                 
-                self.decoderType = (QPlayerDecoder)(type - 200);
-                [self.player.controlHandler setDecoderType:(QPlayerDecoder)(type - 200)];;
+                weakSelf.decoderType = (QPlayerDecoder)(type - 200);
+                [weakSelf.player.controlHandler setDecoderType:(QPlayerDecoder)(type - 200)];;
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"Decoder" selIndex:(int)(type - 200)];
             }else if(type < 302 ){
-                [self.player.controlHandler  setSeekMode:(QPlayerSeek)(type-300)];
+                [weakSelf.player.controlHandler  setSeekMode:(QPlayerSeek)(type-300)];
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"Seek" selIndex:(int)(type-300)];
             }else if(type < 402){
-                [self.player.controlHandler setStartAction:(QPlayerStart)(type-400)];;;
+                [weakSelf.player.controlHandler setStartAction:(QPlayerStart)(type-400)];;;
                 
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"Start Action" selIndex:(int)(type-400)];
             }
             else if(type == 500){
-                [self.player.controlHandler setSEIEnable: selected];
+                [weakSelf.player.controlHandler setSEIEnable: selected];
                 if (selected) {
                     
                     [[QDataHandle shareInstance] setSelConfiguraKey:@"SEI" selIndex:0];
@@ -192,7 +195,7 @@ QIPlayerAuthenticationListener
             }
             else if(type == 600){
                 if (selected) {
-                    [self.player.controlHandler forceAuthenticationFromNetwork];
+                    [weakSelf.player.controlHandler forceAuthenticationFromNetwork];
                     [[QDataHandle shareInstance] setSelConfiguraKey:@"鉴权" selIndex:0];
                 }else{
                     
@@ -200,7 +203,7 @@ QIPlayerAuthenticationListener
                 }
             }
             else if (type == 700){
-                [self.player.controlHandler setBackgroundPlayEnable:selected];
+                [weakSelf.player.controlHandler setBackgroundPlayEnable:selected];
                 if (selected) {
                     [[QDataHandle shareInstance] setSelConfiguraKey:@"后台播放" selIndex:0];
                 }
@@ -254,7 +257,7 @@ QIPlayerAuthenticationListener
                     break;
             }
             
-            [self.player.controlHandler setSpeed:speed];
+            [weakSelf.player.controlHandler setSpeed:speed];
             [[QDataHandle shareInstance] setSelConfiguraKey:@"播放速度" selIndex:(int)(type)];
             
             [[QDataHandle shareInstance] saveConfigurations];
@@ -654,7 +657,7 @@ QIPlayerAuthenticationListener
         fullFrame = frame;
         self.settingSpeedView.contentSize = CGSizeMake(130, frame.size.height);
         [self.settingSpeedView reloadInputViews];
-        self.activityIndicatorView.center = self.myRenderView.center;
+        self.activityIndicatorView.center = self.player.center;
     } else{
         self.buttonView.frame = CGRectMake(8, playerHeight - 28, playerWidth - 16, 28);
         

@@ -16,6 +16,9 @@
     myPlayer = player;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListenerCallback:) name:AVAudioSessionRouteChangeNotification object:nil];
 }
+-(void)removeNotificationsPlayer{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 
 /**
  *  耳机插入、拔出事件
