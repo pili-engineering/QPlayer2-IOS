@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-<<<<<<< HEAD
-		404B4AC63E07219F80148C01 /* libPods-qplayer2demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28213E62E1DBFDB4047DE7E7 /* libPods-qplayer2demo.a */; };
-=======
->>>>>>> bd1fd7d (预发版demo配置更新)
 		50B1F3D5289BBF7A0074E02D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B1F3D4289BBF7A0074E02D /* Foundation.framework */; };
 		50B1F487289CC62D0074E02D /* QNConfigSegTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B1F425289CC62D0074E02D /* QNConfigSegTableViewCell.m */; };
 		50B1F488289CC62D0074E02D /* QNConfigInputTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B1F427289CC62D0074E02D /* QNConfigInputTableViewCell.m */; };
@@ -73,6 +69,7 @@
 		50B1F4C2289CC62D0074E02D /* pl_max_blue_volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F47E289CC62D0074E02D /* pl_max_blue_volume.png */; };
 		50B1F4C3289CC62D0074E02D /* pl_rotate@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F47F289CC62D0074E02D /* pl_rotate@3x.png */; };
 		50B1F4C5289CC62D0074E02D /* QNHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B1F483289CC62D0074E02D /* QNHomeViewController.m */; };
+		616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0C2D1DB69E96781D80C1A2 /* libPods-qplayer2demo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -89,7 +86,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		28213E62E1DBFDB4047DE7E7 /* libPods-qplayer2demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-qplayer2demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4211E9CF8D034B873A1A0811 /* Pods-qplayer2demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-qplayer2demo.release.xcconfig"; path = "Target Support Files/Pods-qplayer2demo/Pods-qplayer2demo.release.xcconfig"; sourceTree = "<group>"; };
 		50B1F3CA289BBC630074E02D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		50B1F3CE289BBCEA0074E02D /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
@@ -179,8 +175,7 @@
 		50B1F481289CC62D0074E02D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50B1F482289CC62D0074E02D /* PLCellPlayerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCellPlayerTableViewCell.h; sourceTree = "<group>"; };
 		50B1F483289CC62D0074E02D /* QNHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHomeViewController.m; sourceTree = "<group>"; };
-		50BC395928AD092800924577 /* qplayer2_core */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = qplayer2_core; path = "../../../../../Library/Developer/Xcode/DerivedData/qplayer2demo-btsekkmneomqmlgtxnxwvobakctg/Build/Products/Debug-iphoneos/qplayer2_core.framework/qplayer2_core"; sourceTree = "<group>"; };
-		50BC395C28AD093500924577 /* qplayer2_core.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = qplayer2_core.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/qplayer2demo-btsekkmneomqmlgtxnxwvobakctg/Build/Products/Debug-iphoneos/qplayer2_core.framework"; sourceTree = "<group>"; };
+		7C0C2D1DB69E96781D80C1A2 /* libPods-qplayer2demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-qplayer2demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2BDA3706EA1C6372228C6C3 /* Pods-qplayer2demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-qplayer2demo.debug.xcconfig"; path = "Target Support Files/Pods-qplayer2demo/Pods-qplayer2demo.debug.xcconfig"; sourceTree = "<group>"; };
 		CA90B80F289A7AF60087543B /* qplayer2demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qplayer2demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -191,11 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50B1F3D5289BBF7A0074E02D /* Foundation.framework in Frameworks */,
-<<<<<<< HEAD
-				404B4AC63E07219F80148C01 /* libPods-qplayer2demo.a in Frameworks */,
-=======
 				616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */,
->>>>>>> bd1fd7d (预发版demo配置更新)
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,12 +379,10 @@
 		CA90BF8B289B846C0087543B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				50BC395C28AD093500924577 /* qplayer2_core.framework */,
-				50BC395928AD092800924577 /* qplayer2_core */,
 				50B1F3D4289BBF7A0074E02D /* Foundation.framework */,
 				50B1F3CE289BBCEA0074E02D /* AVKit.framework */,
 				50B1F3CA289BBC630074E02D /* AVFoundation.framework */,
-				28213E62E1DBFDB4047DE7E7 /* libPods-qplayer2demo.a */,
+				7C0C2D1DB69E96781D80C1A2 /* libPods-qplayer2demo.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -410,11 +399,7 @@
 				CA90B80C289A7AF60087543B /* Frameworks */,
 				CA90B80D289A7AF60087543B /* Resources */,
 				50BC397028AD14BA00924577 /* Embed Frameworks */,
-<<<<<<< HEAD
-				0D3E1C39237A0DA52370166F /* [CP] Embed Pods Frameworks */,
-=======
 				4398DB20E4B4B50117E2A39D /* [CP] Embed Pods Frameworks */,
->>>>>>> bd1fd7d (预发版demo配置更新)
 			);
 			buildRules = (
 			);
@@ -507,11 +492,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-<<<<<<< HEAD
-		0D3E1C39237A0DA52370166F /* [CP] Embed Pods Frameworks */ = {
-=======
 		4398DB20E4B4B50117E2A39D /* [CP] Embed Pods Frameworks */ = {
->>>>>>> bd1fd7d (预发版demo配置更新)
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -744,7 +725,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-
 				MARKETING_VERSION = 1.1.0;
 				PODS_PODFILE_DIR_PATH = "${SRCROOT}/.";
 				PODS_ROOT = "${SRCROOT}/Pods";
