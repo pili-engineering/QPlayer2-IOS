@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+<<<<<<< HEAD
 		404B4AC63E07219F80148C01 /* libPods-qplayer2demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28213E62E1DBFDB4047DE7E7 /* libPods-qplayer2demo.a */; };
+=======
+>>>>>>> bd1fd7d (预发版demo配置更新)
 		50B1F3D5289BBF7A0074E02D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B1F3D4289BBF7A0074E02D /* Foundation.framework */; };
 		50B1F487289CC62D0074E02D /* QNConfigSegTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B1F425289CC62D0074E02D /* QNConfigSegTableViewCell.m */; };
 		50B1F488289CC62D0074E02D /* QNConfigInputTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B1F427289CC62D0074E02D /* QNConfigInputTableViewCell.m */; };
@@ -188,7 +191,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				50B1F3D5289BBF7A0074E02D /* Foundation.framework in Frameworks */,
+<<<<<<< HEAD
 				404B4AC63E07219F80148C01 /* libPods-qplayer2demo.a in Frameworks */,
+=======
+				616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */,
+>>>>>>> bd1fd7d (预发版demo配置更新)
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,7 +410,11 @@
 				CA90B80C289A7AF60087543B /* Frameworks */,
 				CA90B80D289A7AF60087543B /* Resources */,
 				50BC397028AD14BA00924577 /* Embed Frameworks */,
+<<<<<<< HEAD
 				0D3E1C39237A0DA52370166F /* [CP] Embed Pods Frameworks */,
+=======
+				4398DB20E4B4B50117E2A39D /* [CP] Embed Pods Frameworks */,
+>>>>>>> bd1fd7d (预发版demo配置更新)
 			);
 			buildRules = (
 			);
@@ -496,7 +507,11 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+<<<<<<< HEAD
 		0D3E1C39237A0DA52370166F /* [CP] Embed Pods Frameworks */ = {
+=======
+		4398DB20E4B4B50117E2A39D /* [CP] Embed Pods Frameworks */ = {
+>>>>>>> bd1fd7d (预发版demo配置更新)
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
