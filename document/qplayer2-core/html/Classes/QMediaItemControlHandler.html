@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>QPlayerRenderHandler Class Reference</title>
+	<title>QMediaItemControlHandler Class Reference</title>
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
@@ -43,8 +43,6 @@
 							<select id="jump-to">
 	<option value="top">Jump To&#133;</option>
 	
-	<option value="overview">Overview</option>
-	
 
 	
 	
@@ -56,35 +54,31 @@
 	
 
 	
-	<optgroup label="Class Methods">
-		
-		<option value="//api/name/new">+ new</option>
-		
-	</optgroup>
-	
 
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/addPlayerRenderListener:">- addPlayerRenderListener:</option>
+		<option value="//api/name/addMediaItemCommandNotAllowListener:">- addMediaItemCommandNotAllowListener:</option>
 		
-		<option value="//api/name/init">- init</option>
+		<option value="//api/name/addMediaItemStateChangeListener:">- addMediaItemStateChangeListener:</option>
 		
 		<option value="//api/name/initWithContext:">- initWithContext:</option>
 		
-		<option value="//api/name/removeAllPlayerRenderListener">- removeAllPlayerRenderListener</option>
+		<option value="//api/name/pause">- pause</option>
 		
-		<option value="//api/name/removePlayerRenderListener:">- removePlayerRenderListener:</option>
+		<option value="//api/name/removeAllMediaItemCommandNotAllowListener">- removeAllMediaItemCommandNotAllowListener</option>
 		
-		<option value="//api/name/setBlindType:">- setBlindType:</option>
+		<option value="//api/name/removeAllMediaItemStateChangeListener">- removeAllMediaItemStateChangeListener</option>
 		
-		<option value="//api/name/setPanoramaViewRotate:rotateY:">- setPanoramaViewRotate:rotateY:</option>
+		<option value="//api/name/removeMediaItemCommandNotAllowListener:">- removeMediaItemCommandNotAllowListener:</option>
 		
-		<option value="//api/name/setRenderRatio:">- setRenderRatio:</option>
+		<option value="//api/name/removeMediaItemStateChangeListener:">- removeMediaItemStateChangeListener:</option>
 		
-		<option value="//api/name/setRenderViewFrame:">- setRenderViewFrame:</option>
+		<option value="//api/name/resume">- resume</option>
 		
-		<option value="//api/name/setRenderViewLayer:">- setRenderViewLayer:</option>
+		<option value="//api/name/start:startPos:">- start:startPos:</option>
+		
+		<option value="//api/name/stop">- stop</option>
 		
 	</optgroup>
 	
@@ -101,7 +95,7 @@
 		<div id="overview_contents" class="container">
 			<div id="content">
 				<main role="main">
-					<h1 class="title">QPlayerRenderHandler Class Reference</h1>
+					<h1 class="title">QMediaItemControlHandler Class Reference</h1>
 
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
@@ -110,20 +104,12 @@
 	<td>NSObject</td>
 </tr><tr>
 	<th>Declared in</th>
-	<td>QPlayerRenderHandler.h</td>
+	<td>QMediaItemControlHandler.h</td>
 </tr>
 						</tbody></table></div>
 					
 
                     
-					
-					<div class="section section-overview">
-						<a title="Overview" name="overview"></a>
-						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>播放器渲染控制器</p>
-					</div>
-					
-					
 
 					
 					
@@ -136,200 +122,6 @@
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/setBlindType:" title="setBlindType:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/setBlindType:">&ndash;&nbsp;setBlindType:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>设置色觉优化</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>- (BOOL)setBlindType:(QPlayerBlind)<em>type</em></code></div>
-
-		    
-			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>type</code></th>
-						<td><p>色觉优化类型</p></td>
-					</tr>
-				
-				</table>
-			</div>
-			
-
-			
-			<div class="method-subsection return">
-				<h4 class="method-subtitle parameter-title">Return Value</h4>
-				<p>true 设置成功 false 设置失败</p>
-			</div>
-			
-
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>设置色觉优化</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerRenderHandler.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/setPanoramaViewRotate:rotateY:" title="setPanoramaViewRotate:rotateY:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/setPanoramaViewRotate:rotateY:">&ndash;&nbsp;setPanoramaViewRotate:rotateY:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>设置VR视频的旋转角度</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>- (BOOL)setPanoramaViewRotate:(float)<em>rotateX</em> rotateY:(float)<em>rotateY</em></code></div>
-
-		    
-			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>rotateX</code></th>
-						<td><p>横向角度 （360度制）</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>rotateY</code></th>
-						<td><p>纵向角度 （360度制）</p></td>
-					</tr>
-				
-				</table>
-			</div>
-			
-
-			
-			<div class="method-subsection return">
-				<h4 class="method-subtitle parameter-title">Return Value</h4>
-				<p>true 设置成功 false 设置失败</p>
-			</div>
-			
-
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>设置VR视频的旋转角度</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerRenderHandler.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/setRenderRatio:" title="setRenderRatio:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/setRenderRatio:">&ndash;&nbsp;setRenderRatio:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>设置视频渲染比例</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>- (BOOL)setRenderRatio:(QPlayerRenderRatio)<em>ratio</em></code></div>
-
-		    
-			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>ratio</code></th>
-						<td><p>比例类型</p></td>
-					</tr>
-				
-				</table>
-			</div>
-			
-
-			
-			<div class="method-subsection return">
-				<h4 class="method-subtitle parameter-title">Return Value</h4>
-				<p>true 设置成功 false 设置失败</p>
-			</div>
-			
-
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>设置视频渲染比例</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerRenderHandler.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
 	<a name="//api/name/initWithContext:" title="initWithContext:"></a>
 	<h3 class="method-title"><code><a href="#//api/name/initWithContext:">&ndash;&nbsp;initWithContext:</a></code>
 </h3>
@@ -341,12 +133,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>初始化</p>
+				<p>初始化预加载控制器</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (instancetype)initWithContext:(QPlayerContext *)<em>context</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (instancetype)initWithContext:(QMediaItemContext *)<em>context</em></code></div>
 
 		    
 			
@@ -356,7 +148,7 @@
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>context</code></th>
-						<td><p>上下文</p></td>
+						<td><p>预加载上下文</p></td>
 					</tr>
 				
 				</table>
@@ -370,7 +162,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>初始化</p>
+				<p>初始化预加载控制器</p>
 			</div>
 			
 
@@ -381,15 +173,15 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerRenderHandler.h</code></p>
+				<p><code class="declared-in-ref">QMediaItemControlHandler.h</code></p>
 			</div>
 			
 			
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/new" title="new"></a>
-	<h3 class="method-title"><code><a href="#//api/name/new">+&nbsp;new</a></code>
+	<a name="//api/name/start:startPos:" title="start:startPos:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/start:startPos:">&ndash;&nbsp;start:startPos:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -399,104 +191,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>方法废弃</p>
+				<p>开始预加载</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>+ (instancetype)new</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>方法废弃</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerRenderHandler.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/init" title="init"></a>
-	<h3 class="method-title"><code><a href="#//api/name/init">&ndash;&nbsp;init</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>方法废弃</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>- (instancetype)init</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>方法废弃</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerRenderHandler.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/setRenderViewLayer:" title="setRenderViewLayer:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/setRenderViewLayer:">&ndash;&nbsp;setRenderViewLayer:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>设置RenderViewLayer</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>- (BOOL)setRenderViewLayer:(CAEAGLLayer *)<em>layer</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (BOOL)start:(QMediaModel *)<em>mediaModel</em> startPos:(int64_t)<em>startPos</em></code></div>
 
 		    
 			
@@ -505,8 +205,13 @@
 				<table class="argument-def parameter-def">
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>layer</code></th>
-						<td><p>RenderViewLayer</p></td>
+						<th scope="row" class="argument-name"><code>mediaModel</code></th>
+						<td><p>预加载资源</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>startPos</code></th>
+						<td><p>起播位置</p></td>
 					</tr>
 				
 				</table>
@@ -516,7 +221,7 @@
 			
 			<div class="method-subsection return">
 				<h4 class="method-subtitle parameter-title">Return Value</h4>
-				<p>true 设置成功 false 设置失败</p>
+				<p>true: start成功 false: start 失败</p>
 			</div>
 			
 
@@ -525,7 +230,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>设置RenderViewLayer</p>
+				<p>开始预加载</p>
 			</div>
 			
 
@@ -536,15 +241,15 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerRenderHandler.h</code></p>
+				<p><code class="declared-in-ref">QMediaItemControlHandler.h</code></p>
 			</div>
 			
 			
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/setRenderViewFrame:" title="setRenderViewFrame:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/setRenderViewFrame:">&ndash;&nbsp;setRenderViewFrame:</a></code>
+	<a name="//api/name/pause" title="pause"></a>
+	<h3 class="method-title"><code><a href="#//api/name/pause">&ndash;&nbsp;pause</a></code>
 </h3>
 
 	<div class="method-info">
@@ -554,32 +259,20 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>设置RenderView的渲染size</p>
+				<p>暂停预加载</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (BOOL)setRenderViewFrame:(CGSize)<em>size</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (BOOL)pause</code></div>
 
 		    
-			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>size</code></th>
-						<td><p>渲染大小</p></td>
-					</tr>
-				
-				</table>
-			</div>
 			
 
 			
 			<div class="method-subsection return">
 				<h4 class="method-subtitle parameter-title">Return Value</h4>
-				<p>true 设置成功 false 设置失败</p>
+				<p>true: pause成功 false: pause失败</p>
 			</div>
 			
 
@@ -588,7 +281,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>设置RenderView的渲染size</p>
+				<p>暂停预加载</p>
 			</div>
 			
 
@@ -599,15 +292,15 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerRenderHandler.h</code></p>
+				<p><code class="declared-in-ref">QMediaItemControlHandler.h</code></p>
 			</div>
 			
 			
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/addPlayerRenderListener:" title="addPlayerRenderListener:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/addPlayerRenderListener:">&ndash;&nbsp;addPlayerRenderListener:</a></code>
+	<a name="//api/name/resume" title="resume"></a>
+	<h3 class="method-title"><code><a href="#//api/name/resume">&ndash;&nbsp;resume</a></code>
 </h3>
 
 	<div class="method-info">
@@ -617,32 +310,20 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>添加渲染信息监听</p>
+				<p>如果之前是暂停状态 ，那么调用resume 则恢复下载</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (BOOL)addPlayerRenderListener:(id&lt;QIPlayerRenderListener&gt;)<em>listener</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (BOOL)resume</code></div>
 
 		    
-			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>listener</code></th>
-						<td><p>渲染信息回调</p></td>
-					</tr>
-				
-				</table>
-			</div>
 			
 
 			
 			<div class="method-subsection return">
 				<h4 class="method-subtitle parameter-title">Return Value</h4>
-				<p>true 调用成功， false 调用失败</p>
+				<p>true: resume成功 false: resume失败</p>
 			</div>
 			
 
@@ -651,7 +332,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>添加渲染信息监听</p>
+				<p>如果之前是暂停状态 ，那么调用resume 则恢复下载</p>
 			</div>
 			
 
@@ -662,15 +343,15 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerRenderHandler.h</code></p>
+				<p><code class="declared-in-ref">QMediaItemControlHandler.h</code></p>
 			</div>
 			
 			
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/removePlayerRenderListener:" title="removePlayerRenderListener:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/removePlayerRenderListener:">&ndash;&nbsp;removePlayerRenderListener:</a></code>
+	<a name="//api/name/stop" title="stop"></a>
+	<h3 class="method-title"><code><a href="#//api/name/stop">&ndash;&nbsp;stop</a></code>
 </h3>
 
 	<div class="method-info">
@@ -680,12 +361,63 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>删除渲染信息监听</p>
+				<p>停止预加载，结束当前预加载实例的生命周期 停止后调用其他接口就无效了，</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (BOOL)removePlayerRenderListener:(id&lt;QIPlayerRenderListener&gt;)<em>listener</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (BOOL)stop</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true: stop成功 false: stop失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>停止预加载，结束当前预加载实例的生命周期 停止后调用其他接口就无效了，</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QMediaItemControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/addMediaItemCommandNotAllowListener:" title="addMediaItemCommandNotAllowListener:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/addMediaItemCommandNotAllowListener:">&ndash;&nbsp;addMediaItemCommandNotAllowListener:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>添加调用播放器接口时状态异常的监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)addMediaItemCommandNotAllowListener:(id&lt;QIMediaItemCommandNotAllowListener&gt;)<em>listener</em></code></div>
 
 		    
 			
@@ -695,7 +427,7 @@
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>listener</code></th>
-						<td><p>渲染信息回调</p></td>
+						<td><p>状态异常的监听</p></td>
 					</tr>
 				
 				</table>
@@ -714,7 +446,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>删除渲染信息监听</p>
+				<p>添加调用播放器接口时状态异常的监听</p>
 			</div>
 			
 
@@ -725,15 +457,15 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerRenderHandler.h</code></p>
+				<p><code class="declared-in-ref">QMediaItemControlHandler.h</code></p>
 			</div>
 			
 			
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/removeAllPlayerRenderListener" title="removeAllPlayerRenderListener"></a>
-	<h3 class="method-title"><code><a href="#//api/name/removeAllPlayerRenderListener">&ndash;&nbsp;removeAllPlayerRenderListener</a></code>
+	<a name="//api/name/removeMediaItemCommandNotAllowListener:" title="removeMediaItemCommandNotAllowListener:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removeMediaItemCommandNotAllowListener:">&ndash;&nbsp;removeMediaItemCommandNotAllowListener:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -743,12 +475,75 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>删除所有渲染信息监听</p>
+				<p>移除调用播放器接口时状态异常的监听</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (BOOL)removeAllPlayerRenderListener</code></div>
+			<div class="method-subsection method-declaration"><code>- (BOOL)removeMediaItemCommandNotAllowListener:(id&lt;QIMediaItemCommandNotAllowListener&gt;)<em>listener</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>listener</code></th>
+						<td><p>状态异常的监听</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>移除调用播放器接口时状态异常的监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QMediaItemControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/removeAllMediaItemCommandNotAllowListener" title="removeAllMediaItemCommandNotAllowListener"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removeAllMediaItemCommandNotAllowListener">&ndash;&nbsp;removeAllMediaItemCommandNotAllowListener</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>移除所有调用播放器接口时状态异常的监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)removeAllMediaItemCommandNotAllowListener</code></div>
 
 		    
 			
@@ -765,7 +560,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>删除所有渲染信息监听</p>
+				<p>移除所有调用播放器接口时状态异常的监听</p>
 			</div>
 			
 
@@ -776,7 +571,184 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerRenderHandler.h</code></p>
+				<p><code class="declared-in-ref">QMediaItemControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/addMediaItemStateChangeListener:" title="addMediaItemStateChangeListener:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/addMediaItemStateChangeListener:">&ndash;&nbsp;addMediaItemStateChangeListener:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>添加预加载状态的监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)addMediaItemStateChangeListener:(id&lt;QIMediaItemStateChangeListener&gt;)<em>listener</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>listener</code></th>
+						<td><p>状态监听</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>添加预加载状态的监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QMediaItemControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/removeMediaItemStateChangeListener:" title="removeMediaItemStateChangeListener:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removeMediaItemStateChangeListener:">&ndash;&nbsp;removeMediaItemStateChangeListener:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>移除预加载状态的监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)removeMediaItemStateChangeListener:(id&lt;QIMediaItemStateChangeListener&gt;)<em>listener</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>listener</code></th>
+						<td><p>状态监听</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>移除预加载状态的监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QMediaItemControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/removeAllMediaItemStateChangeListener" title="removeAllMediaItemStateChangeListener"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removeAllMediaItemStateChangeListener">&ndash;&nbsp;removeAllMediaItemStateChangeListener</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>移除所有预加载状态的监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)removeAllMediaItemStateChangeListener</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>移除所有预加载状态的监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QMediaItemControlHandler.h</code></p>
 			</div>
 			
 			

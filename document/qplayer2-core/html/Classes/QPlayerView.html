@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>QPlayerContext Class Reference</title>
+	<title>QPlayerView Class Reference</title>
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
@@ -43,8 +43,6 @@
 							<select id="jump-to">
 	<option value="top">Jump To&#133;</option>
 	
-	<option value="overview">Overview</option>
-	
 
 	
 	
@@ -74,7 +72,11 @@
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/initPlayerAPPVersion:localStorageDir:logLevel:">- initPlayerAPPVersion:localStorageDir:logLevel:</option>
+		<option value="//api/name/init">- init</option>
+		
+		<option value="//api/name/initWithFrame:">- initWithFrame:</option>
+		
+		<option value="//api/name/initWithFrame:APPVersion:localStorageDir:logLevel:">- initWithFrame:APPVersion:localStorageDir:logLevel:</option>
 		
 	</optgroup>
 	
@@ -91,29 +93,21 @@
 		<div id="overview_contents" class="container">
 			<div id="content">
 				<main role="main">
-					<h1 class="title">QPlayerContext Class Reference</h1>
+					<h1 class="title">QPlayerView Class Reference</h1>
 
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<th>Inherits from</th>
-	<td>NSObject</td>
+	<td>UIView</td>
 </tr><tr>
 	<th>Declared in</th>
-	<td>QPlayerContext.h</td>
+	<td>QPlayerView.h</td>
 </tr>
 						</tbody></table></div>
 					
 
                     
-					
-					<div class="section section-overview">
-						<a title="Overview" name="overview"></a>
-						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>播放器上下文</p>
-					</div>
-					
-					
 
 					
 					
@@ -126,54 +120,8 @@
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/new" title="new"></a>
-	<h3 class="method-title"><code><a href="#//api/name/new">+&nbsp;new</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>方法废弃: new    <a href="#//api/name/init">init</a></p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>+ (instancetype)new</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>方法废弃: new    <a href="#//api/name/init">init</a></p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerContext.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/initPlayerAPPVersion:localStorageDir:logLevel:" title="initPlayerAPPVersion:localStorageDir:logLevel:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/initPlayerAPPVersion:localStorageDir:logLevel:">&ndash;&nbsp;initPlayerAPPVersion:localStorageDir:logLevel:</a></code>
+	<a name="//api/name/initWithFrame:APPVersion:localStorageDir:logLevel:" title="initWithFrame:APPVersion:localStorageDir:logLevel:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithFrame:APPVersion:localStorageDir:logLevel:">&ndash;&nbsp;initWithFrame:APPVersion:localStorageDir:logLevel:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -188,13 +136,18 @@
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (instancetype)initPlayerAPPVersion:(NSString *)<em>APPVersion</em> localStorageDir:(NSString *)<em>localStorageDir</em> logLevel:(QLogLevel)<em>logLevel</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (instancetype)initWithFrame:(CGRect)<em>frame</em> APPVersion:(NSString *)<em>APPVersion</em> localStorageDir:(NSString *)<em>localStorageDir</em> logLevel:(QLogLevel)<em>logLevel</em></code></div>
 
 		    
 			
 			<div class="method-subsection arguments-section parameters">
 				<h4 class="method-subtitle parameter-title">Parameters</h4>
 				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>frame</code></th>
+						<td><p>view的大小</p></td>
+					</tr>
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>APPVersion</code></th>
@@ -233,7 +186,145 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerContext.h</code></p>
+				<p><code class="declared-in-ref">QPlayerView.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/new" title="new"></a>
+	<h3 class="method-title"><code><a href="#//api/name/new">+&nbsp;new</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>方法废弃</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (instancetype)new</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>方法废弃</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerView.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/init" title="init"></a>
+	<h3 class="method-title"><code><a href="#//api/name/init">&ndash;&nbsp;init</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>方法废弃</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (instancetype)init</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>方法废弃</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerView.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/initWithFrame:" title="initWithFrame:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithFrame:">&ndash;&nbsp;initWithFrame:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>方法废弃</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (instancetype)initWithFrame:(CGRect)<em>frame</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>方法废弃</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerView.h</code></p>
 			</div>
 			
 			
@@ -279,7 +370,7 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerContext.h</code></p>
+				<p><code class="declared-in-ref">QPlayerView.h</code></p>
 			</div>
 			
 			
@@ -325,7 +416,7 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerContext.h</code></p>
+				<p><code class="declared-in-ref">QPlayerView.h</code></p>
 			</div>
 			
 			
