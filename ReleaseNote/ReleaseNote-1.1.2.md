@@ -1,4 +1,4 @@
-# 1.1.1 ReleaseNote
+# 1.1.2 ReleaseNote
 #### 新增能力
 
 - 支持预加载功能

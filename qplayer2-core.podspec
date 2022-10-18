@@ -11,7 +11,7 @@ Pod::Spec.new do |spec|
 
 
   spec.name         = "qplayer2-core"
-  spec.version      = "1.1.1"
+  spec.version      = "1.1.2"
   spec.summary      = "Pili iOS video player SDK, RTMP, HLS video streaming supported."
 
 
