@@ -43,7 +43,7 @@ Qplayer2是一款跨平台的播放器SDK,除了基础的播放器能力外，�
 ##### 引入依赖
 
 ```groovy
-pod 'qplayer2-core', '1.1.1'
+pod 'qplayer2-core', '1.1.2'
 ```
 
 
@@ -72,7 +72,7 @@ pod 'qplayer2-core', '1.1.1'
 ##### Demo介绍
 
 1. demo工程内的 长视频播放页 是基于 qplayer2-core来实现的
-3. 体验demo下载：http://fir.qnsdk.com/5fv8?release_id=63480dcb0d81cc6f8a067c0d
+3. 体验demo下载：http://fir.qnsdk.com/5fv8?release_id=634fd08cf94548274366498d
 
 
 
