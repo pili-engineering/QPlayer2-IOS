@@ -72,7 +72,7 @@ pod 'qplayer2-core', '1.1.2'
 ##### Demo介绍
 
 1. demo工程内的 长视频播放页 是基于 qplayer2-core来实现的
-3. 体验demo下载：http://fir.qnsdk.com/5fv8?release_id=634fd08cf94548274366498d
+3. 体验demo下载：http://fir.qnsdk.com/5fv8?release_id=6350ce2c23389f0ee410820c
 
 
 
