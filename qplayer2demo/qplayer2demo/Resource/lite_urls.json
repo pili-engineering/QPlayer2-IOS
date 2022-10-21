@@ -1,69 +1,68 @@
 [
     {
-        "name": "",
         "isLive": 0,
         "streamElements": [
             {
                 "userType": "",
-                "urlType": 1,
+                "urlType": 0,
                 "url": "http://demo-videos.qnsdk.com/qiniu-1080p.mp4",
                 "quality": 1080,
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             },
             {
                 "userType": "",
-                "urlType": 1,
+                "urlType": 0,
                 "url": "http://demo-videos.qnsdk.com/qiniu-720p.mp4",
                 "quality": 720,
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             },
             {
                 "userType": "",
-                "urlType": 1,
+                "urlType": 0,
                 "url": "http://demo-videos.qnsdk.com/qiniu-480p.mp4",
                 "quality": 480,
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             },
             {
                 "userType": "",
-                "urlType": 1,
+                "urlType": 0,
                 "url": "http://demo-videos.qnsdk.com/qiniu-360p.mp4",
-                "quality": 360,
+                "quality": 270,
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     },
     
     {
-        "name": "",
+         
         "isLive": 0,
         "streamElements": [
             {
                 "userType": "",
-                "urlType": 1,
+                "urlType": 0,
                 "url": "http://oalnjsthd.bkt.clouddn.com/new.mp4",
                 "quality": 1080,
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     },
     {
-        "name": "",
+         
         "isLive": 0,
         "streamElements": [
             {
@@ -74,12 +73,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     },
     {
-        "name": "",
+         
         "isLive": 0,
         "streamElements": [
             {
@@ -90,12 +89,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     },
     {
-        "name": "",
+         
         "isLive": 0,
         "streamElements": [
             {
@@ -106,12 +105,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     },
     {
-        "name": "音画同步-H264-60FPS",
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -122,12 +121,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     },
     {
-        "name": "",
+         
         "isLive": 0,
         "streamElements": [
             {
@@ -138,7 +137,7 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "immediately": 0
+                 
             }
         ]
     }

@@ -40,7 +40,8 @@
 
 /** QPlayer **/
 //@property (nonatomic, weak) QPlayer *player;
-@property (nonatomic, weak) QPlayerContext *player;
+//@property (nonatomic, weak) QPlayerContext *player;
+@property (nonatomic, weak) QPlayerView *player;
 
 @property (nonatomic, strong) UISegmentedControl *qualitySegMc;
 
@@ -54,7 +55,9 @@
  @param isLiving 是否是直播
  @return QNPlayerMaskView 的实例子
  */
-- (id)initWithFrame:(CGRect)frame player:(QPlayerContext *)player isLiving:(BOOL)isLiving  renderView:(RenderView *)view;
+//- (id)initWithFrame:(CGRect)frame player:(QPlayerContext *)player isLiving:(BOOL)isLiving  renderView:(RenderView *)view;
+
+- (id)initWithFrame:(CGRect)frame player:(QPlayerView *)player isLiving:(BOOL)isLiving;
 
 /**
  刷新音量图片的显示

@@ -8,7 +8,6 @@
 
 #import "QNHomeViewController.h"
 #import "QNPlayerViewController.h"
-#import "PLCellPlayerViewController.h"
 #import "QNPlayerConfigViewController.h"
 
 
@@ -50,15 +49,6 @@
     playerButton.titleLabel.font = PL_FONT_MEDIUM(14);
     [self.view addSubview:playerButton];
     
-    // 单 player 多 cell
-    UIButton *cellPlayerButton = [[UIButton alloc] initWithFrame:CGRectMake(70, (PL_SCREEN_HEIGHT - kLogoSizeHeight - 116)/4 + kLogoSizeHeight + 50 + 70, PL_SCREEN_WIDTH - 140, 34)];
-    cellPlayerButton.backgroundColor = PL_BUTTON_BACKGROUNDCOLOR;
-    cellPlayerButton.layer.cornerRadius = 3;
-    cellPlayerButton.tag = 20;
-    [cellPlayerButton addTarget:self action:@selector(enterCellPlayerAction:) forControlEvents:UIControlEventTouchDown];
-    [cellPlayerButton setTitle:@"短视频" forState:UIControlStateNormal];
-    cellPlayerButton.titleLabel.font = PL_FONT_MEDIUM(14);
-//    [self.view addSubview:cellPlayerButton];
     
     // 多 player 多 item
     UIButton *itemPlayerButton = [[UIButton alloc] initWithFrame:CGRectMake(70, (PL_SCREEN_HEIGHT - kLogoSizeHeight - 116)/4 + kLogoSizeHeight + 50 + 140, PL_SCREEN_WIDTH - 140, 34)];
@@ -80,10 +70,7 @@
     [self.navigationController pushViewController:playerViewController animated:YES];
 }
 
-- (void)enterCellPlayerAction:(UIButton *)button {
-    PLCellPlayerViewController *cellPlayerViewController = [[PLCellPlayerViewController alloc] init];
-    [self.navigationController pushViewController:cellPlayerViewController animated:YES];
-}
+
 
 - (void)enterItemPlayerAction:(UIButton *)button {
     QNPlayerConfigViewController *itemPlayerViewController = [[QNPlayerConfigViewController alloc] init];

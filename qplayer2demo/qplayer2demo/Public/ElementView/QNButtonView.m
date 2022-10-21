@@ -342,6 +342,13 @@
     _isSeeking = YES;
 
 }
+-(void)dealloc{
+    myCallback = NULL;
+    changeScreenSizeCallback = NULL;
+    sliderStart = NULL;
+    sliderEnd = NULL;
+    
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

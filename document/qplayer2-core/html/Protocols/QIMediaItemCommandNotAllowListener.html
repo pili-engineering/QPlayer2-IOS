@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>QIPlayerVideoDecodeListener Protocol Reference</title>
+	<title>QIMediaItemCommandNotAllowListener Protocol Reference</title>
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
@@ -60,9 +60,7 @@
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/notSupportCodecFormat:codec:">- notSupportCodecFormat:codec:</option>
-		
-		<option value="//api/name/onVideoDecodeByType:Type:">- onVideoDecodeByType:Type:</option>
+		<option value="//api/name/onCommandNotAllow:commandName:state:">- onCommandNotAllow:commandName:state:</option>
 		
 	</optgroup>
 	
@@ -79,7 +77,7 @@
 		<div id="overview_contents" class="container">
 			<div id="content">
 				<main role="main">
-					<h1 class="title">QIPlayerVideoDecodeListener Protocol Reference</h1>
+					<h1 class="title">QIMediaItemCommandNotAllowListener Protocol Reference</h1>
 
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
@@ -88,7 +86,7 @@
 	<td>NSObject</td>
 </tr><tr>
 	<th>Declared in</th>
-	<td>QIPlayerVideoDecodeListener.h</td>
+	<td>QIMediaItemCommandNotAllowListener.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -98,7 +96,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>播放器视频解码监听</p>
+						<p>调用播放器接口时状态异常的监听</p>
 					</div>
 					
 					
@@ -114,8 +112,8 @@
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/onVideoDecodeByType:Type:" title="onVideoDecodeByType:Type:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/onVideoDecodeByType:Type:">&ndash;&nbsp;onVideoDecodeByType:Type:</a></code>
+	<a name="//api/name/onCommandNotAllow:commandName:state:" title="onCommandNotAllow:commandName:state:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onCommandNotAllow:commandName:state:">&ndash;&nbsp;onCommandNotAllow:commandName:state:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -125,12 +123,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>当前视频用的是哪种解码方式</p>
+				<p>播放器操作（eg.playMediaModel/seek 等操作）由于状态问题导致的失败</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)onVideoDecodeByType:(QPlayerContext *)<em>context</em> Type:(QPlayerDecoderType)<em>type</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)onCommandNotAllow:(QMediaItemContext *)<em>context</em> commandName:(NSString *)<em>commandName</em> state:(QMediaItemState)<em>state</em></code></div>
 
 		    
 			
@@ -140,12 +138,17 @@
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>context</code></th>
-						<td><p>当前的播放器</p></td>
+						<td><p>当前预加载上下文</p></td>
 					</tr>
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>type</code></th>
-						<td><p>解码方式</p></td>
+						<th scope="row" class="argument-name"><code>commandName</code></th>
+						<td><p>操作名称</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>state</code></th>
+						<td><p>异常发生时的的状态</p></td>
 					</tr>
 				
 				</table>
@@ -159,7 +162,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>当前视频用的是哪种解码方式</p>
+				<p>播放器操作（eg.playMediaModel/seek 等操作）由于状态问题导致的失败</p>
 			</div>
 			
 
@@ -170,70 +173,7 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QIPlayerVideoDecodeListener.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/notSupportCodecFormat:codec:" title="notSupportCodecFormat:codec:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/notSupportCodecFormat:codec:">&ndash;&nbsp;notSupportCodecFormat:codec:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>如果当前视频编码 所在设备或者sdk不支持 则回调该方法</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>- (void)notSupportCodecFormat:(QPlayerContext *)<em>context</em> codec:(NSInteger)<em>codecId</em></code></div>
-
-		    
-			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>context</code></th>
-						<td><p>当前的播放器</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>codecId</code></th>
-						<td><p>视频的编码id</p></td>
-					</tr>
-				
-				</table>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>如果当前视频编码 所在设备或者sdk不支持 则回调该方法</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QIPlayerVideoDecodeListener.h</code></p>
+				<p><code class="declared-in-ref">QIMediaItemCommandNotAllowListener.h</code></p>
 			</div>
 			
 			
