@@ -100,7 +100,6 @@ QIPlayerRenderListener
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-
     if (!self.scanClick) {
         self.toastView = nil;
         [_playerModels removeAllObjects];
@@ -215,6 +214,7 @@ QIPlayerRenderListener
     
     NSString *documentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 
+    
 //    QPlayerContext *player =  [[QPlayerContext alloc]initPlayerAPPVersion:nil localStorageDir:documentsDir logLevel:LOG_VERBOSE];
 //    self.playerContext = player;
 //    _myRenderView = [[RenderView alloc]initWithFrame:CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT)];
@@ -224,7 +224,6 @@ QIPlayerRenderListener
     [self.view addSubview:self.myPlayerView];
 //    [self.playerContext.controlHandler forceAuthenticationFromNetwork];
     [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
-
     for (QNClassModel* model in configs) {
         for (PLConfigureModel* configModel in model.classValue) {
             if ([model.classKey isEqualToString:@"PLPlayerOption"]) {
