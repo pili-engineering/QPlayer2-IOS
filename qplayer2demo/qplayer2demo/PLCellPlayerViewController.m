@@ -255,8 +255,6 @@ QIMediaItemCommandNotAllowListener
         _currentCell.playerView = _myRenderView;
         
     });
-//
-//    [self.cacheArray removeObject:<#(nonnull QMediaItemContext *)#>];
 }
 
 
@@ -339,10 +337,12 @@ QIMediaItemCommandNotAllowListener
     
     // 注意, 如果正在播放的cell和finnalCell是同一个cell, 不应该在播放
     if (finnalCell != nil && _currentCell != finnalCell)  {
-
+        
+        [self updateForAddCache:finnalCell.model];
+        
         [self updatePlayCell:finnalCell scroll:YES];
         
-        [self updateCache:finnalCell.model];
+        [self updateForDeleteCache:finnalCell.model];
         return;
     }
     
@@ -429,9 +429,19 @@ QIMediaItemCommandNotAllowListener
     }
     return NULL;
 }
+-(void)updateForAddCache:(QMediaModel *)model{
+    
+    NSArray *realCacheArray = [self getRealCacheIndexArray:model];
+    for (int i = 0; i < realCacheArray.count; i ++) {//
+        int index = [realCacheArray[i] intValue];
+        QMediaModel *model0 = _playerModels[index];
+        if (![self findCrashMediaItemsOf:model0]) {// realCacheArray 独有
+            [self AddToCash:_playerModels[index]];
+        }
+    }
+}
 
-
--(void)updateCache:(QMediaModel *)model{
+-(void)updateForDeleteCache:(QMediaModel *)model{
 
     NSArray *realCacheArray = [self getRealCacheIndexArray:model];
     
@@ -447,13 +457,13 @@ QIMediaItemCommandNotAllowListener
         }
     }
 
-    for (int i = 0; i < realCacheArray.count; i ++) {//
-        int index = [realCacheArray[i] intValue];
-        QMediaModel *model0 = _playerModels[index];
-        if (![self findCrashMediaItemsOf:model0]) {// realCacheArray 独有
-            [self AddToCash:_playerModels[index]];
-        }
-    }
+//    for (int i = 0; i < realCacheArray.count; i ++) {//
+//        int index = [realCacheArray[i] intValue];
+//        QMediaModel *model0 = _playerModels[index];
+//        if (![self findCrashMediaItemsOf:model0]) {// realCacheArray 独有
+//            [self AddToCash:_playerModels[index]];
+//        }
+//    }
     [_cacheArray removeObjectsInArray:delArray];
     [delArray removeAllObjects];
     delArray = nil;
