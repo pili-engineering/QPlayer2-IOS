@@ -131,9 +131,9 @@ QIMediaItemCommandNotAllowListener
    
     for (NSDictionary *dic in urlArray) {
 
-        QMediaModel *modle = [[QMediaModel alloc]init:[NSString stringWithFormat:@"%@",[dic valueForKey:@"isLive"]].intValue  == 0? NO : YES];
+        QMediaModelBuilder *modleBuilder = [[QMediaModelBuilder alloc]initWithIsLive:[NSString stringWithFormat:@"%@",[dic valueForKey:@"isLive"]].intValue  == 0? NO : YES];
         for (NSDictionary *elDic in dic[@"streamElements"]) {
-            [modle addStreamElements:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"userType"]]
+            [modleBuilder addStreamElements:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"userType"]]
                              urlType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"urlType"]].intValue
                              url:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"url"]]
                              quality:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"quality"]].intValue
@@ -142,7 +142,8 @@ QIMediaItemCommandNotAllowListener
                              referer:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"referer"]]
                              renderType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"renderType"]].intValue];
         }
-        [_playerModels addObject:modle];
+        QMediaModel *model = [modleBuilder build];
+        [_playerModels addObject:model];
     }
     
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT) style:UITableViewStylePlain];
@@ -185,9 +186,7 @@ QIMediaItemCommandNotAllowListener
     [self.myRenderView attachPlayerContext:self.player];
     
     
-    QMediaModel *model = [[QMediaModel alloc] init];
-    model.streamElements = _playerModels.firstObject.streamElements;
-    model.isLive = _playerModels.firstObject.isLive;
+    QMediaModel *model = _playerModels.firstObject;
     [self.player.controlHandler playMediaModel:model startPos:0];
 
 
@@ -375,9 +374,9 @@ QIMediaItemCommandNotAllowListener
             NSLog(@"预加载--播放缓存---%@",item.controlHandler.media_model.streamElements[0].url);
             
         }else if(_currentCell != nil){
-            QMediaModel *model = [[QMediaModel alloc] init];
-            model.streamElements = cell.model.streamElements;
-            model.isLive = _playerModels.firstObject.isLive;
+            QMediaModelBuilder *modelBuilder = [[QMediaModelBuilder alloc] initWithIsLive:_playerModels.firstObject.isLive];
+            [modelBuilder addStreamElements:cell.model.streamElements];
+            QMediaModel *model = [modelBuilder build];
             BOOL playBool = [self.player.controlHandler playMediaModel:model startPos:0];
             if (!playBool) {
                 NSLog(@"播放错误");
@@ -396,14 +395,12 @@ QIMediaItemCommandNotAllowListener
 //    NSString *path = [documentsDir stringByAppendingPathComponent:@"me"];
     
     
-    QMediaModel *model = [[QMediaModel alloc] init];
-    model.streamElements = playerModel.streamElements;
-    model.isLive = playerModel.isLive;
+    QMediaModel *model = playerModel;
     
     // 预加载
-    QMediaItemContext *item = [[QMediaItemContext alloc] initItemComtextStorageDir:documentsDir logLevel:LOG_VERBOSE];
+    QMediaItemContext *item = [[QMediaItemContext alloc]initItemComtextWithMediaModel:model startPos:0 storageDir:documentsDir logLevel:LOG_VERBOSE];
     [self addAllCallBack:item];
-    [item.controlHandler start:model startPos:0];
+    [item.controlHandler start];
     [self.cacheArray addObject:item];
     
     NSLog(@"预加载--addcrash -- %@",playerModel.streamElements.firstObject.url);

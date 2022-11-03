@@ -147,8 +147,9 @@ QIPlayerRenderListener
     _playerModels = [NSMutableArray array];
    
     for (NSDictionary *dic in urlArray) {
-        QMediaModel *modle = [[QMediaModel alloc] init];
-        [modle setValuesForKeysWithDictionary:dic];
+        BOOL islive =  [[dic valueForKey:@"isLive"] intValue]==0? NO:YES;
+        QMediaModelBuilder *modleBuilder = [[QMediaModelBuilder alloc] initWithIsLive:islive];
+//        [modle setValuesForKeysWithDictionary:dic];
             
         NSMutableArray <QStreamElement*> *streams = [NSMutableArray array];
         for (NSDictionary *elDic in dic[@"streamElements"]) {
@@ -156,9 +157,9 @@ QIPlayerRenderListener
             [subModle setValuesForKeysWithDictionary:elDic];
             [streams addObject:subModle];
         }
-        
-        modle.streamElements = streams;
-        [_playerModels addObject:modle];
+        [modleBuilder addStreamElements:streams];
+        QMediaModel *model = [modleBuilder build];
+        [_playerModels addObject:model];
         
     }
 
@@ -231,9 +232,9 @@ QIPlayerRenderListener
             }
         }
     }
-    QMediaModel *model = [[QMediaModel alloc] init];
-    model.streamElements = _playerModels.firstObject.streamElements;
-    model.isLive = _playerModels.firstObject.isLive;
+    QMediaModel *model = _playerModels.firstObject;
+//    model.streamElements = _playerModels.firstObject.streamElements;
+//    model.isLive = _playerModels.firstObject.isLive;
 //    [self.playerContext.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
 
@@ -434,9 +435,9 @@ QIPlayerRenderListener
 }
 
 -(void)reOpenPlayPlayerMaskView:(QNPlayerMaskView *)playerMaskView{
-    QMediaModel *model = [[QMediaModel alloc] init];
-    model.streamElements = _playerModels[_selectedIndex].streamElements;
-    model.isLive = _playerModels[_selectedIndex].isLive;
+    QMediaModel *model = _playerModels[_selectedIndex];
+//    model.streamElements = _playerModels[_selectedIndex].streamElements;
+//    model.isLive = _playerModels[_selectedIndex].isLive;
 //
 //    [_playerContext.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
@@ -581,13 +582,11 @@ QIPlayerRenderListener
         
     }
     if (url) {
-        QMediaModel *modle = [[QMediaModel alloc] init];
-        QStreamElement *el = [[QStreamElement alloc] init];
-        el.url = qrString;
-        el.isSelected = YES;
-        modle.streamElements = @[el];
-        modle.isLive = isLive;
-        [_playerModels addObject:modle];
+        QMediaModelBuilder *modleBuilder = [[QMediaModelBuilder alloc] initWithIsLive:isLive];
+        
+        [modleBuilder addStreamElements:@"" urlType:QURL_TYPE_QAUDIO_AND_VIDEO url:qrString quality:0 isSelected:YES backupUrl:@"" referer:@"" renderType:QPLAYER_RENDER_TYPE_PLANE];
+        QMediaModel *model = [modleBuilder build];
+        [_playerModels addObject:model];
         _selectedIndex = _playerModels.count - 1;
         [self tableView:self.urlListTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForItem:_selectedIndex inSection:0]];
 
@@ -654,9 +653,7 @@ QIPlayerRenderListener
     _selectedIndex = indexPath.row;
     [_urlListTableView reloadData];
     
-    QMediaModel *model = [[QMediaModel alloc] init];
-    model.streamElements = _playerModels[indexPath.row].streamElements;
-    model.isLive = _playerModels[indexPath.row].isLive;
+    QMediaModel *model = _playerModels[indexPath.row];
     self.maskView.isLiving = model.isLive;
     if(model.streamElements.count > 1){
         [self.maskView.qualitySegMc removeAllSegments];
