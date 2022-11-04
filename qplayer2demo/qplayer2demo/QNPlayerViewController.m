@@ -584,7 +584,7 @@ QIPlayerRenderListener
     if (url) {
         QMediaModelBuilder *modleBuilder = [[QMediaModelBuilder alloc] initWithIsLive:isLive];
         
-        [modleBuilder addStreamElements:@"" urlType:QURL_TYPE_QAUDIO_AND_VIDEO url:qrString quality:0 isSelected:YES backupUrl:@"" referer:@"" renderType:QPLAYER_RENDER_TYPE_PLANE];
+        [modleBuilder addStreamElementWithUserType:@"" urlType:QURL_TYPE_QAUDIO_AND_VIDEO url:qrString quality:0 isSelected:YES backupUrl:@"" referer:@"" renderType:QPLAYER_RENDER_TYPE_PLANE];
         QMediaModel *model = [modleBuilder build];
         [_playerModels addObject:model];
         _selectedIndex = _playerModels.count - 1;

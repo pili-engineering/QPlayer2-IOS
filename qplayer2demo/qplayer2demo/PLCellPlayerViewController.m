@@ -133,7 +133,7 @@ QIMediaItemCommandNotAllowListener
 
         QMediaModelBuilder *modleBuilder = [[QMediaModelBuilder alloc]initWithIsLive:[NSString stringWithFormat:@"%@",[dic valueForKey:@"isLive"]].intValue  == 0? NO : YES];
         for (NSDictionary *elDic in dic[@"streamElements"]) {
-            [modleBuilder addStreamElements:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"userType"]]
+            [modleBuilder addStreamElementWithUserType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"userType"]]
                              urlType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"urlType"]].intValue
                              url:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"url"]]
                              quality:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"quality"]].intValue
