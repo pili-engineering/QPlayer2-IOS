@@ -266,7 +266,7 @@ QIMediaItemCommandNotAllowListener
 
 }
 -(void)onStateChanged:(QMediaItemContext *)context state:(QMediaItemState)state{
-    NSLog(@"-------------预加载--onStateChanged -- %d---%@",state,context.controlHandler.media_model.streamElements[0].url);
+    NSLog(@"-------------预加载--onStateChanged -- %d---%@",state,context.controlHandler.mediaModel.streamElements[0].url);
 }
 -(void)onCommandNotAllow:(QMediaItemContext *)context commandName:(NSString *)commandName state:(QMediaItemState)state{
     NSLog(@"-------------预加载--notAllow---%@",commandName);
@@ -371,7 +371,7 @@ QIMediaItemCommandNotAllowListener
             if (!playBool) {
                 NSLog(@"播放错误");
             }
-            NSLog(@"预加载--播放缓存---%@",item.controlHandler.media_model.streamElements[0].url);
+            NSLog(@"预加载--播放缓存---%@",item.controlHandler.mediaModel.streamElements[0].url);
             
         }else if(_currentCell != nil){
             QMediaModelBuilder *modelBuilder = [[QMediaModelBuilder alloc] initWithIsLive:_playerModels.firstObject.isLive];
@@ -381,7 +381,7 @@ QIMediaItemCommandNotAllowListener
             if (!playBool) {
                 NSLog(@"播放错误");
             }
-            NSLog(@"预加载--new---%@",item.controlHandler.media_model.streamElements[0].url);
+            NSLog(@"预加载--new---%@",item.controlHandler.mediaModel.streamElements[0].url);
         }
     
         _currentCell = cell;
@@ -396,7 +396,6 @@ QIMediaItemCommandNotAllowListener
     
     
     QMediaModel *model = playerModel;
-    
     // 预加载
     QMediaItemContext *item = [[QMediaItemContext alloc]initItemComtextWithMediaModel:model startPos:0 storageDir:documentsDir logLevel:LOG_VERBOSE];
     [self addAllCallBack:item];
@@ -410,7 +409,7 @@ QIMediaItemCommandNotAllowListener
 -(int)indexPlayerModelsOf:(QMediaItemContext *)item{
     for (int i = 0; i < _playerModels.count; i ++) {
         QMediaModel *modle = _playerModels[i];
-        if (modle.isLive == item.controlHandler.media_model.isLive && modle.streamElements == item.controlHandler.media_model.streamElements) {
+        if (modle.isLive == item.controlHandler.mediaModel.isLive && modle.streamElements == item.controlHandler.mediaModel.streamElements) {
             return i;
         }
     }
@@ -420,7 +419,7 @@ QIMediaItemCommandNotAllowListener
 -(QMediaItemContext *)findCrashMediaItemsOf:(QMediaModel *)modle{
     for (int i = 0; i < _cacheArray.count; i ++) {
         QMediaItemContext *item = _cacheArray[i];
-        if (modle.isLive == item.controlHandler.media_model.isLive && modle.streamElements == item.controlHandler.media_model.streamElements) {
+        if (modle.isLive == item.controlHandler.mediaModel.isLive && modle.streamElements == item.controlHandler.mediaModel.streamElements) {
             return item;
         }
     }
@@ -436,6 +435,7 @@ QIMediaItemCommandNotAllowListener
             [self AddToCash:_playerModels[index]];
         }
     }
+    
 }
 
 -(void)updateForDeleteCache:(QMediaModel *)model{
