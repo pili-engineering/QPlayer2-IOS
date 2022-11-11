@@ -395,9 +395,7 @@ QIPlayerRenderListener
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
     if (appDelegate.isFlip) {
         [self forceOrientationLandscape:NO];
-//        _toastView.frame = CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300);
     } else{
-//        [self.playerContext.controlHandler stop];
         [self.myPlayerView.controlHandler stop];
         [self.durationTimer invalidate];
         self.durationTimer = nil;
@@ -410,9 +408,7 @@ QIPlayerRenderListener
 
 - (void)playerMaskView:(QNPlayerMaskView *)playerMaskView isLandscape:(BOOL)isLandscape {
     [self forceOrientationLandscape:isLandscape];
-    if(@available(iOS 16.0,*)){
-        
-    
+
 }
 
 -(void)reOpenPlayPlayerMaskView:(QNPlayerMaskView *)playerMaskView{
