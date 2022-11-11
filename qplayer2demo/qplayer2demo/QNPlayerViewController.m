@@ -215,12 +215,6 @@ QIPlayerRenderListener
     
     NSString *documentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 
-    
-//    QPlayerContext *player =  [[QPlayerContext alloc]initPlayerAPPVersion:nil localStorageDir:documentsDir logLevel:LOG_VERBOSE];
-//    self.playerContext = player;
-//    _myRenderView = [[RenderView alloc]initWithFrame:CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT)];
-//    [_myRenderView attachPlayerContext:self.playerContext];
-//    [self.view addSubview:_myRenderView];
     self.myPlayerView = [[QPlayerView alloc]initWithFrame:CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
     [self.view addSubview:self.myPlayerView];
 //    [self.playerContext.controlHandler forceAuthenticationFromNetwork];
@@ -233,9 +227,7 @@ QIPlayerRenderListener
         }
     }
     QMediaModel *model = _playerModels.firstObject;
-//    model.streamElements = _playerModels.firstObject.streamElements;
-//    model.isLive = _playerModels.firstObject.isLive;
-//    [self.playerContext.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
+
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
 
 
@@ -245,13 +237,6 @@ QIPlayerRenderListener
 
 -(void)playerContextAllCallBack{
 
-//    [self.playerContext.controlHandler addPlayerStateListener:self];
-//    [self.playerContext.controlHandler addPlayerBufferingChangeListener:self];
-//    [self.playerContext.controlHandler addPlayerQualityListener:self];
-//    [self.playerContext.controlHandler addPlayerSpeedChangeListener:self];
-//    [self.playerContext.controlHandler addPlayerAuthenticationListener:self];
-//    [self.playerContext.controlHandler addPlayerSEIDataListener:self];
-//    [self.playerContext.renderHandler addPlayerRenderListener:self];
     [self.myPlayerView.controlHandler addPlayerStateListener:self];
     [self.myPlayerView.controlHandler addPlayerBufferingChangeListener:self];
     [self.myPlayerView.controlHandler addPlayerQualityListener:self];
@@ -347,7 +332,6 @@ QIPlayerRenderListener
 
     NSArray *array = @[statusStr,firstVideoTimeStr,renderFPSStr,downSpeedStr];
 
-//    long bufferPositon = self.playerContext.controlHandler.bufferPostion;
     long bufferPositon = self.myPlayerView.controlHandler.bufferPostion;
     NSString *fileUnit = @"ms";
 
@@ -411,7 +395,7 @@ QIPlayerRenderListener
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
     if (appDelegate.isFlip) {
         [self forceOrientationLandscape:NO];
-        _toastView.frame = CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300);
+//        _toastView.frame = CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300);
     } else{
 //        [self.playerContext.controlHandler stop];
         [self.myPlayerView.controlHandler stop];
@@ -426,20 +410,13 @@ QIPlayerRenderListener
 
 - (void)playerMaskView:(QNPlayerMaskView *)playerMaskView isLandscape:(BOOL)isLandscape {
     [self forceOrientationLandscape:isLandscape];
-    if (isLandscape) {
-        _toastView.frame = CGRectMake(40, PL_SCREEN_HEIGHT-220, 200, 150);
-    }else
-    {
-        _toastView.frame = CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300);
-    }
+    if(@available(iOS 16.0,*)){
+        
+    
 }
 
 -(void)reOpenPlayPlayerMaskView:(QNPlayerMaskView *)playerMaskView{
     QMediaModel *model = _playerModels[_selectedIndex];
-//    model.streamElements = _playerModels[_selectedIndex].streamElements;
-//    model.isLive = _playerModels[_selectedIndex].isLive;
-//
-//    [_playerContext.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     [_maskView setPlayButtonState:YES];
 
@@ -452,7 +429,6 @@ QIPlayerRenderListener
 
 }
 
-
 - (void)forceOrientationLandscape:(BOOL)isLandscape {
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.isFlip = isLandscape;
@@ -460,28 +436,61 @@ QIPlayerRenderListener
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     }
     [appDelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
-    [UIViewController attemptRotationToDeviceOrientation];
+    
     UIDeviceOrientation ori = [UIDevice currentDevice].orientation;
     _isFlip = appDelegate.isFlip;
-    if (isLandscape) {
-        [self.navigationController setNavigationBarHidden:YES animated:NO];
-        if ([UIDevice currentDevice].orientation != UIInterfaceOrientationLandscapeLeft) {
-            
-            [[UIDevice currentDevice] setValue:@(UIInterfaceOrientationLandscapeRight) forKey:@"orientation"];
+    if(@available(iOS 16.0,*)){
+        [UIViewController attemptRotationToDeviceOrientation];
+        [self setNeedsUpdateOfSupportedInterfaceOrientations];
+        NSArray *array = [[[UIApplication sharedApplication] connectedScenes] allObjects];
+        UIWindowScene *scene = [array firstObject];
+        UIInterfaceOrientationMask orientation = isLandscape ? UIInterfaceOrientationMaskLandscape : UIInterfaceOrientationMaskPortrait;
+        UIWindowSceneGeometryPreferencesIOS *geometryPreferencesIOS = [[UIWindowSceneGeometryPreferencesIOS alloc] initWithInterfaceOrientations:orientation];
+        [scene requestGeometryUpdateWithPreferences:geometryPreferencesIOS errorHandler:^(NSError * _Nonnull error) {
+            NSLog(@"强制%@错误:%@", isLandscape ? @"横屏" : @"竖屏", error);
+        }];
+        
+        if(isLandscape){
+            [self.navigationController setNavigationBarHidden:YES animated:NO];
+            [self.urlListTableView removeFromSuperview];
+            self.myPlayerView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
+            self.maskView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
+            _toastView.frame = CGRectMake(40, scene.screen.bounds.size.width-220, 200, 150);
         }else{
+            [self.navigationController setNavigationBarHidden:NO animated:NO];
+            [self.view addSubview:_urlListTableView];
+            self.myPlayerView.frame = CGRectMake(0, _topSpace, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.height*9/16);
+            self.maskView.frame = CGRectMake(0, _topSpace, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.height*9/16);
             
-            [[UIDevice currentDevice] setValue:@(UIInterfaceOrientationLandscapeLeft) forKey:@"orientation"];
+            _toastView.frame = CGRectMake(0, scene.screen.bounds.size.width-300, 200, 300);
         }
-        [self.urlListTableView removeFromSuperview];
-        self.myPlayerView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT);
-        self.maskView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT);
-    } else {
-        [self.navigationController setNavigationBarHidden:NO animated:NO];
-        [[UIDevice currentDevice] setValue:@(UIDeviceOrientationPortrait) forKey:@"orientation"];
-        [self.view addSubview:_urlListTableView];
-        self.myPlayerView.frame = CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT);
-        self.maskView.frame = CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT);
+        
+    }else{
+        [UIViewController attemptRotationToDeviceOrientation];
+        if (isLandscape) {
+            [self.navigationController setNavigationBarHidden:YES animated:NO];
+            if ([UIDevice currentDevice].orientation != UIInterfaceOrientationLandscapeLeft) {
+                
+                [[UIDevice currentDevice] setValue:@(UIInterfaceOrientationLandscapeRight) forKey:@"orientation"];
+            }else{
+                
+                [[UIDevice currentDevice] setValue:@(UIInterfaceOrientationLandscapeLeft) forKey:@"orientation"];
+            }
+            [self.urlListTableView removeFromSuperview];
+            self.myPlayerView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT);
+            self.maskView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT);
+            _toastView.frame = CGRectMake(40, PL_SCREEN_HEIGHT-220, 200, 150);
+        } else {
+            [self.navigationController setNavigationBarHidden:NO animated:NO];
+            [[UIDevice currentDevice] setValue:@(UIDeviceOrientationPortrait) forKey:@"orientation"];
+            [self.view addSubview:_urlListTableView];
+            self.myPlayerView.frame = CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT);
+            self.maskView.frame = CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT);
+            _toastView.frame = CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300);
+        }
+        
     }
+//    [UIViewController attemptRotationToDeviceOrientation];
     
 }
 
@@ -704,11 +713,6 @@ QIPlayerRenderListener
 
     [headerView addSubview:titleLabel];
     
-//    UIButton *pullButton = [[UIButton alloc] initWithFrame:CGRectMake(190, 7, 22, 22)];
-//    pullButton.selected = _isPull;
-//    [pullButton setImage:[UIImage imageNamed:@"pl_down"] forState:UIControlStateNormal];
-//    [pullButton setImage:[UIImage imageNamed:@"pl_up"] forState:UIControlStateSelected];
-//    [pullButton addTarget:self action:@selector(pullClickList:) forControlEvents:UIControlEventTouchDown];
     
     UIButton *scanButton = [[UIButton alloc] initWithFrame:CGRectMake(245, 7, 22, 22)];
     scanButton.backgroundColor = PL_COLOR_RGB(81, 81, 81, 1);
@@ -821,8 +825,6 @@ QIPlayerRenderListener
         tempIndex ++;
     }
     NSArray<NSString*> *segmentedArray = [[NSArray alloc]initWithObjects:@"1080p",@"720p",@"480p",@"270p",nil];
-//    
-//    [self.playerContext.controlHandler switchQuality:model.streamElements[index]];
     BOOL switchQualityBool =[self.myPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:model.isLive];
     if (!switchQualityBool) {
         self.maskView.qualitySegMc.selectedSegmentIndex = self.UpQualityIndex;

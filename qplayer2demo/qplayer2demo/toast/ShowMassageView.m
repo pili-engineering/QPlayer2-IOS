@@ -43,7 +43,7 @@
 
 -(void)setFrame:(CGRect)frame{
     textView.bounds = CGRectMake(0, 0,frame.size.width, frame.size.height);
-//    self.frame = frame;
+//    _frame = frame;
     [super setFrame:frame];
 }
 
