@@ -80,6 +80,14 @@
  修改播放按钮的状态
  */
 -(void)setPlayButtonState:(BOOL)state;
+/**
+ 开启陀螺仪
+ */
+-(void)gyroscopeStart;
+/**
+ 关闭陀螺仪
+ */
+-(void)gyroscopeEnd;
 
 /**
 返回解码类型

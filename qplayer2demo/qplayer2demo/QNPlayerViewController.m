@@ -37,7 +37,8 @@ QIPlayerQualityListener,
 QIPlayerSpeedListener,
 QIPlayerSEIDataListener,
 QIPlayerAuthenticationListener,
-QIPlayerRenderListener
+QIPlayerRenderListener,
+QIPlayerShootVideoListener
 >
 
 /** 播放器蒙版视图 **/
@@ -191,7 +192,6 @@ QIPlayerRenderListener
     [self playerContextAllCallBack];
     
     
-    
 }
 
 #pragma mark - 初始化 PLPlayer
@@ -230,7 +230,6 @@ QIPlayerRenderListener
 
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
 
-
 }
 
 #pragma mark - PlayerListenerDelegate
@@ -244,6 +243,7 @@ QIPlayerRenderListener
     [self.myPlayerView.controlHandler addPlayerAuthenticationListener:self];
     [self.myPlayerView.controlHandler addPlayerSEIDataListener:self];
     [self.myPlayerView.renderHandler addPlayerRenderListener:self];
+    [self.myPlayerView.controlHandler addPlayerShootVideoListener:self];
     
 }
 -(void)onFirstFrameRendered:(QPlayerContext *)context elapsedTime:(NSInteger)elapsedTime{
@@ -312,8 +312,31 @@ QIPlayerRenderListener
     NSString *string = [NSString stringWithFormat:@"清晰度 %ld p",(long)newQuality];
     [self.toastView addText:string];
 }
-
-
+-(void)onShootFailed:(QPlayerContext *)context{
+    NSLog(@"截图失败");
+}
+-(void)onShootSuccessful:(QPlayerContext *)context imageData:(NSData *)imageData width:(int)width height:(int)height type:(ShootVideoType)type{
+    if(type == QPLAYER_SHOOT_VIDEO_JPEG){
+        NSLog(@"截图格式 jpeg");
+        UIImage *image = [UIImage imageWithData:imageData];
+        UIImageView *shootImageView = [[UIImageView alloc]initWithFrame:CGRectMake(50, 50, PL_SCREEN_WIDTH-100, PL_SCREEN_HEIGHT-100)];
+        [shootImageView setImage:image];
+        shootImageView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:shootImageView];
+        
+        UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+        [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
+            [shootImageView removeFromSuperview];
+        }];
+    }else{
+        NSLog(@"截图格式 none");
+    }
+}
+#pragma mark - 保存图片到相册出错回调
+-(void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+  NSLog(@"image = %@, error = %@, contextInfo = %@", image, error, contextInfo);
+}
 #pragma mark - 计时器方法
 
 - (void)onTimer:(NSTimer *)timer {
@@ -376,14 +399,11 @@ QIPlayerRenderListener
 
 
 - (void)addPlayerMaskView{
-//    self.maskView = [[QNPlayerMaskView alloc] initWithFrame:CGRectMake(0, 0, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT) player:self.playerContext isLiving:NO renderView:self.myRenderView];
     self.maskView = [[QNPlayerMaskView alloc] initWithFrame:CGRectMake(0, 0, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT) player:self.myPlayerView isLiving:NO];
     
-//    self.maskView.center = self.myRenderView.center;
     self.maskView.center = self.myPlayerView.center;
     self.maskView.delegate = self;
     self.maskView.backgroundColor = PL_COLOR_RGB(0, 0, 0, 0.35);
-//    [self.view insertSubview:_maskView aboveSubview:self.myRenderView];
         [self.view insertSubview:_maskView aboveSubview:self.myPlayerView];
 
     [self.maskView.qualitySegMc addTarget:self action:@selector(qualityAction:) forControlEvents:UIControlEventValueChanged];
@@ -690,6 +710,19 @@ QIPlayerRenderListener
     
     if ([[QDataHandle shareInstance] getAuthenticationState]) {
         [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
+    }
+    BOOL isAR = false;
+    for (QStreamElement *stream in model.streamElements) {
+        if(stream.renderType == QPLAYER_RENDER_TYPE_PANORAMA_EQUIRECT_ANGULAR){
+            isAR = true;
+            break;
+        }
+    }
+    if(isAR == true){
+        [self.maskView gyroscopeStart];
+    }
+    else{
+        [self.maskView gyroscopeEnd];
     }
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     [_maskView setPlayButtonState:NO];

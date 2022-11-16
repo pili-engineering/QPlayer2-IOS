@@ -11,6 +11,7 @@
 #import "QDataHandle.h"
 #import "QNHeadsetNotification.h"
 #import "QNButtonView.h"
+#import <CoreMotion/CoreMotion.h>
 typedef NS_ENUM(NSInteger, PLMoveDirectionType)
 {
     PLHorizontailDirection,
@@ -39,7 +40,15 @@ QIPlayerAuthenticationListener
 @property (nonatomic, strong) UILabel *fastTimeLabel;
 @property (nonatomic, strong) UIImageView *fastImageView;
 
+/** 陀螺仪**/
+@property (nonatomic, strong)CMMotionManager *motionManager;
 
+/** 计时器获取陀螺仪参数**/
+@property (nonatomic, strong)NSTimer *motionTimer;
+/** 陀螺仪参数**/
+@property (nonatomic)float motionRoll;
+/** 陀螺仪参数**/
+@property (nonatomic)float motionPitch;
 /** slider上次的值 **/
 @property (nonatomic, assign) CGFloat sliderLastValue;
 
@@ -63,9 +72,12 @@ QIPlayerAuthenticationListener
 @property (nonatomic, strong) UIButton *showSpeedViewButton;
 @property (nonatomic, strong) QNPlayerSettingsView *settingSpeedView;
 
+
+/** 截图按钮 **/
+@property (nonatomic, strong) UIButton *shootVideoButton;
+
 @property (nonatomic, assign) QPlayerDecoder decoderType;
 @property (nonatomic, assign) BOOL seeking;
-//@property (nonatomic, weak) RenderView *myRenderView;
 @end
 
 @implementation QNPlayerMaskView
@@ -80,10 +92,11 @@ QIPlayerAuthenticationListener
 - (id)initWithFrame:(CGRect)frame player:(QPlayerView *)player isLiving:(BOOL)isLiving{
     if (self = [super initWithFrame:frame]) {
         self.player = player;
-        
         [self.player.controlHandler addPlayerQualityListener:self];
         [self.player.controlHandler addPlayerAuthenticationListener:self];
         self.isLiving = isLiving;
+        self.motionPitch = 0;
+        self.motionRoll = 0;
 //        self.myRenderView = view;
         CGFloat playerWidth = CGRectGetWidth(frame);
         CGFloat playerHeight = CGRectGetHeight(frame);
@@ -142,7 +155,12 @@ QIPlayerAuthenticationListener
         [self addSubview:_qualitySegMc];
         
 
-        
+        self.shootVideoButton = [[UIButton alloc]initWithFrame:CGRectMake(PL_SCREEN_WIDTH-60, PL_SCREEN_HEIGHT/2-20, 40, 40)];
+        [self.shootVideoButton addTarget:self action:@selector(shootVideoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [self.shootVideoButton setImage:[[UIImage imageNamed:@"shootVideo"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        self.shootVideoButton.tintColor = [UIColor whiteColor];
+        self.shootVideoButton.hidden = YES;
+        [self addSubview:self.shootVideoButton];
         
         [self createGesture];
         
@@ -445,6 +463,7 @@ QIPlayerAuthenticationListener
         [_settingView setChangeDefault:UIButtonTypeFilterNone];
     }
 }
+
 #pragma mark - getter
 
 - (float)currentTime
@@ -490,7 +509,43 @@ QIPlayerAuthenticationListener
 
 
 #pragma mark - public methods
+/**
+ 开启陀螺仪
+ */
+-(void)gyroscopeStart{
+    if(self.motionManager != nil){
 
+    }
+    else{
+        self.motionManager = [[CMMotionManager alloc]init];
+        [self.motionManager setDeviceMotionUpdateInterval:0.1];
+        [self.motionManager startDeviceMotionUpdates];
+        __weak typeof(self) weakSelf = self;
+        self.motionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+//            *180/M_PI
+            //pitch = 90度 表示手机短边在下竖直正立放置  roll = 90度时 长边在下竖直屏幕朝右放置  roll = 0 pitch = 0 时屏幕朝上水平放置
+            float pitch = weakSelf.motionManager.deviceMotion.attitude.pitch*180/M_PI-weakSelf.motionPitch;
+            float roll = weakSelf.motionManager.deviceMotion.attitude.roll*180/M_PI-weakSelf.motionRoll;
+            NSLog(@"motionManager  roll: %lf, pitch: %lf",roll,pitch);
+            [weakSelf.player.renderHandler setPanoramaViewRotate:pitch rotateY:roll];
+            weakSelf.motionRoll = self.motionManager.deviceMotion.attitude.roll*180/M_PI;
+            
+            weakSelf.motionPitch = self.motionManager.deviceMotion.attitude.pitch*180/M_PI;
+        }];
+    }
+
+}
+/**
+ 关闭陀螺仪
+ */
+-(void)gyroscopeEnd{
+    if(self.motionManager != nil){
+
+        self.motionManager = nil;
+        [self.motionTimer invalidate];
+        self.motionTimer = nil;
+    }
+}
 // 加载视频转码的动画
 - (void)loadActivityIndicatorView {
 
@@ -527,10 +582,12 @@ QIPlayerAuthenticationListener
         
         self.showSettingViewButton.hidden = self.buttonView.hidden;
         self.showSpeedViewButton.hidden = self.buttonView.hidden;
+        self.shootVideoButton.hidden = self.buttonView.hidden;
     }else{
         
         self.showSettingViewButton.hidden = YES;
         self.showSpeedViewButton.hidden = YES;
+        self.shootVideoButton.hidden = YES;
     }
     if (self.qualitySegMc.numberOfSegments >1) {
         self.qualitySegMc.hidden  = !self.qualitySegMc.hidden;
@@ -587,6 +644,7 @@ QIPlayerAuthenticationListener
         self.qualitySegMc.hidden = YES;
         self.showSettingViewButton.hidden = YES;
         self.showSpeedViewButton.hidden = YES;
+        self.shootVideoButton.hidden = YES;
         self.backgroundColor = [UIColor clearColor];
     }
 }
@@ -644,6 +702,7 @@ QIPlayerAuthenticationListener
 
    
     self.showSettingViewButton.frame = CGRectMake(playerWidth - 100, 8, 25, 30);
+    self.shootVideoButton.frame = CGRectMake(playerWidth - 60, playerHeight/2-20, 40, 40);
     self.settingView.frame = CGRectMake(playerWidth - 390, 0, 390, playerHeight);
     self.showSpeedViewButton.frame = CGRectMake(playerWidth - 170, 8, 40, 30);
     self.settingSpeedView.frame = CGRectMake(playerWidth - 130, 0, 130, playerHeight);
@@ -654,6 +713,7 @@ QIPlayerAuthenticationListener
         [self.buttonView changeFrame:frame isFull:isFull];
         _showSettingViewButton.hidden = NO;
         _showSpeedViewButton.hidden = NO;
+        self.shootVideoButton.hidden = NO;
         fullFrame = frame;
         self.settingSpeedView.contentSize = CGSizeMake(130, frame.size.height);
         [self.settingSpeedView reloadInputViews];
@@ -676,13 +736,15 @@ QIPlayerAuthenticationListener
         }
         _showSettingViewButton.hidden = YES;
         _showSpeedViewButton.hidden = YES;
+        self.shootVideoButton.hidden = YES;
         self.activityIndicatorView.frame = CGRectMake(playerWidth/2 - 20, playerHeight/2 - 20, 40, 40);
     }
     
 }
-
-
-
+-(void)shootVideoButtonClick{
+    NSLog(@"shootVideoButtonClick");
+    [self.player.controlHandler shootVideo:YES];
+}
 
 
 #pragma mark - 返回
@@ -711,5 +773,7 @@ QIPlayerAuthenticationListener
     }
     
 }
+
+
 
 @end
