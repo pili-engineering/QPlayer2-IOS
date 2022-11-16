@@ -527,7 +527,7 @@ QIPlayerAuthenticationListener
             float pitch = weakSelf.motionManager.deviceMotion.attitude.pitch*180/M_PI-weakSelf.motionPitch;
             float roll = weakSelf.motionManager.deviceMotion.attitude.roll*180/M_PI-weakSelf.motionRoll;
             NSLog(@"motionManager  roll: %lf, pitch: %lf",roll,pitch);
-            [weakSelf.player.renderHandler setPanoramaViewRotate:pitch rotateY:roll];
+            [weakSelf.player.renderHandler setPanoramaViewRotate:weakSelf.motionManager.deviceMotion.attitude.pitch*180/M_PI rotateY:weakSelf.motionManager.deviceMotion.attitude.roll];
             weakSelf.motionRoll = self.motionManager.deviceMotion.attitude.roll*180/M_PI;
             
             weakSelf.motionPitch = self.motionManager.deviceMotion.attitude.pitch*180/M_PI;
@@ -742,8 +742,9 @@ QIPlayerAuthenticationListener
     
 }
 -(void)shootVideoButtonClick{
-    NSLog(@"shootVideoButtonClick");
-    [self.player.controlHandler shootVideo:YES];
+    if(self.delegate!=nil && [self.delegate respondsToSelector:@selector(shootVideoButtonClick)]){
+        [self.delegate shootVideoButtonClick];
+    }
 }
 
 

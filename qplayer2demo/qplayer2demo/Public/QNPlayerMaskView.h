@@ -30,6 +30,7 @@
 
 
 - (void)reOpenPlayPlayerMaskView:(QNPlayerMaskView *)playerMaskView;
+- (void)shootVideoButtonClick;
 
 @end
 

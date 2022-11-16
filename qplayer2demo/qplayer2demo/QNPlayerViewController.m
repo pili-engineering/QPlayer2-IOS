@@ -313,29 +313,35 @@ QIPlayerShootVideoListener
     [self.toastView addText:string];
 }
 -(void)onShootFailed:(QPlayerContext *)context{
-    NSLog(@"截图失败");
+    [_toastView addText:@"截图失败"];
 }
--(void)onShootSuccessful:(QPlayerContext *)context imageData:(NSData *)imageData width:(int)width height:(int)height type:(ShootVideoType)type{
+-(void)onShootSuccessful:(QPlayerContext *)context imageData:(NSData *)imageData width:(int)width height:(int)height type:(QPlayerShootVideoType)type{
     if(type == QPLAYER_SHOOT_VIDEO_JPEG){
-        NSLog(@"截图格式 jpeg");
         UIImage *image = [UIImage imageWithData:imageData];
         UIImageView *shootImageView = [[UIImageView alloc]initWithFrame:CGRectMake(50, 50, PL_SCREEN_WIDTH-100, PL_SCREEN_HEIGHT-100)];
+        shootImageView.contentMode = UIViewContentModeScaleAspectFit;
         [shootImageView setImage:image];
-        shootImageView.backgroundColor = [UIColor whiteColor];
+        shootImageView.backgroundColor = [UIColor clearColor];
         [self.view addSubview:shootImageView];
         
         UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+        [_toastView addText:@"截图成功"];
         [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
             [shootImageView removeFromSuperview];
         }];
     }else{
-        NSLog(@"截图格式 none");
+        [_toastView addText:@"截图格式为None"];
     }
 }
 #pragma mark - 保存图片到相册出错回调
 -(void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-  NSLog(@"image = %@, error = %@, contextInfo = %@", image, error, contextInfo);
+    if(error == nil){
+        [_toastView addText:@"保存成功"];
+    }
+    else{
+        [_toastView addText: [NSString stringWithFormat:@"保存失败：%@",error]];
+    }
 }
 #pragma mark - 计时器方法
 
@@ -410,7 +416,20 @@ QIPlayerShootVideoListener
 }
 
 #pragma mark - QNPlayerMaskView 代理方法
-
+-(void)shootVideoButtonClick{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"截图模式" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *trueAction = [UIAlertAction actionWithTitle:@"视频原图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [self.myPlayerView.controlHandler shootVideo:YES];
+    }];
+    UIAlertAction *falseAction = [UIAlertAction actionWithTitle:@"渲染后的图" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+        [self.myPlayerView.controlHandler shootVideo:NO];
+    }];
+    [alert addAction:trueAction];
+    [alert addAction:falseAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 - (void)playerMaskView:(QNPlayerMaskView *)playerMaskView didGetBack:(UIButton *)backButton {
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
     if (appDelegate.isFlip) {
@@ -718,12 +737,12 @@ QIPlayerShootVideoListener
             break;
         }
     }
-    if(isAR == true){
-        [self.maskView gyroscopeStart];
-    }
-    else{
-        [self.maskView gyroscopeEnd];
-    }
+//    if(isAR == true){
+//        [self.maskView gyroscopeStart];
+//    }
+//    else{
+//        [self.maskView gyroscopeEnd];
+//    }
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     [_maskView setPlayButtonState:NO];
     [self judgeWeatherIsLiveWithURL:selectedURL];
