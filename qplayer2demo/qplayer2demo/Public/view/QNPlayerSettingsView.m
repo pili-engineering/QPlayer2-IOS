@@ -22,6 +22,7 @@
     QNChangePlayerView *SEIPlayerView;
     QNChangePlayerView *authenticationPlayerView;
     QNChangePlayerView *backgroundPlayPlayerView;
+    QNChangePlayerView *immediatelyPlayerView;
     void (^changePlayerViewCallback)(ChangeButtonType type , NSString * startPosition,BOOL selected);
     void (^speedViewCallback)(SpeedUIButtonType type);
 }
@@ -113,6 +114,12 @@
         case UIButtonTypeBackgroundPlay:
             [backgroundPlayPlayerView setDefault:type];
             break;
+            
+        case UIButtonTypeImmediatelyTrue:
+        case UIButtonTypeImmediatelyFalse:
+        case UIButtonTypeImmediatelyCustom:
+            [immediatelyPlayerView setDefault:type];
+            break;
         default:
             NSLog(@"设置出错");
             break;
@@ -141,7 +148,7 @@
 }
 -(void)addScrollView:(CGRect)frame{
 //    self = [[UIScrollView alloc]initWithFrame:frame];
-    self.contentSize = CGSizeMake(frame.size.width, 950);
+    self.contentSize = CGSizeMake(frame.size.width, 1050);
 //    self.backgroundColor = [UIColor clearColor];
     self.userInteractionEnabled = YES;
     self.scrollEnabled = YES;
@@ -198,8 +205,23 @@
     [self addBackgroundPlay:CGRectMake(0, 865, 350, 90)];
     
     
+    [self addLine:CGRectMake(5, 948, self.frame.size.width, 2)];
+    
+    [self addImmediately:CGRectMake(0, 965, 350, 90)];
+    
+    
     
 }
+-(void)addImmediately:(CGRect)frame{
+    immediatelyPlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [immediatelyPlayerView setTitleLabelText:@"清晰度切换" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [immediatelyPlayerView addButtonText:@"立即切换" frame:CGRectMake(10, 50, 90, 20) type:UIButtonTypeImmediatelyTrue target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [immediatelyPlayerView addButtonText:@"无缝切换(只使用与点播)" frame:CGRectMake(100, 50, 170, 20) type:UIButtonTypeImmediatelyFalse target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [immediatelyPlayerView addButtonText:@"直播立即点播无缝" frame:CGRectMake(270, 50, 150, 20) type:UIButtonTypeImmediatelyCustom target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [immediatelyPlayerView setDefault:UIButtonTypeImmediatelyCustom];
+    [self addSubview:immediatelyPlayerView];
+}
+
 -(void)addBackgroundPlay:(CGRect)frame{
     
     

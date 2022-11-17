@@ -24,7 +24,6 @@ UIGestureRecognizerDelegate,
 QIPlayerQualityListener,
 QIPlayerAuthenticationListener
 >{
-    bool isScreenFull;
     CGRect fullFrame;
 }
 
@@ -39,7 +38,7 @@ QIPlayerAuthenticationListener
 @property (nonatomic, strong) UIProgressView *fastProgressView;
 @property (nonatomic, strong) UILabel *fastTimeLabel;
 @property (nonatomic, strong) UIImageView *fastImageView;
-
+@property (nonatomic)BOOL isScreenFull;
 /** 陀螺仪**/
 @property (nonatomic, strong)CMMotionManager *motionManager;
 
@@ -49,6 +48,12 @@ QIPlayerAuthenticationListener
 @property (nonatomic)float motionRoll;
 /** 陀螺仪参数**/
 @property (nonatomic)float motionPitch;
+/** 手势参数**/
+@property (nonatomic)float rotateX;
+/** 手势参数**/
+@property (nonatomic)float rotateY;
+/** 手势参数**/
+@property (nonatomic)BOOL isRotate;
 /** slider上次的值 **/
 @property (nonatomic, assign) CGFloat sliderLastValue;
 
@@ -97,6 +102,9 @@ QIPlayerAuthenticationListener
         self.isLiving = isLiving;
         self.motionPitch = 0;
         self.motionRoll = 0;
+        self.rotateX = 0;
+        self.rotateY = 0;
+        self.isRotate = false;
 //        self.myRenderView = view;
         CGFloat playerWidth = CGRectGetWidth(frame);
         CGFloat playerHeight = CGRectGetHeight(frame);
@@ -230,6 +238,14 @@ QIPlayerAuthenticationListener
                 }
             }
             
+            else if (800 <= type && type <= 802){
+                if(weakSelf.delegate != nil && [weakSelf.delegate respondsToSelector:@selector(setImmediately:)]){
+                    [weakSelf.delegate setImmediately:(int)(type-800)];
+                }
+                [[QDataHandle shareInstance] setSelConfiguraKey:@"清晰度切换" selIndex:(int)(type-800)];
+                
+            }
+            
             if (startPosition) {
                 int satartPod = [startPosition intValue];
                 
@@ -353,12 +369,13 @@ QIPlayerAuthenticationListener
             }else{
                 
             }
+        }else if ([configureModel.configuraKey containsString:@"清晰度切换"]) {
+            [_settingView setChangeDefault:(ChangeButtonType)(index+800)];
+            
         }
         
     }
 }
-
-
 
 ///**
 // *  创建手势
@@ -521,16 +538,28 @@ QIPlayerAuthenticationListener
         [self.motionManager setDeviceMotionUpdateInterval:0.1];
         [self.motionManager startDeviceMotionUpdates];
         __weak typeof(self) weakSelf = self;
-        self.motionTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+        self.motionTimer = [NSTimer scheduledTimerWithTimeInterval:0.03 repeats:YES block:^(NSTimer * _Nonnull timer) {
 //            *180/M_PI
-            //pitch = 90度 表示手机短边在下竖直正立放置  roll = 90度时 长边在下竖直屏幕朝右放置  roll = 0 pitch = 0 时屏幕朝上水平放置
-            float pitch = weakSelf.motionManager.deviceMotion.attitude.pitch*180/M_PI-weakSelf.motionPitch;
-            float roll = weakSelf.motionManager.deviceMotion.attitude.roll*180/M_PI-weakSelf.motionRoll;
-            NSLog(@"motionManager  roll: %lf, pitch: %lf",roll,pitch);
-            [weakSelf.player.renderHandler setPanoramaViewRotate:weakSelf.motionManager.deviceMotion.attitude.pitch*180/M_PI rotateY:weakSelf.motionManager.deviceMotion.attitude.roll];
-            weakSelf.motionRoll = self.motionManager.deviceMotion.attitude.roll*180/M_PI;
+            if(!weakSelf.isRotate){
+                //pitch = 90度 表示手机短边在下竖直正立放置  roll = 90度时 长边在下竖直屏幕朝右放置  roll = 0 pitch = 0 时屏幕朝上水平放置
+                float pitch = weakSelf.motionManager.deviceMotion.attitude.pitch*180/M_PI-weakSelf.motionPitch;
+                float roll = weakSelf.motionManager.deviceMotion.attitude.roll*180/M_PI-weakSelf.motionRoll;
+                if(weakSelf.isScreenFull){
+                    
+                    weakSelf.rotateX += roll;
+                    weakSelf.rotateY -= pitch;
+                }else{
+                    
+                    weakSelf.rotateX += pitch;
+                    weakSelf.rotateY += roll;
+                }
+                [weakSelf.player.renderHandler setPanoramaViewRotate:weakSelf.rotateX rotateY:weakSelf.rotateY];
+                
+            }
             
-            weakSelf.motionPitch = self.motionManager.deviceMotion.attitude.pitch*180/M_PI;
+            weakSelf.motionRoll = weakSelf.motionManager.deviceMotion.attitude.roll*180/M_PI;
+            
+            weakSelf.motionPitch = weakSelf.motionManager.deviceMotion.attitude.pitch*180/M_PI;
         }];
     }
 
@@ -578,7 +607,7 @@ QIPlayerAuthenticationListener
 - (void)showAction
 {
     self.buttonView.hidden = !self.buttonView.hidden;
-    if(isScreenFull){
+    if(self.isScreenFull){
         
         self.showSettingViewButton.hidden = self.buttonView.hidden;
         self.showSpeedViewButton.hidden = self.buttonView.hidden;
@@ -666,7 +695,6 @@ QIPlayerAuthenticationListener
     }
 }
 
-
 /**
  *  pan手势事件
  *
@@ -674,6 +702,11 @@ QIPlayerAuthenticationListener
  */
 - (void)panAction:(UIPanGestureRecognizer *)pan {
     // 根据上次和本次移动的位置，算出一个速率的point
+    if(pan.state == UIGestureRecognizerStateBegan){
+        self.isRotate = true;
+    }else if(pan.state == UIGestureRecognizerStateEnded){
+        self.isRotate = false;
+    }
     CGPoint veloctyPoint = [pan velocityInView:self];
 //    static int panX = 0;
 //    static int panY = 0;
@@ -690,8 +723,9 @@ QIPlayerAuthenticationListener
     
     rotateY = rotateY % 360;
     rotateX = rotateX % 360;
-    
-    [self.player.renderHandler setPanoramaViewRotate:rotateX rotateY:rotateY];
+    self.rotateY -= transPoint.x;
+    self.rotateX += transPoint.y;
+    [self.player.renderHandler setPanoramaViewRotate:self.rotateX rotateY:self.rotateY];
 
 }
 
@@ -706,9 +740,9 @@ QIPlayerAuthenticationListener
     self.settingView.frame = CGRectMake(playerWidth - 390, 0, 390, playerHeight);
     self.showSpeedViewButton.frame = CGRectMake(playerWidth - 170, 8, 40, 30);
     self.settingSpeedView.frame = CGRectMake(playerWidth - 130, 0, 130, playerHeight);
-    isScreenFull = isFull;
+    self.isScreenFull = isFull;
     if (isFull) {
-        self.buttonView.frame = CGRectMake(8, playerHeight - 55, playerWidth - 16, 28);
+        self.buttonView.frame = CGRectMake(8, playerHeight - 60, playerWidth - 16, 28);
         
         [self.buttonView changeFrame:frame isFull:isFull];
         _showSettingViewButton.hidden = NO;

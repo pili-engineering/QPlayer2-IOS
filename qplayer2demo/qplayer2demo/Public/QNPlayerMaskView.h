@@ -32,6 +32,8 @@
 - (void)reOpenPlayPlayerMaskView:(QNPlayerMaskView *)playerMaskView;
 - (void)shootVideoButtonClick;
 
+- (void)setImmediately:(int)immediately;
+
 @end
 
 @interface QNPlayerMaskView : UIView

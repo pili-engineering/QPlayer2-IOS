@@ -56,6 +56,8 @@ QIPlayerShootVideoListener
 @property (nonatomic, assign) BOOL isPull;
 
 @property (nonatomic, copy) NSString *playerLogFileName;
+
+@property (nonatomic) int immediatelyType;
 /** 无可显示 URL 的提示 **/
 @property (nonatomic, strong) UILabel *hintLabel;
 
@@ -416,6 +418,9 @@ QIPlayerShootVideoListener
 }
 
 #pragma mark - QNPlayerMaskView 代理方法
+-(void)setImmediately:(int)immediately{
+    self.immediatelyType = immediately;
+}
 -(void)shootVideoButtonClick{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"截图模式" message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *trueAction = [UIAlertAction actionWithTitle:@"视频原图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -607,6 +612,9 @@ QIPlayerShootVideoListener
                 [self.myPlayerView.controlHandler setBackgroundPlayEnable:NO];
             }
         }
+        else if ([configureModel.configuraKey containsString:@"清晰度切换"]){
+            _immediatelyType =(int)index;
+        }
     }
 }
 
@@ -737,12 +745,12 @@ QIPlayerShootVideoListener
             break;
         }
     }
-//    if(isAR == true){
-//        [self.maskView gyroscopeStart];
-//    }
-//    else{
-//        [self.maskView gyroscopeEnd];
-//    }
+    if(isAR == true){
+        [self.maskView gyroscopeStart];
+    }
+    else{
+        [self.maskView gyroscopeEnd];
+    }
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     [_maskView setPlayButtonState:NO];
     [self judgeWeatherIsLiveWithURL:selectedURL];
@@ -873,7 +881,17 @@ QIPlayerShootVideoListener
         tempIndex ++;
     }
     NSArray<NSString*> *segmentedArray = [[NSArray alloc]initWithObjects:@"1080p",@"720p",@"480p",@"270p",nil];
-    BOOL switchQualityBool =[self.myPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:model.isLive];
+    BOOL switchQualityBool;
+    if(self.immediatelyType == 0){
+        
+        switchQualityBool = [self.myPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:true];
+    }else if(self.immediatelyType == 1){
+        
+        switchQualityBool = [self.myPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:false];
+    }
+    else{
+        switchQualityBool = [self.myPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:model.isLive];
+    }
     if (!switchQualityBool) {
         self.maskView.qualitySegMc.selectedSegmentIndex = self.UpQualityIndex;
 

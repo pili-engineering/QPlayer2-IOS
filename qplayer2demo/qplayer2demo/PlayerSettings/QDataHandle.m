@@ -63,8 +63,10 @@
         
         NSDictionary *backgroundPlayDict = @{@"后台播放":@[@"开启",@"关闭"], @"default":@0};
         
+        NSDictionary *immediatelyDict = @{@"清晰度切换":@[@"立即切换",@"无缝切换",@"直播立即点播无缝"], @"default":@2};
         
-        NSArray *piliOptionArray = @[startDict,videoToolboxDict, seekDict,actionDict,renderDict,speepDict,colorBDict,authonDict,SEIDict,backgroundPlayDict];
+        
+        NSArray *piliOptionArray = @[startDict,videoToolboxDict, seekDict,actionDict,renderDict,speepDict,colorBDict,authonDict,SEIDict,backgroundPlayDict,immediatelyDict];
         
 //        NSDictionary *PLPlayerDict = @{@"PLPlayer":piliPlayerArray};
         NSDictionary *PLPlayerOptionDict = @{@"PLPlayerOption":piliOptionArray};
