@@ -7,7 +7,7 @@
 //
 
 #import "QNButtonView.h"
-@interface QNButtonView()<QIPlayerProgressListener>
+@interface QNButtonView()<QIPlayerProgressListener,QIPlayerStateChangeListener>
 
 @property (nonatomic, strong) UILabel *totalDurationLabel;
 @property (nonatomic, strong) UILabel *currentTimeLabel;
@@ -15,6 +15,8 @@
 @property (nonatomic, strong) UIButton *fullScreenButton;
 @property (nonatomic, strong) UISlider *prograssSlider;
 @property (nonatomic, assign) BOOL isSeeking;
+@property (nonatomic, assign) BOOL isNeedUpdatePrograss;
+
 
 @property (nonatomic, strong) UIButton *playButton;
 @property (nonatomic, assign) BOOL shortVideoBool;
@@ -34,6 +36,7 @@
 -(instancetype)initWithFrame:(CGRect)frame player:(QPlayerContext *)player playerFrame:(CGRect)playerFrame isLiving:(BOOL)isLiving{
     self = [super initWithFrame:frame];
     if (self) {
+        self.isNeedUpdatePrograss = false;
         _shortVideoBool = false;
         self.isSeeking = NO;
         self.isBuffingBool = NO;
@@ -56,6 +59,7 @@
         [self addPlayButton];
         [self addFullScreenButton];
         [self.player.controlHandler addPlayerProgressChangeListener:self];
+        [self.player.controlHandler addPlayerStateListener:self];
     }
     return self;
 }
@@ -170,48 +174,61 @@
     return _prograssSlider;
 }
 
-#pragma mark ListenDelegate
--(void)onProgressChanged:(QPlayerContext *)context progress:(NSInteger)progress duration:(NSInteger)duration{
-    long long currentSeconds = progress/1000;
-    float currentSecondsDouble = progress/1000.0;
-    long long totalSeconds = self.player.controlHandler.duration/1000;
+#pragma mark ListenerDelegate
 
-    if (self.totalDuration != duration/1000) {
-        if (self.isLiving) {
-            self.totalDuration = 0;
-        } else {
-            self.totalDuration = duration/1000;
-        }
-        float minutes = _totalDuration / 60.0;
-        int seconds = (int)_totalDuration % 60;
-        if (minutes < 60) {
-            self.totalDurationLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
-        } else{
-            float hours = minutes / 60.0;
-            int min = (int)minutes % 60;
-            self.totalDurationLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d", (int)hours, (int)min, seconds];
-        }
-        self.prograssSlider.maximumValue = _totalDuration;
+- (void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
+    if(state == QPLAYER_STATE_PLAYING){
+        self.isNeedUpdatePrograss = true;
+    }else{
+        self.isNeedUpdatePrograss = false;
     }
-    
-    if (self.totalDuration != 0 && (currentSeconds >= totalSeconds || fabsf(currentSecondsDouble - totalSeconds) <=0.5)) {
-        if (!_isLiving) {
-            self.prograssSlider.value = self.totalDuration;
-            float minutes = totalSeconds / 60;
-            int seconds = totalSeconds % 60;
-            self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
-            
-        }
-    } else{
-        if (self.isSeeking || self.isBuffingBool) {
-            return;
+}
+
+-(void)onProgressChanged:(QPlayerContext *)context progress:(NSInteger)progress duration:(NSInteger)duration{
+    if(self.isNeedUpdatePrograss){
+        long long currentSeconds = progress/1000;
+        float currentSecondsDouble = progress/1000.0;
+        long long totalSeconds = self.player.controlHandler.duration/1000;
+
+        if (self.totalDuration != duration/1000) {
+            if (self.isLiving) {
+                self.totalDuration = 0;
+            } else {
+                self.totalDuration = duration/1000;
+            }
+            float minutes = _totalDuration / 60.0;
+            int seconds = (int)_totalDuration % 60;
+            if (minutes < 60) {
+                self.totalDurationLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
+            } else{
+                float hours = minutes / 60.0;
+                int min = (int)minutes % 60;
+                self.totalDurationLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d", (int)hours, (int)min, seconds];
+            }
+            self.prograssSlider.maximumValue = _totalDuration;
         }
         
-        minutes = currentSeconds / 60;
-        seconds = currentSeconds % 60;
-        self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
-        self.prograssSlider.value = currentSeconds;
+        if (self.totalDuration != 0 && (currentSeconds >= totalSeconds || fabsf(currentSecondsDouble - totalSeconds) <=0.5)) {
+            if (!_isLiving) {
+                self.prograssSlider.value = self.totalDuration;
+                float minutes = totalSeconds / 60;
+                int seconds = totalSeconds % 60;
+                self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
+                
+            }
+        } else{
+            if (self.isSeeking || self.isBuffingBool) {
+                return;
+            }
+            
+            minutes = currentSeconds / 60;
+            seconds = currentSeconds % 60;
+            self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
+            self.prograssSlider.value = currentSeconds;
+        }
+        
     }
+
 }
 
 #pragma mark 对外接口
@@ -284,9 +301,11 @@
 }
 - (void)progressSliderValueChanged:(UISlider *)slider {
     _isSeeking = YES;
+    self.isNeedUpdatePrograss = false;
 }
 - (void)sliderTouchUpDown:(UISlider*)slider {
     _isSeeking = YES;
+    self.isNeedUpdatePrograss = false;
     if (sliderStart) {
         sliderStart(true);
     }
@@ -294,6 +313,7 @@
 }
 - (void)sliderTouchUpInside:(UISlider*)slider {
     _isSeeking = NO;
+    self.isNeedUpdatePrograss = false;
     if (sliderEnd) {
         sliderEnd(false);
     }
@@ -313,6 +333,7 @@
 }
 - (void)sliderTouchUpCancel:(UISlider*)slider {
     _isSeeking = NO;
+    self.isNeedUpdatePrograss = false;
     if (sliderEnd) {
         sliderEnd(false);
     }
@@ -320,6 +341,7 @@
 
 - (void)sliderTouchUpOutside:(UISlider*)slider {
     _isSeeking = NO;
+    self.isNeedUpdatePrograss = false;
     if (sliderEnd) {
         sliderEnd(false);
     }
@@ -328,7 +350,6 @@
     }else{
         
         [self.player.controlHandler seek:(int)slider.value * 1000];
-        self.prograssSlider.value = slider.value;
         self.prograssSlider.value = slider.value;
         
         minutes = (int)slider.value / 60;
@@ -340,6 +361,7 @@
 }
 - (void)sliderTouchDragExit:(UISlider*)slider {
     _isSeeking = YES;
+    self.isNeedUpdatePrograss = false;
 
 }
 -(void)dealloc{
