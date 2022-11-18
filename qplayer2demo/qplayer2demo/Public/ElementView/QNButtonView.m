@@ -89,6 +89,9 @@
         [self addCurrentTimeLabel];
         
         [self.player.controlHandler addPlayerProgressChangeListener:self];
+        [self.player.controlHandler addPlayerStateListener:self];
+        self.isNeedUpdatePrograss = true;
+        
     }
     return self;
 }

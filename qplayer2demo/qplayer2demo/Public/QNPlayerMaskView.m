@@ -647,7 +647,11 @@ QIPlayerAuthenticationListener
  *  @param gesture UITapGestureRecognizer
  */
 - (void)doubleTapAction:(UIGestureRecognizer *)gesture {
-
+    if(self.player.controlHandler.currentPlayerState == QPLAYER_STATE_COMPLETED){
+        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(reOpenPlayPlayerMaskView:)]) {
+            [self.delegate reOpenPlayPlayerMaskView:self];
+        }
+    }
     [self.buttonView setPlayState];
 
 }
@@ -707,22 +711,10 @@ QIPlayerAuthenticationListener
     }else if(pan.state == UIGestureRecognizerStateEnded){
         self.isRotate = false;
     }
-    CGPoint veloctyPoint = [pan velocityInView:self];
-//    static int panX = 0;
-//    static int panY = 0;
     
-    CGPoint locationPoint = [pan locationInView:self];
     CGPoint transPoint = [pan translationInView:self];
     [pan setTranslation:CGPointZero inView:self];
     
-    static int rotateY = 0;
-    static int rotateX = 0;
-    
-    rotateY -= transPoint.x;
-    rotateX += transPoint.y;
-    
-    rotateY = rotateY % 360;
-    rotateX = rotateX % 360;
     self.rotateY -= transPoint.x;
     self.rotateX += transPoint.y;
     [self.player.renderHandler setPanoramaViewRotate:self.rotateX rotateY:self.rotateY];
