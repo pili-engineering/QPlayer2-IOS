@@ -34,24 +34,23 @@
     NSUserDefaults *userdafault = [NSUserDefaults standardUserDefaults];
     NSArray *dataArray = [userdafault objectForKey:@"PLPlayer_settings"];
     
+    NSMutableArray *piliOptionNameArray = [NSMutableArray arrayWithArray:@[@"播放起始 (ms)",@"Decoder", @"Seek",@"Start Action",@"Render ratio",@"播放速度",@"色盲模式",@"鉴权",@"SEI",@"后台播放",@"清晰度切换"]];
     if (dataArray.count != 0 ) {
         NSMutableArray *array = [NSMutableArray array];
-        NSMutableArray *piliOptionArray = [NSMutableArray arrayWithArray:@[@"播放起始 (ms)",@"Decoder", @"Seek",@"Start Action",@"Render ratio",@"播放速度",@"色盲模式",@"鉴权",@"SEI",@"后台播放",@"清晰度切换"]];
         for (NSData *data in dataArray) {
             QNClassModel *classModel = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             for (PLConfigureModel *config in classModel.classValue) {
-                [piliOptionArray removeObject:config.configuraKey];
+                [piliOptionNameArray removeObject:config.configuraKey];
             }
-            if(piliOptionArray.count!=0){
+            if(piliOptionNameArray.count!=0){
                 
                 NSMutableArray<PLConfigureModel*> *arrayMissing = [NSMutableArray array];
                 for (PLConfigureModel *config in classModel.classValue) {
                     [arrayMissing addObject:config];
                 }
-                for (NSString *str in piliOptionArray) {
+                for (NSString *str in piliOptionNameArray) {
                     PLConfigureModel *configureModel = [PLConfigureModel configureModelWithDictionary:[self getDefult:str]];
                     [arrayMissing addObject:configureModel];
-//                    [arrayMissing addObject:[self getDefult:str]];
                 }
                 classModel.classValue = arrayMissing;
             }
@@ -61,30 +60,11 @@
         
     } else {
 
-        NSDictionary *startDict = [self getDefult:@"播放起始 (ms)"];
-        NSDictionary *videoToolboxDict = [self getDefult:@"Decoder"];
+        NSMutableArray *piliOptionArray = [NSMutableArray array];
+        for (NSString *str in piliOptionNameArray) {
+            [piliOptionArray addObject:[self getDefult:str]];
+        }
         
-        NSDictionary *seekDict = [self getDefult:@"Seek"];
-        NSDictionary *actionDict = [self getDefult:@"Start Action"];
-
-        NSDictionary *renderDict = [self getDefult:@"Render ratio"];
-        
-        NSDictionary *speepDict = [self getDefult:@"播放速度"];
-        
-        NSDictionary *colorBDict = [self getDefult:@"色盲模式"];
-        
-        NSDictionary *authonDict = [self getDefult:@"鉴权"];
-        
-        NSDictionary *SEIDict = [self getDefult:@"SEI"];
-        
-        NSDictionary *backgroundPlayDict = [self getDefult:@"后台播放"];
-        
-        NSDictionary *immediatelyDict = [self getDefult:@"清晰度切换"];
-        
-        
-        NSArray *piliOptionArray = @[startDict,videoToolboxDict, seekDict,actionDict,renderDict,speepDict,colorBDict,authonDict,SEIDict,backgroundPlayDict,immediatelyDict];
-        
-//        NSDictionary *PLPlayerDict = @{@"PLPlayer":piliPlayerArray};
         NSDictionary *PLPlayerOptionDict = @{@"PLPlayerOption":piliOptionArray};
     
         NSArray *configureArray = @[PLPlayerOptionDict];
