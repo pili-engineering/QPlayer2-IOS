@@ -890,7 +890,7 @@ QIPlayerVideoFrameSizeChangeListener
         }
         tempIndex ++;
     }
-    NSArray<NSString*> *segmentedArray = [[NSArray alloc]initWithObjects:@"1080p",@"720p",@"480p",@"270p",nil];
+    NSArray<NSString*> *segmentedArray = [[NSArray alloc]initWithObjects:@"1080p",@"720p",@"480p",@"360p",nil];
     BOOL switchQualityBool;
     if(self.immediatelyType == 0){
         

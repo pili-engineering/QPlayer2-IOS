@@ -152,7 +152,7 @@ QIPlayerAuthenticationListener
         [self addSubview:_backButton];
         
         
-        NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"1080p",@"720p",@"480p",@"270p",nil];
+        NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"1080p",@"720p",@"480p",@"360p",nil];
 
         self.qualitySegMc = [[UISegmentedControl alloc]initWithItems:segmentedArray];
 

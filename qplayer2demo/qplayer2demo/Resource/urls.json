@@ -191,8 +191,18 @@
                 "userType": "",
                 "urlType": 0,
                 "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666",
-                "quality": 360,
+                "quality": 720,
                 "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666@480p",
+                "quality": 480,
+                "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
                  
