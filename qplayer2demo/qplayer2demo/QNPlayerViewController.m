@@ -289,7 +289,6 @@ QIPlayerVideoFrameSizeChangeListener
         self.isPlaying = YES;
         [_maskView setPlayButtonState:YES];
         [self showHintViewWithText:@"开始播放器"];
-        [_toastView addText:[NSString stringWithFormat:@"isMute :%d",self.myPlayerView.controlHandler.isMute]];
         [_toastView addText:@"播放中"];
         
     } else if (state == QPLAYER_STATE_PAUSED_RENDER) {
