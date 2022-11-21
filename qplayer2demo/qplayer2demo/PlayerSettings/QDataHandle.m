@@ -36,34 +36,50 @@
     
     if (dataArray.count != 0 ) {
         NSMutableArray *array = [NSMutableArray array];
+        NSMutableArray *piliOptionArray = [NSMutableArray arrayWithArray:@[@"播放起始 (ms)",@"Decoder", @"Seek",@"Start Action",@"Render ratio",@"播放速度",@"色盲模式",@"鉴权",@"SEI",@"后台播放",@"清晰度切换"]];
         for (NSData *data in dataArray) {
             QNClassModel *classModel = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            for (PLConfigureModel *config in classModel.classValue) {
+                [piliOptionArray removeObject:config.configuraKey];
+            }
+            if(piliOptionArray.count!=0){
+                
+                NSMutableArray<PLConfigureModel*> *arrayMissing = [NSMutableArray array];
+                for (PLConfigureModel *config in classModel.classValue) {
+                    [arrayMissing addObject:config];
+                }
+                for (NSString *str in piliOptionArray) {
+                    PLConfigureModel *configureModel = [PLConfigureModel configureModelWithDictionary:[self getDefult:str]];
+                    [arrayMissing addObject:configureModel];
+//                    [arrayMissing addObject:[self getDefult:str]];
+                }
+                classModel.classValue = arrayMissing;
+            }
             [array addObject:classModel];
         }
         _playerConfigArray = [array copy];
         
     } else {
 
-        NSDictionary *startDict = @{@"播放起始 (ms)":@[@"0.0",@"0.0"], @"default":@0};
-        NSDictionary *videoToolboxDict = @{@"Decoder":@[@"自动",@"硬解",@"软解"], @"default":@0};
+        NSDictionary *startDict = [self getDefult:@"播放起始 (ms)"];
+        NSDictionary *videoToolboxDict = [self getDefult:@"Decoder"];
         
-        NSDictionary *seekDict = @{@"Seek":@[@"关键帧seek",@"精准seek"], @"default":@0};
-        
-        NSDictionary *actionDict = @{@"Start Action":@[@"启播播放",@"启播暂停"], @"default":@0};
+        NSDictionary *seekDict = [self getDefult:@"Seek"];
+        NSDictionary *actionDict = [self getDefult:@"Start Action"];
 
-        NSDictionary *renderDict = @{@"Render ratio":@[@"自动",@"拉伸",@"铺满",@"16:9",@"4:3"], @"default":@0};
+        NSDictionary *renderDict = [self getDefult:@"Render ratio"];
         
-        NSDictionary *speepDict = @{@"播放速度":@[@"0.5",@"0.75",@"1.0",@"1.25",@"1.5",@"2.0"], @"default":@2};
+        NSDictionary *speepDict = [self getDefult:@"播放速度"];
         
-        NSDictionary *colorBDict = @{@"色盲模式":@[@"无",@"红色盲",@"绿色盲",@"蓝色盲"], @"default":@0};
+        NSDictionary *colorBDict = [self getDefult:@"色盲模式"];
         
-        NSDictionary *authonDict = @{@"鉴权":@[@"开启",@"关闭"], @"default":@0};
+        NSDictionary *authonDict = [self getDefult:@"鉴权"];
         
-        NSDictionary *SEIDict = @{@"SEI":@[@"开启",@"关闭"], @"default":@0};
+        NSDictionary *SEIDict = [self getDefult:@"SEI"];
         
-        NSDictionary *backgroundPlayDict = @{@"后台播放":@[@"开启",@"关闭"], @"default":@0};
+        NSDictionary *backgroundPlayDict = [self getDefult:@"后台播放"];
         
-        NSDictionary *immediatelyDict = @{@"清晰度切换":@[@"立即切换",@"无缝切换",@"直播立即点播无缝"], @"default":@2};
+        NSDictionary *immediatelyDict = [self getDefult:@"清晰度切换"];
         
         
         NSArray *piliOptionArray = @[startDict,videoToolboxDict, seekDict,actionDict,renderDict,speepDict,colorBDict,authonDict,SEIDict,backgroundPlayDict,immediatelyDict];
@@ -77,7 +93,34 @@
         _playerConfigArray = [QNClassModel classArrayWithArray:configureArray];
     }
 }
-
+-(NSDictionary *)getDefult:(NSString *)key{
+    if([key isEqual:@"播放起始 (ms)"]){
+        return @{@"播放起始 (ms)":@[@"0.0",@"0.0"], @"default":@0};
+    }else if([key isEqual:@"Decoder"]){
+        return @{@"Decoder":@[@"自动",@"硬解",@"软解"], @"default":@0};
+    }else if([key isEqual:@"Seek"]){
+        return @{@"Seek":@[@"关键帧seek",@"精准seek"], @"default":@0};
+    }else if([key isEqual:@"Start Action"]){
+        return @{@"Start Action":@[@"启播播放",@"启播暂停"], @"default":@0};
+    }else if([key isEqual:@"Render ratio"]){
+        return @{@"Render ratio":@[@"自动",@"拉伸",@"铺满",@"16:9",@"4:3"], @"default":@0};
+    }else if([key isEqual:@"播放速度"]){
+        return @{@"播放速度":@[@"0.5",@"0.75",@"1.0",@"1.25",@"1.5",@"2.0"], @"default":@2};
+    }else if([key isEqual:@"色盲模式"]){
+        return @{@"色盲模式":@[@"无",@"红色盲",@"绿色盲",@"蓝色盲"], @"default":@0};
+    }else if([key isEqual:@"鉴权"]){
+        return @{@"鉴权":@[@"开启",@"关闭"], @"default":@0};
+    }else if([key isEqual:@"SEI"]){
+        return @{@"SEI":@[@"开启",@"关闭"], @"default":@0};
+    }else if([key isEqual:@"后台播放"]){
+        return @{@"后台播放":@[@"开启",@"关闭"], @"default":@0};
+    }else if([key isEqual:@"清晰度切换"]){
+        return @{@"清晰度切换":@[@"立即切换",@"无缝切换",@"直播立即点播无缝"], @"default":@2};
+    }else{
+        NSLog(@"读取PLPlayerOption数据出错");
+        return nil;
+    }
+}
 -(void)setSelConfiguraKey:(NSString *)tittle selIndex:(int)selIndex{
     for (QNClassModel *classModel in _playerConfigArray){
         for (PLConfigureModel *cMode in classModel.classValue) {
