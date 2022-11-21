@@ -156,7 +156,7 @@ QIPlayerAuthenticationListener
 
         self.qualitySegMc = [[UISegmentedControl alloc]initWithItems:segmentedArray];
 
-        self.qualitySegMc.frame = CGRectMake(playerWidth - 250, 7, 250, 28);
+        self.qualitySegMc.frame = CGRectMake(playerWidth - 250, 17, 250, 28);
 
         self.qualitySegMc.selectedSegmentIndex = 0;//设置默认选择项索引
         self.qualitySegMc.tintColor = [UIColor grayColor];
@@ -181,9 +181,10 @@ QIPlayerAuthenticationListener
         [self.activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
         
         //设置悬浮框
-        _showSettingViewButton = [[UIButton alloc] initWithFrame:CGRectMake(playerWidth, 7, 30, 30)];
+        _showSettingViewButton = [[UIButton alloc] initWithFrame:CGRectMake(playerWidth, 7, 35, 30)];
         _showSettingViewButton.backgroundColor = [UIColor clearColor];
         [_showSettingViewButton setImage:[UIImage imageNamed:@"icon-more"] forState:UIControlStateNormal];
+        _showSettingViewButton.contentMode = UIViewContentModeScaleAspectFit;
         [_showSettingViewButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_showSettingViewButton addTarget:self action:@selector(ShowSettingViewButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         _showSettingViewButton.hidden = YES;
@@ -732,7 +733,7 @@ QIPlayerAuthenticationListener
     CGFloat playerHeight = CGRectGetHeight(frame);
 
    
-    self.showSettingViewButton.frame = CGRectMake(playerWidth - 100, 8, 25, 30);
+    self.showSettingViewButton.frame = CGRectMake(playerWidth - 100, 8, 35, 30);
     self.shootVideoButton.frame = CGRectMake(playerWidth - 60, playerHeight/2-20, 40, 40);
     self.settingView.frame = CGRectMake(playerWidth - 390, 0, 390, playerHeight);
     self.showSpeedViewButton.frame = CGRectMake(playerWidth - 170, 8, 40, 30);
