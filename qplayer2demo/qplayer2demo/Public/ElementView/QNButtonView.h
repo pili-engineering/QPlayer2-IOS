@@ -46,6 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///修改播放按钮的点击状态
 -(void)setPlayButtonState:(BOOL)state;
+///修改静音播放按钮的点击状态
+-(void)setMuteButtonState:(BOOL)state;
 
 ///是否全屏的frame变化
 - (void)changeFrame:(CGRect)frame isFull:(BOOL)isFull;

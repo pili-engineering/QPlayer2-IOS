@@ -216,8 +216,8 @@
     immediatelyPlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
     [immediatelyPlayerView setTitleLabelText:@"清晰度切换" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
     [immediatelyPlayerView addButtonText:@"立即切换" frame:CGRectMake(10, 50, 90, 20) type:UIButtonTypeImmediatelyTrue target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [immediatelyPlayerView addButtonText:@"无缝切换(只使用与点播)" frame:CGRectMake(100, 50, 170, 20) type:UIButtonTypeImmediatelyFalse target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [immediatelyPlayerView addButtonText:@"直播立即点播无缝" frame:CGRectMake(270, 50, 150, 20) type:UIButtonTypeImmediatelyCustom target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [immediatelyPlayerView addButtonText:@"无缝切换(只适用点播)" frame:CGRectMake(100, 50, 160, 20) type:UIButtonTypeImmediatelyFalse target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [immediatelyPlayerView addButtonText:@"直播立即点播无缝" frame:CGRectMake(260, 50, 150, 20) type:UIButtonTypeImmediatelyCustom target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
     [immediatelyPlayerView setDefault:UIButtonTypeImmediatelyCustom];
     [self addSubview:immediatelyPlayerView];
 }

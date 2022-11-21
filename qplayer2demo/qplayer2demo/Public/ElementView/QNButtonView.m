@@ -7,7 +7,7 @@
 //
 
 #import "QNButtonView.h"
-@interface QNButtonView()<QIPlayerProgressListener,QIPlayerStateChangeListener>
+@interface QNButtonView()<QIPlayerProgressListener,QIPlayerStateChangeListener,QIPlayerAudioListener>
 
 @property (nonatomic, strong) UILabel *totalDurationLabel;
 @property (nonatomic, strong) UILabel *currentTimeLabel;
@@ -19,6 +19,7 @@
 
 
 @property (nonatomic, strong) UIButton *playButton;
+@property (nonatomic, strong) UIButton *muteButton;
 @property (nonatomic, assign) BOOL shortVideoBool;
 @property (nonatomic, assign) BOOL isBuffingBool;
 @end
@@ -57,8 +58,10 @@
         [self addTotalDurationLabel];
         [self addCurrentTimeLabel];
         [self addPlayButton];
+        [self addMuteButton];
         [self addFullScreenButton];
         [self.player.controlHandler addPlayerProgressChangeListener:self];
+        [self.player.controlHandler addPlayerAudioListener:self];
         [self.player.controlHandler addPlayerStateListener:self];
     }
     return self;
@@ -96,6 +99,15 @@
     return self;
 }
 #pragma mark 添加控件
+-(void)addMuteButton{
+    self.muteButton = [[UIButton alloc] initWithFrame:CGRectMake(playerWidth - 82, 0, 35, 30)];
+    [self.muteButton setImageEdgeInsets:UIEdgeInsetsMake(3, 6, 5, 7)];
+    [self.muteButton setImage:[[UIImage imageNamed:@"pl_notMute"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [self.muteButton setImage:[[UIImage imageNamed:@"pl_mute"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateSelected];
+    self.muteButton.tintColor = [UIColor whiteColor];
+    [self.muteButton addTarget:self action:@selector(muteButtonClick:) forControlEvents:UIControlEventTouchDown];
+    [self addSubview:self.muteButton];
+}
 -(void)addTotalDurationLabel{
     if (_shortVideoBool) {
         
@@ -103,7 +115,7 @@
     }
     else{
         
-        self.totalDurationLabel = [[UILabel alloc] initWithFrame:CGRectMake(playerWidth - 122, 3, 70, 20)];
+        self.totalDurationLabel = [[UILabel alloc] initWithFrame:CGRectMake(playerWidth - 152, 3, 70, 20)];
     }
     self.totalDurationLabel.font = PL_FONT_LIGHT(14);
     self.totalDurationLabel.textColor = [UIColor whiteColor];
@@ -154,7 +166,7 @@
         }
         else{
             
-            _prograssSlider = [[UISlider alloc] initWithFrame:CGRectMake(76, 3, playerWidth - 170, 20)];
+            _prograssSlider = [[UISlider alloc] initWithFrame:CGRectMake(76, 3, playerWidth - 185, 20)];
         }
         _prograssSlider.enabled = !_isLiving;
         [_prograssSlider setThumbImage:[UIImage imageNamed:@"pl_round.png"]forState:UIControlStateNormal];
@@ -178,7 +190,9 @@
 }
 
 #pragma mark ListenerDelegate
-
+-(void)onMuteChanged:(QPlayerContext *)context isMute:(BOOL)isMute{
+    self.muteButton.selected = isMute;
+}
 - (void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
     if(state == QPLAYER_STATE_PLAYING){
         self.isNeedUpdatePrograss = true;
@@ -239,9 +253,10 @@
 - (void)changeFrame:(CGRect)frame isFull:(BOOL)isFull{
     playerWidth = CGRectGetWidth(frame);
     playerHeight = CGRectGetHeight(frame);
-    self.totalDurationLabel.frame = CGRectMake(playerWidth - 122, 3, 70, 20);
+    self.totalDurationLabel.frame = CGRectMake(playerWidth - 162, 3, 70, 20);
     self.fullScreenButton.frame = CGRectMake(playerWidth - 52, 0, 35, 30);
-    self.prograssSlider.frame = CGRectMake(76, 3, playerWidth - 200, 20);
+    self.muteButton.frame = CGRectMake(playerWidth - 87, 0, 35, 30);
+    self.prograssSlider.frame = CGRectMake(76, 3, playerWidth - 215, 20);
 }
 
 -(void)setFullButtonState:(BOOL)state{
@@ -251,6 +266,10 @@
     self.playButton.selected = state;
 }
 
+///修改静音播放按钮的点击状态
+-(void)setMuteButtonState:(BOOL)state{
+    self.muteButton.selected = state;
+}
 
 -(BOOL)getFullButtonState{
     return self.fullScreenButton.isSelected;
@@ -280,6 +299,10 @@
 }
 
 #pragma mark 按钮点击事件
+-(void)muteButtonClick:(UIButton *)sender{
+    sender.selected = !sender.selected;
+    [self.player.controlHandler setMute:sender.selected];
+}
 - (void)changeScreenSize:(UIButton *)button {
     button.selected = !button.selected;
     changeScreenSizeCallback(button.isSelected);

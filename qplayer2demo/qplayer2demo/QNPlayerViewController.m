@@ -38,7 +38,8 @@ QIPlayerSpeedListener,
 QIPlayerSEIDataListener,
 QIPlayerAuthenticationListener,
 QIPlayerRenderListener,
-QIPlayerShootVideoListener
+QIPlayerShootVideoListener,
+QIPlayerVideoFrameSizeChangeListener
 >
 
 /** 播放器蒙版视图 **/
@@ -246,7 +247,14 @@ QIPlayerShootVideoListener
     [self.myPlayerView.controlHandler addPlayerSEIDataListener:self];
     [self.myPlayerView.renderHandler addPlayerRenderListener:self];
     [self.myPlayerView.controlHandler addPlayerShootVideoListener:self];
+    [self.myPlayerView.controlHandler addPlayerVideoFrameSizeChangeListener:self];
+
     
+}
+
+-(void)onVideoFrameSizeChanged:(QPlayerContext *)context width:(int)width height:(int)height{
+    
+    [_toastView addText:[NSString stringWithFormat:@"视频宽高 width:%d height:%d",width,height]];
 }
 -(void)onFirstFrameRendered:(QPlayerContext *)context elapsedTime:(NSInteger)elapsedTime{
     self.firstVideoTime = elapsedTime;
@@ -281,7 +289,7 @@ QIPlayerShootVideoListener
         self.isPlaying = YES;
         [_maskView setPlayButtonState:YES];
         [self showHintViewWithText:@"开始播放器"];
-        
+        [_toastView addText:[NSString stringWithFormat:@"isMute :%d",self.myPlayerView.controlHandler.isMute]];
         [_toastView addText:@"播放中"];
         
     } else if (state == QPLAYER_STATE_PAUSED_RENDER) {
@@ -738,21 +746,24 @@ QIPlayerShootVideoListener
     if ([[QDataHandle shareInstance] getAuthenticationState]) {
         [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
     }
-    BOOL isAR = false;
-    for (QStreamElement *stream in model.streamElements) {
-        if(stream.renderType == QPLAYER_RENDER_TYPE_PANORAMA_EQUIRECT_ANGULAR){
-            isAR = true;
-            break;
-        }
-    }
-    if(isAR == true){
-        [self.maskView gyroscopeStart];
-    }
-    else{
-        [self.maskView gyroscopeEnd];
-    }
+    
+    //开启此处即开启VR的陀螺仪，未验证，可能存在未知bug
+//    BOOL isVR = false;
+//    for (QStreamElement *stream in model.streamElements) {
+//        if(stream.renderType == QPLAYER_RENDER_TYPE_PANORAMA_EQUIRECT_ANGULAR){
+//            isVR = true;
+//            break;
+//        }
+//    }
+//    if(isVR == true){
+//        [self.maskView gyroscopeStart];
+//    }
+//    else{
+//        [self.maskView gyroscopeEnd];
+//    }
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     [_maskView setPlayButtonState:NO];
+    [_maskView setMuteButtonState:NO];
     [self judgeWeatherIsLiveWithURL:selectedURL];
     
 }

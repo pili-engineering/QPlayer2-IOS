@@ -594,6 +594,11 @@ QIPlayerAuthenticationListener
 -(void)setPlayButtonState:(BOOL)state{
     [self.buttonView setPlayButtonState:state];
 }
+///修改静音播放按钮的点击状态
+-(void)setMuteButtonState:(BOOL)state{
+    
+    [self.buttonView setMuteButtonState:state];
+}
 
 -(QPlayerDecoder)getDecoderType{
     return self.decoderType;

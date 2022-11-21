@@ -83,6 +83,8 @@
  修改播放按钮的状态
  */
 -(void)setPlayButtonState:(BOOL)state;
+///修改静音播放按钮的点击状态
+-(void)setMuteButtonState:(BOOL)state;
 /**
  开启陀螺仪
  */
