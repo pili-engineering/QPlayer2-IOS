@@ -70,6 +70,8 @@
 		
 		<option value="//api/name/fps">fps</option>
 		
+		<option value="//api/name/isMute">isMute</option>
+		
 		<option value="//api/name/playerSpeed">playerSpeed</option>
 		
 	</optgroup>
@@ -79,6 +81,8 @@
 
 	
 	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/addPlayerAudioListener:">- addPlayerAudioListener:</option>
 		
 		<option value="//api/name/addPlayerAuthenticationListener:">- addPlayerAuthenticationListener:</option>
 		
@@ -102,11 +106,15 @@
 		
 		<option value="//api/name/addPlayerSEIDataListener:">- addPlayerSEIDataListener:</option>
 		
+		<option value="//api/name/addPlayerShootVideoListener:">- addPlayerShootVideoListener:</option>
+		
 		<option value="//api/name/addPlayerSpeedChangeListener:">- addPlayerSpeedChangeListener:</option>
 		
 		<option value="//api/name/addPlayerStateListener:">- addPlayerStateListener:</option>
 		
 		<option value="//api/name/addPlayerVideoDecodeTypeListener:">- addPlayerVideoDecodeTypeListener:</option>
+		
+		<option value="//api/name/addPlayerVideoFrameSizeChangeListener:">- addPlayerVideoFrameSizeChangeListener:</option>
 		
 		<option value="//api/name/forceAuthenticationFromNetwork">- forceAuthenticationFromNetwork</option>
 		
@@ -118,8 +126,6 @@
 		
 		<option value="//api/name/init">- init</option>
 		
-		<option value="//api/name/initWithContext:">- initWithContext:</option>
-		
 		<option value="//api/name/new">- new</option>
 		
 		<option value="//api/name/pauseRender">- pauseRender</option>
@@ -129,6 +135,8 @@
 		<option value="//api/name/playMediaModel:startPos:">- playMediaModel:startPos:</option>
 		
 		<option value="//api/name/playerRelease">- playerRelease</option>
+		
+		<option value="//api/name/removeAllPlayerAudioListener">- removeAllPlayerAudioListener</option>
 		
 		<option value="//api/name/removeAllPlayerAuthenticationListener">- removeAllPlayerAuthenticationListener</option>
 		
@@ -152,15 +160,21 @@
 		
 		<option value="//api/name/removeAllPlayerSEIDataListener">- removeAllPlayerSEIDataListener</option>
 		
+		<option value="//api/name/removeAllPlayerShootVideoListener">- removeAllPlayerShootVideoListener</option>
+		
 		<option value="//api/name/removeAllPlayerSpeedChangeListener">- removeAllPlayerSpeedChangeListener</option>
 		
 		<option value="//api/name/removeAllPlayerStateListener">- removeAllPlayerStateListener</option>
 		
 		<option value="//api/name/removeAllPlayerVideoDecodeTypeListener">- removeAllPlayerVideoDecodeTypeListener</option>
 		
+		<option value="//api/name/removeAllPlayerVideoFrameSizeChangeListener">- removeAllPlayerVideoFrameSizeChangeListener</option>
+		
 		<option value="//api/name/removePlayeSpeedChangeListener:">- removePlayeSpeedChangeListener:</option>
 		
 		<option value="//api/name/removePlayeVideoDecodeTypeListener:">- removePlayeVideoDecodeTypeListener:</option>
+		
+		<option value="//api/name/removePlayerAudioListener:">- removePlayerAudioListener:</option>
 		
 		<option value="//api/name/removePlayerAuthenticationListener:">- removePlayerAuthenticationListener:</option>
 		
@@ -184,7 +198,11 @@
 		
 		<option value="//api/name/removePlayerSEIDataListener:">- removePlayerSEIDataListener:</option>
 		
+		<option value="//api/name/removePlayerShootVideoListener:">- removePlayerShootVideoListener:</option>
+		
 		<option value="//api/name/removePlayerStateListener:">- removePlayerStateListener:</option>
+		
+		<option value="//api/name/removePlayerVideoFrameSizeChangeListener:">- removePlayerVideoFrameSizeChangeListener:</option>
 		
 		<option value="//api/name/resumeRender">- resumeRender</option>
 		
@@ -194,6 +212,8 @@
 		
 		<option value="//api/name/setDecoderType:">- setDecoderType:</option>
 		
+		<option value="//api/name/setMute:">- setMute:</option>
+		
 		<option value="//api/name/setSEIEnable:">- setSEIEnable:</option>
 		
 		<option value="//api/name/setSeekMode:">- setSeekMode:</option>
@@ -201,6 +221,8 @@
 		<option value="//api/name/setSpeed:">- setSpeed:</option>
 		
 		<option value="//api/name/setStartAction:">- setStartAction:</option>
+		
+		<option value="//api/name/shootVideo:">- shootVideo:</option>
 		
 		<option value="//api/name/stop">- stop</option>
 		
@@ -624,8 +646,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/initWithContext:" title="initWithContext:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/initWithContext:">&ndash;&nbsp;initWithContext:</a></code>
+	<a name="//api/name/isMute" title="isMute"></a>
+	<h3 class="method-title"><code><a href="#//api/name/isMute">&nbsp;&nbsp;isMute</a></code>
 </h3>
 
 	<div class="method-info">
@@ -635,12 +657,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>初始化handler</p>
+				<p>是否静音</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (instancetype)initWithContext:(QPlayerContext *)<em>context</em></code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) BOOL isMute</code></div>
 
 		    
 			
@@ -652,7 +674,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>初始化handler</p>
+				<p>是否静音</p>
 			</div>
 			
 
@@ -1145,6 +1167,64 @@
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/shootVideo:" title="shootVideo:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/shootVideo:">&ndash;&nbsp;shootVideo:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>截图</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)shootVideo:(BOOL)<em>source</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>source</code></th>
+						<td><p>true 视频原图  false 经过渲染的视频图</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>截图</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/setDecoderType:" title="setDecoderType:"></a>
 	<h3 class="method-title"><code><a href="#//api/name/setDecoderType:">&ndash;&nbsp;setDecoderType:</a></code>
 </h3>
@@ -1418,6 +1498,64 @@
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
 				<p>切换视频当前进度</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/setMute:" title="setMute:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/setMute:">&ndash;&nbsp;setMute:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>设置静音状态</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)setMute:(BOOL)<em>isMute</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>isMute</code></th>
+						<td><p>true 静音播放 false 非静音播放。默认为非静音播放</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>设置静音状态</p>
 			</div>
 			
 
@@ -4241,6 +4379,537 @@
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/addPlayerShootVideoListener:" title="addPlayerShootVideoListener:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/addPlayerShootVideoListener:">&ndash;&nbsp;addPlayerShootVideoListener:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>添加播放器截图监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)addPlayerShootVideoListener:(id&lt;QIPlayerShootVideoListener&gt;)<em>listener</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>listener</code></th>
+						<td><p>播放器截图监听</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>添加播放器截图监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/removePlayerShootVideoListener:" title="removePlayerShootVideoListener:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removePlayerShootVideoListener:">&ndash;&nbsp;removePlayerShootVideoListener:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>删除播放器截图监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)removePlayerShootVideoListener:(id&lt;QIPlayerShootVideoListener&gt;)<em>listener</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>listener</code></th>
+						<td><p>播放器截图监听</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>删除播放器截图监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/removeAllPlayerShootVideoListener" title="removeAllPlayerShootVideoListener"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removeAllPlayerShootVideoListener">&ndash;&nbsp;removeAllPlayerShootVideoListener</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>删除所有播放器截图监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)removeAllPlayerShootVideoListener</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>删除所有播放器截图监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/addPlayerAudioListener:" title="addPlayerAudioListener:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/addPlayerAudioListener:">&ndash;&nbsp;addPlayerAudioListener:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>添加播放器静音播放监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)addPlayerAudioListener:(id&lt;QIPlayerAudioListener&gt;)<em>listener</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>listener</code></th>
+						<td><p>播放器静音播放监听</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>添加播放器静音播放监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/removePlayerAudioListener:" title="removePlayerAudioListener:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removePlayerAudioListener:">&ndash;&nbsp;removePlayerAudioListener:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>删除播放器静音播放监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)removePlayerAudioListener:(id&lt;QIPlayerAudioListener&gt;)<em>listener</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>listener</code></th>
+						<td><p>播放器静音播放监听</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>删除播放器静音播放监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/removeAllPlayerAudioListener" title="removeAllPlayerAudioListener"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removeAllPlayerAudioListener">&ndash;&nbsp;removeAllPlayerAudioListener</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>删除所有播放器静音播放监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)removeAllPlayerAudioListener</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>删除所有播放器静音播放监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/addPlayerVideoFrameSizeChangeListener:" title="addPlayerVideoFrameSizeChangeListener:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/addPlayerVideoFrameSizeChangeListener:">&ndash;&nbsp;addPlayerVideoFrameSizeChangeListener:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>添加推流端视频长宽变化监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)addPlayerVideoFrameSizeChangeListener:(id&lt;QIPlayerVideoFrameSizeChangeListener&gt;)<em>listener</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>listener</code></th>
+						<td><p>推流端视频长宽变化监听</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>添加推流端视频长宽变化监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/removePlayerVideoFrameSizeChangeListener:" title="removePlayerVideoFrameSizeChangeListener:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removePlayerVideoFrameSizeChangeListener:">&ndash;&nbsp;removePlayerVideoFrameSizeChangeListener:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>删除推流端视频长宽变化监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)removePlayerVideoFrameSizeChangeListener:(id&lt;QIPlayerVideoFrameSizeChangeListener&gt;)<em>listener</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>listener</code></th>
+						<td><p>推流端视频长宽变化监听</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>删除推流端视频长宽变化监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/removeAllPlayerVideoFrameSizeChangeListener" title="removeAllPlayerVideoFrameSizeChangeListener"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removeAllPlayerVideoFrameSizeChangeListener">&ndash;&nbsp;removeAllPlayerVideoFrameSizeChangeListener</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>删除所有推流端视频长宽变化监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)removeAllPlayerVideoFrameSizeChangeListener</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>删除所有推流端视频长宽变化监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/playerRelease" title="playerRelease"></a>
 	<h3 class="method-title"><code><a href="#//api/name/playerRelease">&ndash;&nbsp;playerRelease</a></code>
 </h3>
@@ -4301,7 +4970,7 @@
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2022 七牛云. All rights reserved. Updated: 2022-10-13</p>
+						<p class="copyright">Copyright &copy; 2022 七牛云. All rights reserved. Updated: 2022-11-23</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
