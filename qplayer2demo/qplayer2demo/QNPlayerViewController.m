@@ -890,7 +890,6 @@ QIPlayerVideoFrameSizeChangeListener
         }
         tempIndex ++;
     }
-    NSArray<NSString*> *segmentedArray = [[NSArray alloc]initWithObjects:@"1080p",@"720p",@"480p",@"360p",nil];
     BOOL switchQualityBool;
     if(self.immediatelyType == 0){
         
@@ -908,8 +907,8 @@ QIPlayerVideoFrameSizeChangeListener
         [_toastView addText:@"不可重复切换"];
     }else{
         _UpQualityIndex = index;
-
-        [_toastView addText:[NSString stringWithFormat:@"即将切换为：%@",segmentedArray[index]]];
+        
+        [_toastView addText:[NSString stringWithFormat:@"即将切换为：%d p",model.streamElements[index].quality]];
     }
 }
 
