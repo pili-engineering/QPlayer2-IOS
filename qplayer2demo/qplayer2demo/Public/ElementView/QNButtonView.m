@@ -135,7 +135,7 @@
     
 }
 -(void)addCurrentTimeLabel{
-    self.currentTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(36, 3, 40, 20)];
+    self.currentTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(36, 3, 55, 20)];
     self.currentTimeLabel.font = PL_FONT_LIGHT(14);
     self.currentTimeLabel.textColor = [UIColor whiteColor];
     self.currentTimeLabel.textAlignment = NSTextAlignmentLeft;
@@ -230,7 +230,13 @@
                 self.prograssSlider.value = self.totalDuration;
                 float minutes = totalSeconds / 60;
                 int seconds = totalSeconds % 60;
-                self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
+                if(minutes>=60){
+                    
+                    self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d",(int)minutes/60, (int)minutes%60, seconds];
+                }else{
+                    
+                    self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
+                }
                 
             }
         } else{
@@ -240,7 +246,12 @@
             
             minutes = currentSeconds / 60;
             seconds = currentSeconds % 60;
-            self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
+            if(minutes>=60){
+                self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d",(int)minutes/60, (int)minutes%60, seconds];
+            }else{
+                
+                self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
+            }
             self.prograssSlider.value = currentSeconds;
         }
         
@@ -352,7 +363,12 @@
         
         minutes = (int)slider.value / 60;
         seconds = (int)slider.value % 60;
-        self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
+        if(minutes>=60){
+            self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d",(int)minutes/60, (int)minutes%60, seconds];
+        }else{
+            
+            self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
+        }
         NSLog(@"seek --- %d", (int)slider.value);
         
     }
@@ -380,7 +396,12 @@
         
         minutes = (int)slider.value / 60;
         seconds = (int)slider.value % 60;
-        self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
+        if(minutes>=60){
+            self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d",(int)minutes/60, (int)minutes%60, seconds];
+        }else{
+            
+            self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
+        }
         NSLog(@"seek --- %d", (int)slider.value * 1000);
     }
 
