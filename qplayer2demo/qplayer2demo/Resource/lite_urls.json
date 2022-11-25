@@ -5,39 +5,9 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/qiniu-1080p.mp4",
+                "url": "http://demo-videos.qnsdk.com/shortvideo/nike.mp4",
                 "quality": 1080,
                 "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            },
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/qiniu-720p.mp4",
-                "quality": 720,
-                "isSelected": 0,
-                "backupUrl": "",
-                "referer": "",
-                 
-            },
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/qiniu-480p.mp4",
-                "quality": 480,
-                "isSelected": 0,
-                "backupUrl": "",
-                "referer": "",
-                 
-            },
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/qiniu-360p.mp4",
-                "quality": 270,
-                "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
                  
@@ -52,7 +22,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://oalnjsthd.bkt.clouddn.com/new.mp4",
+                "url": "http://demo-videos.qnsdk.com/shortvideo/super.mp4",
                 "quality": 1080,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -68,7 +38,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/shortvideo/nike.mp4",
+                "url": "http://demo-videos.qnsdk.com/shortvideo/兔子.mp4",
                 "quality": 960,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -84,7 +54,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/bbk-bt709.mp4",
+                "url": "http://demo-videos.qnsdk.com/shortvideo/喷泉.mp4",
                 "quality": 720,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -100,7 +70,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/bbk-H265-50fps.mp4",
+                "url": "http://demo-videos.qnsdk.com/shortvideo/桃花.mp4",
                 "quality": 0,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -116,7 +86,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/Sync-Footage-V1-H264.mp4",
+                "url": "http://demo-videos.qnsdk.com/shortvideo/特效.mp4",
                 "quality": 1080,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -132,7 +102,103 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "https://img.qunliao.info:443/4oEGX68t_9505974551.mp4",
+                "url": "http://demo-videos.qnsdk.com/shortvideo/狗.mp4",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+         
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://demo-videos.qnsdk.com/shortvideo/猫.mp4",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+         
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://demo-videos.qnsdk.com/shortvideo/翻跟斗.mp4",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+         
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://demo-videos.qnsdk.com/shortvideo/迪斯尼.mp4",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+         
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://demo-videos.qnsdk.com/bbk-bt709.mp4",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+         
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://demo-videos.qnsdk.com/Sync-Footage-V1-H264.mp4",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+         
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://demo-videos.qnsdk.com/bbk-H265-50fps.mp4",
                 "quality": 360,
                 "isSelected": 1,
                 "backupUrl": "",
