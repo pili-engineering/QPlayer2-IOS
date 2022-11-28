@@ -429,18 +429,8 @@ QIPlayerVideoFrameSizeChangeListener
     self.immediatelyType = immediately;
 }
 -(void)shootVideoButtonClick{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"截图模式" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *trueAction = [UIAlertAction actionWithTitle:@"视频原图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        [self.myPlayerView.controlHandler shootVideo:YES];
-    }];
-    UIAlertAction *falseAction = [UIAlertAction actionWithTitle:@"渲染后的图" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-        [self.myPlayerView.controlHandler shootVideo:NO];
-    }];
-    [alert addAction:trueAction];
-    [alert addAction:falseAction];
-    [self presentViewController:alert animated:YES completion:nil];
+    [self.myPlayerView.controlHandler shootVideo];
+
 }
 - (void)playerMaskView:(QNPlayerMaskView *)playerMaskView didGetBack:(UIButton *)backButton {
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
