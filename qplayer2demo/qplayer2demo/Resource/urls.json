@@ -596,6 +596,22 @@
     },
     {
           
+        "isLive": 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 2,
+                "url": "http://pili-hdl.qnsdk.com/sdk-live/videoonly.flv",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+          
         "isLive": 0,
         "streamElements": [
             {
