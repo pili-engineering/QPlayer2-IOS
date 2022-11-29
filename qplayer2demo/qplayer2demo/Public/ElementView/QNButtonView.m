@@ -102,9 +102,10 @@
 -(void)addMuteButton{
     self.muteButton = [[UIButton alloc] initWithFrame:CGRectMake(playerWidth - 82, 0, 35, 30)];
     [self.muteButton setImageEdgeInsets:UIEdgeInsetsMake(3, 6, 5, 7)];
-    [self.muteButton setImage:[[UIImage imageNamed:@"pl_notMute"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [self.muteButton setImage:[[UIImage imageNamed:@"pl_mute"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateSelected];
+    [self.muteButton setImage:[[UIImage imageNamed:@"pl_notMute"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateSelected];
+    [self.muteButton setImage:[[UIImage imageNamed:@"pl_mute"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     self.muteButton.tintColor = [UIColor whiteColor];
+    self.muteButton.selected = YES;
     [self.muteButton addTarget:self action:@selector(muteButtonClick:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:self.muteButton];
 }
@@ -191,7 +192,7 @@
 
 #pragma mark ListenerDelegate
 -(void)onMuteChanged:(QPlayerContext *)context isMute:(BOOL)isMute{
-    self.muteButton.selected = isMute;
+    self.muteButton.selected = !isMute;
 }
 - (void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
     if(state == QPLAYER_STATE_PLAYING){
@@ -311,7 +312,7 @@
 
 #pragma mark 按钮点击事件
 -(void)muteButtonClick:(UIButton *)sender{
-    sender.selected = !sender.selected;
+//    sender.selected = !sender.selected;
     [self.player.controlHandler setMute:sender.selected];
 }
 - (void)changeScreenSize:(UIButton *)button {

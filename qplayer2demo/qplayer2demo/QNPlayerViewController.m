@@ -752,7 +752,6 @@ QIPlayerVideoFrameSizeChangeListener
 //    }
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     [_maskView setPlayButtonState:NO];
-    [_maskView setMuteButtonState:NO];
     [self judgeWeatherIsLiveWithURL:selectedURL];
     
 }
