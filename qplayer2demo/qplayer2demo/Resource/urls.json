@@ -689,6 +689,22 @@
                  
             }
         ]
+    },
+    {
+          
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "https://playback-vpaas.cloudlinks.cn/vas/playback/m3u8?ownerid=9223372043328869169&deviceid=7391983055&startTime=1669959976&endTime=1669959984&sign=18aca951c5b70194ba51f31e5c662949c3cb0d88&port=47807",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
     }
     
 ]

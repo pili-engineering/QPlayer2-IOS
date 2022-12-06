@@ -12,6 +12,7 @@
 @property (nonatomic, strong) UILabel *totalDurationLabel;
 @property (nonatomic, strong) UILabel *currentTimeLabel;
 @property (nonatomic, assign) long long totalDuration;
+@property (nonatomic, assign) long long startDuration;
 @property (nonatomic, strong) UIButton *fullScreenButton;
 @property (nonatomic, strong) UISlider *prograssSlider;
 @property (nonatomic, assign) BOOL isSeeking;
@@ -40,6 +41,7 @@
         self.isNeedUpdatePrograss = false;
         _shortVideoBool = false;
         self.isSeeking = NO;
+        self.startDuration = -1;
         self.isBuffingBool = NO;
         self.isLiving = isLiving;
         myPlayerFrame = playerFrame;
@@ -63,6 +65,7 @@
         [self.player.controlHandler addPlayerProgressChangeListener:self];
         [self.player.controlHandler addPlayerAudioListener:self];
         [self.player.controlHandler addPlayerStateListener:self];
+        
     }
     return self;
 }
@@ -200,12 +203,18 @@
     }else{
         self.isNeedUpdatePrograss = false;
     }
+    if(state == QPLAYER_STATE_PREPARE || state == QPLAYER_STATE_MEDIA_ITEM_PREPARE){
+        self.startDuration = -1;
+    }
 }
 
 -(void)onProgressChanged:(QPlayerContext *)context progress:(NSInteger)progress duration:(NSInteger)duration{
     if(self.isNeedUpdatePrograss){
-        long long currentSeconds = progress/1000;
-        float currentSecondsDouble = progress/1000.0;
+        if(self.startDuration == -1){
+            self.startDuration = progress;
+        }
+        long long currentSeconds = (progress-self.startDuration)/1000;
+        float currentSecondsDouble = (progress-self.startDuration)/1000.0;
         long long totalSeconds = self.player.controlHandler.duration/1000;
 
         if (self.totalDuration != duration/1000) {
@@ -359,7 +368,7 @@
         
     }else{
         
-        [self.player.controlHandler seek:(int)slider.value * 1000];
+        [self.player.controlHandler seek:(int)((slider.value) * 1000 + self.startDuration)];
         self.prograssSlider.value = slider.value;
         
         minutes = (int)slider.value / 60;
@@ -391,8 +400,7 @@
     if (_isLiving) {
         
     }else{
-        
-        [self.player.controlHandler seek:(int)slider.value * 1000];
+        [self.player.controlHandler seek:(int)((slider.value) * 1000 + self.startDuration)];
         self.prograssSlider.value = slider.value;
         
         minutes = (int)slider.value / 60;
