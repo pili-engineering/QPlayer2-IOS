@@ -39,7 +39,8 @@ QIPlayerSEIDataListener,
 QIPlayerAuthenticationListener,
 QIPlayerRenderListener,
 QIPlayerShootVideoListener,
-QIPlayerVideoFrameSizeChangeListener
+QIPlayerVideoFrameSizeChangeListener,
+QIPlayerSeekListener
 >
 
 /** 播放器蒙版视图 **/
@@ -248,10 +249,15 @@ QIPlayerVideoFrameSizeChangeListener
     [self.myPlayerView.renderHandler addPlayerRenderListener:self];
     [self.myPlayerView.controlHandler addPlayerShootVideoListener:self];
     [self.myPlayerView.controlHandler addPlayerVideoFrameSizeChangeListener:self];
-
+    [self.myPlayerView.controlHandler addPlayerSeekListener:self];
     
 }
-
+-(void)onSeekFailed:(QPlayerContext *)context{
+    [_toastView addText:@"seek失败"];
+}
+-(void)onSeekSuccess:(QPlayerContext *)context{
+    [_toastView addText:@"seek成功"];
+}
 -(void)onVideoFrameSizeChanged:(QPlayerContext *)context width:(int)width height:(int)height{
     
     [_toastView addText:[NSString stringWithFormat:@"视频宽高 width:%d height:%d",width,height]];

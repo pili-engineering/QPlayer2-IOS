@@ -7,12 +7,17 @@
 //
 
 #import "QNButtonView.h"
-@interface QNButtonView()<QIPlayerProgressListener,QIPlayerStateChangeListener,QIPlayerAudioListener>
+#import "QDataHandle.h"
+@interface QNButtonView()
+<
+QIPlayerProgressListener,
+QIPlayerStateChangeListener,
+QIPlayerAudioListener
+>
 
 @property (nonatomic, strong) UILabel *totalDurationLabel;
 @property (nonatomic, strong) UILabel *currentTimeLabel;
 @property (nonatomic, assign) long long totalDuration;
-@property (nonatomic, assign) long long startDuration;
 @property (nonatomic, strong) UIButton *fullScreenButton;
 @property (nonatomic, strong) UISlider *prograssSlider;
 @property (nonatomic, assign) BOOL isSeeking;
@@ -41,7 +46,6 @@
         self.isNeedUpdatePrograss = false;
         _shortVideoBool = false;
         self.isSeeking = NO;
-        self.startDuration = -1;
         self.isBuffingBool = NO;
         self.isLiving = isLiving;
         myPlayerFrame = playerFrame;
@@ -203,20 +207,17 @@
     }else{
         self.isNeedUpdatePrograss = false;
     }
-    if(state == QPLAYER_STATE_PREPARE || state == QPLAYER_STATE_MEDIA_ITEM_PREPARE){
-        self.startDuration = -1;
-    }
 }
 
 -(void)onProgressChanged:(QPlayerContext *)context progress:(NSInteger)progress duration:(NSInteger)duration{
     if(self.isNeedUpdatePrograss){
-        if(self.startDuration == -1){
-            self.startDuration = progress;
-        }
-        long long currentSeconds = (progress-self.startDuration)/1000;
-        float currentSecondsDouble = (progress-self.startDuration)/1000.0;
+
+ 
+        long long currentSeconds = progress/1000;
+        float currentSecondsDouble = progress/1000.0;
         long long totalSeconds = self.player.controlHandler.duration/1000;
 
+        
         if (self.totalDuration != duration/1000) {
             if (self.isLiving) {
                 self.totalDuration = 0;
@@ -235,7 +236,7 @@
             self.prograssSlider.maximumValue = _totalDuration;
         }
         
-        if (self.totalDuration != 0 && (currentSeconds >= totalSeconds || fabsf(currentSecondsDouble - totalSeconds) <=0.5)) {
+        if (self.totalDuration != 0 && (currentSecondsDouble >= duration/1000.0)) {
             if (!_isLiving) {
                 self.prograssSlider.value = self.totalDuration;
                 float minutes = totalSeconds / 60;
@@ -262,7 +263,7 @@
                 
                 self.currentTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)minutes, seconds];
             }
-            self.prograssSlider.value = currentSeconds;
+            self.prograssSlider.value = currentSecondsDouble;
         }
         
     }
@@ -332,7 +333,9 @@
     button.selected = !button.selected;
 
     myCallback(button.isSelected);
-    
+    if(self.player.controlHandler.currentPlayerState == QPLAYER_STATE_COMPLETED){
+        return;
+    }
     if (button.selected) {
         [self.player.controlHandler resumeRender];
 
@@ -368,7 +371,7 @@
         
     }else{
         
-        [self.player.controlHandler seek:(int)((slider.value) * 1000 + self.startDuration)];
+        [self.player.controlHandler seek:(int)((slider.value) * 1000)];
         self.prograssSlider.value = slider.value;
         
         minutes = (int)slider.value / 60;
@@ -400,7 +403,7 @@
     if (_isLiving) {
         
     }else{
-        [self.player.controlHandler seek:(int)((slider.value) * 1000 + self.startDuration)];
+        [self.player.controlHandler seek:(int)((slider.value) * 1000)];
         self.prograssSlider.value = slider.value;
         
         minutes = (int)slider.value / 60;
