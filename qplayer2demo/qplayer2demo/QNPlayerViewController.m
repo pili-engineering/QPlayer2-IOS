@@ -37,7 +37,10 @@ QIPlayerQualityListener,
 QIPlayerSpeedListener,
 QIPlayerSEIDataListener,
 QIPlayerAuthenticationListener,
-QIPlayerRenderListener
+QIPlayerRenderListener,
+QIPlayerShootVideoListener,
+QIPlayerVideoFrameSizeChangeListener,
+QIPlayerSeekListener
 >
 
 /** 播放器蒙版视图 **/
@@ -55,6 +58,8 @@ QIPlayerRenderListener
 @property (nonatomic, assign) BOOL isPull;
 
 @property (nonatomic, copy) NSString *playerLogFileName;
+
+@property (nonatomic) int immediatelyType;
 /** 无可显示 URL 的提示 **/
 @property (nonatomic, strong) UILabel *hintLabel;
 
@@ -100,7 +105,6 @@ QIPlayerRenderListener
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-
     if (!self.scanClick) {
         self.toastView = nil;
         [_playerModels removeAllObjects];
@@ -148,8 +152,9 @@ QIPlayerRenderListener
     _playerModels = [NSMutableArray array];
    
     for (NSDictionary *dic in urlArray) {
-        QMediaModel *modle = [[QMediaModel alloc] init];
-        [modle setValuesForKeysWithDictionary:dic];
+        BOOL islive =  [[dic valueForKey:@"isLive"] intValue]==0? NO:YES;
+        QMediaModelBuilder *modleBuilder = [[QMediaModelBuilder alloc] initWithIsLive:islive];
+//        [modle setValuesForKeysWithDictionary:dic];
             
         NSMutableArray <QStreamElement*> *streams = [NSMutableArray array];
         for (NSDictionary *elDic in dic[@"streamElements"]) {
@@ -157,9 +162,9 @@ QIPlayerRenderListener
             [subModle setValuesForKeysWithDictionary:elDic];
             [streams addObject:subModle];
         }
-        
-        modle.streamElements = streams;
-        [_playerModels addObject:modle];
+        [modleBuilder addStreamElements:streams];
+        QMediaModel *model = [modleBuilder build];
+        [_playerModels addObject:model];
         
     }
 
@@ -191,7 +196,6 @@ QIPlayerRenderListener
     [self playerContextAllCallBack];
     
     
-    
 }
 
 #pragma mark - 初始化 PLPlayer
@@ -215,16 +219,10 @@ QIPlayerRenderListener
     
     NSString *documentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 
-//    QPlayerContext *player =  [[QPlayerContext alloc]initPlayerAPPVersion:nil localStorageDir:documentsDir logLevel:LOG_VERBOSE];
-//    self.playerContext = player;
-//    _myRenderView = [[RenderView alloc]initWithFrame:CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT)];
-//    [_myRenderView attachPlayerContext:self.playerContext];
-//    [self.view addSubview:_myRenderView];
     self.myPlayerView = [[QPlayerView alloc]initWithFrame:CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
     [self.view addSubview:self.myPlayerView];
 //    [self.playerContext.controlHandler forceAuthenticationFromNetwork];
     [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
-
     for (QNClassModel* model in configs) {
         for (PLConfigureModel* configModel in model.classValue) {
             if ([model.classKey isEqualToString:@"PLPlayerOption"]) {
@@ -232,12 +230,9 @@ QIPlayerRenderListener
             }
         }
     }
-    QMediaModel *model = [[QMediaModel alloc] init];
-    model.streamElements = _playerModels.firstObject.streamElements;
-    model.isLive = _playerModels.firstObject.isLive;
-//    [self.playerContext.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
-    [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
+    QMediaModel *model = _playerModels.firstObject;
 
+    [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
 
 }
 
@@ -245,13 +240,6 @@ QIPlayerRenderListener
 
 -(void)playerContextAllCallBack{
 
-//    [self.playerContext.controlHandler addPlayerStateListener:self];
-//    [self.playerContext.controlHandler addPlayerBufferingChangeListener:self];
-//    [self.playerContext.controlHandler addPlayerQualityListener:self];
-//    [self.playerContext.controlHandler addPlayerSpeedChangeListener:self];
-//    [self.playerContext.controlHandler addPlayerAuthenticationListener:self];
-//    [self.playerContext.controlHandler addPlayerSEIDataListener:self];
-//    [self.playerContext.renderHandler addPlayerRenderListener:self];
     [self.myPlayerView.controlHandler addPlayerStateListener:self];
     [self.myPlayerView.controlHandler addPlayerBufferingChangeListener:self];
     [self.myPlayerView.controlHandler addPlayerQualityListener:self];
@@ -259,7 +247,20 @@ QIPlayerRenderListener
     [self.myPlayerView.controlHandler addPlayerAuthenticationListener:self];
     [self.myPlayerView.controlHandler addPlayerSEIDataListener:self];
     [self.myPlayerView.renderHandler addPlayerRenderListener:self];
+    [self.myPlayerView.controlHandler addPlayerShootVideoListener:self];
+    [self.myPlayerView.controlHandler addPlayerVideoFrameSizeChangeListener:self];
+    [self.myPlayerView.controlHandler addPlayerSeekListener:self];
     
+}
+-(void)onSeekFailed:(QPlayerContext *)context{
+    [_toastView addText:@"seek失败"];
+}
+-(void)onSeekSuccess:(QPlayerContext *)context{
+    [_toastView addText:@"seek成功"];
+}
+-(void)onVideoFrameSizeChanged:(QPlayerContext *)context width:(int)width height:(int)height{
+    
+    [_toastView addText:[NSString stringWithFormat:@"视频宽高 width:%d height:%d",width,height]];
 }
 -(void)onFirstFrameRendered:(QPlayerContext *)context elapsedTime:(NSInteger)elapsedTime{
     self.firstVideoTime = elapsedTime;
@@ -294,7 +295,6 @@ QIPlayerRenderListener
         self.isPlaying = YES;
         [_maskView setPlayButtonState:YES];
         [self showHintViewWithText:@"开始播放器"];
-        
         [_toastView addText:@"播放中"];
         
     } else if (state == QPLAYER_STATE_PAUSED_RENDER) {
@@ -327,8 +327,37 @@ QIPlayerRenderListener
     NSString *string = [NSString stringWithFormat:@"清晰度 %ld p",(long)newQuality];
     [self.toastView addText:string];
 }
-
-
+-(void)onShootFailed:(QPlayerContext *)context{
+    [_toastView addText:@"截图失败"];
+}
+-(void)onShootSuccessful:(QPlayerContext *)context imageData:(NSData *)imageData width:(int)width height:(int)height type:(QPlayerShootVideoType)type{
+    if(type == QPLAYER_SHOOT_VIDEO_JPEG){
+        UIImage *image = [UIImage imageWithData:imageData];
+        UIImageView *shootImageView = [[UIImageView alloc]initWithFrame:CGRectMake(50, 50, PL_SCREEN_WIDTH-100, PL_SCREEN_HEIGHT-100)];
+        shootImageView.contentMode = UIViewContentModeScaleAspectFit;
+        [shootImageView setImage:image];
+        shootImageView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:shootImageView];
+        
+        UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+        [_toastView addText:@"截图成功"];
+        [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
+            [shootImageView removeFromSuperview];
+        }];
+    }else{
+        [_toastView addText:@"截图格式为None"];
+    }
+}
+#pragma mark - 保存图片到相册出错回调
+-(void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    if(error == nil){
+        [_toastView addText:@"保存成功"];
+    }
+    else{
+        [_toastView addText: [NSString stringWithFormat:@"保存失败：%@",error]];
+    }
+}
 #pragma mark - 计时器方法
 
 - (void)onTimer:(NSTimer *)timer {
@@ -347,7 +376,6 @@ QIPlayerRenderListener
 
     NSArray *array = @[statusStr,firstVideoTimeStr,renderFPSStr,downSpeedStr];
 
-//    long bufferPositon = self.playerContext.controlHandler.bufferPostion;
     long bufferPositon = self.myPlayerView.controlHandler.bufferPostion;
     NSString *fileUnit = @"ms";
 
@@ -392,28 +420,29 @@ QIPlayerRenderListener
 
 
 - (void)addPlayerMaskView{
-//    self.maskView = [[QNPlayerMaskView alloc] initWithFrame:CGRectMake(0, 0, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT) player:self.playerContext isLiving:NO renderView:self.myRenderView];
     self.maskView = [[QNPlayerMaskView alloc] initWithFrame:CGRectMake(0, 0, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT) player:self.myPlayerView isLiving:NO];
     
-//    self.maskView.center = self.myRenderView.center;
     self.maskView.center = self.myPlayerView.center;
     self.maskView.delegate = self;
     self.maskView.backgroundColor = PL_COLOR_RGB(0, 0, 0, 0.35);
-//    [self.view insertSubview:_maskView aboveSubview:self.myRenderView];
         [self.view insertSubview:_maskView aboveSubview:self.myPlayerView];
 
     [self.maskView.qualitySegMc addTarget:self action:@selector(qualityAction:) forControlEvents:UIControlEventValueChanged];
 }
 
 #pragma mark - QNPlayerMaskView 代理方法
+-(void)setImmediately:(int)immediately{
+    self.immediatelyType = immediately;
+}
+-(void)shootVideoButtonClick{
+    [self.myPlayerView.controlHandler shootVideo];
 
+}
 - (void)playerMaskView:(QNPlayerMaskView *)playerMaskView didGetBack:(UIButton *)backButton {
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
     if (appDelegate.isFlip) {
         [self forceOrientationLandscape:NO];
-        _toastView.frame = CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300);
     } else{
-//        [self.playerContext.controlHandler stop];
         [self.myPlayerView.controlHandler stop];
         [self.durationTimer invalidate];
         self.durationTimer = nil;
@@ -426,20 +455,11 @@ QIPlayerRenderListener
 
 - (void)playerMaskView:(QNPlayerMaskView *)playerMaskView isLandscape:(BOOL)isLandscape {
     [self forceOrientationLandscape:isLandscape];
-    if (isLandscape) {
-        _toastView.frame = CGRectMake(40, PL_SCREEN_HEIGHT-220, 200, 150);
-    }else
-    {
-        _toastView.frame = CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300);
-    }
+
 }
 
 -(void)reOpenPlayPlayerMaskView:(QNPlayerMaskView *)playerMaskView{
-    QMediaModel *model = [[QMediaModel alloc] init];
-    model.streamElements = _playerModels[_selectedIndex].streamElements;
-    model.isLive = _playerModels[_selectedIndex].isLive;
-//
-//    [_playerContext.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
+    QMediaModel *model = _playerModels[_selectedIndex];
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     [_maskView setPlayButtonState:YES];
 
@@ -452,7 +472,6 @@ QIPlayerRenderListener
 
 }
 
-
 - (void)forceOrientationLandscape:(BOOL)isLandscape {
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.isFlip = isLandscape;
@@ -460,28 +479,61 @@ QIPlayerRenderListener
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     }
     [appDelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
-    [UIViewController attemptRotationToDeviceOrientation];
+    
     UIDeviceOrientation ori = [UIDevice currentDevice].orientation;
     _isFlip = appDelegate.isFlip;
-    if (isLandscape) {
-        [self.navigationController setNavigationBarHidden:YES animated:NO];
-        if ([UIDevice currentDevice].orientation != UIInterfaceOrientationLandscapeLeft) {
-            
-            [[UIDevice currentDevice] setValue:@(UIInterfaceOrientationLandscapeRight) forKey:@"orientation"];
+    if(@available(iOS 16.0,*)){
+        [UIViewController attemptRotationToDeviceOrientation];
+        [self setNeedsUpdateOfSupportedInterfaceOrientations];
+        NSArray *array = [[[UIApplication sharedApplication] connectedScenes] allObjects];
+        UIWindowScene *scene = [array firstObject];
+        UIInterfaceOrientationMask orientation = isLandscape ? UIInterfaceOrientationMaskLandscape : UIInterfaceOrientationMaskPortrait;
+        UIWindowSceneGeometryPreferencesIOS *geometryPreferencesIOS = [[UIWindowSceneGeometryPreferencesIOS alloc] initWithInterfaceOrientations:orientation];
+        [scene requestGeometryUpdateWithPreferences:geometryPreferencesIOS errorHandler:^(NSError * _Nonnull error) {
+            NSLog(@"强制%@错误:%@", isLandscape ? @"横屏" : @"竖屏", error);
+        }];
+        
+        if(isLandscape){
+            [self.navigationController setNavigationBarHidden:YES animated:NO];
+            [self.urlListTableView removeFromSuperview];
+            self.myPlayerView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
+            self.maskView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
+            _toastView.frame = CGRectMake(40, scene.screen.bounds.size.width-220, 200, 150);
         }else{
+            [self.navigationController setNavigationBarHidden:NO animated:NO];
+            [self.view addSubview:_urlListTableView];
+            self.myPlayerView.frame = CGRectMake(0, _topSpace, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.height*9/16);
+            self.maskView.frame = CGRectMake(0, _topSpace, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.height*9/16);
             
-            [[UIDevice currentDevice] setValue:@(UIInterfaceOrientationLandscapeLeft) forKey:@"orientation"];
+            _toastView.frame = CGRectMake(0, scene.screen.bounds.size.width-300, 200, 300);
         }
-        [self.urlListTableView removeFromSuperview];
-        self.myPlayerView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT);
-        self.maskView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT);
-    } else {
-        [self.navigationController setNavigationBarHidden:NO animated:NO];
-        [[UIDevice currentDevice] setValue:@(UIDeviceOrientationPortrait) forKey:@"orientation"];
-        [self.view addSubview:_urlListTableView];
-        self.myPlayerView.frame = CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT);
-        self.maskView.frame = CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT);
+        
+    }else{
+        [UIViewController attemptRotationToDeviceOrientation];
+        if (isLandscape) {
+            [self.navigationController setNavigationBarHidden:YES animated:NO];
+            if ([UIDevice currentDevice].orientation != UIInterfaceOrientationLandscapeLeft) {
+                
+                [[UIDevice currentDevice] setValue:@(UIInterfaceOrientationLandscapeRight) forKey:@"orientation"];
+            }else{
+                
+                [[UIDevice currentDevice] setValue:@(UIInterfaceOrientationLandscapeLeft) forKey:@"orientation"];
+            }
+            [self.urlListTableView removeFromSuperview];
+            self.myPlayerView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT);
+            self.maskView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT);
+            _toastView.frame = CGRectMake(40, PL_SCREEN_HEIGHT-220, 200, 150);
+        } else {
+            [self.navigationController setNavigationBarHidden:NO animated:NO];
+            [[UIDevice currentDevice] setValue:@(UIDeviceOrientationPortrait) forKey:@"orientation"];
+            [self.view addSubview:_urlListTableView];
+            self.myPlayerView.frame = CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT);
+            self.maskView.frame = CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT);
+            _toastView.frame = CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300);
+        }
+        
     }
+//    [UIViewController attemptRotationToDeviceOrientation];
     
 }
 
@@ -563,6 +615,9 @@ QIPlayerRenderListener
                 [self.myPlayerView.controlHandler setBackgroundPlayEnable:NO];
             }
         }
+        else if ([configureModel.configuraKey containsString:@"清晰度切换"]){
+            _immediatelyType =(int)index;
+        }
     }
 }
 
@@ -582,13 +637,11 @@ QIPlayerRenderListener
         
     }
     if (url) {
-        QMediaModel *modle = [[QMediaModel alloc] init];
-        QStreamElement *el = [[QStreamElement alloc] init];
-        el.url = qrString;
-        el.isSelected = YES;
-        modle.streamElements = @[el];
-        modle.isLive = isLive;
-        [_playerModels addObject:modle];
+        QMediaModelBuilder *modleBuilder = [[QMediaModelBuilder alloc] initWithIsLive:isLive];
+        
+        [modleBuilder addStreamElementWithUserType:@"" urlType:QURL_TYPE_QAUDIO_AND_VIDEO url:qrString quality:0 isSelected:YES backupUrl:@"" referer:@"" renderType:QPLAYER_RENDER_TYPE_PLANE];
+        QMediaModel *model = [modleBuilder build];
+        [_playerModels addObject:model];
         _selectedIndex = _playerModels.count - 1;
         [self tableView:self.urlListTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForItem:_selectedIndex inSection:0]];
 
@@ -655,9 +708,7 @@ QIPlayerRenderListener
     _selectedIndex = indexPath.row;
     [_urlListTableView reloadData];
     
-    QMediaModel *model = [[QMediaModel alloc] init];
-    model.streamElements = _playerModels[indexPath.row].streamElements;
-    model.isLive = _playerModels[indexPath.row].isLive;
+    QMediaModel *model = _playerModels[indexPath.row];
     self.maskView.isLiving = model.isLive;
     if(model.streamElements.count > 1){
         [self.maskView.qualitySegMc removeAllSegments];
@@ -690,6 +741,21 @@ QIPlayerRenderListener
     if ([[QDataHandle shareInstance] getAuthenticationState]) {
         [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
     }
+    
+    //开启此处即开启VR的陀螺仪，未验证，可能存在未知bug
+//    BOOL isVR = false;
+//    for (QStreamElement *stream in model.streamElements) {
+//        if(stream.renderType == QPLAYER_RENDER_TYPE_PANORAMA_EQUIRECT_ANGULAR){
+//            isVR = true;
+//            break;
+//        }
+//    }
+//    if(isVR == true){
+//        [self.maskView gyroscopeStart];
+//    }
+//    else{
+//        [self.maskView gyroscopeEnd];
+//    }
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     [_maskView setPlayButtonState:NO];
     [self judgeWeatherIsLiveWithURL:selectedURL];
@@ -708,18 +774,13 @@ QIPlayerRenderListener
 
     [headerView addSubview:titleLabel];
     
-//    UIButton *pullButton = [[UIButton alloc] initWithFrame:CGRectMake(190, 7, 22, 22)];
-//    pullButton.selected = _isPull;
-//    [pullButton setImage:[UIImage imageNamed:@"pl_down"] forState:UIControlStateNormal];
-//    [pullButton setImage:[UIImage imageNamed:@"pl_up"] forState:UIControlStateSelected];
-//    [pullButton addTarget:self action:@selector(pullClickList:) forControlEvents:UIControlEventTouchDown];
     
     UIButton *scanButton = [[UIButton alloc] initWithFrame:CGRectMake(245, 7, 22, 22)];
     scanButton.backgroundColor = PL_COLOR_RGB(81, 81, 81, 1);
     scanButton.layer.cornerRadius = 1;
     [scanButton setImage:[UIImage imageNamed:@"pl_scan"] forState:UIControlStateNormal];
     [scanButton addTarget:self action:@selector(scanCodeAction:) forControlEvents:UIControlEventTouchDown];
-    [headerView addSubview:scanButton];
+//    [headerView addSubview:scanButton];
     return headerView;
 }
 
@@ -824,18 +885,25 @@ QIPlayerRenderListener
         }
         tempIndex ++;
     }
-    NSArray<NSString*> *segmentedArray = [[NSArray alloc]initWithObjects:@"1080p",@"720p",@"480p",@"270p",nil];
-//    
-//    [self.playerContext.controlHandler switchQuality:model.streamElements[index]];
-    BOOL switchQualityBool =[self.myPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:model.isLive];
+    BOOL switchQualityBool;
+    if(self.immediatelyType == 0){
+        
+        switchQualityBool = [self.myPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:true];
+    }else if(self.immediatelyType == 1){
+        
+        switchQualityBool = [self.myPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:false];
+    }
+    else{
+        switchQualityBool = [self.myPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:model.isLive];
+    }
     if (!switchQualityBool) {
         self.maskView.qualitySegMc.selectedSegmentIndex = self.UpQualityIndex;
 
         [_toastView addText:@"不可重复切换"];
     }else{
         _UpQualityIndex = index;
-
-        [_toastView addText:[NSString stringWithFormat:@"即将切换为：%@",segmentedArray[index]]];
+        
+        [_toastView addText:[NSString stringWithFormat:@"即将切换为：%d p",model.streamElements[index].quality]];
     }
 }
 

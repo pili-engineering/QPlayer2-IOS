@@ -11,6 +11,7 @@
 #import "QDataHandle.h"
 #import "QNHeadsetNotification.h"
 #import "QNButtonView.h"
+#import <CoreMotion/CoreMotion.h>
 typedef NS_ENUM(NSInteger, PLMoveDirectionType)
 {
     PLHorizontailDirection,
@@ -23,7 +24,6 @@ UIGestureRecognizerDelegate,
 QIPlayerQualityListener,
 QIPlayerAuthenticationListener
 >{
-    bool isScreenFull;
     CGRect fullFrame;
 }
 
@@ -38,8 +38,22 @@ QIPlayerAuthenticationListener
 @property (nonatomic, strong) UIProgressView *fastProgressView;
 @property (nonatomic, strong) UILabel *fastTimeLabel;
 @property (nonatomic, strong) UIImageView *fastImageView;
+@property (nonatomic)BOOL isScreenFull;
+/** 陀螺仪**/
+@property (nonatomic, strong)CMMotionManager *motionManager;
 
-
+/** 计时器获取陀螺仪参数**/
+@property (nonatomic, strong)NSTimer *motionTimer;
+/** 陀螺仪参数**/
+@property (nonatomic)float motionRoll;
+/** 陀螺仪参数**/
+@property (nonatomic)float motionPitch;
+/** 手势参数**/
+@property (nonatomic)float rotateX;
+/** 手势参数**/
+@property (nonatomic)float rotateY;
+/** 手势参数**/
+@property (nonatomic)BOOL isRotate;
 /** slider上次的值 **/
 @property (nonatomic, assign) CGFloat sliderLastValue;
 
@@ -63,9 +77,12 @@ QIPlayerAuthenticationListener
 @property (nonatomic, strong) UIButton *showSpeedViewButton;
 @property (nonatomic, strong) QNPlayerSettingsView *settingSpeedView;
 
+
+/** 截图按钮 **/
+@property (nonatomic, strong) UIButton *shootVideoButton;
+
 @property (nonatomic, assign) QPlayerDecoder decoderType;
 @property (nonatomic, assign) BOOL seeking;
-//@property (nonatomic, weak) RenderView *myRenderView;
 @end
 
 @implementation QNPlayerMaskView
@@ -80,10 +97,14 @@ QIPlayerAuthenticationListener
 - (id)initWithFrame:(CGRect)frame player:(QPlayerView *)player isLiving:(BOOL)isLiving{
     if (self = [super initWithFrame:frame]) {
         self.player = player;
-        
         [self.player.controlHandler addPlayerQualityListener:self];
         [self.player.controlHandler addPlayerAuthenticationListener:self];
         self.isLiving = isLiving;
+        self.motionPitch = 0;
+        self.motionRoll = 0;
+        self.rotateX = 0;
+        self.rotateY = 0;
+        self.isRotate = false;
 //        self.myRenderView = view;
         CGFloat playerWidth = CGRectGetWidth(frame);
         CGFloat playerHeight = CGRectGetHeight(frame);
@@ -131,18 +152,23 @@ QIPlayerAuthenticationListener
         [self addSubview:_backButton];
         
         
-        NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"1080p",@"720p",@"480p",@"270p",nil];
+        NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"1080p",@"720p",@"480p",@"360p",nil];
 
         self.qualitySegMc = [[UISegmentedControl alloc]initWithItems:segmentedArray];
 
-        self.qualitySegMc.frame = CGRectMake(playerWidth - 250, 7, 250, 28);
+        self.qualitySegMc.frame = CGRectMake(playerWidth - 250, 17, 250, 28);
 
         self.qualitySegMc.selectedSegmentIndex = 0;//设置默认选择项索引
         self.qualitySegMc.tintColor = [UIColor grayColor];
         [self addSubview:_qualitySegMc];
         
 
-        
+        self.shootVideoButton = [[UIButton alloc]initWithFrame:CGRectMake(PL_SCREEN_WIDTH-60, PL_SCREEN_HEIGHT/2-20, 40, 40)];
+        [self.shootVideoButton addTarget:self action:@selector(shootVideoButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [self.shootVideoButton setImage:[[UIImage imageNamed:@"shootVideo"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        self.shootVideoButton.tintColor = [UIColor whiteColor];
+        self.shootVideoButton.hidden = YES;
+        [self addSubview:self.shootVideoButton];
         
         [self createGesture];
         
@@ -155,9 +181,10 @@ QIPlayerAuthenticationListener
         [self.activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
         
         //设置悬浮框
-        _showSettingViewButton = [[UIButton alloc] initWithFrame:CGRectMake(playerWidth, 7, 30, 30)];
+        _showSettingViewButton = [[UIButton alloc] initWithFrame:CGRectMake(playerWidth, 7, 35, 30)];
         _showSettingViewButton.backgroundColor = [UIColor clearColor];
         [_showSettingViewButton setImage:[UIImage imageNamed:@"icon-more"] forState:UIControlStateNormal];
+        _showSettingViewButton.contentMode = UIViewContentModeScaleAspectFit;
         [_showSettingViewButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_showSettingViewButton addTarget:self action:@selector(ShowSettingViewButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         _showSettingViewButton.hidden = YES;
@@ -210,6 +237,14 @@ QIPlayerAuthenticationListener
                 else{
                     [[QDataHandle shareInstance] setSelConfiguraKey:@"后台播放" selIndex:1];
                 }
+            }
+            
+            else if (800 <= type && type <= 802){
+                if(weakSelf.delegate != nil && [weakSelf.delegate respondsToSelector:@selector(setImmediately:)]){
+                    [weakSelf.delegate setImmediately:(int)(type-800)];
+                }
+                [[QDataHandle shareInstance] setSelConfiguraKey:@"清晰度切换" selIndex:(int)(type-800)];
+                
             }
             
             if (startPosition) {
@@ -335,12 +370,13 @@ QIPlayerAuthenticationListener
             }else{
                 
             }
+        }else if ([configureModel.configuraKey containsString:@"清晰度切换"]) {
+            [_settingView setChangeDefault:(ChangeButtonType)(index+800)];
+            
         }
         
     }
 }
-
-
 
 ///**
 // *  创建手势
@@ -445,6 +481,7 @@ QIPlayerAuthenticationListener
         [_settingView setChangeDefault:UIButtonTypeFilterNone];
     }
 }
+
 #pragma mark - getter
 
 - (float)currentTime
@@ -490,7 +527,55 @@ QIPlayerAuthenticationListener
 
 
 #pragma mark - public methods
+/**
+ 开启陀螺仪
+ */
+-(void)gyroscopeStart{
+    if(self.motionManager != nil){
 
+    }
+    else{
+        self.motionManager = [[CMMotionManager alloc]init];
+        [self.motionManager setDeviceMotionUpdateInterval:0.1];
+        [self.motionManager startDeviceMotionUpdates];
+        __weak typeof(self) weakSelf = self;
+        self.motionTimer = [NSTimer scheduledTimerWithTimeInterval:0.03 repeats:YES block:^(NSTimer * _Nonnull timer) {
+//            *180/M_PI
+            if(!weakSelf.isRotate){
+                //pitch = 90度 表示手机短边在下竖直正立放置  roll = 90度时 长边在下竖直屏幕朝右放置  roll = 0 pitch = 0 时屏幕朝上水平放置
+                float pitch = weakSelf.motionManager.deviceMotion.attitude.pitch*180/M_PI-weakSelf.motionPitch;
+                float roll = weakSelf.motionManager.deviceMotion.attitude.roll*180/M_PI-weakSelf.motionRoll;
+                if(weakSelf.isScreenFull){
+                    
+                    weakSelf.rotateX += roll;
+                    weakSelf.rotateY -= pitch;
+                }else{
+                    
+                    weakSelf.rotateX += pitch;
+                    weakSelf.rotateY += roll;
+                }
+                [weakSelf.player.renderHandler setPanoramaViewRotate:weakSelf.rotateX rotateY:weakSelf.rotateY];
+                
+            }
+            
+            weakSelf.motionRoll = weakSelf.motionManager.deviceMotion.attitude.roll*180/M_PI;
+            
+            weakSelf.motionPitch = weakSelf.motionManager.deviceMotion.attitude.pitch*180/M_PI;
+        }];
+    }
+
+}
+/**
+ 关闭陀螺仪
+ */
+-(void)gyroscopeEnd{
+    if(self.motionManager != nil){
+
+        self.motionManager = nil;
+        [self.motionTimer invalidate];
+        self.motionTimer = nil;
+    }
+}
 // 加载视频转码的动画
 - (void)loadActivityIndicatorView {
 
@@ -511,6 +596,7 @@ QIPlayerAuthenticationListener
     [self.buttonView setPlayButtonState:state];
 }
 
+
 -(QPlayerDecoder)getDecoderType{
     return self.decoderType;
 }
@@ -523,14 +609,16 @@ QIPlayerAuthenticationListener
 - (void)showAction
 {
     self.buttonView.hidden = !self.buttonView.hidden;
-    if(isScreenFull){
+    if(self.isScreenFull){
         
         self.showSettingViewButton.hidden = self.buttonView.hidden;
         self.showSpeedViewButton.hidden = self.buttonView.hidden;
+        self.shootVideoButton.hidden = self.buttonView.hidden;
     }else{
         
         self.showSettingViewButton.hidden = YES;
         self.showSpeedViewButton.hidden = YES;
+        self.shootVideoButton.hidden = YES;
     }
     if (self.qualitySegMc.numberOfSegments >1) {
         self.qualitySegMc.hidden  = !self.qualitySegMc.hidden;
@@ -561,7 +649,11 @@ QIPlayerAuthenticationListener
  *  @param gesture UITapGestureRecognizer
  */
 - (void)doubleTapAction:(UIGestureRecognizer *)gesture {
-
+    if(self.player.controlHandler.currentPlayerState == QPLAYER_STATE_COMPLETED){
+        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(reOpenPlayPlayerMaskView:)]) {
+            [self.delegate reOpenPlayPlayerMaskView:self];
+        }
+    }
     [self.buttonView setPlayState];
 
 }
@@ -587,6 +679,7 @@ QIPlayerAuthenticationListener
         self.qualitySegMc.hidden = YES;
         self.showSettingViewButton.hidden = YES;
         self.showSpeedViewButton.hidden = YES;
+        self.shootVideoButton.hidden = YES;
         self.backgroundColor = [UIColor clearColor];
     }
 }
@@ -608,7 +701,6 @@ QIPlayerAuthenticationListener
     }
 }
 
-
 /**
  *  pan手势事件
  *
@@ -616,24 +708,18 @@ QIPlayerAuthenticationListener
  */
 - (void)panAction:(UIPanGestureRecognizer *)pan {
     // 根据上次和本次移动的位置，算出一个速率的point
-    CGPoint veloctyPoint = [pan velocityInView:self];
-//    static int panX = 0;
-//    static int panY = 0;
+    if(pan.state == UIGestureRecognizerStateBegan){
+        self.isRotate = true;
+    }else if(pan.state == UIGestureRecognizerStateEnded){
+        self.isRotate = false;
+    }
     
-    CGPoint locationPoint = [pan locationInView:self];
     CGPoint transPoint = [pan translationInView:self];
     [pan setTranslation:CGPointZero inView:self];
     
-    static int rotateY = 0;
-    static int rotateX = 0;
-    
-    rotateY -= transPoint.x;
-    rotateX += transPoint.y;
-    
-    rotateY = rotateY % 360;
-    rotateX = rotateX % 360;
-    
-    [self.player.renderHandler setPanoramaViewRotate:rotateX rotateY:rotateY];
+    self.rotateY -= transPoint.x;
+    self.rotateX += transPoint.y;
+    [self.player.renderHandler setPanoramaViewRotate:self.rotateX rotateY:self.rotateY];
 
 }
 
@@ -643,17 +729,19 @@ QIPlayerAuthenticationListener
     CGFloat playerHeight = CGRectGetHeight(frame);
 
    
-    self.showSettingViewButton.frame = CGRectMake(playerWidth - 100, 8, 25, 30);
+    self.showSettingViewButton.frame = CGRectMake(playerWidth - 100, 8, 35, 30);
+    self.shootVideoButton.frame = CGRectMake(playerWidth - 60, playerHeight/2-20, 40, 40);
     self.settingView.frame = CGRectMake(playerWidth - 390, 0, 390, playerHeight);
     self.showSpeedViewButton.frame = CGRectMake(playerWidth - 170, 8, 40, 30);
     self.settingSpeedView.frame = CGRectMake(playerWidth - 130, 0, 130, playerHeight);
-    isScreenFull = isFull;
+    self.isScreenFull = isFull;
     if (isFull) {
-        self.buttonView.frame = CGRectMake(8, playerHeight - 55, playerWidth - 16, 28);
+        self.buttonView.frame = CGRectMake(8, playerHeight - 60, playerWidth - 16, 28);
         
         [self.buttonView changeFrame:frame isFull:isFull];
         _showSettingViewButton.hidden = NO;
         _showSpeedViewButton.hidden = NO;
+        self.shootVideoButton.hidden = NO;
         fullFrame = frame;
         self.settingSpeedView.contentSize = CGSizeMake(130, frame.size.height);
         [self.settingSpeedView reloadInputViews];
@@ -676,13 +764,16 @@ QIPlayerAuthenticationListener
         }
         _showSettingViewButton.hidden = YES;
         _showSpeedViewButton.hidden = YES;
+        self.shootVideoButton.hidden = YES;
         self.activityIndicatorView.frame = CGRectMake(playerWidth/2 - 20, playerHeight/2 - 20, 40, 40);
     }
     
 }
-
-
-
+-(void)shootVideoButtonClick{
+    if(self.delegate!=nil && [self.delegate respondsToSelector:@selector(shootVideoButtonClick)]){
+        [self.delegate shootVideoButtonClick];
+    }
+}
 
 
 #pragma mark - 返回
@@ -711,5 +802,7 @@ QIPlayerAuthenticationListener
     }
     
 }
+
+
 
 @end

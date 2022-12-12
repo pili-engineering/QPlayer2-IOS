@@ -191,8 +191,18 @@
                 "userType": "",
                 "urlType": 0,
                 "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666",
-                "quality": 360,
+                "quality": 720,
                 "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666@480p",
+                "quality": 480,
+                "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
                  
@@ -586,6 +596,22 @@
     },
     {
           
+        "isLive": 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 2,
+                "url": "http://pili-hdl.qnsdk.com/sdk-live/videoonly.flv",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+          
         "isLive": 0,
         "streamElements": [
             {
@@ -656,6 +682,22 @@
                 "userType": "",
                 "urlType": 0,
                 "url": "srt://180.101.136.81:1935?streamid=#!::h=pilidemo/timestamp,m=request,domain=live-pilidemo.cloudvdn.com",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+          
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "https://playback-vpaas.cloudlinks.cn/vas/playback/m3u8?ownerid=9223372043328869169&deviceid=7391983055&startTime=1669959976&endTime=1669959984&sign=18aca951c5b70194ba51f31e5c662949c3cb0d88&port=47807",
                 "quality": 360,
                 "isSelected": 1,
                 "backupUrl": "",
