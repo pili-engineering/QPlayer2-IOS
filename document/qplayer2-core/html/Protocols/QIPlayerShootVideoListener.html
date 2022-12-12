@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>QIPlayerStateChangeListener Protocol Reference</title>
+	<title>QIPlayerShootVideoListener Protocol Reference</title>
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
@@ -60,7 +60,9 @@
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/onStateChange:state:">- onStateChange:state:</option>
+		<option value="//api/name/onShootFailed:">- onShootFailed:</option>
+		
+		<option value="//api/name/onShootSuccessful:imageData:width:height:type:">- onShootSuccessful:imageData:width:height:type:</option>
 		
 	</optgroup>
 	
@@ -77,7 +79,7 @@
 		<div id="overview_contents" class="container">
 			<div id="content">
 				<main role="main">
-					<h1 class="title">QIPlayerStateChangeListener Protocol Reference</h1>
+					<h1 class="title">QIPlayerShootVideoListener Protocol Reference</h1>
 
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
@@ -86,7 +88,7 @@
 	<td>NSObject</td>
 </tr><tr>
 	<th>Declared in</th>
-	<td>QIPlayerStateChangeListener.h</td>
+	<td>QIPlayerShootVideoListener.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -96,7 +98,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>播放器状态变更监听</p>
+						<p>截图监听</p>
 					</div>
 					
 					
@@ -112,8 +114,8 @@
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/onStateChange:state:" title="onStateChange:state:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/onStateChange:state:">&ndash;&nbsp;onStateChange:state:</a></code>
+	<a name="//api/name/onShootSuccessful:imageData:width:height:type:" title="onShootSuccessful:imageData:width:height:type:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onShootSuccessful:imageData:width:height:type:">&ndash;&nbsp;onShootSuccessful:imageData:width:height:type:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -123,12 +125,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>状态变更回调</p>
+				<p>截图成功回调</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)onStateChange:(QPlayerContext *)<em>context</em> state:(QPlayerState)<em>state</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)onShootSuccessful:(QPlayerContext *)<em>context</em> imageData:(NSData *)<em>imageData</em> width:(int)<em>width</em> height:(int)<em>height</em> type:(QPlayerShootVideoType)<em>type</em></code></div>
 
 		    
 			
@@ -142,8 +144,23 @@
 					</tr>
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>state</code></th>
-						<td><p>播放器状态</p></td>
+						<th scope="row" class="argument-name"><code>imageData</code></th>
+						<td><p>图片的 NSData 数据</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>width</code></th>
+						<td><p>图片的宽</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>height</code></th>
+						<td><p>图片的高</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>type</code></th>
+						<td><p>图片类型</p></td>
 					</tr>
 				
 				</table>
@@ -157,7 +174,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>状态变更回调</p>
+				<p>截图成功回调</p>
 			</div>
 			
 
@@ -168,7 +185,65 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QIPlayerStateChangeListener.h</code></p>
+				<p><code class="declared-in-ref">QIPlayerShootVideoListener.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/onShootFailed:" title="onShootFailed:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onShootFailed:">&ndash;&nbsp;onShootFailed:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>截图失败回调</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)onShootFailed:(QPlayerContext *)<em>context</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>context</code></th>
+						<td><p>当前的播放器</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>截图失败回调</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QIPlayerShootVideoListener.h</code></p>
 			</div>
 			
 			

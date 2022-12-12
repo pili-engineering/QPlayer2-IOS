@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>QIPlayerStateChangeListener Protocol Reference</title>
+	<title>QIPlayerVideoFrameSizeChangeListener Protocol Reference</title>
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
@@ -60,7 +60,7 @@
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/onStateChange:state:">- onStateChange:state:</option>
+		<option value="//api/name/onVideoFrameSizeChanged:width:height:">- onVideoFrameSizeChanged:width:height:</option>
 		
 	</optgroup>
 	
@@ -77,7 +77,7 @@
 		<div id="overview_contents" class="container">
 			<div id="content">
 				<main role="main">
-					<h1 class="title">QIPlayerStateChangeListener Protocol Reference</h1>
+					<h1 class="title">QIPlayerVideoFrameSizeChangeListener Protocol Reference</h1>
 
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
@@ -86,7 +86,7 @@
 	<td>NSObject</td>
 </tr><tr>
 	<th>Declared in</th>
-	<td>QIPlayerStateChangeListener.h</td>
+	<td>QIPlayerVideoFrameSizeChangeListener.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -96,7 +96,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>播放器状态变更监听</p>
+						<p>推流端视频长宽变化监听</p>
 					</div>
 					
 					
@@ -112,8 +112,8 @@
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/onStateChange:state:" title="onStateChange:state:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/onStateChange:state:">&ndash;&nbsp;onStateChange:state:</a></code>
+	<a name="//api/name/onVideoFrameSizeChanged:width:height:" title="onVideoFrameSizeChanged:width:height:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onVideoFrameSizeChanged:width:height:">&ndash;&nbsp;onVideoFrameSizeChanged:width:height:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -123,12 +123,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>状态变更回调</p>
+				<p>推流端视频长宽变化回调</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)onStateChange:(QPlayerContext *)<em>context</em> state:(QPlayerState)<em>state</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)onVideoFrameSizeChanged:(QPlayerContext *)<em>context</em> width:(int)<em>width</em> height:(int)<em>height</em></code></div>
 
 		    
 			
@@ -142,8 +142,13 @@
 					</tr>
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>state</code></th>
-						<td><p>播放器状态</p></td>
+						<th scope="row" class="argument-name"><code>width</code></th>
+						<td><p>视频宽度</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>height</code></th>
+						<td><p>视频高度</p></td>
 					</tr>
 				
 				</table>
@@ -157,7 +162,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>状态变更回调</p>
+				<p>推流端视频长宽变化回调</p>
 			</div>
 			
 
@@ -168,7 +173,7 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QIPlayerStateChangeListener.h</code></p>
+				<p><code class="declared-in-ref">QIPlayerVideoFrameSizeChangeListener.h</code></p>
 			</div>
 			
 			

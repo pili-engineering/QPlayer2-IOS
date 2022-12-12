@@ -106,6 +106,8 @@
 		
 		<option value="//api/name/addPlayerSEIDataListener:">- addPlayerSEIDataListener:</option>
 		
+		<option value="//api/name/addPlayerSeekListener:">- addPlayerSeekListener:</option>
+		
 		<option value="//api/name/addPlayerShootVideoListener:">- addPlayerShootVideoListener:</option>
 		
 		<option value="//api/name/addPlayerSpeedChangeListener:">- addPlayerSpeedChangeListener:</option>
@@ -160,6 +162,8 @@
 		
 		<option value="//api/name/removeAllPlayerSEIDataListener">- removeAllPlayerSEIDataListener</option>
 		
+		<option value="//api/name/removeAllPlayerSeekListener">- removeAllPlayerSeekListener</option>
+		
 		<option value="//api/name/removeAllPlayerShootVideoListener">- removeAllPlayerShootVideoListener</option>
 		
 		<option value="//api/name/removeAllPlayerSpeedChangeListener">- removeAllPlayerSpeedChangeListener</option>
@@ -198,6 +202,8 @@
 		
 		<option value="//api/name/removePlayerSEIDataListener:">- removePlayerSEIDataListener:</option>
 		
+		<option value="//api/name/removePlayerSeekListener:">- removePlayerSeekListener:</option>
+		
 		<option value="//api/name/removePlayerShootVideoListener:">- removePlayerShootVideoListener:</option>
 		
 		<option value="//api/name/removePlayerStateListener:">- removePlayerStateListener:</option>
@@ -222,7 +228,7 @@
 		
 		<option value="//api/name/setStartAction:">- setStartAction:</option>
 		
-		<option value="//api/name/shootVideo:">- shootVideo:</option>
+		<option value="//api/name/shootVideo">- shootVideo</option>
 		
 		<option value="//api/name/stop">- stop</option>
 		
@@ -1167,8 +1173,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/shootVideo:" title="shootVideo:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/shootVideo:">&ndash;&nbsp;shootVideo:</a></code>
+	<a name="//api/name/shootVideo" title="shootVideo"></a>
+	<h3 class="method-title"><code><a href="#//api/name/shootVideo">&ndash;&nbsp;shootVideo</a></code>
 </h3>
 
 	<div class="method-info">
@@ -1183,7 +1189,7 @@
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (BOOL)shootVideo:(BOOL)<em>source</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (BOOL)shootVideo</code></div>
 
 		    
 			
@@ -4910,6 +4916,183 @@
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/addPlayerSeekListener:" title="addPlayerSeekListener:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/addPlayerSeekListener:">&ndash;&nbsp;addPlayerSeekListener:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>添加seek监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)addPlayerSeekListener:(id&lt;QIPlayerSeekListener&gt;)<em>listener</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>listener</code></th>
+						<td><p>seek 监听</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>添加seek监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/removePlayerSeekListener:" title="removePlayerSeekListener:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removePlayerSeekListener:">&ndash;&nbsp;removePlayerSeekListener:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>删除seek监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)removePlayerSeekListener:(id&lt;QIPlayerSeekListener&gt;)<em>listener</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>listener</code></th>
+						<td><p>seek监听</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>删除seek监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/removeAllPlayerSeekListener" title="removeAllPlayerSeekListener"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removeAllPlayerSeekListener">&ndash;&nbsp;removeAllPlayerSeekListener</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>删除所有seek监听</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)removeAllPlayerSeekListener</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>删除所有seek监听</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QPlayerControlHandler.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/playerRelease" title="playerRelease"></a>
 	<h3 class="method-title"><code><a href="#//api/name/playerRelease">&ndash;&nbsp;playerRelease</a></code>
 </h3>
@@ -4970,7 +5153,7 @@
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2022 七牛云. All rights reserved. Updated: 2022-11-23</p>
+						<p class="copyright">Copyright &copy; 2022 七牛云. All rights reserved. Updated: 2022-12-12</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
