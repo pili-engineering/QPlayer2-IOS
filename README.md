@@ -72,9 +72,12 @@ pod 'qplayer2-core', '1.2.0'
 ##### Demo介绍
 
 1. demo 工程内的 长视频播放页 是基于 qplayer2-core来实现的
+
 1. 最新 demo 请通过工程自行打包
 
+1. testFlight 公测链接：https://testflight.apple.com/join/YocXmZ2j
 
+   
 
 #### 技术支持与交流
 
