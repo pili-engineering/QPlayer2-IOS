@@ -259,6 +259,8 @@ QIPlayerSeekListener
 }
 -(void)onSeekSuccess:(QPlayerContext *)context{
     [_toastView addText:@"seek成功"];
+    
+    [self.maskView removeActivityIndicatorView];
 }
 -(void)onVideoFrameSizeChanged:(QPlayerContext *)context width:(int)width height:(int)height{
     
@@ -332,6 +334,7 @@ QIPlayerSeekListener
         [_maskView setPlayButtonState:YES];
         [self showHintViewWithText:@"开始播放器"];
         [_toastView addText:@"播放中"];
+        [self.maskView removeActivityIndicatorView];
         
     } else if (state == QPLAYER_STATE_PAUSED_RENDER) {
         [_toastView addText:@"暂停播放"];
@@ -348,6 +351,10 @@ QIPlayerSeekListener
         
         [_toastView addText:@"播放完成"];
         [_maskView setPlayButtonState:NO];
+    }
+    else if (state == QPLAYER_STATE_SEEKING){
+        
+        [self.maskView loadActivityIndicatorView];
     }
     
 }
