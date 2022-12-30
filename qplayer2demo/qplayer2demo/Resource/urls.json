@@ -689,6 +689,22 @@
                  
             }
         ]
+    },
+    {
+          
+        "isLive": 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://219.151.31.38/liveplay-kk.rtxapp.com/live/program/live/hnwshd/4000000/mnf.m3u8",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
     }
     
 ]
