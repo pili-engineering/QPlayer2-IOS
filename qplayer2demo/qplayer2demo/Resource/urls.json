@@ -705,6 +705,39 @@
                  
             }
         ]
+    },
+    {
+          
+        "isLive": 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://stream.0554news.com/hnds1/playlist.m3u8?_upt=cc441e8f1669371377",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+          
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://demo-videos.qnsdk.com/qiniu-vr.mov",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                "renderType": 1,
+                 
+            }
+        ]
     }
     
 ]
