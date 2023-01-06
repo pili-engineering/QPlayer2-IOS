@@ -94,22 +94,6 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/shortvideo/nike.mp4",
-                "quality": 960,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-          
-        "isLive": 0,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
                 "url": "http://demo-videos.qnsdk.com/only-video-1080p-60fps.m4s",
                 "quality": 1080,
                 "isSelected": 1,
