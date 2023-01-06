@@ -266,8 +266,28 @@ QIPlayerSeekListener
     self.firstVideoTime = elapsedTime;
 }
 -(void)onSEIData:(QPlayerContext *)context data:(NSData *)data{
-    [_toastView addText:@"sei回调"];
+    NSString *str = [[NSString alloc]initWithData:data encoding:NSDataBase64DecodingIgnoreUnknownCharacters];
+    
+    NSLog(@"sei回调 data.length: %lu",(unsigned long)data.length);
+    NSLog(@"sei回调 :str = %@",str);
+    NSDictionary *dict=@{NSFontAttributeName:[UIFont systemFontOfSize:13.0]};
+    CGSize contentSize=[str sizeWithAttributes:dict];
+    int lineNum = contentSize.width/200 + 1;
+    UITextView *seitext = [[UITextView alloc]initWithFrame:CGRectMake(PL_SCREEN_WIDTH/2-100, PL_SCREEN_HEIGHT/2-200, 200, 22.0 + (contentSize.height + 6) * lineNum)];
+    seitext.editable = NO;
+    seitext.userInteractionEnabled = NO;
+    seitext.font = [UIFont systemFontOfSize:13.0];
+    seitext.backgroundColor = [UIColor blackColor];
+    seitext.text = [NSString stringWithFormat:@"sei回调 : %@",str];
+    seitext.textColor = [UIColor whiteColor];
+    [self.view addSubview:seitext];
+    [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
+        [seitext removeFromSuperview];
+    }];
+
+    
 }
+
 -(void)onAuthenticationFailed:(QPlayerContext *)context error:(QPlayerAuthenticationErrorType)error{
     
     [_toastView addText:[NSString stringWithFormat:@"鉴权失败 : %d",(int)error]];
@@ -820,7 +840,7 @@ QIPlayerSeekListener
     [self.view addSubview:_hintLabel];
 }
 
-- (NSString *)convertDataToHexStr:(NSData *)data {
+-(NSString *)convertDataToHexStr:(NSData *)data {
     if (!data || [data length] == 0) {
         return @"";
     }

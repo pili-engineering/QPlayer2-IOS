@@ -89,6 +89,54 @@
     },
     {
           
+        "isLive": 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 100,
+                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/Hera",
+                "quality": 0,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+          
+        "isLive": 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 100,
+                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/841666",
+                "quality": 0,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+          
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://pili-playback.qnsdk.com/recordings/z1.sdk-live.841666/1672908481_1672910686.m3u8",
+                "quality": 100,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+          
         "isLive": 0,
         "streamElements": [
             {
