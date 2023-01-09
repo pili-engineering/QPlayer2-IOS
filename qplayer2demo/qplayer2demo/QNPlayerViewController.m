@@ -266,19 +266,28 @@ QIPlayerSeekListener
     self.firstVideoTime = elapsedTime;
 }
 -(void)onSEIData:(QPlayerContext *)context data:(NSData *)data{
-    NSString *str = [[NSString alloc]initWithData:data encoding:NSDataBase64DecodingIgnoreUnknownCharacters];
+    NSString * uuidString = @"";
+    if(data.length >16){
+        NSData *uuidData = [data subdataWithRange:NSMakeRange(0, 16)];
+        NSUUID * uuid = [[NSUUID alloc]initWithUUIDBytes:uuidData.bytes];
+        uuidString = [NSString stringWithFormat:@"%@",uuid];
+        
+    }
+    NSData *seiData = [data subdataWithRange:NSMakeRange(16, data.length-16)];
+    NSString *str = [[NSString alloc]initWithData:seiData encoding:NSDataBase64DecodingIgnoreUnknownCharacters];
     
     NSLog(@"sei回调 data.length: %lu",(unsigned long)data.length);
-    NSLog(@"sei回调 :str = %@",str);
+    NSLog(@"sei回调 :UUID : %@         seiString = %@",uuidString,str);
+    NSString * logString = [NSString stringWithFormat:@"sei回调 :UUID : %@         seiString = %@",uuidString,str];
     NSDictionary *dict=@{NSFontAttributeName:[UIFont systemFontOfSize:13.0]};
-    CGSize contentSize=[str sizeWithAttributes:dict];
+    CGSize contentSize=[logString sizeWithAttributes:dict];
     int lineNum = contentSize.width/200 + 1;
     UITextView *seitext = [[UITextView alloc]initWithFrame:CGRectMake(PL_SCREEN_WIDTH/2-100, PL_SCREEN_HEIGHT/2-200, 200, 22.0 + (contentSize.height + 6) * lineNum)];
     seitext.editable = NO;
     seitext.userInteractionEnabled = NO;
     seitext.font = [UIFont systemFontOfSize:13.0];
     seitext.backgroundColor = [UIColor blackColor];
-    seitext.text = [NSString stringWithFormat:@"sei回调 : %@",str];
+    seitext.text = logString;
     seitext.textColor = [UIColor whiteColor];
     [self.view addSubview:seitext];
     [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
@@ -857,7 +866,26 @@ QIPlayerSeekListener
             }
         }
     }];
-    
+//    if (data.size > 16) {
+//
+//                //uuid_iso_iec_11578
+//                val uuid = data.slice(0 until 16).toString()
+//                val seiData = data.slice(16 until data.size).toByteArray()
+//                val toast = PlayerToast.Builder()
+//                    .toastItemType(PlayerToastConfig.TYPE_NORMAL)
+//                    .location(PlayerToastConfig.LOCAT_LEFT_SIDE)
+//                    .setExtraString(PlayerToastConfig.EXTRA_TITLE, "UUID:${uuid} SEI DATA:${seiData.decodeToString()}")
+//                    .duration(PlayerToastConfig.DURATION_3)
+//                    .build()
+//
+//                Log.i("PlayerToastService", "UUID:${uuid}  SEI Decode DATA:${seiData.decodeToString()}")
+//                mPlayerCore.playerToastContainer?.showToast(toast)
+//            }
+    if(data.length >16){
+        
+        NSString * uuid = [NSString stringWithFormat:@"%@",[data subdataWithRange:NSMakeRange(0, 16)]];
+        
+    }
     return string;
 }
 
