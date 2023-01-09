@@ -93,9 +93,9 @@
         "streamElements": [
             {
                 "userType": "",
-                "urlType": 100,
+                "urlType": 0,
                 "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/Hera",
-                "quality": 0,
+                "quality": 100,
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
@@ -109,9 +109,9 @@
         "streamElements": [
             {
                 "userType": "",
-                "urlType": 100,
+                "urlType": 0,
                 "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/841666",
-                "quality": 0,
+                "quality": 100,
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
