@@ -848,45 +848,7 @@ QIPlayerSeekListener
     [self.view addSubview:_hintLabel];
 }
 
--(NSString *)convertDataToHexStr:(NSData *)data {
-    if (!data || [data length] == 0) {
-        return @"";
-    }
-    NSMutableString *string = [[NSMutableString alloc] initWithCapacity:[data length]];
-    
-    [data enumerateByteRangesUsingBlock:^(const void *bytes, NSRange byteRange, BOOL *stop) {
-        unsigned char *dataBytes = (unsigned char*)bytes;
-        for (NSInteger i = 0; i < byteRange.length; i++) {
-            NSString *hexStr = [NSString stringWithFormat:@"%x", (dataBytes[i]) & 0xff];
-            if ([hexStr length] == 2) {
-                [string appendString:hexStr];
-            } else {
-                [string appendFormat:@"0%@", hexStr];
-            }
-        }
-    }];
-//    if (data.size > 16) {
-//
-//                //uuid_iso_iec_11578
-//                val uuid = data.slice(0 until 16).toString()
-//                val seiData = data.slice(16 until data.size).toByteArray()
-//                val toast = PlayerToast.Builder()
-//                    .toastItemType(PlayerToastConfig.TYPE_NORMAL)
-//                    .location(PlayerToastConfig.LOCAT_LEFT_SIDE)
-//                    .setExtraString(PlayerToastConfig.EXTRA_TITLE, "UUID:${uuid} SEI DATA:${seiData.decodeToString()}")
-//                    .duration(PlayerToastConfig.DURATION_3)
-//                    .build()
-//
-//                Log.i("PlayerToastService", "UUID:${uuid}  SEI Decode DATA:${seiData.decodeToString()}")
-//                mPlayerCore.playerToastContainer?.showToast(toast)
-//            }
-    if(data.length >16){
-        
-        NSString * uuid = [NSString stringWithFormat:@"%@",[data subdataWithRange:NSMakeRange(0, 16)]];
-        
-    }
-    return string;
-}
+
 
 - (void)judgeWeatherIsLiveWithURL:(NSURL *)URL {
     NSString *scheme = URL.scheme;
