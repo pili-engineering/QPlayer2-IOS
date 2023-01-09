@@ -267,15 +267,14 @@ QIPlayerSeekListener
 }
 -(void)onSEIData:(QPlayerContext *)context data:(NSData *)data{
     NSString * uuidString = @"";
+    NSData *seiData = data;
     if(data.length >16){
         NSData *uuidData = [data subdataWithRange:NSMakeRange(0, 16)];
         NSUUID * uuid = [[NSUUID alloc]initWithUUIDBytes:uuidData.bytes];
         uuidString = [NSString stringWithFormat:@"%@",uuid];
-        
+        seiData = [data subdataWithRange:NSMakeRange(16, data.length-16)];
     }
-    NSData *seiData = [data subdataWithRange:NSMakeRange(16, data.length-16)];
     NSString *str = [[NSString alloc]initWithData:seiData encoding:NSDataBase64DecodingIgnoreUnknownCharacters];
-    
     NSLog(@"sei回调 data.length: %lu",(unsigned long)data.length);
     NSLog(@"sei回调 :UUID : %@         seiString = %@",uuidString,str);
     NSString * logString = [NSString stringWithFormat:@"sei回调 :UUID : %@         seiString = %@",uuidString,str];
