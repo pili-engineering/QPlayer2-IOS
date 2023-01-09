@@ -70,6 +70,27 @@
     itemPlayerButton.titleLabel.font = PL_FONT_MEDIUM(14);
     [self.view addSubview:itemPlayerButton];
     
+    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+    NSString *appVersionString = [infoDic objectForKey:@"CFBundleShortVersionString"];
+    UILabel *demoVersionLabel = [[UILabel alloc]initWithFrame:CGRectMake(PL_SCREEN_WIDTH-150, PL_SCREEN_HEIGHT-100 , 150, 30)];
+    demoVersionLabel.text = [NSString stringWithFormat:@"demo 版本号 : %@",appVersionString];
+    demoVersionLabel.textColor = [UIColor blackColor];
+    demoVersionLabel.backgroundColor = [UIColor clearColor];
+    demoVersionLabel.font = [UIFont systemFontOfSize:10.0];
+    [self.view addSubview:demoVersionLabel];
+    
+
+    UILabel *frameworkVersionLabel = [[UILabel alloc]initWithFrame:CGRectMake(PL_SCREEN_WIDTH-150, PL_SCREEN_HEIGHT-70 , 150, 30)];
+    frameworkVersionLabel.textColor = [UIColor blackColor];
+    frameworkVersionLabel.backgroundColor = [UIColor clearColor];
+    frameworkVersionLabel.font = [UIFont systemFontOfSize:10.0];
+    [self.view addSubview:frameworkVersionLabel];
+    for (NSBundle *bundle in [NSBundle allFrameworks]) {
+        NSDictionary *bundleDic = [bundle infoDictionary];
+        if ([[bundleDic valueForKey:@"CFBundleName"] isEqual:@"qplayer2_core"]) {
+            frameworkVersionLabel.text = [NSString stringWithFormat:@"framework 版本号 : %s",[[bundleDic valueForKey:@"CFBundleShortVersionString"]UTF8String]];
+        }
+    }
 }
 
 #pragma mark - 进入各个模式
