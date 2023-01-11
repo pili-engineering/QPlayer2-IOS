@@ -85,6 +85,8 @@ QIPlayerSeekListener
 @property (nonatomic, assign) BOOL beInterruptedByOtherAudio;
 @property (nonatomic, assign) NSInteger UpQualityIndex;
 @property (nonatomic, assign) NSInteger firstVideoTime;
+@property (nonatomic, assign) int seiNum;
+@property (nonatomic, strong) NSString *seiString;
 @end
 
 @implementation QNPlayerViewController
@@ -275,6 +277,12 @@ QIPlayerSeekListener
         seiData = [data subdataWithRange:NSMakeRange(16, data.length-16)];
     }
     NSString *str = [[NSString alloc]initWithData:seiData encoding:NSUTF8StringEncoding];
+    if ([self.seiString isEqual:str]){
+        self.seiNum++;
+    }else{
+        self.seiNum = 1;
+        self.seiString = str;
+    }
     NSLog(@"sei回调 data.length: %lu",(unsigned long)data.length);
     NSLog(@"sei回调 :UUID : %@         seiString = %@",uuidString,str);
     NSString * logString = [NSString stringWithFormat:@"sei回调 :UUID : %@         seiString = %@",uuidString,str];
@@ -292,7 +300,7 @@ QIPlayerSeekListener
     [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
         [seitext removeFromSuperview];
     }];
-
+    [_toastView addText:[NSString stringWithFormat:@"sei 条数 ： %d",self.seiNum]];
     
 }
 
