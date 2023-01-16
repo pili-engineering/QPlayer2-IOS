@@ -339,6 +339,7 @@ QIPlayerSeekListener
     } else if (state == QPLAYER_STATE_PAUSED_RENDER) {
         [_toastView addText:@"暂停播放"];
         [_maskView setPlayButtonState:NO];
+        [self.maskView removeActivityIndicatorView];
     }else if (state == QPLAYER_STATE_STOPPED){
         
         [_toastView addText:@"停止播放"];
