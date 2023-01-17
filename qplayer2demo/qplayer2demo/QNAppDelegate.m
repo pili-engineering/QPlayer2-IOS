@@ -23,10 +23,6 @@
     
     [Bugly startWithAppId:@"f562ca3299"];
     
-    // 使用 category，应用不会随手机静音键而静音，可在手机静音下播放声音
-
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-    [[AVAudioSession sharedInstance] setActive:YES error:nil];
     
     QNHomeViewController *mainVC = [[QNHomeViewController alloc] init];
     UINavigationController *navigationController = [[UINavigationController alloc]initWithRootViewController:mainVC];

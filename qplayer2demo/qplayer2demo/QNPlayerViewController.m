@@ -85,6 +85,8 @@ QIPlayerSeekListener
 @property (nonatomic, assign) BOOL beInterruptedByOtherAudio;
 @property (nonatomic, assign) NSInteger UpQualityIndex;
 @property (nonatomic, assign) NSInteger firstVideoTime;
+@property (nonatomic, assign) int seiNum;
+@property (nonatomic, strong) NSString *seiString;
 @end
 
 @implementation QNPlayerViewController
@@ -257,6 +259,8 @@ QIPlayerSeekListener
 }
 -(void)onSeekSuccess:(QPlayerContext *)context{
     [_toastView addText:@"seek成功"];
+    
+    [self.maskView removeActivityIndicatorView];
 }
 -(void)onVideoFrameSizeChanged:(QPlayerContext *)context width:(int)width height:(int)height{
     
@@ -266,8 +270,42 @@ QIPlayerSeekListener
     self.firstVideoTime = elapsedTime;
 }
 -(void)onSEIData:(QPlayerContext *)context data:(NSData *)data{
-    [_toastView addText:@"sei回调"];
+    NSString * uuidString = @"";
+    NSData *seiData = data;
+    if(data.length >16){
+        NSData *uuidData = [data subdataWithRange:NSMakeRange(0, 16)];
+        NSUUID * uuid = [[NSUUID alloc]initWithUUIDBytes:uuidData.bytes];
+        uuidString = [NSString stringWithFormat:@"%@",uuid];
+        seiData = [data subdataWithRange:NSMakeRange(16, data.length-16)];
+    }
+    NSString *str = [[NSString alloc]initWithData:seiData encoding:NSUTF8StringEncoding];
+    if ([self.seiString isEqual:str]){
+        self.seiNum++;
+    }else{
+        self.seiNum = 1;
+        self.seiString = str;
+    }
+    NSLog(@"sei回调 data.length: %lu",(unsigned long)data.length);
+    NSLog(@"sei回调 :UUID : %@         seiString = %@",uuidString,str);
+    NSString * logString = [NSString stringWithFormat:@"sei回调 :UUID : %@         seiString = %@",uuidString,str];
+    NSDictionary *dict=@{NSFontAttributeName:[UIFont systemFontOfSize:13.0]};
+    CGSize contentSize=[logString sizeWithAttributes:dict];
+    int lineNum = contentSize.width/200 + 1;
+    UITextView *seitext = [[UITextView alloc]initWithFrame:CGRectMake(PL_SCREEN_WIDTH/2-100, PL_SCREEN_HEIGHT/2-200, 200, 22.0 + (contentSize.height + 6) * lineNum)];
+    seitext.editable = NO;
+    seitext.userInteractionEnabled = NO;
+    seitext.font = [UIFont systemFontOfSize:13.0];
+    seitext.backgroundColor = [UIColor blackColor];
+    seitext.text = logString;
+    seitext.textColor = [UIColor whiteColor];
+    [self.view addSubview:seitext];
+    [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
+        [seitext removeFromSuperview];
+    }];
+    [_toastView addText:[NSString stringWithFormat:@"sei 条数 ： %d",self.seiNum]];
+    
 }
+
 -(void)onAuthenticationFailed:(QPlayerContext *)context error:(QPlayerAuthenticationErrorType)error{
     
     [_toastView addText:[NSString stringWithFormat:@"鉴权失败 : %d",(int)error]];
@@ -296,10 +334,12 @@ QIPlayerSeekListener
         [_maskView setPlayButtonState:YES];
         [self showHintViewWithText:@"开始播放器"];
         [_toastView addText:@"播放中"];
+        [self.maskView removeActivityIndicatorView];
         
     } else if (state == QPLAYER_STATE_PAUSED_RENDER) {
         [_toastView addText:@"暂停播放"];
         [_maskView setPlayButtonState:NO];
+        [self.maskView removeActivityIndicatorView];
     }else if (state == QPLAYER_STATE_STOPPED){
         
         [_toastView addText:@"停止播放"];
@@ -312,6 +352,10 @@ QIPlayerSeekListener
         
         [_toastView addText:@"播放完成"];
         [_maskView setPlayButtonState:NO];
+    }
+    else if (state == QPLAYER_STATE_SEEKING){
+        
+        [self.maskView loadActivityIndicatorView];
     }
     
 }
@@ -820,26 +864,7 @@ QIPlayerSeekListener
     [self.view addSubview:_hintLabel];
 }
 
-- (NSString *)convertDataToHexStr:(NSData *)data {
-    if (!data || [data length] == 0) {
-        return @"";
-    }
-    NSMutableString *string = [[NSMutableString alloc] initWithCapacity:[data length]];
-    
-    [data enumerateByteRangesUsingBlock:^(const void *bytes, NSRange byteRange, BOOL *stop) {
-        unsigned char *dataBytes = (unsigned char*)bytes;
-        for (NSInteger i = 0; i < byteRange.length; i++) {
-            NSString *hexStr = [NSString stringWithFormat:@"%x", (dataBytes[i]) & 0xff];
-            if ([hexStr length] == 2) {
-                [string appendString:hexStr];
-            } else {
-                [string appendFormat:@"0%@", hexStr];
-            }
-        }
-    }];
-    
-    return string;
-}
+
 
 - (void)judgeWeatherIsLiveWithURL:(NSURL *)URL {
     NSString *scheme = URL.scheme;
