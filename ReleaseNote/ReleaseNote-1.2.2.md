@@ -1,0 +1,16 @@
+  # 1.2.2 ReleaseNote
+
+#### 新增能力
+
+- 新增接口：resumeAudioSessionCategory 恢复播放器所需 AudioSessionCategory 配置
+
+  ```objective-c
+  [self.myPlayerView.controlHandler resumeAudioSessionCategory];
+  ```
+
+- 新增 demo SEI 解析代码
+
+#### 修复问题
+
+- 修复部分视频只有首帧 SEI 回调
+- 修复创建播放器时 AudioSessionCategory 状态不符合播放器条件
