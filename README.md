@@ -43,7 +43,7 @@ Qplayer2是一款跨平台的播放器SDK,除了基础的播放器能力外，�
 ##### 引入依赖
 
 ```groovy
-pod 'qplayer2-core', '1.2.1'
+pod 'qplayer2-core', '1.2.2'
 ```
 
 
