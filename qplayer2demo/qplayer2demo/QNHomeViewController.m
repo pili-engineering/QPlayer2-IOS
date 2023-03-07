@@ -10,6 +10,7 @@
 #import "QNPlayerViewController.h"
 #import "PLCellPlayerViewController.h"
 #import "QNPlayerConfigViewController.h"
+#import "QNDoublePlayerViewController.h"
 
 
 #define kLogoSizeWidth (PL_SCREEN_WIDTH - 100)
@@ -79,6 +80,15 @@
     demoVersionLabel.font = [UIFont systemFontOfSize:10.0];
     [self.view addSubview:demoVersionLabel];
     
+    // 两个player切换
+    UIButton *doublePlayerButton = [[UIButton alloc] initWithFrame:CGRectMake(70, (PL_SCREEN_HEIGHT - kLogoSizeHeight - 116)/4 + kLogoSizeHeight + 50 + 210, PL_SCREEN_WIDTH - 140, 34)];
+    doublePlayerButton.backgroundColor = PL_BUTTON_BACKGROUNDCOLOR;
+    doublePlayerButton.layer.cornerRadius = 3;
+    doublePlayerButton.tag = 20;
+    [doublePlayerButton addTarget:self action:@selector(enterDoublePlayerAction:) forControlEvents:UIControlEventTouchDown];
+    [doublePlayerButton setTitle:@"两个player切换" forState:UIControlStateNormal];
+    doublePlayerButton.titleLabel.font = PL_FONT_MEDIUM(14);
+    [self.view addSubview:doublePlayerButton];
 
     UILabel *frameworkVersionLabel = [[UILabel alloc]initWithFrame:CGRectMake(PL_SCREEN_WIDTH-150, PL_SCREEN_HEIGHT-70 , 150, 30)];
     frameworkVersionLabel.textColor = [UIColor blackColor];
@@ -111,6 +121,11 @@
 - (void)enterItemPlayerAction:(UIButton *)button {
     QNPlayerConfigViewController *itemPlayerViewController = [[QNPlayerConfigViewController alloc] init];
     [self.navigationController pushViewController:itemPlayerViewController animated:YES];
+}
+
+- (void) enterDoublePlayerAction:(UIButton *) button {
+    QNDoublePlayerViewController *doublePlayerViewController = [[QNDoublePlayerViewController alloc] init];
+    [self.navigationController pushViewController:doublePlayerViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
