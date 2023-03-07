@@ -55,13 +55,13 @@ QIMediaItemCommandNotAllowListener
 
 @implementation QNDoublePlayerViewController
 
--(void) viewWillAppear:(BOOL)animated {
+-(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
 }
 
--(void) viewDidLoad {
+-(void)viewDidLoad {
     [super viewDidLoad];
     [self configView];
     [self setupPlayer: _playerConfigArray];
@@ -71,11 +71,11 @@ QIMediaItemCommandNotAllowListener
 }
 
 
-- (void) dealloc {
+- (void)dealloc {
     NSLog(@"dealloc");
 }
 
-- (void) viewWillDisAppear:(BOOL)animated {
+- (void)viewWillDisAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.player.controlHandler stop];
     
@@ -88,7 +88,7 @@ QIMediaItemCommandNotAllowListener
 }
 
 #pragma mark - configPlayerANDconfigDefaults
-- (void) configView {
+- (void)configView {
     if (@available(iOS 13.0, *)) {
         UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc]init];
         [appearance configureWithOpaqueBackground];
@@ -98,7 +98,7 @@ QIMediaItemCommandNotAllowListener
         
     } else {
         self.navigationController.navigationBar.barTintColor = PL_SEGMENT_BG_COLOR;
-    };
+    }
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 6, 34, 34)];
     UIImage *image = [UIImage imageNamed:@"pl_back"];
@@ -116,7 +116,7 @@ QIMediaItemCommandNotAllowListener
 
 //
 #pragma mark setup
-- (void)setupPlayer:(NSArray<QNClassModel*>*)models{
+- (void)setupPlayer:(NSArray<QNClassModel*>*)models {
     if (PL_HAS_NOTCH) {
         _topSpace = 88;
     } else {
@@ -159,7 +159,7 @@ QIMediaItemCommandNotAllowListener
     for (QNClassModel* model in configs) {
         for (PLConfigureModel* configModel in model.classValue) {
             if ([model.classKey isEqualToString:@"PLPlayerOption"]) {
-                [self configurePlayerWithConfigureModel:configModel classModel:model isMain:true];;
+                [self configurePlayerWithConfigureModel:configModel classModel:model isMain:true];
             }
         }
     }
@@ -169,7 +169,7 @@ QIMediaItemCommandNotAllowListener
 
 
 }
-- (void) setupPlayer_other:(NSArray<QNClassModel*>*)models {
+- (void)setupPlayer_other:(NSArray<QNClassModel*>*)models {
     if (PL_HAS_NOTCH) {
         _topSpace = 88;
     } else {
@@ -198,12 +198,12 @@ QIMediaItemCommandNotAllowListener
     [self.otherRenderView attachPlayerContext:self.player_other];
     _modelBuilder_other = [[QMediaModelBuilder alloc] initWithIsLive:NO];
         [_modelBuilder_other addStreamElementWithUserType:@""
-                                 urlType:QURL_TYPE_QAUDIO_AND_VIDEO                      //资源的类型，这里的url对应的资源是音视频
-                                 url:@"http://demo-videos.qnsdk.com/shortvideo/桃花.mp4"     //播放地址
-                                 quality:1080                                            //清晰度数值标记为1080
+                                 urlType:QURL_TYPE_QAUDIO_AND_VIDEO
+                                 url:@"http://demo-videos.qnsdk.com/shortvideo/桃花.mp4"
+                                 quality:1080
                                  isSelected:YES
-                                 backupUrl:@""                                            //备用地址
-                                 referer:@""                                              //http/https 协议的地址 支持该属性
+                                 backupUrl:@""
+                                 referer:@""
                                  renderType:QPLAYER_RENDER_TYPE_PLANE];
     for (QNClassModel* model in configs) {
         for (PLConfigureModel* configModel in model.classValue) {
@@ -232,7 +232,7 @@ QIMediaItemCommandNotAllowListener
 
 #pragma mark -function of switch
 
-- (void) makeSwitch {
+- (void)makeSwitch {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swithActionPlayer)];
     UITapGestureRecognizer *tapGesture_other = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swithActionPlayer_other)];
     tapGesture.numberOfTapsRequired = 1;
@@ -243,7 +243,7 @@ QIMediaItemCommandNotAllowListener
     [_myRenderView addGestureRecognizer:tapGesture_other];
 }
 //交换rendview
-- (void) switchAction {
+- (void)switchAction {
     BOOL isPlaying_player = (_player.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING);
     if(isPlaying_player) {
         [_player.controlHandler pauseRender];
@@ -258,12 +258,14 @@ QIMediaItemCommandNotAllowListener
 }
 
 //交换player
-- (void) swithActionPlayer{
+- (void)swithActionPlayer {
     BOOL isPlaying_player = (_player.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING);
     BOOL isPlaying_player_other = (_player_other.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING);
+    
     BOOL bothPlaying = (isPlaying_player && isPlaying_player_other);
     BOOL onlyPlayerplaying = (isPlaying_player && !isPlaying_player_other);
     BOOL onlyPlayerOtherplaying = (!isPlaying_player && isPlaying_player_other);
+    
     if(bothPlaying) {
         if(playerSwitchFlag) {
             [self.otherRenderView attachPlayerContext:self.player];
@@ -282,12 +284,14 @@ QIMediaItemCommandNotAllowListener
         [self switchAction];
     }
 }
-- (void) swithActionPlayer_other{
+- (void)swithActionPlayer_other {
     BOOL isPlaying_player = (_player.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING);
     BOOL isPlaying_player_other = (_player_other.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING);
+    
     BOOL bothPlaying = (isPlaying_player && isPlaying_player_other);
     BOOL onlyPlayerplaying = (isPlaying_player && !isPlaying_player_other);
     BOOL onlyPlayerOtherplaying = (!isPlaying_player && isPlaying_player_other);
+    
     if(bothPlaying) {
         if(playerSwitchFlag) {
             [self.otherRenderView attachPlayerContext:self.player];
