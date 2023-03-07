@@ -123,7 +123,7 @@
     [self.navigationController pushViewController:itemPlayerViewController animated:YES];
 }
 
-- (void) enterDoublePlayerAction:(UIButton *) button {
+- (void)enterDoublePlayerAction:(UIButton *)button {
     QNDoublePlayerViewController *doublePlayerViewController = [[QNDoublePlayerViewController alloc] init];
     [self.navigationController pushViewController:doublePlayerViewController animated:YES];
 }
