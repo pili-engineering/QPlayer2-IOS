@@ -78,7 +78,8 @@ QIMediaItemCommandNotAllowListener
 - (void)viewWillDisAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.player.controlHandler stop];
-    
+    [self.player_other.controlHandler stop];
+
     _toastView = nil;
     [self.player.controlHandler playerRelease];
     self.myRenderView = nil;
@@ -218,6 +219,7 @@ QIMediaItemCommandNotAllowListener
 }
 - (void)getBack {
     [self.player.controlHandler stop];
+    [self.player_other.controlHandler stop];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
