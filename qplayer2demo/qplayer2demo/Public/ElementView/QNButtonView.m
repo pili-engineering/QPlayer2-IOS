@@ -25,6 +25,7 @@ QIPlayerAudioListener
 
 
 @property (nonatomic, strong) UIButton *playButton;
+@property (nonatomic, strong) UIButton *stopButton;
 @property (nonatomic, strong) UIButton *muteButton;
 @property (nonatomic, assign) BOOL shortVideoBool;
 @property (nonatomic, assign) BOOL isBuffingBool;
@@ -65,6 +66,7 @@ QIPlayerAudioListener
         [self addCurrentTimeLabel];
         [self addPlayButton];
         [self addMuteButton];
+        [self addStopButton];
         [self addFullScreenButton];
         [self.player.controlHandler addPlayerProgressChangeListener:self];
         [self.player.controlHandler addPlayerAudioListener:self];
@@ -116,6 +118,15 @@ QIPlayerAudioListener
     [self.muteButton addTarget:self action:@selector(muteButtonClick:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:self.muteButton];
 }
+-(void)addStopButton{
+    self.stopButton = [[UIButton alloc] initWithFrame:CGRectMake(36, 0, 35, 30)];
+    [self.stopButton setImageEdgeInsets:UIEdgeInsetsMake(3, 6, 5, 7)];
+    [self.stopButton setImage:[[UIImage imageNamed:@"pl_stop"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateSelected];
+    self.stopButton.tintColor = [UIColor whiteColor];
+    self.stopButton.selected = YES;
+    [self.stopButton addTarget:self action:@selector(stopButtonClick) forControlEvents:UIControlEventTouchDown];
+    [self addSubview:self.stopButton];
+}
 -(void)addTotalDurationLabel{
     if (_shortVideoBool) {
         
@@ -137,13 +148,13 @@ QIPlayerAudioListener
     self.playButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 35, 30)];
     [self.playButton setImageEdgeInsets:UIEdgeInsetsMake(3, 6, 5, 7)];
     [self.playButton setImage:[UIImage imageNamed:@"pl_play"] forState:UIControlStateNormal];
-    [self.playButton setImage:[UIImage imageNamed:@"pl_stop"] forState:UIControlStateSelected];
+    [self.playButton setImage:[UIImage imageNamed:@"pl_pause"] forState:UIControlStateSelected];
     [self.playButton addTarget:self action:@selector(playButtonClick:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:_playButton];
     
 }
 -(void)addCurrentTimeLabel{
-    self.currentTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(36, 3, 55, 20)];
+    self.currentTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(72, 3, 55, 20)];
     self.currentTimeLabel.font = PL_FONT_LIGHT(14);
     self.currentTimeLabel.textColor = [UIColor whiteColor];
     self.currentTimeLabel.textAlignment = NSTextAlignmentLeft;
@@ -174,7 +185,7 @@ QIPlayerAudioListener
         }
         else{
             
-            _prograssSlider = [[UISlider alloc] initWithFrame:CGRectMake(76, 3, playerWidth - 185, 20)];
+            _prograssSlider = [[UISlider alloc] initWithFrame:CGRectMake(105, 3, playerWidth - 215, 20)];
         }
         _prograssSlider.enabled = !_isLiving;
         [_prograssSlider setThumbImage:[UIImage imageNamed:@"pl_round.png"]forState:UIControlStateNormal];
@@ -278,7 +289,7 @@ QIPlayerAudioListener
     self.totalDurationLabel.frame = CGRectMake(playerWidth - 162, 3, 70, 20);
     self.fullScreenButton.frame = CGRectMake(playerWidth - 52, 0, 35, 30);
     self.muteButton.frame = CGRectMake(playerWidth - 87, 0, 35, 30);
-    self.prograssSlider.frame = CGRectMake(76, 3, playerWidth - 215, 20);
+    self.prograssSlider.frame = CGRectMake(105, 3, playerWidth - 245, 20);
 }
 
 -(void)setFullButtonState:(BOOL)state{
@@ -324,6 +335,9 @@ QIPlayerAudioListener
 -(void)muteButtonClick:(UIButton *)sender{
 //    sender.selected = !sender.selected;
     [self.player.controlHandler setMute:sender.selected];
+}
+-(void)stopButtonClick{
+    [self.player.controlHandler stop];
 }
 - (void)changeScreenSize:(UIButton *)button {
     button.selected = !button.selected;
