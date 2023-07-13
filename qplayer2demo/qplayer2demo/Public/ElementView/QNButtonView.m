@@ -154,7 +154,13 @@ QIPlayerAudioListener
     
 }
 -(void)addCurrentTimeLabel{
-    self.currentTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(72, 3, 55, 20)];
+    if(self.shortVideoBool){
+        
+        self.currentTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(36, 3, 55, 20)];
+    }else{
+        
+        self.currentTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(72, 3, 55, 20)];
+    }
     self.currentTimeLabel.font = PL_FONT_LIGHT(14);
     self.currentTimeLabel.textColor = [UIColor whiteColor];
     self.currentTimeLabel.textAlignment = NSTextAlignmentLeft;
