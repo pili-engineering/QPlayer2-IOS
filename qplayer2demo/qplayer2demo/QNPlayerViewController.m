@@ -398,6 +398,7 @@ QIPlayerAudioDataListener
     }else if (state == QPLAYER_STATE_STOPPED){
         
         [_toastView addText:@"停止播放"];
+        self.subtitleLabel.text = @"";
         [_maskView setPlayButtonState:NO];
     }
     else if (state == QPLAYER_STATE_ERROR){
