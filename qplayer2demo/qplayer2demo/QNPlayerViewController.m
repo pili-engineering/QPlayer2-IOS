@@ -40,7 +40,9 @@ QIPlayerAuthenticationListener,
 QIPlayerRenderListener,
 QIPlayerShootVideoListener,
 QIPlayerVideoFrameSizeChangeListener,
-QIPlayerSeekListener
+QIPlayerSeekListener,
+QIPlayerSubtitleListener,
+QIPlayerAudioDataListener
 >
 
 /** 播放器蒙版视图 **/
@@ -63,6 +65,7 @@ QIPlayerSeekListener
 /** 无可显示 URL 的提示 **/
 @property (nonatomic, strong) UILabel *hintLabel;
 
+@property (nonatomic, strong) UILabel *subtitleLabel;
 @property (nonatomic, strong) NSTimer *durationTimer;
 @property (nonatomic, assign) BOOL isFlip;
 @property (nonatomic, assign) CGFloat topSpace;
@@ -159,12 +162,24 @@ QIPlayerSeekListener
 //        [modle setValuesForKeysWithDictionary:dic];
             
         NSMutableArray <QStreamElement*> *streams = [NSMutableArray array];
+        NSMutableArray <QSubtitleElement*> *subtitiles = [NSMutableArray array];
         for (NSDictionary *elDic in dic[@"streamElements"]) {
             QStreamElement *subModle = [[QStreamElement alloc] init];
             [subModle setValuesForKeysWithDictionary:elDic];
             [streams addObject:subModle];
         }
+        if([dic objectForKey:@"subtitleElements"]){
+            for(NSDictionary *subDic in dic[@"subtitleElements"]){
+                QSubtitleElement *subtitleEle = [[QSubtitleElement alloc]init];
+                [subtitleEle setValuesForKeysWithDictionary:subDic];
+                [subtitiles addObject:subtitleEle];
+                
+//                [modleBuilder addSubtitleElement:subDic[@"name"] url:subDic[@"url"] isDefault:[subDic[@"isSelected"]intValue]==0?NO:YES];
+            }
+            
+        }
         [modleBuilder addStreamElements:streams];
+        [modleBuilder addSubtitleElements:subtitiles];
         QMediaModel *model = [modleBuilder build];
         [_playerModels addObject:model];
         
@@ -188,6 +203,41 @@ QIPlayerSeekListener
     // PLPlayer 应用
     [self setUpPlayer:self.playerConfigArray];
     
+//    self.subtitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.myPlayerView.frame.size.width/2, self.myPlayerView.frame.size.height-60, 50, 30)];
+    self.subtitleLabel = [[UILabel alloc]init];
+
+    self.subtitleLabel.backgroundColor = [UIColor clearColor];
+    self.subtitleLabel.textColor = [UIColor whiteColor];
+    self.subtitleLabel.numberOfLines = 0;
+    [self.subtitleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+    self.subtitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    [self.myPlayerView addSubview:self.subtitleLabel];
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                       relatedBy:NSLayoutRelationLessThanOrEqual
+                                                                          toItem:self.myPlayerView
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                      multiplier:1.0
+                                                                        constant:0.0];
+    
+    NSLayoutConstraint *centerXConstraint = [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+                                                                         attribute:NSLayoutAttributeCenterX
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:self.myPlayerView
+                                                                         attribute:NSLayoutAttributeCenterX
+                                                                        multiplier:1.0
+                                                                          constant:0.0];
+
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.myPlayerView
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                       multiplier:1.0
+                                                                         constant:-40.0];
+
+    [NSLayoutConstraint activateConstraints:@[widthConstraint, centerXConstraint, bottomConstraint]];
     [self addPlayerMaskView];
 
     [self layoutUrlListTableView];
@@ -225,6 +275,9 @@ QIPlayerSeekListener
     [self.view addSubview:self.myPlayerView];
 //    [self.playerContext.controlHandler forceAuthenticationFromNetwork];
     [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
+    
+    [self.myPlayerView.controlHandler setSubtitleEnable:YES];
+    [self.myPlayerView.controlHandler setSubtitle:@"英文"];
     for (QNClassModel* model in configs) {
         for (PLConfigureModel* configModel in model.classValue) {
             if ([model.classKey isEqualToString:@"PLPlayerOption"]) {
@@ -252,6 +305,8 @@ QIPlayerSeekListener
     [self.myPlayerView.controlHandler addPlayerShootVideoListener:self];
     [self.myPlayerView.controlHandler addPlayerVideoFrameSizeChangeListener:self];
     [self.myPlayerView.controlHandler addPlayerSeekListener:self];
+    [self.myPlayerView.controlHandler addPlayerSubtitleListener:self];
+    [self.myPlayerView.controlHandler addPlayerAudioDataListener:self];
     
 }
 -(void)onSeekFailed:(QPlayerContext *)context{
@@ -391,6 +446,46 @@ QIPlayerSeekListener
     }else{
         [_toastView addText:@"截图格式为None"];
     }
+}
+
+-(void)onSubtitleClose:(QPlayerContext *)context{
+    [_toastView addText:@"字幕关闭"];
+}
+
+-(void)onSubtitleNameChange:(QPlayerContext *)context name:(NSString *)name{
+    [_toastView addText:[NSString stringWithFormat:@"name 更改为 %@",name]];
+}
+-(void)onSubtitleTextChange:(QPlayerContext *)context text:(NSString *)text{
+    NSLog(@"text is :%@",text);
+    self.subtitleLabel.text = text;
+//    [self.subtitleLabel sizeToFit];
+//    CGRect frame = self.subtitleLabel.frame;
+//    NSLog(@"frame.size.width: %f,frame.size.height: %f",frame.size.width,frame.size.height);
+//    frame.size.width = MIN(frame.size.width,self.myPlayerView.frame.size.width);
+//    frame.size.height = MAX(30,frame.size.height);
+//
+//    NSLog(@"frame.size.height :%f, frame.size.width: %f self.myPlayerView.frame.size.width: %f text : %@",frame.size.height,frame.size.width,self.myPlayerView.frame.size.width,text);
+//    self.subtitleLabel.frame = frame;
+//    self.subtitleLabel.center = CGPointMake(self.myPlayerView.frame.size.width/2, self.myPlayerView.frame.size.height-60);
+}
+- (void)onSubtitleLoaded:(QPlayerContext *)context name:(NSString *)name result:(BOOL)result{
+    if(result){
+        [_toastView addText:[NSString stringWithFormat:@"字幕加载成功：%@",name]];
+    }
+    else{
+        [_toastView addText:[NSString stringWithFormat:@"字幕加载失败：%@",name]];
+    }
+}
+-(void)onSubtitleDecoded:(QPlayerContext *)context name:(NSString *)name result:(BOOL)result{
+    if(result){
+        [_toastView addText:[NSString stringWithFormat:@"字幕Decoded成功：%@",name]];
+    }
+    else{
+        [_toastView addText:[NSString stringWithFormat:@"字幕Decoded失败：%@",name]];
+    }
+}
+-(void)onAudioData:(QPlayerContext *)context sampleRate:(int)sampleRate format:(QSampleFormat)format channelNum:(int)channelNum channelLayout:(QChannelLayout)channelLayout data:(NSData *)data{
+    NSLog(@"onAudioData sampleRate: %d,format : %d,channelNum : %d,channelLayou : %d",sampleRate,(int)format,channelNum,(int)channelLayout);
 }
 #pragma mark - 保存图片到相册出错回调
 -(void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo

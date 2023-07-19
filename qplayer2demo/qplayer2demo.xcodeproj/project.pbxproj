@@ -72,18 +72,18 @@
 		50B1F4C5289CC62D0074E02D /* QNHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B1F483289CC62D0074E02D /* QNHomeViewController.m */; };
 		616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0C2D1DB69E96781D80C1A2 /* libPods-qplayer2demo.a */; };
 		977927F029B71BF1006E7931 /* QNDoublePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 977927EF29B71BF1006E7931 /* QNDoublePlayerViewController.m */; };
-		BA908F332A5E53120080E10A /* qplayer2_core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA908F322A5E53120080E10A /* qplayer2_core.framework */; };
-		BA908F342A5E53120080E10A /* qplayer2_core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA908F322A5E53120080E10A /* qplayer2_core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BAAD19772A65450000DB96FF /* qplayer2_core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAD19762A65450000DB96FF /* qplayer2_core.framework */; };
+		BAAD19782A65450000DB96FF /* qplayer2_core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BAAD19762A65450000DB96FF /* qplayer2_core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		BA908F352A5E53120080E10A /* Embed Frameworks */ = {
+		BAAD19792A65450000DB96FF /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BA908F342A5E53120080E10A /* qplayer2_core.framework in Embed Frameworks */,
+				BAAD19782A65450000DB96FF /* qplayer2_core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,6 +187,7 @@
 		B2BDA3706EA1C6372228C6C3 /* Pods-qplayer2demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-qplayer2demo.debug.xcconfig"; path = "Target Support Files/Pods-qplayer2demo/Pods-qplayer2demo.debug.xcconfig"; sourceTree = "<group>"; };
 		BA1855D32A5C08BC009BD367 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA908F322A5E53120080E10A /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAAD19762A65450000DB96FF /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA90B80F289A7AF60087543B /* qplayer2demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qplayer2demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -198,7 +199,7 @@
 				50B1F3D5289BBF7A0074E02D /* Foundation.framework in Frameworks */,
 				50387155292CA3410000C4DD /* CoreMotion.framework in Frameworks */,
 				616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */,
-				BA908F332A5E53120080E10A /* qplayer2_core.framework in Frameworks */,
+				BAAD19772A65450000DB96FF /* qplayer2_core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +394,7 @@
 		CA90BF8B289B846C0087543B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BAAD19762A65450000DB96FF /* qplayer2_core.framework */,
 				BA908F322A5E53120080E10A /* qplayer2_core.framework */,
 				BA1855D32A5C08BC009BD367 /* qplayer2_core.framework */,
 				50387154292CA3410000C4DD /* CoreMotion.framework */,
@@ -415,7 +417,7 @@
 				CA90B80B289A7AF60087543B /* Sources */,
 				CA90B80C289A7AF60087543B /* Frameworks */,
 				CA90B80D289A7AF60087543B /* Resources */,
-				BA908F352A5E53120080E10A /* Embed Frameworks */,
+				BAAD19792A65450000DB96FF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
