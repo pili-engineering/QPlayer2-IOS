@@ -72,18 +72,18 @@
 		50B1F4C5289CC62D0074E02D /* QNHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B1F483289CC62D0074E02D /* QNHomeViewController.m */; };
 		616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0C2D1DB69E96781D80C1A2 /* libPods-qplayer2demo.a */; };
 		977927F029B71BF1006E7931 /* QNDoublePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 977927EF29B71BF1006E7931 /* QNDoublePlayerViewController.m */; };
-		BAAD19772A65450000DB96FF /* qplayer2_core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAD19762A65450000DB96FF /* qplayer2_core.framework */; };
-		BAAD19782A65450000DB96FF /* qplayer2_core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BAAD19762A65450000DB96FF /* qplayer2_core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BAD34C292A68CDBA00B24A30 /* qplayer2_core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1855D32A5C08BC009BD367 /* qplayer2_core.framework */; };
+		BAD34C2A2A68CDBA00B24A30 /* qplayer2_core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA1855D32A5C08BC009BD367 /* qplayer2_core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		BAAD19792A65450000DB96FF /* Embed Frameworks */ = {
+		BAD34C2B2A68CDBA00B24A30 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BAAD19782A65450000DB96FF /* qplayer2_core.framework in Embed Frameworks */,
+				BAD34C2A2A68CDBA00B24A30 /* qplayer2_core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -199,7 +199,7 @@
 				50B1F3D5289BBF7A0074E02D /* Foundation.framework in Frameworks */,
 				50387155292CA3410000C4DD /* CoreMotion.framework in Frameworks */,
 				616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */,
-				BAAD19772A65450000DB96FF /* qplayer2_core.framework in Frameworks */,
+				BAD34C292A68CDBA00B24A30 /* qplayer2_core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,7 +417,7 @@
 				CA90B80B289A7AF60087543B /* Sources */,
 				CA90B80C289A7AF60087543B /* Frameworks */,
 				CA90B80D289A7AF60087543B /* Resources */,
-				BAAD19792A65450000DB96FF /* Embed Frameworks */,
+				BAD34C2B2A68CDBA00B24A30 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

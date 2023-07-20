@@ -97,7 +97,7 @@
     }else if([key isEqual:@"清晰度切换"]){
         return @{@"清晰度切换":@[@"立即切换",@"无缝切换",@"直播立即点播无缝"], @"default":@2};
     }else if([key isEqual:@"字幕"]){
-        return @{@"是否开启字幕":@[@"开启",@"关闭"], @"default":@0};
+    return @{@"字幕":@[@"关闭",@"中文",@"英文"], @"default":@0};
     }else{
         NSLog(@"读取PLPlayerOption数据出错");
         return nil;

@@ -276,7 +276,6 @@ QIPlayerAudioDataListener
 //    [self.playerContext.controlHandler forceAuthenticationFromNetwork];
     [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
     
-    [self.myPlayerView.controlHandler setSubtitleEnable:YES];
     [self.myPlayerView.controlHandler setSubtitle:@"英文"];
     for (QNClassModel* model in configs) {
         for (PLConfigureModel* configModel in model.classValue) {
@@ -757,6 +756,19 @@ QIPlayerAudioDataListener
         }
         else if ([configureModel.configuraKey containsString:@"清晰度切换"]){
             _immediatelyType =(int)index;
+        }
+        else if ([configureModel.configuraKey containsString:@"字幕"]){
+            [self.myPlayerView.controlHandler setSubtitleEnable:index==0?NO:YES];
+            if(index == 1 ){
+                if(![self.myPlayerView.controlHandler.subtitleName isEqual:@"中文"]){
+                    [self.myPlayerView.controlHandler setSubtitle:@"中文"];
+                }
+            }
+            else if (index == 2){
+                if(![self.myPlayerView.controlHandler.subtitleName isEqual:@"英文"]){
+                    [self.myPlayerView.controlHandler setSubtitle:@"英文"];
+                }
+            }
         }
     }
 }
