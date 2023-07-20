@@ -23,6 +23,7 @@
     QNChangePlayerView *authenticationPlayerView;
     QNChangePlayerView *backgroundPlayPlayerView;
     QNChangePlayerView *immediatelyPlayerView;
+    QNChangePlayerView *subtitlePlayerView;
     void (^changePlayerViewCallback)(ChangeButtonType type , NSString * startPosition,BOOL selected);
     void (^speedViewCallback)(SpeedUIButtonType type);
 }
@@ -120,11 +121,17 @@
         case UIButtonTypeImmediatelyCustom:
             [immediatelyPlayerView setDefault:type];
             break;
+        case UIButtonTypeSubtitleClose:
+        case UIButtonTypeSubtitleChinese:
+        case UIButtonTypeSubtitleEnglish:
+            [subtitlePlayerView setDefault:type];
+            break;
         default:
             NSLog(@"设置出错");
             break;
     }
 }
+
 -(void)addSpeedView{
     speedView = [[QNSpeedPlayerView alloc]initWithFrame:CGRectMake(0, 0, 100, ScreenWidth) backgroudColor:[UIColor clearColor]];
     [speedView addButtonText:@"2.0x" frame:CGRectMake((speedView.frame.size.width-100)/2, 50, 100, 50) type:UIButtonTypeFor20 target:self selector:@selector(SpeedButtonClick:)];
@@ -148,7 +155,7 @@
 }
 -(void)addScrollView:(CGRect)frame{
 //    self = [[UIScrollView alloc]initWithFrame:frame];
-    self.contentSize = CGSizeMake(frame.size.width, 1050);
+    self.contentSize = CGSizeMake(frame.size.width, 1170);
 //    self.backgroundColor = [UIColor clearColor];
     self.userInteractionEnabled = YES;
     self.scrollEnabled = YES;
@@ -209,6 +216,9 @@
     
     [self addImmediately:CGRectMake(0, 965, 350, 90)];
     
+    [self addLine:CGRectMake(5, 1058, self.frame.size.width, 2)];
+    
+    [self addSubtitleView:CGRectMake(0, 1065, 350, 90)];
     
     
 }
@@ -221,6 +231,7 @@
     [immediatelyPlayerView setDefault:UIButtonTypeImmediatelyCustom];
     [self addSubview:immediatelyPlayerView];
 }
+
 
 -(void)addBackgroundPlay:(CGRect)frame{
     
@@ -332,6 +343,15 @@
     [decoderView addButtonText:@"硬解" frame:CGRectMake(240, 50, 60, 20) type:UIButtonTypeDectorHard target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
     [decoderView setDefault:UIButtonTypeDectorAutomatic];
     [self addSubview:decoderView];
+}
+-(void)addSubtitleView:(CGRect)frame{
+    subtitlePlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [subtitlePlayerView setTitleLabelText:@"字幕设置" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [subtitlePlayerView addButtonText:@"关闭" frame:CGRectMake(10, 50, 60, 20) type:UIButtonTypeSubtitleClose target:self selector:@selector(changePlayerViewClickTag:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [subtitlePlayerView addButtonText:@"中文" frame:CGRectMake(125, 50, 60, 20) type:UIButtonTypeSubtitleChinese target:self selector:@selector(changePlayerViewClickTag:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [subtitlePlayerView addButtonText:@"英文" frame:CGRectMake(240, 50, 60, 20) type:UIButtonTypeSubtitleEnglish target:self selector:@selector(changePlayerViewClickTag:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [subtitlePlayerView setDefault:UIButtonTypeSubtitleClose];
+    [self addSubview:subtitlePlayerView];
 }
 -(void)addRender:(CGRect)frame{
     

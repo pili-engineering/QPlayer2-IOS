@@ -245,6 +245,20 @@ QIPlayerAuthenticationListener
                 }
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"清晰度切换" selIndex:(int)(type-800)];
                 
+            }else if (900 <= type && type <= 902){
+                if(type == 900){
+                    [weakSelf.player.controlHandler setSubtitleEnable:NO];
+                }else{
+                    [weakSelf.player.controlHandler setSubtitleEnable:YES];
+                }
+                if(type == 901){
+                    [weakSelf.player.controlHandler setSubtitle:@"中文"];
+                }else if(type == 902){
+                    [weakSelf.player.controlHandler setSubtitle:@"英文"];
+                }
+                
+                [[QDataHandle shareInstance] setSelConfiguraKey:@"字幕" selIndex:(int)(type-900)];
+                
             }
             
             if (startPosition) {
@@ -252,8 +266,9 @@ QIPlayerAuthenticationListener
                 
                 [[QDataHandle shareInstance] setValueConfiguraKey:@"播放起始" selValue:satartPod];
                 
-                [[QDataHandle shareInstance] saveConfigurations];
             }
+            
+            [[QDataHandle shareInstance] saveConfigurations];
         }];
         _settingView.hidden = YES;
         [self addSubview:_settingView];
@@ -372,6 +387,9 @@ QIPlayerAuthenticationListener
             }
         }else if ([configureModel.configuraKey containsString:@"清晰度切换"]) {
             [_settingView setChangeDefault:(ChangeButtonType)(index+800)];
+            
+        }else if ([configureModel.configuraKey containsString:@"字幕"]) {
+            [_settingView setChangeDefault:(ChangeButtonType)(index+900)];
             
         }
         

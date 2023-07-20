@@ -235,7 +235,7 @@ QIPlayerAudioDataListener
                                                                            toItem:self.myPlayerView
                                                                         attribute:NSLayoutAttributeBottom
                                                                        multiplier:1.0
-                                                                         constant:-40.0];
+                                                                         constant:-70.0];
 
     [NSLayoutConstraint activateConstraints:@[widthConstraint, centerXConstraint, bottomConstraint]];
     [self addPlayerMaskView];
@@ -275,8 +275,9 @@ QIPlayerAudioDataListener
     [self.view addSubview:self.myPlayerView];
 //    [self.playerContext.controlHandler forceAuthenticationFromNetwork];
     [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
-    
-    [self.myPlayerView.controlHandler setSubtitle:@"英文"];
+    QMediaModel *model = _playerModels.firstObject;
+
+    [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     for (QNClassModel* model in configs) {
         for (PLConfigureModel* configModel in model.classValue) {
             if ([model.classKey isEqualToString:@"PLPlayerOption"]) {
@@ -284,9 +285,7 @@ QIPlayerAudioDataListener
             }
         }
     }
-    QMediaModel *model = _playerModels.firstObject;
-
-    [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
+    
 
 }
 
@@ -379,6 +378,8 @@ QIPlayerAudioDataListener
 
 -(void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
     if (state == QPLAYER_STATE_PREPARE) {
+        
+        self.subtitleLabel.text = @"";
         [self.maskView loadActivityIndicatorView];
         [_toastView addText:@"开始拉视频数据"];
         [_toastView addDecoderType:[self.maskView getDecoderType]];
@@ -449,6 +450,7 @@ QIPlayerAudioDataListener
 }
 
 -(void)onSubtitleClose:(QPlayerContext *)context{
+    self.subtitleLabel.text = @"";
     [_toastView addText:@"字幕关闭"];
 }
 
@@ -458,15 +460,7 @@ QIPlayerAudioDataListener
 -(void)onSubtitleTextChange:(QPlayerContext *)context text:(NSString *)text{
     NSLog(@"text is :%@",text);
     self.subtitleLabel.text = text;
-//    [self.subtitleLabel sizeToFit];
-//    CGRect frame = self.subtitleLabel.frame;
-//    NSLog(@"frame.size.width: %f,frame.size.height: %f",frame.size.width,frame.size.height);
-//    frame.size.width = MIN(frame.size.width,self.myPlayerView.frame.size.width);
-//    frame.size.height = MAX(30,frame.size.height);
-//
-//    NSLog(@"frame.size.height :%f, frame.size.width: %f self.myPlayerView.frame.size.width: %f text : %@",frame.size.height,frame.size.width,self.myPlayerView.frame.size.width,text);
-//    self.subtitleLabel.frame = frame;
-//    self.subtitleLabel.center = CGPointMake(self.myPlayerView.frame.size.width/2, self.myPlayerView.frame.size.height-60);
+
 }
 - (void)onSubtitleLoaded:(QPlayerContext *)context name:(NSString *)name result:(BOOL)result{
     if(result){
