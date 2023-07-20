@@ -347,9 +347,9 @@
 -(void)addSubtitleView:(CGRect)frame{
     subtitlePlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
     [subtitlePlayerView setTitleLabelText:@"字幕设置" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
-    [subtitlePlayerView addButtonText:@"关闭" frame:CGRectMake(10, 50, 60, 20) type:UIButtonTypeSubtitleClose target:self selector:@selector(changePlayerViewClickTag:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [subtitlePlayerView addButtonText:@"中文" frame:CGRectMake(125, 50, 60, 20) type:UIButtonTypeSubtitleChinese target:self selector:@selector(changePlayerViewClickTag:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [subtitlePlayerView addButtonText:@"英文" frame:CGRectMake(240, 50, 60, 20) type:UIButtonTypeSubtitleEnglish target:self selector:@selector(changePlayerViewClickTag:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [subtitlePlayerView addButtonText:@"关闭" frame:CGRectMake(10, 50, 60, 20) type:UIButtonTypeSubtitleClose target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [subtitlePlayerView addButtonText:@"中文" frame:CGRectMake(125, 50, 60, 20) type:UIButtonTypeSubtitleChinese target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [subtitlePlayerView addButtonText:@"英文" frame:CGRectMake(240, 50, 60, 20) type:UIButtonTypeSubtitleEnglish target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
     [subtitlePlayerView setDefault:UIButtonTypeSubtitleClose];
     [self addSubview:subtitlePlayerView];
 }
