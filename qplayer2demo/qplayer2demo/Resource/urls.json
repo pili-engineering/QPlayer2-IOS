@@ -6,7 +6,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/qiniu-1080p.mp4",
+                "url": "http://demo-videos.qnsdk.com/qiniu-2023-1080p.mp4",
                 "quality": 1080,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -16,7 +16,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/qiniu-720p.mp4",
+                "url": "http://demo-videos.qnsdk.com/qiniu-2023-720p.mp4",
                 "quality": 720,
                 "isSelected": 0,
                 "backupUrl": "",
@@ -26,7 +26,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/qiniu-480p.mp4",
+                "url": "http://demo-videos.qnsdk.com/qiniu-2023-480p.mp4",
                 "quality": 480,
                 "isSelected": 0,
                 "backupUrl": "",
@@ -36,11 +36,35 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/qiniu-360p.mp4",
+                "url": "http://demo-videos.qnsdk.com/qiniu-2023-360p.mp4",
                 "quality": 360,
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://demo-videos.qnsdk.com/qiniu-2023-240p.mp4",
+                "quality": 240,
+                "isSelected": 0,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ],
+        "subtitleElements": [
+            {
+                "name": "中文",
+                "url": "http://demo-videos.qnsdk.com/qiniu-2023-chinese.srt",
+                "isSelected": 1,
+                 
+            },
+            {
+                "name": "英文",
+                "url": "http://demo-videos.qnsdk.com/qiniu-2023-english.srt",
+                "isSelected": 0,
                  
             }
         ]
