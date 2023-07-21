@@ -890,6 +890,23 @@
                  
             }
         ]
+    },
+    {
+          
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://80rjmu.com1.z0.glb.clouddn.com/ncyY3ioGAakS-Lg252IscrXNxyo=/Fgny-rvibYqoFP-lPkI53JfmoIx5",
+                "quality": 720,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                "hlsDrmKey": "testtesttesttest",
+                 
+            }
+        ]
     }
     
 ]
