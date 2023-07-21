@@ -449,9 +449,15 @@ QIPlayerAudioDataListener
     }
 }
 
--(void)onSubtitleClose:(QPlayerContext *)context{
+-(void)onSubtitleEnable:(QPlayerContext *)context enable:(BOOL)enable{
     self.subtitleLabel.text = @"";
-    [_toastView addText:@"字幕关闭"];
+    if (enable) {
+        
+        [_toastView addText:@"字幕开启"];
+    }else{
+        
+        [_toastView addText:@"字幕关闭"];
+    }
 }
 
 -(void)onSubtitleNameChange:(QPlayerContext *)context name:(NSString *)name{
