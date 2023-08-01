@@ -72,4 +72,5 @@ else if (@available(iOS 11.0, *)) {\
 #import <Masonry/Masonry.h>
 
 #import <Bugly/Bugly.h>
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 #endif /* QNPublicHeader_h */

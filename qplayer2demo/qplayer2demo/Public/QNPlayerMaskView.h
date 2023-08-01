@@ -31,7 +31,7 @@
 
 - (void)reOpenPlayPlayerMaskView:(QNPlayerMaskView *)playerMaskView;
 - (void)shootVideoButtonClick;
-
+- (void)pushStreamButtonClick:(BOOL)isSelected;
 - (void)setImmediately:(int)immediately;
 
 @end

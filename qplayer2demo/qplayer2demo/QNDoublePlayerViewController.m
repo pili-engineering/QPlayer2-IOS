@@ -372,6 +372,22 @@ QIMediaItemCommandNotAllowListener
                 [self.player.controlHandler setBackgroundPlayEnable:NO];
             }
         }
+        else if ([configureModel.configuraKey containsString:@"清晰度切换"]){
+//            _immediatelyType =(int)index;
+        }
+        else if ([configureModel.configuraKey containsString:@"字幕"]){
+            [self.player.controlHandler setSubtitleEnable:index==0?NO:YES];
+            if(index == 1 ){
+                if(![self.player.controlHandler.subtitleName isEqual:@"中文"]){
+                    [self.player.controlHandler setSubtitle:@"中文"];
+                }
+            }
+            else if (index == 2){
+                if(![self.player.controlHandler.subtitleName isEqual:@"英文"]){
+                    [self.player.controlHandler setSubtitle:@"英文"];
+                }
+            }
+        }
     }
 }
 
