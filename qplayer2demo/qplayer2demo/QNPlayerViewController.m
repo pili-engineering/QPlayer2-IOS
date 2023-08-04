@@ -357,7 +357,7 @@ QIPlayerVideoDataListener
     [self.view addSubview:self.myPlayerView];
 //    [self.playerContext.controlHandler forceAuthenticationFromNetwork];
     [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
-//    [self.myPlayerView.controlHandler setVideoType];
+    [self.myPlayerView.controlHandler setVideoType:QVIDEO_TYPE_YUV_420P];
     QMediaModel *model = _playerModels.firstObject;
 
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
