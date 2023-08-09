@@ -907,6 +907,37 @@
                  
             }
         ]
+    },
+    {
+          
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "https://sdk-release.qnsdk.com/CENC_AES-CTR.mp4",
+                "quality": 720,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                "mp4DrmKey" : "c7e16c4403654b85847037383f0c2db3"
+            }
+        ]
+    },
+    {
+          
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "https://sdk-release.qnsdk.com/CENC_AES-CTR.mp4",
+                "quality": 720,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": ""
+            }
+        ]
     }
     
 ]

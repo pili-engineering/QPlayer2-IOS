@@ -13,5 +13,4 @@
 
 @property (nonatomic, strong) NSArray<QNClassModel*> *playerConfigArray;
 
-
 @end

@@ -33,7 +33,7 @@
     
     // 布局主页面
     [self layoutMainView];
-
+    
 }
 
 - (void)layoutMainView {
@@ -107,7 +107,6 @@
 
 - (void)enterPlayerAction:(UIButton *)button {
     QNPlayerViewController *playerViewController = [[QNPlayerViewController alloc] init];
-
     [self.navigationController pushViewController:playerViewController animated:YES];
 }
 
