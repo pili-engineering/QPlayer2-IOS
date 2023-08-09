@@ -81,8 +81,6 @@ QIPlayerAuthenticationListener
 /** 截图按钮 **/
 @property (nonatomic, strong) UIButton *shootVideoButton;
 
-/** 推流按钮 **/
-@property (nonatomic, strong) UIButton *pushStreamButton;
 
 @property (nonatomic, assign) QPlayerDecoder decoderType;
 @property (nonatomic, assign) BOOL seeking;
@@ -173,14 +171,7 @@ QIPlayerAuthenticationListener
         self.shootVideoButton.hidden = YES;
         [self addSubview:self.shootVideoButton];
         
-        self.pushStreamButton = [[UIButton alloc]initWithFrame:CGRectMake(PL_SCREEN_WIDTH-60, PL_SCREEN_HEIGHT/2-80, 40, 40)];
-        [self.pushStreamButton addTarget:self action:@selector(pushStreamButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        [self.pushStreamButton setImage:[[UIImage imageNamed:@"pl_pushStream"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
         
-        [self.pushStreamButton setImage:[UIImage imageNamed:@"pl_stopStream"] forState:UIControlStateSelected];
-        self.pushStreamButton.tintColor = [UIColor whiteColor];
-        self.pushStreamButton.hidden = YES;
-        [self addSubview:self.pushStreamButton];
         
         [self createGesture];
         
@@ -644,13 +635,11 @@ QIPlayerAuthenticationListener
         self.showSettingViewButton.hidden = self.buttonView.hidden;
         self.showSpeedViewButton.hidden = self.buttonView.hidden;
         self.shootVideoButton.hidden = self.buttonView.hidden;
-        self.pushStreamButton.hidden = self.buttonView.hidden;
     }else{
         
         self.showSettingViewButton.hidden = YES;
         self.showSpeedViewButton.hidden = YES;
         self.shootVideoButton.hidden = YES;
-        self.pushStreamButton.hidden = YES;
     }
     if (self.qualitySegMc.numberOfSegments >1) {
         self.qualitySegMc.hidden  = !self.qualitySegMc.hidden;
@@ -712,7 +701,6 @@ QIPlayerAuthenticationListener
         self.showSettingViewButton.hidden = YES;
         self.showSpeedViewButton.hidden = YES;
         self.shootVideoButton.hidden = YES;
-        self.pushStreamButton.hidden = YES;
         self.backgroundColor = [UIColor clearColor];
     }
 }
@@ -764,7 +752,6 @@ QIPlayerAuthenticationListener
    
     self.showSettingViewButton.frame = CGRectMake(playerWidth - 100, 8, 35, 30);
     self.shootVideoButton.frame = CGRectMake(playerWidth - 60, playerHeight/2-20, 40, 40);
-    self.pushStreamButton.frame = CGRectMake(playerWidth - 60, playerHeight/2-80, 40, 40);
     self.settingView.frame = CGRectMake(playerWidth - 390, 0, 390, playerHeight);
     self.showSpeedViewButton.frame = CGRectMake(playerWidth - 170, 8, 40, 30);
     self.settingSpeedView.frame = CGRectMake(playerWidth - 130, 0, 130, playerHeight);
@@ -776,7 +763,6 @@ QIPlayerAuthenticationListener
         _showSettingViewButton.hidden = NO;
         _showSpeedViewButton.hidden = NO;
         self.shootVideoButton.hidden = NO;
-        self.pushStreamButton.hidden = NO;
         fullFrame = frame;
         self.settingSpeedView.contentSize = CGSizeMake(130, frame.size.height);
         [self.settingSpeedView reloadInputViews];
@@ -800,7 +786,6 @@ QIPlayerAuthenticationListener
         _showSettingViewButton.hidden = YES;
         _showSpeedViewButton.hidden = YES;
         self.shootVideoButton.hidden = YES;
-        self.pushStreamButton.hidden = YES;
         self.activityIndicatorView.frame = CGRectMake(playerWidth/2 - 20, playerHeight/2 - 20, 40, 40);
     }
     
@@ -810,12 +795,7 @@ QIPlayerAuthenticationListener
         [self.delegate shootVideoButtonClick];
     }
 }
--(void)pushStreamButtonClick{
-    self.pushStreamButton.selected = !self.pushStreamButton.selected;
-    if(self.delegate!=nil && [self.delegate respondsToSelector:@selector(pushStreamButtonClick:)]){
-        [self.delegate pushStreamButtonClick:self.pushStreamButton.selected];
-    }
-}
+
 
 #pragma mark - 返回
 

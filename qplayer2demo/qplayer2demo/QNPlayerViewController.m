@@ -45,9 +45,7 @@ QIPlayerRenderListener,
 QIPlayerShootVideoListener,
 QIPlayerVideoFrameSizeChangeListener,
 QIPlayerSeekListener,
-QIPlayerSubtitleListener,
-QIPlayerAudioDataListener,
-QIPlayerVideoDataListener
+QIPlayerSubtitleListener
 >
 
 /** 播放器蒙版视图 **/
@@ -357,7 +355,6 @@ QIPlayerVideoDataListener
     [self.view addSubview:self.myPlayerView];
 //    [self.playerContext.controlHandler forceAuthenticationFromNetwork];
     [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
-    [self.myPlayerView.controlHandler setVideoType:QVIDEO_TYPE_YUV_420P];
     QMediaModel *model = _playerModels.firstObject;
 
     [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
@@ -387,8 +384,7 @@ QIPlayerVideoDataListener
     [self.myPlayerView.controlHandler addPlayerVideoFrameSizeChangeListener:self];
     [self.myPlayerView.controlHandler addPlayerSeekListener:self];
     [self.myPlayerView.controlHandler addPlayerSubtitleListener:self];
-    [self.myPlayerView.controlHandler addPlayerAudioDataListener:self];
-    [self.myPlayerView.controlHandler addPlayerVideoDataListener:self];
+    
     
 }
 -(void)onSeekFailed:(QPlayerContext *)context{
@@ -460,34 +456,6 @@ QIPlayerVideoDataListener
     [_toastView addText:[NSString stringWithFormat:@"切换失败"]];
 }
 
--(void)onVideoData:(QPlayerContext *)context width:(int)width height:(int)height videoType:(QVideoType)videoType buffer:(CVPixelBufferRef)buffer{
-    if(self.isStartPush &&videoType == QVIDEO_TYPE_RGBA){
-
-    }
-
-    if(self.isStartPush&&videoType==QVIDEO_TYPE_YUV_420P){
-//        CMSampleBufferRef sample = [self CVPixelBufferRefToCMSampleBufferRef:sampleCV];
-        
-        [self.session pushPixelBuffer:buffer completion:^(BOOL success) {
-            if (success) {
-                NSLog(@"success");
-            }else{
-                NSLog(@"false");
-            }
-        }];
-        
-//        [self.session pushVideoSampleBuffer:sample completion:^(BOOL success) {
-//            if (success) {
-//                NSLog(@"success");
-//            }else{
-//                NSLog(@"false");
-//            }
-//        }];
-        
-        
-    }
-//    [_toastView addText:[NSString stringWithFormat:@"videoData width :%d height : %d",width,height]];
-}
 
 
 
@@ -600,38 +568,7 @@ QIPlayerVideoDataListener
         [_toastView addText:[NSString stringWithFormat:@"字幕Decoded失败：%@",name]];
     }
 }
--(void)onAudioData:(QPlayerContext *)context sampleRate:(int)sampleRate format:(QSampleFormat)format channelNum:(int)channelNum channelLayout:(QChannelLayout)channelLayout data:(NSData *)data{
-//    NSLog(@"onAudioData sampleRate: %d,format : %d,channelNum : %d,channelLayou : %d",sampleRate,(int)format,channelNum,(int)channelLayout);
 
-    if (self.isStartPush) {
-        
-        AudioStreamBasicDescription audioFormatDesc;
-        audioFormatDesc.mSampleRate = sampleRate;
-        audioFormatDesc.mFormatID = kAudioFormatLinearPCM;
-        audioFormatDesc.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
-        audioFormatDesc.mFramesPerPacket = 1;
-        audioFormatDesc.mChannelsPerFrame = channelNum;
-        audioFormatDesc.mBitsPerChannel = 16;
-        audioFormatDesc.mBytesPerFrame = (audioFormatDesc.mBitsPerChannel/8)  * audioFormatDesc.mChannelsPerFrame;
-        audioFormatDesc.mBytesPerPacket = audioFormatDesc.mBytesPerFrame * audioFormatDesc.mFramesPerPacket;
-        audioFormatDesc.mReserved = 0;
-
-        AudioBuffer audioBuffer;
-
-        audioBuffer.mNumberChannels = channelNum;
-        audioBuffer.mDataByteSize = (UInt32)[data length];
-
-        audioBuffer.mData = malloc( audioBuffer.mDataByteSize );
-
-        [data getBytes:audioBuffer.mData length:audioBuffer.mDataByteSize];
-        [self.session pushAudioBuffer:&audioBuffer asbd:&audioFormatDesc completion:^(BOOL success) {
-            
-        }];
-    }
-    
-
-    
-}
 
 #pragma mark - 保存图片到相册出错回调
 -(void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
