@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PLCellPlayerViewController : UIViewController
+@interface QNCellPlayerViewController : UIViewController
 
 - (void)onUIApplication:(BOOL)active;
 @end

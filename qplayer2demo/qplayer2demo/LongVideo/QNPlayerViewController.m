@@ -20,6 +20,10 @@
 #import "QDataHandle.h"
 #import "QNToastView.h"
 
+#import <CoreVideo/CoreVideo.h>
+#import <CoreMedia/CoreMedia.h>
+#import <CoreAudio/CoreAudioTypes.h>
+
 
 #define PL_PLAYER_VIDEO_ROOT_FOLDER @"PLPlayerFloder"
 #define GET_PL_PLAYER_VIDEO_FOLDER(folderName) [PL_PLAYER_VIDEO_ROOT_FOLDER stringByAppendingPathComponent:folderName]
@@ -40,7 +44,8 @@ QIPlayerAuthenticationListener,
 QIPlayerRenderListener,
 QIPlayerShootVideoListener,
 QIPlayerVideoFrameSizeChangeListener,
-QIPlayerSeekListener
+QIPlayerSeekListener,
+QIPlayerSubtitleListener
 >
 
 /** 播放器蒙版视图 **/
@@ -63,6 +68,7 @@ QIPlayerSeekListener
 /** 无可显示 URL 的提示 **/
 @property (nonatomic, strong) UILabel *hintLabel;
 
+@property (nonatomic, strong) UILabel *subtitleLabel;
 @property (nonatomic, strong) NSTimer *durationTimer;
 @property (nonatomic, assign) BOOL isFlip;
 @property (nonatomic, assign) CGFloat topSpace;
@@ -79,7 +85,7 @@ QIPlayerSeekListener
 
 //@property (nonatomic, strong) QPlayerContext *playerContext;
 @property (nonatomic, assign) BOOL scanClick;
-//@property (nonatomic, strong) RenderView *myRenderView;
+//@property (nonatomic, strong) QRenderView *myRenderView;
 @property (nonatomic, strong) QPlayerView *myPlayerView;
 @property (nonatomic, assign) BOOL isPlaying;
 @property (nonatomic, assign) BOOL beInterruptedByOtherAudio;
@@ -87,17 +93,26 @@ QIPlayerSeekListener
 @property (nonatomic, assign) NSInteger firstVideoTime;
 @property (nonatomic, assign) int seiNum;
 @property (nonatomic, strong) NSString *seiString;
+@property (nonatomic, strong) PLStreamingSession *session;
+
+@property (nonatomic, assign) BOOL isStartPush;
 @end
 
 @implementation QNPlayerViewController
 
 - (void)dealloc {
+    if (self.session.isRunning) {
+        [self.session stop];
+        self.session.delegate = nil;
+        self.session = nil;
+    }
     NSLog(@"QNPlayerViewController dealloc");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
+    self.isStartPush = false;
     self.scanClick = NO;
     if (appDelegate.isFlip) {
         [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -159,12 +174,24 @@ QIPlayerSeekListener
 //        [modle setValuesForKeysWithDictionary:dic];
             
         NSMutableArray <QStreamElement*> *streams = [NSMutableArray array];
+        NSMutableArray <QSubtitleElement*> *subtitiles = [NSMutableArray array];
         for (NSDictionary *elDic in dic[@"streamElements"]) {
             QStreamElement *subModle = [[QStreamElement alloc] init];
             [subModle setValuesForKeysWithDictionary:elDic];
             [streams addObject:subModle];
         }
+        if([dic objectForKey:@"subtitleElements"]){
+            for(NSDictionary *subDic in dic[@"subtitleElements"]){
+                QSubtitleElement *subtitleEle = [[QSubtitleElement alloc]init];
+                [subtitleEle setValuesForKeysWithDictionary:subDic];
+                [subtitiles addObject:subtitleEle];
+                
+//                [modleBuilder addSubtitleElement:subDic[@"name"] url:subDic[@"url"] isDefault:[subDic[@"isSelected"]intValue]==0?NO:YES];
+            }
+            
+        }
         [modleBuilder addStreamElements:streams];
+        [modleBuilder addSubtitleElements:subtitiles];
         QMediaModel *model = [modleBuilder build];
         [_playerModels addObject:model];
         
@@ -188,11 +215,46 @@ QIPlayerSeekListener
     // PLPlayer 应用
     [self setUpPlayer:self.playerConfigArray];
     
+//    self.subtitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.myPlayerView.frame.size.width/2, self.myPlayerView.frame.size.height-60, 50, 30)];
+    self.subtitleLabel = [[UILabel alloc]init];
+
+    self.subtitleLabel.backgroundColor = [UIColor clearColor];
+    self.subtitleLabel.textColor = [UIColor whiteColor];
+    self.subtitleLabel.numberOfLines = 0;
+    [self.subtitleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+    self.subtitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    [self.myPlayerView addSubview:self.subtitleLabel];
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                       relatedBy:NSLayoutRelationLessThanOrEqual
+                                                                          toItem:self.myPlayerView
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                      multiplier:1.0
+                                                                        constant:0.0];
+    
+    NSLayoutConstraint *centerXConstraint = [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+                                                                         attribute:NSLayoutAttributeCenterX
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:self.myPlayerView
+                                                                         attribute:NSLayoutAttributeCenterX
+                                                                        multiplier:1.0
+                                                                          constant:0.0];
+
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.myPlayerView
+                                                                        attribute:NSLayoutAttributeBottom
+                                                                       multiplier:1.0
+                                                                         constant:-70.0];
+
+    [NSLayoutConstraint activateConstraints:@[widthConstraint, centerXConstraint, bottomConstraint]];
     [self addPlayerMaskView];
 
     [self layoutUrlListTableView];
     
-    
+    [self setPLStream];
     _toastView = [[QNToastView alloc]initWithFrame:CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300)];
     [self.view addSubview:_toastView];
     [self playerContextAllCallBack];
@@ -202,6 +264,74 @@ QIPlayerSeekListener
 
 #pragma mark - 初始化 PLPlayer
 
+-(void)setPLStream{
+    //默认配置
+//    PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
+//    PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
+    PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
+    PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
+//
+    videoStreamingConfiguration.videoSize =CGSizeMake(1080, 720);
+    self.session = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+    
+}
+
+- (CVPixelBufferRef)createSampleBufferFromData:(NSData *)data width:(int)width height:(int)height {
+    // 创建CVPixelBufferRef
+    CVPixelBufferRef pixelBuffer = NULL;
+//    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelFormatType_420YpCbCr8Planar, (__bridge CFDictionaryRef)pixelAttributes, &pixelBuffer);
+    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelFormatType_420YpCbCr8Planar, NULL, &pixelBuffer);
+    if (status != kCVReturnSuccess) {
+        NSLog(@"Unable to create pixel buffer");
+        return NULL;
+    }
+
+    // 锁定pixel buffer的基地址
+    CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+
+    // 获取pixel buffer的Y和UV平面基地址
+    uint8_t *baseAddressY = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
+    uint8_t *baseAddressU = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
+    uint8_t *baseAddressV = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 2);
+
+    // 从NSData中复制Y和UV平面的数据
+    NSLog(@"data.bytes width : %d height : %d length :%lu",width,height,(unsigned long)data.length);
+    memcpy(baseAddressY, data.bytes, width * height);
+    memcpy(baseAddressU, data.bytes + width * height, width * height / 4);
+    
+    memcpy(baseAddressV, data.bytes + (width * height)*5/4, width * height / 4);
+    
+    // 解锁pixel buffer的基地址
+    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
+    
+
+    return pixelBuffer;
+}
+
+
+-(CMSampleBufferRef)CVPixelBufferRefToCMSampleBufferRef : (CVPixelBufferRef) pixelBuffer{
+
+    // 创建一个视频信息描述
+    CMVideoFormatDescriptionRef videoFormatDescription;
+    CMVideoFormatDescriptionCreateForImageBuffer(NULL, pixelBuffer, &videoFormatDescription);
+
+    // 创建一个时间戳
+    CMTime presentationTimeStamp = CMTimeMake(0, 30000);
+
+    // 创建一个 CMSampleTimingInfo 结构
+    CMSampleTimingInfo timingInfo = kCMTimingInfoInvalid;
+    timingInfo.duration = kCMTimeInvalid;
+    timingInfo.decodeTimeStamp = kCMTimeInvalid;
+    timingInfo.presentationTimeStamp = presentationTimeStamp;
+
+    // 创建一个 CMSampleBufferRef
+    CMSampleBufferRef sampleBuffer;
+    CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault, pixelBuffer, true, NULL, NULL, videoFormatDescription, &timingInfo, &sampleBuffer);
+    
+    CFRelease(videoFormatDescription);
+    return sampleBuffer;
+
+}
 
 - (void)setUpPlayer:(NSArray<QNClassModel*>*)models {
     NSMutableArray *configs = [NSMutableArray array];
@@ -225,6 +355,9 @@ QIPlayerSeekListener
     [self.view addSubview:self.myPlayerView];
 //    [self.playerContext.controlHandler forceAuthenticationFromNetwork];
     [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
+    QMediaModel *model = _playerModels.firstObject;
+
+    [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     for (QNClassModel* model in configs) {
         for (PLConfigureModel* configModel in model.classValue) {
             if ([model.classKey isEqualToString:@"PLPlayerOption"]) {
@@ -232,9 +365,7 @@ QIPlayerSeekListener
             }
         }
     }
-    QMediaModel *model = _playerModels.firstObject;
-
-    [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
+    
 
 }
 
@@ -252,6 +383,8 @@ QIPlayerSeekListener
     [self.myPlayerView.controlHandler addPlayerShootVideoListener:self];
     [self.myPlayerView.controlHandler addPlayerVideoFrameSizeChangeListener:self];
     [self.myPlayerView.controlHandler addPlayerSeekListener:self];
+    [self.myPlayerView.controlHandler addPlayerSubtitleListener:self];
+    
     
 }
 -(void)onSeekFailed:(QPlayerContext *)context{
@@ -323,8 +456,14 @@ QIPlayerSeekListener
     [_toastView addText:[NSString stringWithFormat:@"切换失败"]];
 }
 
+
+
+
+
 -(void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
     if (state == QPLAYER_STATE_PREPARE) {
+        
+        self.subtitleLabel.text = @"";
         [self.maskView loadActivityIndicatorView];
         [_toastView addText:@"开始拉视频数据"];
         [_toastView addDecoderType:[self.maskView getDecoderType]];
@@ -343,6 +482,7 @@ QIPlayerSeekListener
     }else if (state == QPLAYER_STATE_STOPPED){
         
         [_toastView addText:@"停止播放"];
+        self.subtitleLabel.text = @"";
         [_maskView setPlayButtonState:NO];
     }
     else if (state == QPLAYER_STATE_ERROR){
@@ -362,13 +502,9 @@ QIPlayerSeekListener
 
 
 -(void)onBufferingEnd:(QPlayerContext *)context{
-    NSLog(@"mybuffer onBufferingEnd");
-    
     [self.maskView removeActivityIndicatorView];
 }
 -(void)onBufferingStart:(QPlayerContext *)context{
-    NSLog(@"mybuffer onBufferingstart");
-    
     [self.maskView loadActivityIndicatorView];
 }
 -(void)onQualitySwitchComplete:(QPlayerContext *)context usertype:(NSString *)usertype urlType:(QPlayerURLType)urlType oldQuality:(NSInteger)oldQuality newQuality:(NSInteger)newQuality{
@@ -396,6 +532,44 @@ QIPlayerSeekListener
         [_toastView addText:@"截图格式为None"];
     }
 }
+
+-(void)onSubtitleEnable:(QPlayerContext *)context enable:(BOOL)enable{
+    self.subtitleLabel.text = @"";
+    if (enable) {
+        
+        [_toastView addText:@"字幕开启"];
+    }else{
+        
+        [_toastView addText:@"字幕关闭"];
+    }
+}
+
+-(void)onSubtitleNameChange:(QPlayerContext *)context name:(NSString *)name{
+    [_toastView addText:[NSString stringWithFormat:@"name 更改为 %@",name]];
+}
+-(void)onSubtitleTextChange:(QPlayerContext *)context text:(NSString *)text{
+    NSLog(@"text is :%@",text);
+    self.subtitleLabel.text = text;
+
+}
+- (void)onSubtitleLoaded:(QPlayerContext *)context name:(NSString *)name result:(BOOL)result{
+    if(result){
+        [_toastView addText:[NSString stringWithFormat:@"字幕加载成功：%@",name]];
+    }
+    else{
+        [_toastView addText:[NSString stringWithFormat:@"字幕加载失败：%@",name]];
+    }
+}
+-(void)onSubtitleDecoded:(QPlayerContext *)context name:(NSString *)name result:(BOOL)result{
+    if(result){
+        [_toastView addText:[NSString stringWithFormat:@"字幕Decoded成功：%@",name]];
+    }
+    else{
+        [_toastView addText:[NSString stringWithFormat:@"字幕Decoded失败：%@",name]];
+    }
+}
+
+
 #pragma mark - 保存图片到相册出错回调
 -(void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
@@ -485,6 +659,53 @@ QIPlayerSeekListener
 -(void)shootVideoButtonClick{
     [self.myPlayerView.controlHandler shootVideo];
 
+}
+
+-(void)pushStreamButtonClick:(BOOL)isSelected{
+    self.isStartPush = isSelected;
+    if(isSelected){
+        __weak typeof(self) weakSelf = self;
+        NSURL *url = [NSURL URLWithString:@"rtmp://pili-publish.qnsdk.com/sdk-live/1234"];
+        [self.session startWithPushURL:url feedback:^(PLStreamStartStateFeedback feedback) {
+            [weakSelf streamStateAlert:feedback];
+            
+        }];
+    }else{
+        [self.session stop];
+    }
+}
+- (void)streamStateAlert:(PLStreamStartStateFeedback)feedback {
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        switch (feedback) {
+            case PLStreamStartStateSuccess:
+                NSLog(@"成功开始推流!");
+                [weakSelf.toastView addText:@"成功开始推流!"];
+                break;
+            case PLStreamStartStateSessionUnknownError:
+                NSLog(@"发生未知错误无法启动!");
+                [weakSelf.toastView addText:@"发生未知错误无法启动!"];
+                break;
+            case PLStreamStartStateSessionStillRunning:
+                NSLog(@"已经在运行中，无需重复启动!");
+                [weakSelf.toastView addText:@"已经在运行中，无需重复启动!"];
+                break;
+            case PLStreamStartStateStreamURLUnauthorized:
+                NSLog(@"当前的 StreamURL 没有被授权!");
+                [weakSelf.toastView addText:@"当前的 StreamURL 没有被授权!"];
+                break;
+            case PLStreamStartStateSessionConnectStreamError:
+                NSLog(@"建立 socket 连接错误!");
+                [weakSelf.toastView addText:@"建立 socket 连接错误!"];
+                break;
+            case PLStreamStartStateSessionPushURLInvalid:
+                NSLog(@"当前传入的 pushURL 无效!");
+                [weakSelf.toastView addText:@"当前传入的 pushURL 无效!"];
+                break;
+            default:
+                break;
+        }
+    });
 }
 - (void)playerMaskView:(QNPlayerMaskView *)playerMaskView didGetBack:(UIButton *)backButton {
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
@@ -665,6 +886,19 @@ QIPlayerSeekListener
         }
         else if ([configureModel.configuraKey containsString:@"清晰度切换"]){
             _immediatelyType =(int)index;
+        }
+        else if ([configureModel.configuraKey containsString:@"字幕"]){
+            [self.myPlayerView.controlHandler setSubtitleEnable:index==0?NO:YES];
+            if(index == 1 ){
+                if(![self.myPlayerView.controlHandler.subtitleName isEqual:@"中文"]){
+                    [self.myPlayerView.controlHandler setSubtitle:@"中文"];
+                }
+            }
+            else if (index == 2){
+                if(![self.myPlayerView.controlHandler.subtitleName isEqual:@"英文"]){
+                    [self.myPlayerView.controlHandler setSubtitle:@"英文"];
+                }
+            }
         }
     }
 }

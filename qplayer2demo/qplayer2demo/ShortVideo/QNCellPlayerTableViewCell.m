@@ -6,17 +6,17 @@
 //  Copyright © 2018年 Hera. All rights reserved.
 //
 
-#import "PLCellPlayerTableViewCell.h"
+#import "QNCellPlayerTableViewCell.h"
 #import "QNPlayerShortVideoMaskView.h"
 
-@interface PLCellPlayerTableViewCell()<QNPlayerShortVideoMaskViewDelegate>
+@interface QNCellPlayerTableViewCell()<QNPlayerShortVideoMaskViewDelegate>
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) CGFloat height;
 @property (nonatomic, strong) QNPlayerShortVideoMaskView* maskView;
 
 @end
 
-@implementation PLCellPlayerTableViewCell
+@implementation QNCellPlayerTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -50,11 +50,20 @@
     return self;
 }
 
-- (void)setPlayerView:(RenderView *)playerView {
+//- (void)setPlayerView:(QRenderView *)playerView
+- (void)setPlayerView:(QNSamplePlayerWithQRenderView *)playerView{
     _playerView = playerView;
     playerView.frame = self.contentView.bounds;
     if (_playerView) {
         [self.contentView insertSubview:_playerView atIndex:0];
+    }
+    if (!self.maskView) {
+        if (playerView != nil) {
+            
+            [self addPlayerMaskView:playerView];
+        }
+    }else{
+        self.maskView.player = playerView;
     }
     
 }
@@ -75,8 +84,8 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    if (!self.maskView && _player != nil) {
-        [self addPlayerMaskView:_player];
+    if (!self.maskView && self.playerView != nil) {
+        [self addPlayerMaskView:self.playerView];
     }
     // Configure the view for the selected state
 }
@@ -87,19 +96,19 @@
     
 }
 -(void)setPlayer:(QPlayerContext *)player{
-    _player = player;
-    if (!self.maskView) {
-        if (player != nil) {
-            
-            [self addPlayerMaskView:player];
-        }
-    }else{
-        self.maskView.player = player;
-    }
+//    _player = player;
+//    if (!self.maskView) {
+//        if (player != nil) {
+//
+//            [self addPlayerMaskView:player];
+//        }
+//    }else{
+//        self.maskView.player = player;
+//    }
 }
 #pragma mark - 添加点播界面蒙版
 
-- (void)addPlayerMaskView:(QPlayerContext *)player{
+- (void)addPlayerMaskView:(QNSamplePlayerWithQRenderView *)player{
     self.maskView = [[QNPlayerShortVideoMaskView alloc] initWithShortVideoFrame:CGRectMake(0, PL_SCREEN_HEIGHT-90, PL_SCREEN_WIDTH, 50) player:player isLiving:NO];
     self.maskView.delegate = self;
     self.maskView.backgroundColor = [UIColor clearColor];

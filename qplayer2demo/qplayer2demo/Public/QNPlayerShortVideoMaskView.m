@@ -16,7 +16,7 @@
 
 @implementation QNPlayerShortVideoMaskView
 
--(instancetype)initWithShortVideoFrame:(CGRect)frame player:(QPlayerContext *)player isLiving:(BOOL)isLiving{
+-(instancetype)initWithShortVideoFrame:(CGRect)frame player:(QNSamplePlayerWithQRenderView *)player isLiving:(BOOL)isLiving{
     self = [super initWithFrame:frame];
     if (self) {
         self.player = player;

@@ -37,8 +37,8 @@ QIMediaItemCommandNotAllowListener
 
 @property (nonatomic, strong) QPlayerContext *player;
 @property (nonatomic, strong) QPlayerContext * player_other;
-@property (nonatomic, strong) RenderView *myRenderView;
-@property (nonatomic, strong) RenderView *otherRenderView;
+@property (nonatomic, strong) QRenderView *myRenderView;
+@property (nonatomic, strong) QRenderView *otherRenderView;
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic, assign) CGFloat topSpace;
@@ -139,7 +139,7 @@ QIMediaItemCommandNotAllowListener
     }
     NSString *documentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     
-    _myRenderView = [[RenderView alloc]initWithFrame:CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PL_SCREEN_HEIGHT)];
+    _myRenderView = [[QRenderView alloc]initWithFrame:CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PL_SCREEN_HEIGHT)];
     
     [self.view addSubview:_myRenderView];
     
@@ -192,7 +192,7 @@ QIMediaItemCommandNotAllowListener
     }
     
     NSString *documentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    _otherRenderView = [[RenderView alloc]initWithFrame:CGRectMake(0, PL_SCREEN_HEIGHT-350, PL_SCREEN_WIDTH, PL_SCREEN_WIDTH)];
+    _otherRenderView = [[QRenderView alloc]initWithFrame:CGRectMake(0, PL_SCREEN_HEIGHT-350, PL_SCREEN_WIDTH, PL_SCREEN_WIDTH)];
     [self.view addSubview:_otherRenderView];
     QPlayerContext *player_other = [[QPlayerContext alloc]initPlayerAPPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
     self.player_other = player_other;

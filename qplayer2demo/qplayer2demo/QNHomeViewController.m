@@ -8,7 +8,7 @@
 
 #import "QNHomeViewController.h"
 #import "QNPlayerViewController.h"
-#import "PLCellPlayerViewController.h"
+#import "QNCellPlayerViewController.h"
 #import "QNPlayerConfigViewController.h"
 #import "QNDoublePlayerViewController.h"
 
@@ -113,7 +113,7 @@
 - (void)enterCellPlayerAction:(UIButton *)button {
 //    QNShortVideoViewController *cellPlayerViewController = [[QNShortVideoViewController alloc] init];
     
-    PLCellPlayerViewController *cellPlayerViewController = [[PLCellPlayerViewController alloc] init];
+    QNCellPlayerViewController *cellPlayerViewController = [[QNCellPlayerViewController alloc] init];
     [self.navigationController pushViewController:cellPlayerViewController animated:YES];
 }
 
