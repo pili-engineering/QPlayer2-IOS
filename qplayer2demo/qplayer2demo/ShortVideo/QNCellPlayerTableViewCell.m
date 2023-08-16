@@ -52,10 +52,13 @@
 
 //- (void)setPlayerView:(QRenderView *)playerView
 - (void)setPlayerView:(QNSamplePlayerWithQRenderView *)playerView{
+    if(self.playerView){
+        [self.playerView removeFromSuperview];
+    }
     _playerView = playerView;
     playerView.frame = self.contentView.bounds;
-    if (_playerView) {
-        [self.contentView insertSubview:_playerView atIndex:0];
+    if (playerView) {
+        [self.contentView insertSubview:playerView atIndex:0];
     }
     if (!self.maskView) {
         if (playerView != nil) {
@@ -95,17 +98,7 @@
     }
     
 }
--(void)setPlayer:(QPlayerContext *)player{
-//    _player = player;
-//    if (!self.maskView) {
-//        if (player != nil) {
-//
-//            [self addPlayerMaskView:player];
-//        }
-//    }else{
-//        self.maskView.player = player;
-//    }
-}
+
 #pragma mark - 添加点播界面蒙版
 
 - (void)addPlayerMaskView:(QNSamplePlayerWithQRenderView *)player{

@@ -6,7 +6,7 @@
 //
 
 #import "QNShortVideoPlayerViewCache.h"
-#define TAG @"PlayerViewCache"
+#define TAG @"QNShortVideoPlayerViewCache"
 @interface QNShortVideoPlayerViewCache()
 @property(nonatomic , strong) QNPlayItemManager * mPlayItemManager;
 @property(nonatomic , strong) NSString * mExternalFilesDir;
@@ -96,6 +96,8 @@
     [playerView.controlHandler removeAllPlayerVideoFrameSizeChangeListener];
     [playerView.renderHandler removeAllPlayerRenderListener];
 }
-
+-(void)dealloc{
+    NSLog(@"%@ dealloc",TAG);
+}
 @end
 

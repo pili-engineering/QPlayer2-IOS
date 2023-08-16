@@ -155,5 +155,8 @@ IPlayItemArrayRefreshListener
     self.mCurrentPosition = 0;
     [self updateMediaItemContext:self.mCurrentPosition];
 }
+-(void)dealloc{
+    NSLog(@"%@ dealloc",TAG);
+}
 @end
 

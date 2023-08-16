@@ -44,12 +44,12 @@ QIMediaItemCommandNotAllowListener
 
 @property (nonatomic, strong) NSMutableArray <NSNumber *>*cacheKeyArray;
 @property (nonatomic, strong) QNPlayItemManager * myPlayItemManager;
-@property (nonatomic, strong) NSMutableArray<QMediaModel *> *playerModels;
 @property (nonatomic, strong) QNShortVideoPlayerViewCache *shortVideoPlayerViewCache;
 
 @property (nonatomic, assign) CGFloat topSpace;
 
 @property (nonatomic, strong) QNToastView *toastView;
+@property (nonatomic, assign) int modelsNum;
 
 @end
 
@@ -62,14 +62,11 @@ QIMediaItemCommandNotAllowListener
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[QNMikuClientManager sharedInstance]uninit];
     [self.shortVideoPlayerViewCache recyclePlayerView:self.player];
     [self.shortVideoPlayerViewCache stop];
     _toastView = nil;
     _currentCell = nil;
-    [_playerModels removeAllObjects];
     self.player = nil;
-    _playerModels = nil;
     
 }
 
@@ -84,9 +81,8 @@ QIMediaItemCommandNotAllowListener
 - (void)viewDidLoad {
     [super viewDidLoad];
         // Do any additional setup after loading the view.
-
+    self.modelsNum = 0;
     self.title = @"短视频";
-    [QNMikuClientManager sharedInstance];
     if (@available(iOS 13.0, *)) {
         UINavigationBarAppearance* appearance = [[UINavigationBarAppearance alloc]init];
         [appearance configureWithOpaqueBackground];
@@ -120,33 +116,25 @@ QIMediaItemCommandNotAllowListener
     }
     NSArray *urlArray=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
     
-    _playerModels = [NSMutableArray array];
     NSMutableArray<QNPlayItem *>* playItemArray = [NSMutableArray array];
-    int index = 0;
     for (NSDictionary *dic in urlArray) {
-//        [client makeProxyURL:[self.urlTextField.text stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]
-//        [NSString stringWithFormat:@"%@",[elDic valueForKey:@"url"]]
         QMediaModelBuilder *modleBuilder = [[QMediaModelBuilder alloc]initWithIsLive:[NSString stringWithFormat:@"%@",[dic valueForKey:@"isLive"]].intValue  == 0? NO : YES];
         for (NSDictionary *elDic in dic[@"streamElements"]) {
-            NSString * urlstr1 = [NSString stringWithFormat:@"%@",[elDic valueForKey:@"url"]];
-            NSString * urlstr2 = [urlstr1 stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-            NSURL * url = [[[QNMikuClientManager sharedInstance] getMikuClient] makeProxyURL:urlstr2];
-            NSString * absoluteStr =[url absoluteString];
-            NSLog(@"\n urlstr1 = %@ \n urlstr2 = %@ \n url = %@ \n absoluteStr = %@ \n",urlstr1,urlstr2,url,absoluteStr);
+            NSString * urlstr = [ [NSString stringWithFormat:@"%@",[elDic valueForKey:@"url"]] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            NSURL * url = [[[QNMikuClientManager sharedInstance] getMikuClient] makeProxyURL:urlstr];
             [modleBuilder addStreamElementWithUserType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"userType"]]
-                             urlType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"urlType"]].intValue
-                             url:absoluteStr
-                             quality:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"quality"]].intValue
+                             urlType:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"urlType"]].intValue
+                             url:       [url absoluteString]
+                             quality:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"quality"]].intValue
                              isSelected:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"isSelected"]].intValue == 0?NO : YES
-                             backupUrl:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"backupUrl"]]
-                             referer:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"referer"]]
+                             backupUrl: [NSString stringWithFormat:@"%@",[elDic valueForKey:@"backupUrl"]]
+                             referer:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"referer"]]
                              renderType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"renderType"]].intValue];
         }
         QMediaModel *model = [modleBuilder build];
-        QNPlayItem *item = [[QNPlayItem alloc]initWithId:index mediaModel:model coverUrl:@""];
+        QNPlayItem *item = [[QNPlayItem alloc]initWithId:self.modelsNum mediaModel:model coverUrl:@""];
         [playItemArray addObject:item];
-        [_playerModels addObject:model];
-        index ++;
+        self.modelsNum ++;
     }
     
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT) style:UITableViewStylePlain];
@@ -244,10 +232,10 @@ QIMediaItemCommandNotAllowListener
     NSLog(@"预加载首帧时间----%d",elapsedTime);
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        if(self.player != self.currentCell.playerView){
+//        if(self.player != self.currentCell.playerView){
             self.currentCell.playerView = self.player;
-        }
-        
+//        }
+
     });
 }
 
@@ -269,7 +257,7 @@ QIMediaItemCommandNotAllowListener
 #pragma mark - tableView delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _playerModels.count;
+    return self.modelsNum;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -279,7 +267,6 @@ QIMediaItemCommandNotAllowListener
     if (cell == nil) {
         cell = [[QNCellPlayerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    QMediaModel *model = _playerModels[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.modelKey = [NSNumber numberWithInteger:indexPath.row];
     return cell;
@@ -315,7 +302,7 @@ QIMediaItemCommandNotAllowListener
     CGFloat gap = MAXFLOAT;
     for (QNCellPlayerTableViewCell *cell in visiableCells) {
 
-        if (0<=[cell.modelKey intValue]<self.playerModels.count) { // 如果这个cell有视频
+        if (0<=[cell.modelKey intValue] && [cell.modelKey intValue]<self.modelsNum) { // 如果这个cell有视频
             CGPoint coorCentre = [cell.superview convertPoint:cell.center toView:nil];
             CGFloat delta = fabs(coorCentre.y-[UIScreen mainScreen].bounds.size.height*0.5);
             if (delta < gap) {
@@ -353,12 +340,15 @@ QIMediaItemCommandNotAllowListener
             _currentCell = cell;
             return;
         }
+//        [self.player removeFromSuperview];
+        
         [self.shortVideoPlayerViewCache recyclePlayerView:self.player];
+        
         self.player = [self.shortVideoPlayerViewCache fetchPlayerView:[cell.modelKey intValue]];
-        [self.shortVideoPlayerViewCache changePosition:[cell.modelKey intValue]];
         [self playerContextAllCallBack];
+        [self.shortVideoPlayerViewCache changePosition:[cell.modelKey intValue]];
         _currentCell = cell;
-        self.currentCell.playerView = self.player;
+//        self.currentCell.playerView = self.player;
     }
 
 }

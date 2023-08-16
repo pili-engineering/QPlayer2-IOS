@@ -56,7 +56,9 @@
     }
 }
 -(MDClient *)getMikuClient{
-
+    if(self.mikuClient == nil){
+        [self initWithQN];
+    }
     return self.mikuClient;
 }
 

@@ -39,6 +39,13 @@
         [innerPlayer.controlHandler stop];
         [innerPlayer.controlHandler playerRelease];
     }
+    if(self.mPreRenderPlayerView){
+        [self.mPreRenderPlayerView.controlHandler stop];
+        [self.mPreRenderPlayerView.controlHandler playerRelease];
+        self.mPreRenderPlayerView = nil;
+    }
+    [self.mPlayerViews removeAllObjects];
+    self.mPlayerViews = nil;
 }
 
 -(BOOL)isPreRenderValaid{
@@ -129,12 +136,11 @@
 -(void)onFirstFrameRendered:(QPlayerContext *)context elapsedTime:(NSInteger)elapsedTime{
     if([self.mPreRenderPlayerView.controlHandler isEqual:context.controlHandler]){
         
-        NSLog(@" QNPlayerViewManager 预加载首帧时间----%d",elapsedTime);
-    }else{
-        
-        NSLog(@" QNPlayerViewManager  else 预加载首帧时间----%d",elapsedTime);
+        NSLog(@" QNPlayerViewManager 预渲染首帧时间----%d",elapsedTime);
     }
 }
-
+-(void)dealloc{
+    NSLog(@"%@ dealloc",TAG);
+}
 @end
 

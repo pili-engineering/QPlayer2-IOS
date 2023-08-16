@@ -6,6 +6,7 @@
 //
 
 #import "QNPlayItemManager.h"
+#define TAG @"QNPlayItemManager"
 @implementation QNPlayItem
 -(instancetype)initWithId:(int)itemId mediaModel:(QMediaModel *)mediaModel coverUrl:(NSString *)coverUrl{
     self = [super init];
@@ -157,6 +158,9 @@
 -(void)removeAllPlayItemRefreshListener{
     if(self.mPlayItemRefreshListeners)
         [self.mPlayItemRefreshListeners removeAllObjects];
+}
+-(void)dealloc{
+    NSLog(@"%@ dealloc",TAG);
 }
 @end
 
