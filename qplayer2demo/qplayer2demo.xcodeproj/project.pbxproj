@@ -72,10 +72,10 @@
 		50B1F4C5289CC62D0074E02D /* QNHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B1F483289CC62D0074E02D /* QNHomeViewController.m */; };
 		616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0C2D1DB69E96781D80C1A2 /* libPods-qplayer2demo.a */; };
 		977927F029B71BF1006E7931 /* QNDoublePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 977927EF29B71BF1006E7931 /* QNDoublePlayerViewController.m */; };
+		BA3E5B032A8CB85F00032327 /* MikuDelivery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA3E5B012A8CB85800032327 /* MikuDelivery.framework */; };
+		BA3E5B042A8CB85F00032327 /* MikuDelivery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA3E5B012A8CB85800032327 /* MikuDelivery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA576B182A8B1537008BD482 /* qplayer2_core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA576B172A8B1537008BD482 /* qplayer2_core.framework */; };
 		BA576B192A8B1537008BD482 /* qplayer2_core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA576B172A8B1537008BD482 /* qplayer2_core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BA576B2B2A8B7084008BD482 /* MikuDelivery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA576B292A8B7069008BD482 /* MikuDelivery.framework */; };
-		BA576B2C2A8B7084008BD482 /* MikuDelivery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA576B292A8B7069008BD482 /* MikuDelivery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA67ABB02A6FE23000BE06FA /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA67ABAF2A6FE22F00BE06FA /* CoreAudio.framework */; };
 		BA78ED972A85CDA4001DE624 /* QNSamplePlayerWithQRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78ED962A85CDA4001DE624 /* QNSamplePlayerWithQRenderView.m */; };
 		BA78EDA12A8631C1001DE624 /* QNMediaItemContextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78EDA02A8631C1001DE624 /* QNMediaItemContextManager.m */; };
@@ -93,7 +93,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BA576B2C2A8B7084008BD482 /* MikuDelivery.framework in Embed Frameworks */,
+				BA3E5B042A8CB85F00032327 /* MikuDelivery.framework in Embed Frameworks */,
 				BA576B192A8B1537008BD482 /* qplayer2_core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -197,8 +197,8 @@
 		977927EF29B71BF1006E7931 /* QNDoublePlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDoublePlayerViewController.m; sourceTree = "<group>"; };
 		B2BDA3706EA1C6372228C6C3 /* Pods-qplayer2demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-qplayer2demo.debug.xcconfig"; path = "Target Support Files/Pods-qplayer2demo/Pods-qplayer2demo.debug.xcconfig"; sourceTree = "<group>"; };
 		BA1855D32A5C08BC009BD367 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA3E5B012A8CB85800032327 /* MikuDelivery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MikuDelivery.framework; sourceTree = "<group>"; };
 		BA576B172A8B1537008BD482 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA576B292A8B7069008BD482 /* MikuDelivery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MikuDelivery.framework; path = qplayer2demo/MikuDelivery.framework; sourceTree = "<group>"; };
 		BA67ABAF2A6FE22F00BE06FA /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		BA78ED952A85CDA4001DE624 /* QNSamplePlayerWithQRenderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNSamplePlayerWithQRenderView.h; sourceTree = "<group>"; };
 		BA78ED962A85CDA4001DE624 /* QNSamplePlayerWithQRenderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNSamplePlayerWithQRenderView.m; sourceTree = "<group>"; };
@@ -225,7 +225,7 @@
 			files = (
 				50B1F3D5289BBF7A0074E02D /* Foundation.framework in Frameworks */,
 				BA576B182A8B1537008BD482 /* qplayer2_core.framework in Frameworks */,
-				BA576B2B2A8B7084008BD482 /* MikuDelivery.framework in Frameworks */,
+				BA3E5B032A8CB85F00032327 /* MikuDelivery.framework in Frameworks */,
 				BA67ABB02A6FE23000BE06FA /* CoreAudio.framework in Frameworks */,
 				50387155292CA3410000C4DD /* CoreMotion.framework in Frameworks */,
 				616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */,
@@ -248,6 +248,7 @@
 		50B1F41C289CC62D0074E02D /* qplayer2demo */ = {
 			isa = PBXGroup;
 			children = (
+				BA3E5B012A8CB85800032327 /* MikuDelivery.framework */,
 				50B1F440289CC62D0074E02D /* Assets.xcassets */,
 				50B1F481289CC62D0074E02D /* Info.plist */,
 				50B1F443289CC62D0074E02D /* LaunchScreen.storyboard */,
@@ -450,7 +451,6 @@
 		CA90B806289A7AF60087543B = {
 			isa = PBXGroup;
 			children = (
-				BA576B292A8B7069008BD482 /* MikuDelivery.framework */,
 				50B1F41C289CC62D0074E02D /* qplayer2demo */,
 				CA90B810289A7AF60087543B /* Products */,
 				CA90BF8B289B846C0087543B /* Frameworks */,

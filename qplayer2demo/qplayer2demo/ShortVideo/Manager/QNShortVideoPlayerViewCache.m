@@ -7,7 +7,7 @@
 
 #import "QNShortVideoPlayerViewCache.h"
 #define TAG @"QNShortVideoPlayerViewCache"
-@interface QNShortVideoPlayerViewCache()
+@interface QNShortVideoPlayerViewCache()<QIPlayerStateChangeListener>
 @property(nonatomic , strong) QNPlayItemManager * mPlayItemManager;
 @property(nonatomic , strong) NSString * mExternalFilesDir;
 @property(nonatomic , strong) QNMediaItemContextManager * mMediaItemContextManager;
@@ -70,7 +70,10 @@
 }
 -(void)recyclePlayerView:(QNSamplePlayerWithQRenderView *)playerView{
     [self removeAllListers:playerView];
+    [playerView.controlHandler addPlayerStateListener:self];
     [playerView.controlHandler stop];
+//    [self removeAllListers:playerView];
+    playerView.hidden = YES;
     [self.mPlayerViewManager recyclePlayerView:playerView];
     
 }
@@ -98,6 +101,11 @@
 }
 -(void)dealloc{
     NSLog(@"%@ dealloc",TAG);
+}
+-(void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
+    if(state == QPLAYER_STATE_STOPPED){
+        NSLog(@"stop");
+    }
 }
 @end
 
