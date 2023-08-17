@@ -5,7 +5,7 @@
 
 
 target 'qplayer2demo' do
-  pod 'PLMediaStreamingKit/iphoneos'
+  #pod 'PLMediaStreamingKit/iphoneos'
   pod 'Bugly'
   pod 'Masonry', '1.0.1'
   #pod 'qplayer2-core', :path => '../'
