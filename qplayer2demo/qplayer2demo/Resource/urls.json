@@ -392,22 +392,6 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://pili-hls.qnsdk.com/sdk-live/6666.m3u8",
-                "quality": 360,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-          
-        "isLive": 1,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
                 "url": "http://pili-hdl.qnsdk.com/sdk-live/6666.flv",
                 "quality": 360,
                 "isSelected": 1,
