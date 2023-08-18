@@ -93,26 +93,18 @@ QIPlayerSubtitleListener
 @property (nonatomic, assign) NSInteger firstVideoTime;
 @property (nonatomic, assign) int seiNum;
 @property (nonatomic, strong) NSString *seiString;
-//@property (nonatomic, strong) PLStreamingSession *session;
 
-@property (nonatomic, assign) BOOL isStartPush;
 @end
 
 @implementation QNPlayerViewController
 
 - (void)dealloc {
-//    if (self.session.isRunning) {
-//        [self.session stop];
-//        self.session.delegate = nil;
-//        self.session = nil;
-//    }
     NSLog(@"QNPlayerViewController dealloc");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
-    self.isStartPush = false;
     self.scanClick = NO;
     if (appDelegate.isFlip) {
         [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -212,10 +204,8 @@ QIPlayerSubtitleListener
         _topSpace = 64;
     }
     
-    // PLPlayer 应用
     [self setUpPlayer:self.playerConfigArray];
     
-//    self.subtitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.myPlayerView.frame.size.width/2, self.myPlayerView.frame.size.height-60, 50, 30)];
     self.subtitleLabel = [[UILabel alloc]init];
 
     self.subtitleLabel.backgroundColor = [UIColor clearColor];
@@ -254,7 +244,6 @@ QIPlayerSubtitleListener
 
     [self layoutUrlListTableView];
     
-    [self setPLStream];
     _toastView = [[QNToastView alloc]initWithFrame:CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300)];
     [self.view addSubview:_toastView];
     [self playerContextAllCallBack];
@@ -264,74 +253,6 @@ QIPlayerSubtitleListener
 
 #pragma mark - 初始化 PLPlayer
 
--(void)setPLStream{
-    //默认配置
-//    PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
-//    PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
-//    PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
-//    PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
-////
-//    videoStreamingConfiguration.videoSize =CGSizeMake(1080, 720);
-//    self.session = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
-    
-}
-
-- (CVPixelBufferRef)createSampleBufferFromData:(NSData *)data width:(int)width height:(int)height {
-    // 创建CVPixelBufferRef
-    CVPixelBufferRef pixelBuffer = NULL;
-//    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelFormatType_420YpCbCr8Planar, (__bridge CFDictionaryRef)pixelAttributes, &pixelBuffer);
-    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelFormatType_420YpCbCr8Planar, NULL, &pixelBuffer);
-    if (status != kCVReturnSuccess) {
-        NSLog(@"Unable to create pixel buffer");
-        return NULL;
-    }
-
-    // 锁定pixel buffer的基地址
-    CVPixelBufferLockBaseAddress(pixelBuffer, 0);
-
-    // 获取pixel buffer的Y和UV平面基地址
-    uint8_t *baseAddressY = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
-    uint8_t *baseAddressU = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
-    uint8_t *baseAddressV = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 2);
-
-    // 从NSData中复制Y和UV平面的数据
-    NSLog(@"data.bytes width : %d height : %d length :%lu",width,height,(unsigned long)data.length);
-    memcpy(baseAddressY, data.bytes, width * height);
-    memcpy(baseAddressU, data.bytes + width * height, width * height / 4);
-    
-    memcpy(baseAddressV, data.bytes + (width * height)*5/4, width * height / 4);
-    
-    // 解锁pixel buffer的基地址
-    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
-    
-
-    return pixelBuffer;
-}
-
-
--(CMSampleBufferRef)CVPixelBufferRefToCMSampleBufferRef : (CVPixelBufferRef) pixelBuffer{
-
-    // 创建一个视频信息描述
-    CMVideoFormatDescriptionRef videoFormatDescription;
-    CMVideoFormatDescriptionCreateForImageBuffer(NULL, pixelBuffer, &videoFormatDescription);
-
-    // 创建一个时间戳
-    CMTime presentationTimeStamp = CMTimeMake(0, 30000);
-
-    // 创建一个 CMSampleTimingInfo 结构
-    CMSampleTimingInfo timingInfo = kCMTimingInfoInvalid;
-    timingInfo.duration = kCMTimeInvalid;
-    timingInfo.decodeTimeStamp = kCMTimeInvalid;
-    timingInfo.presentationTimeStamp = presentationTimeStamp;
-
-    // 创建一个 CMSampleBufferRef
-    CMSampleBufferRef sampleBuffer;
-    CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault, pixelBuffer, true, NULL, NULL, videoFormatDescription, &timingInfo, &sampleBuffer);
-    
-    CFRelease(videoFormatDescription);
-    return sampleBuffer;
-
-}
 
 - (void)setUpPlayer:(NSArray<QNClassModel*>*)models {
     NSMutableArray *configs = [NSMutableArray array];
@@ -455,10 +376,6 @@ QIPlayerSubtitleListener
 -(void)onQualitySwitchFailed:(QPlayerContext *)context usertype:(NSString *)usertype urlType:(QPlayerURLType)urlType oldQuality:(NSInteger)oldQuality newQuality:(NSInteger)newQuality{
     [_toastView addText:[NSString stringWithFormat:@"切换失败"]];
 }
-
-
-
-
 
 -(void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
     if (state == QPLAYER_STATE_PREPARE) {
@@ -633,7 +550,6 @@ QIPlayerSubtitleListener
                                        @(QPLAYER_STATE_SEEKING):@"seek",
                                        @(QPLAYER_STATE_COMPLETED):@"Completed"
                                        };
-//    return statusDictionary[@(self.playerContext.controlHandler.currentPlayerState)];
     return  statusDictionary[@(self.myPlayerView.controlHandler.currentPlayerState)];;
 
 }
@@ -661,52 +577,7 @@ QIPlayerSubtitleListener
 
 }
 
--(void)pushStreamButtonClick:(BOOL)isSelected{
-//    self.isStartPush = isSelected;
-//    if(isSelected){
-//        __weak typeof(self) weakSelf = self;
-//        NSURL *url = [NSURL URLWithString:@"rtmp://pili-publish.qnsdk.com/sdk-live/1234"];
-//        [self.session startWithPushURL:url feedback:^(PLStreamStartStateFeedback feedback) {
-//            [weakSelf streamStateAlert:feedback];
-//
-//        }];
-//    }else{
-//        [self.session stop];
-//    }
-}
-//- (void)streamStateAlert:(PLStreamStartStateFeedback)feedback {
-//    __weak typeof(self) weakSelf = self;
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        switch (feedback) {
-//            case PLStreamStartStateSuccess:
-//                NSLog(@"成功开始推流!");
-//                [weakSelf.toastView addText:@"成功开始推流!"];
-//                break;
-//            case PLStreamStartStateSessionUnknownError:
-//                NSLog(@"发生未知错误无法启动!");
-//                [weakSelf.toastView addText:@"发生未知错误无法启动!"];
-//                break;
-//            case PLStreamStartStateSessionStillRunning:
-//                NSLog(@"已经在运行中，无需重复启动!");
-//                [weakSelf.toastView addText:@"已经在运行中，无需重复启动!"];
-//                break;
-//            case PLStreamStartStateStreamURLUnauthorized:
-//                NSLog(@"当前的 StreamURL 没有被授权!");
-//                [weakSelf.toastView addText:@"当前的 StreamURL 没有被授权!"];
-//                break;
-//            case PLStreamStartStateSessionConnectStreamError:
-//                NSLog(@"建立 socket 连接错误!");
-//                [weakSelf.toastView addText:@"建立 socket 连接错误!"];
-//                break;
-//            case PLStreamStartStateSessionPushURLInvalid:
-//                NSLog(@"当前传入的 pushURL 无效!");
-//                [weakSelf.toastView addText:@"当前传入的 pushURL 无效!"];
-//                break;
-//            default:
-//                break;
-//        }
-//    });
-//}
+
 - (void)playerMaskView:(QNPlayerMaskView *)playerMaskView didGetBack:(UIButton *)backButton {
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
     if (appDelegate.isFlip) {
@@ -802,7 +673,6 @@ QIPlayerSubtitleListener
         }
         
     }
-//    [UIViewController attemptRotationToDeviceOrientation];
     
 }
 
