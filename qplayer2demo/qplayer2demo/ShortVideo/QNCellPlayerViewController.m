@@ -169,29 +169,29 @@ QIMediaItemCommandNotAllowListener
     [self.view addSubview:_toastView];
     
 
-    self.playerView1 = [[QNSamplePlayerWithQRenderView alloc]initWithFrame:CGRectMake(0, 0, 150, 100) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
-    self.playerView2 = [[QNSamplePlayerWithQRenderView alloc]initWithFrame:CGRectMake(0, 0, 150, 100) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
+//    self.playerView1 = [[QNSamplePlayerWithQRenderView alloc]initWithFrame:CGRectMake(0, 0, 150, 100) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
+//    self.playerView2 = [[QNSamplePlayerWithQRenderView alloc]initWithFrame:CGRectMake(0, 0, 150, 100) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
     UIButton *stop =[[UIButton alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
     [stop addTarget:self action:@selector(stopClick:) forControlEvents:UIControlEventTouchUpInside];
     stop.backgroundColor = [UIColor redColor];
     stop.tag = 1;
-    [self.view addSubview:stop];
+//    [self.view addSubview:stop];
     UIButton *stop2 =[[UIButton alloc]initWithFrame:CGRectMake(250, 100, 100, 100)];
     [stop2 addTarget:self action:@selector(stopClick:) forControlEvents:UIControlEventTouchUpInside];
     stop2.backgroundColor = [UIColor redColor];
     stop2.tag = 2;
-    [self.view addSubview:stop2];
+//    [self.view addSubview:stop2];
     self.view1 = [[UIView alloc]initWithFrame:CGRectMake(50, 300, 150, 150)];
     self.view1.backgroundColor = [UIColor greenColor];
-    [self.view addSubview:self.view1];
-    [self.view1 addSubview:self.playerView1];
+//    [self.view addSubview:self.view1];
+//    [self.view1 addSubview:self.playerView1];
     self.view2 = [[UIView alloc]initWithFrame:CGRectMake(250, 300, 150, 150)];
     self.view2.backgroundColor = [UIColor greenColor];
-    [self.view addSubview:self.view2];
-    [self.view2 addSubview:self.playerView2];
+//    [self.view addSubview:self.view2];
+//    [self.view2 addSubview:self.playerView2];
 //    self.item1 = [[QMediaItemContext alloc]initItemComtextWithMediaModel:self.models[1] startPos:0 storageDir:documentsDir logLevel:LOG_DEBUG];
 //    [self.item1.controlHandler start];
-    [self.playerView1.renderHandler addPlayerRenderListener:self];
+//    [self.playerView1.renderHandler addPlayerRenderListener:self];
 }
 -(void) stopClick:(UIButton *)sender{
     NSLog(@"stopClick -------");
@@ -227,10 +227,10 @@ QIMediaItemCommandNotAllowListener
     [self.myPlayItemManager append:playItemArray];
     self.shortVideoPlayerViewCache = [[QNShortVideoPlayerViewCache alloc]initWithPlayItemManager:self.myPlayItemManager externalFilesDir:documentsDir];
     [self.shortVideoPlayerViewCache start];
-//   self.player = [self.shortVideoPlayerViewCache fetchPlayerView:0];
+   self.player = [self.shortVideoPlayerViewCache fetchPlayerView:0];
     
-//
-//    [self.shortVideoPlayerViewCache changePosition:0];
+
+    [self.shortVideoPlayerViewCache changePosition:0];
     [self playerContextAllCallBack];
 }
 
@@ -292,15 +292,15 @@ QIMediaItemCommandNotAllowListener
     
     
 //    dispatch_async(dispatch_get_main_queue(), ^{
-//        self.currentCell.state = YES;
-//        self.currentCell.firstFrameTime = elapsedTime;
-//        QNCellPlayerTableViewCell *inner = self.currentCell;
-//        [inner hideCoverImage];
-        if(self.viewtag == 1){
-            [self.view1 addSubview:self.playerView1];
-        }else{
-            [self.view2 addSubview:self.playerView1];
-        }
+        self.currentCell.state = YES;
+        self.currentCell.firstFrameTime = elapsedTime;
+        QNCellPlayerTableViewCell *inner = self.currentCell;
+        [inner hideCoverImage];
+//        if(self.viewtag == 1){
+//            [self.view1 addSubview:self.playerView1];
+//        }else{
+//            [self.view2 addSubview:self.playerView1];
+//        }
 //    });
 }
 
@@ -342,8 +342,8 @@ QIMediaItemCommandNotAllowListener
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    QNCellPlayerTableViewCell *cell = (QNCellPlayerTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-//    [self updatePlayCell:cell scroll:NO];
+    QNCellPlayerTableViewCell *cell = (QNCellPlayerTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [self updatePlayCell:cell scroll:NO];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -430,7 +430,7 @@ QIMediaItemCommandNotAllowListener
         NSLog(@"self.player.mytag : %@",self.player.mytag);
         if(_currentCell == nil){
             _currentCell = cell;
-            
+            _currentCell.playerView = self.player;
 //            [_currentCell addCoverImage:self.coverImageArray[0]];
             return;
         }
