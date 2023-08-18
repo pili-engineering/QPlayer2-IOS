@@ -320,6 +320,94 @@
             {
                 "userType": "",
                 "urlType": 0,
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/test6666@zn720p",
+                "quality": 720,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/test6666@zn480p",
+                "quality": 480,
+                "isSelected": 0,
+                "backupUrl": "",
+                "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/test6666@zn240p",
+                "quality": 240,
+                "isSelected": 0,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+          
+        "isLive": 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/zengtest@zn720p",
+                "quality": 720,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/zengtest@zn480p",
+                "quality": 480,
+                "isSelected": 0,
+                "backupUrl": "",
+                "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/zengtest@zn240p",
+                "quality": 240,
+                "isSelected": 0,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+          
+        "isLive": 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://pili-hls.qnsdk.com/sdk-live/6666.m3u8",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+          
+        "isLive": 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
                 "url": "http://pili-hdl.qnsdk.com/sdk-live/6666.flv",
                 "quality": 360,
                 "isSelected": 1,
