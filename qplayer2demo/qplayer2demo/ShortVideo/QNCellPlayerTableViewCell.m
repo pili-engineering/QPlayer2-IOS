@@ -20,7 +20,6 @@ QIPlayerFPSListener
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) CGFloat height;
 @property (nonatomic, strong) QNPlayerShortVideoMaskView* maskView;
-//@property (nonatomic, strong) NSMutableArray<UILabel *>* infoLabels;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *,UILabel *>* infoLabelDictionary;
 @property (nonatomic, strong) NSDictionary<NSNumber *,NSString *>* infoNameDictionary;
 @property (nonatomic, strong) UIImageView *coverImageView;
@@ -45,25 +44,6 @@ QIPlayerFPSListener
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.contentView.backgroundColor = [UIColor blackColor];
-//        self.width = PLAYER_PORTRAIT_WIDTH;
-//        self.height = PLAYER_PORTRAIT_HEIGHT;
-//        self.contentView.frame = CGRectMake(0, 92, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT-170);
-//        self.stateLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, _height- 20, _width - 10, 20)];
-//        self.stateLabel.backgroundColor = [UIColor clearColor];
-//        self.stateLabel.font = PL_FONT_MEDIUM(12);
-//        self.stateLabel.textColor = [UIColor whiteColor];
-//        self.stateLabel.textAlignment = NSTextAlignmentLeft;
-//        self.stateLabel.numberOfLines = 0;
-//        [self.contentView addSubview:_stateLabel];
-//
-//        self.URLLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 2, _width - 10, 100)];
-//        self.URLLabel.backgroundColor = [UIColor clearColor];
-//        self.URLLabel.font = PL_FONT_MEDIUM(12);
-//        self.URLLabel.textColor = [UIColor whiteColor];
-//        self.URLLabel.textAlignment = NSTextAlignmentLeft;
-//        self.URLLabel.text = self.url;
-//        self.URLLabel.numberOfLines = 0;
-//        [self.contentView addSubview:_URLLabel];
 
         UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, _width, 0.5)];
         lineView.backgroundColor = [UIColor whiteColor];
@@ -74,7 +54,6 @@ QIPlayerFPSListener
     return self;
 }
 
-//- (void)setPlayerView:(QRenderView *)playerView
 - (void)setPlayerView:(QNSamplePlayerWithQRenderView *)playerView{
 
     _playerView = playerView;
@@ -99,14 +78,6 @@ QIPlayerFPSListener
     [self.playerView.controlHandler addPlayerDownloadChangeListener:self];
     [self.playerView.renderHandler addPlayerRenderListener:self];
 }
-//- (void)setUrl:(NSString *)url {
-//    _url = url;
-//    if (url) {
-//        CGRect bounds = [self.url boundingRectWithSize:CGSizeMake(_width - 10, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:PL_FONT_MEDIUM(12) forKey:NSFontAttributeName] context:nil];
-//        self.URLLabel.frame = CGRectMake(5, 2, _width - 10, bounds.size.height);
-//        self.URLLabel.text = self.url;
-//    }
-//}
 -(void)addCoverImage:(UIImage *)coverImage{
     if(self.coverImageView){
         self.coverImageView.image = coverImage;
@@ -118,7 +89,6 @@ QIPlayerFPSListener
     self.coverImageView.backgroundColor = [UIColor clearColor];
     self.coverImageView.frame = CGRectMake(0, 92, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT-170);
     [self.contentView insertSubview:self.coverImageView atIndex:1];
-//    [self.contentView addSubview:self.coverImageView];
 }
 -(void)hideCoverImage{
     if(self.coverImageView){

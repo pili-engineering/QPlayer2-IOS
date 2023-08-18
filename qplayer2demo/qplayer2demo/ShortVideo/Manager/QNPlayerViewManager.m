@@ -15,7 +15,6 @@
 @property (nonatomic , assign) int mCurrentCacheCount;
 @property (nonatomic , strong) QNSamplePlayerWithQRenderView * mPreRenderPlayerView;
 @property (nonatomic , assign) int mPreRenderVideoId;
-@property (nonatomic , assign) BOOL tagFalse;
 @end
 
 @implementation QNPlayerViewManager
@@ -25,7 +24,6 @@
     if(self){
         self.mPlayerViews = [NSMutableArray array];
         self.mCurrentCacheCount = 0;
-        self.tagFalse = false;
         self.mPreRenderVideoId = INVALID_VIDEO_ID;
     }
     return self;
@@ -91,13 +89,6 @@
             self.mCurrentCacheCount ++;
             QNSamplePlayerWithQRenderView * playerView = [[QNSamplePlayerWithQRenderView alloc]initWithFrame:CGRectMake(0, 0, 1, 1) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_DEBUG];
             playerView.hidden = NO;
-            if(!self.tagFalse){
-                playerView.mytag = @"A";
-                self.tagFalse = true;
-            }else{
-                
-                playerView.mytag = @"B";
-            }
             return playerView;
         }else{
             return nil;
@@ -151,7 +142,6 @@
 }
 -(void)onFirstFrameRendered:(QPlayerContext *)context elapsedTime:(NSInteger)elapsedTime{
     if([self.mPreRenderPlayerView.controlHandler isEqual:context.controlHandler]){
-        
         NSLog(@" QNPlayerViewManager 预渲染首帧时间----%d",elapsedTime);
     }
 }

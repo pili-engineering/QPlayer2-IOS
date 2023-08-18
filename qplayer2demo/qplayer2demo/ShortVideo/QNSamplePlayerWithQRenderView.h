@@ -12,7 +12,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QNSamplePlayerWithQRenderView : UIView
-@property(nonatomic , strong) NSString *mytag ;
 /**
  初始化
  @param frame view的大小

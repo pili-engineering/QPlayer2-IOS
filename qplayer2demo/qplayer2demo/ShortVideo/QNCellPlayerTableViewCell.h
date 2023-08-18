@@ -10,9 +10,6 @@
 #import "QNSamplePlayerWithQRenderView.h"
 @interface QNCellPlayerTableViewCell : UITableViewCell
 
-//@property (nonatomic, copy) NSString *url;
-//@property (nonatomic, strong) UILabel *URLLabel;
-//@property (nonatomic, strong) UILabel *stateLabel;
 @property (nonatomic, assign) BOOL state;
 @property (nonatomic, weak) QNSamplePlayerWithQRenderView *playerView;
 @property (nonatomic, assign) long firstFrameTime;

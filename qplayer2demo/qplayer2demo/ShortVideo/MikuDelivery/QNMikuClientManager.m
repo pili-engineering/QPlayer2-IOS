@@ -28,18 +28,15 @@
 -(instancetype)initWithQN{
     self = [super init];
     if(self){
-//        NSString *cachePath = CACHE_PATH;
-//        int cacheSizeMb = CACHE_SIZE_MB;
-//        int maxWorkers = MAX_WORKERS;
-//        BOOL httpDNS = IS_USE_HTTP_DNS;
-//        MDConfig *config = [[MDConfig alloc]init];
-//        config.workers = maxWorkers;
-//        config.httpDNS = httpDNS;
-//        config.cacheConfig = [[MDCacheConfig alloc]init];
-//        config.cacheConfig.dir = cachePath;
-//        config.cacheConfig.cacheSize = cacheSizeMb*1024*1024;
-//        static MDClient * mikuClient;
-        self.mikuClient = [MDClient createClient:kMiku_APPKEY appSalt:kMiku_APPSALT config:nil];
+        int cacheSizeMb = CACHE_SIZE_MB;
+        int maxWorkers = MAX_WORKERS;
+        BOOL httpDNS = IS_USE_HTTP_DNS;
+        MDConfig *config = [[MDConfig alloc]init];
+        config.workers = maxWorkers;
+        config.httpDNS = httpDNS;
+        config.cacheConfig = [[MDCacheConfig alloc]init];
+        config.cacheConfig.cacheSize = cacheSizeMb*1024*1024;
+        self.mikuClient = [MDClient createClient:kMiku_APPKEY appSalt:kMiku_APPSALT config:config];
         if(self.mikuClient == nil){
             NSLog(@"mikuClient create failed");
         }

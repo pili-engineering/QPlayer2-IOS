@@ -52,15 +52,6 @@ QIMediaItemCommandNotAllowListener
 @property (nonatomic, strong) QNToastView *toastView;
 @property (nonatomic, assign) int modelsNum;
 @property (nonatomic, assign) int currentPlayingNum;
-@property (nonatomic, assign) int lastContentOffset;
-@property (nonatomic, assign) BOOL isDownScrolling;
-@property (nonatomic, strong) NSMutableArray< QMediaModel *> * models;
-@property (nonatomic, strong) QNSamplePlayerWithQRenderView *playerView1;
-@property (nonatomic, strong) QNSamplePlayerWithQRenderView *playerView2;
-@property (nonatomic, strong) QMediaItemContext *item1;
-@property (nonatomic, strong) UIView *view1;
-@property (nonatomic, strong) UIView *view2;
-@property (nonatomic, assign) int viewtag;
 
 @end
 
@@ -73,22 +64,25 @@ QIMediaItemCommandNotAllowListener
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    //回收播放器
     [self.shortVideoPlayerViewCache recyclePlayerView:self.player];
+    //停止并释放 shortVideoPlayerViewCache
     [self.shortVideoPlayerViewCache stop];
     _toastView = nil;
     _currentCell = nil;
     self.player = nil;
     
 }
-
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.currentPlayingNum = 0;
-    
 }
-
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    //锁定播放器当前位置为 0 0
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -116,9 +110,9 @@ QIMediaItemCommandNotAllowListener
     [backButton setImage:image forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(getBack) forControlEvents:UIControlEventTouchDown];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:backButton];
-    
 
     NSString *documentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    //读取 lite_urls 文件内容
     NSString *path = [documentsDir stringByAppendingPathComponent:@"lite_urls.json"];
     
     NSData *data=[[NSData alloc] initWithContentsOfFile:path];
@@ -127,14 +121,16 @@ QIMediaItemCommandNotAllowListener
         data=[[NSData alloc] initWithContentsOfFile:path];
     }
     NSArray *urlArray=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    self.models = [NSMutableArray array];
     NSMutableArray<QNPlayItem *>* playItemArray = [NSMutableArray array];
     self.coverImageArray = [NSMutableArray array];
+    //创建播放的资源数据
     for (NSDictionary *dic in urlArray) {
         QMediaModelBuilder *modleBuilder = [[QMediaModelBuilder alloc]initWithIsLive:[NSString stringWithFormat:@"%@",[dic valueForKey:@"isLive"]].intValue  == 0? NO : YES];
+        //获取封面名称
         NSString *coverImageName = [dic valueForKey:@"coverImageName"];
         UIImage *coverImage = [UIImage imageNamed:coverImageName];
         [self.coverImageArray addObject:coverImage];
+        //获取 streamElements 字段数据
         for (NSDictionary *elDic in dic[@"streamElements"]) {
             NSString * urlstr = [ [NSString stringWithFormat:@"%@",[elDic valueForKey:@"url"]] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
             NSURL * url = [[[QNMikuClientManager sharedInstance] getMikuClient] makeProxyURL:urlstr];
@@ -147,12 +143,15 @@ QIMediaItemCommandNotAllowListener
                              referer:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"referer"]]
                              renderType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"renderType"]].intValue];
         }
+        //创建 QMediaModel
         QMediaModel *model = [modleBuilder build];
+        //创建 QNPlayItem
         QNPlayItem *item = [[QNPlayItem alloc]initWithId:self.modelsNum mediaModel:model coverUrl:@""];
         [playItemArray addObject:item];
-        [self.models addObject:item.mediaModel];
+        //统计 QMediaModel 数据数量
         self.modelsNum ++;
     }
+    //创建tableview
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -162,57 +161,13 @@ QIMediaItemCommandNotAllowListener
     self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     [self.view addSubview:_tableView];
     
-
     [self setUpPlayer:playItemArray];
     
     _toastView = [[QNToastView alloc]initWithFrame:CGRectMake(0, PL_SCREEN_HEIGHT - 350, 200, 300)];
     [self.view addSubview:_toastView];
     
 
-//    self.playerView1 = [[QNSamplePlayerWithQRenderView alloc]initWithFrame:CGRectMake(0, 0, 150, 100) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
-//    self.playerView2 = [[QNSamplePlayerWithQRenderView alloc]initWithFrame:CGRectMake(0, 0, 150, 100) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
-    UIButton *stop =[[UIButton alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
-    [stop addTarget:self action:@selector(stopClick:) forControlEvents:UIControlEventTouchUpInside];
-    stop.backgroundColor = [UIColor redColor];
-    stop.tag = 1;
-//    [self.view addSubview:stop];
-    UIButton *stop2 =[[UIButton alloc]initWithFrame:CGRectMake(250, 100, 100, 100)];
-    [stop2 addTarget:self action:@selector(stopClick:) forControlEvents:UIControlEventTouchUpInside];
-    stop2.backgroundColor = [UIColor redColor];
-    stop2.tag = 2;
-//    [self.view addSubview:stop2];
-    self.view1 = [[UIView alloc]initWithFrame:CGRectMake(50, 300, 150, 150)];
-    self.view1.backgroundColor = [UIColor greenColor];
-//    [self.view addSubview:self.view1];
-//    [self.view1 addSubview:self.playerView1];
-    self.view2 = [[UIView alloc]initWithFrame:CGRectMake(250, 300, 150, 150)];
-    self.view2.backgroundColor = [UIColor greenColor];
-//    [self.view addSubview:self.view2];
-//    [self.view2 addSubview:self.playerView2];
-//    self.item1 = [[QMediaItemContext alloc]initItemComtextWithMediaModel:self.models[1] startPos:0 storageDir:documentsDir logLevel:LOG_DEBUG];
-//    [self.item1.controlHandler start];
-//    [self.playerView1.renderHandler addPlayerRenderListener:self];
-}
--(void) stopClick:(UIButton *)sender{
-    NSLog(@"stopClick -------");
-    NSString *documentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    self.item1 = [[QMediaItemContext alloc]initItemComtextWithMediaModel:self.models[sender.tag] startPos:0 storageDir:documentsDir logLevel:LOG_DEBUG];
-    [self.item1.controlHandler start];
-    self.viewtag = sender.tag;
-    if(sender.tag == 1){
-        [self.playerView1 removeFromSuperview];
-        [self.playerView1.controlHandler stop];
-        [self.playerView1.controlHandler playMediaItem:self.item1];
-//        [self.view1 addSubview:self.playerView1];
-    }else{
-        [self.playerView1 removeFromSuperview];
-        [self.playerView1.controlHandler stop];
-        [self.playerView1.controlHandler playMediaItem:self.item1];
-//        [self.view2 addSubview:self.playerView1];
-    }
     
-//    [self.player.controlHandler stop];
-//    [self.player.controlHandler playMediaItem:item];
 }
 - (void)setUpPlayer:(NSArray *)playItemArray{
     NSMutableArray *configs = [NSMutableArray array];
@@ -227,24 +182,19 @@ QIMediaItemCommandNotAllowListener
     [self.myPlayItemManager append:playItemArray];
     self.shortVideoPlayerViewCache = [[QNShortVideoPlayerViewCache alloc]initWithPlayItemManager:self.myPlayItemManager externalFilesDir:documentsDir];
     [self.shortVideoPlayerViewCache start];
-   self.player = [self.shortVideoPlayerViewCache fetchPlayerView:0];
-    
-
-    [self.shortVideoPlayerViewCache changePosition:0];
-    [self playerContextAllCallBack];
 }
-
-#pragma mark - PLPlayerDelegate
+//添加播放器的所有 listener
 -(void)playerContextAllCallBack{
     [self.player.controlHandler addPlayerStateListener:self];
     [self.player.controlHandler addPlayerProgressChangeListener:self];
     [self.player.renderHandler addPlayerRenderListener:self];
 
 }
+#pragma mark - PLPlayerDelegate
+
 -(void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
     if(state == QPLAYER_STATE_NONE){
         [_toastView addText:@"初始状态"];
-        
     }
     else if (state ==     QPLAYER_STATE_INIT){
         
@@ -254,9 +204,6 @@ QIMediaItemCommandNotAllowListener
         [_toastView addText:@"正在加载"];
     }
     else if (state == QPLAYER_STATE_PLAYING) {
-        if (_currentCell == nil) {
-            [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-        }
         _currentCell.state = YES;
         [_toastView addText:@"正在播放"];
     }
@@ -290,18 +237,11 @@ QIMediaItemCommandNotAllowListener
 -(void)onFirstFrameRendered:(QPlayerContext *)context elapsedTime:(NSInteger)elapsedTime{
     NSLog(@"预加载首帧时间----%d",elapsedTime);
     
+    self.currentCell.state = YES;
+    self.currentCell.firstFrameTime = elapsedTime;
+    QNCellPlayerTableViewCell *inner = self.currentCell;
+    [inner hideCoverImage];
     
-//    dispatch_async(dispatch_get_main_queue(), ^{
-        self.currentCell.state = YES;
-        self.currentCell.firstFrameTime = elapsedTime;
-        QNCellPlayerTableViewCell *inner = self.currentCell;
-        [inner hideCoverImage];
-//        if(self.viewtag == 1){
-//            [self.view1 addSubview:self.playerView1];
-//        }else{
-//            [self.view2 addSubview:self.playerView1];
-//        }
-//    });
 }
 
 
@@ -326,18 +266,8 @@ QIMediaItemCommandNotAllowListener
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%ld%ld", (long)[indexPath section], (long)[indexPath row]];
-//    // 出列可重用的 cell，从缓存池取标识为 "Cell" 的 cell
-//    QNCellPlayerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil) {
-//        cell = [[QNCellPlayerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//    }
     QNCellPlayerTableViewCell* cell = [[QNCellPlayerTableViewCell alloc]initWithImage:self.coverImageArray[indexPath.row]];
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    [cell showCoverImage];
     cell.modelKey = [NSNumber numberWithInteger:indexPath.row];
-    NSLog(@"cell.modelKey index : %ld",indexPath.row);
-//    self.currentPlayingNum = (int)indexPath.row;
     return cell;
 }
 
@@ -353,24 +283,7 @@ QIMediaItemCommandNotAllowListener
 
 // 松手时已经静止,只会调用scrollViewDidEndDragging
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-//    if (decelerate == NO) { // scrollView已经完全静止
-        [self handleScroll];
-//    }else{
-//        if(self.lastContentOffset > scrollView.contentOffset.y){
-////            self.isDownScrolling = YES;
-//            if(self.currentPlayingNum <self.modelsNum){
-//                self.currentPlayingNum ++;
-//                [self.shortVideoPlayerViewCache changePosition:self.currentPlayingNum];
-//            }
-//        }else if(self.lastContentOffset < scrollView.contentOffset.y) {
-////            self.isDownScrolling = NO;
-//            if(self.currentPlayingNum>0){
-//                self.currentPlayingNum --;
-//                [self.shortVideoPlayerViewCache changePosition:self.currentPlayingNum];
-//            }
-//        }
-//    }
-//    self.lastContentOffset = scrollView.contentOffset.y;
+    [self handleScroll];
 }
 
 // 松手时还在运动, 先调用scrollViewDidEndDragging,在调用scrollViewDidEndDecelerating
@@ -395,13 +308,8 @@ QIMediaItemCommandNotAllowListener
             }
         }
     }
- 
+    //修改当前正在播放的 playItem 的 itemId，也就是key
     self.currentPlayingNum = [finnalCell.modelKey intValue];
-    if(abs([self.currentCell.modelKey intValue] - self.currentPlayingNum)>=2){
-        
-        NSLog(@"self.currentPlayingNum %d , self.currentCell.modelKey %@",self.currentPlayingNum,self.currentCell.modelKey);
-    }
-    NSLog(@"self.currentPlayingNum %d , self.currentCell.modelKey %@",self.currentPlayingNum,self.currentCell.modelKey);
     // 注意, 如果正在播放的cell和finnalCell是同一个cell, 不应该在播放
     if (finnalCell != nil && finnalCell != self.currentCell)  {
         
@@ -412,6 +320,7 @@ QIMediaItemCommandNotAllowListener
     
 }
 
+#pragma mark - 更新cell
 
 -(void)updatePlayCell:(QNCellPlayerTableViewCell *)cell scroll:(BOOL)scroll{
     
@@ -426,29 +335,28 @@ QIMediaItemCommandNotAllowListener
             }
         }
     } else{
-        NSLog(@"cell.modelKey : %d",[cell.modelKey intValue]);
-        NSLog(@"self.player.mytag : %@",self.player.mytag);
         if(_currentCell == nil){
             _currentCell = cell;
+            self.player = [self.shortVideoPlayerViewCache fetchPlayerView:0];
+             [self.shortVideoPlayerViewCache changePosition:0];
+             [self playerContextAllCallBack];
             _currentCell.playerView = self.player;
-//            [_currentCell addCoverImage:self.coverImageArray[0]];
             return;
         }
-        
-//        QNSamplePlayerWithQRenderView * view = self.player;
-//        [self.player removeFromSuperview];
+        //重新展示封面
         [self.currentCell showCoverImage];
+        //回收播放器
         [self.shortVideoPlayerViewCache recyclePlayerView:self.player];
-//        [cell addCoverImage:self.coverImageArray[[cell.modelKey intValue]]];
+        //拿取下一个cell所需要的播放器
         self.player = [self.shortVideoPlayerViewCache fetchPlayerView:[cell.modelKey intValue]];
-        
-        NSLog(@"self.player.mytag : %@ tag : %d",self.player.mytag,[cell.modelKey intValue]);
+        //添加listener
         [self playerContextAllCallBack];
+        //切换当前正在播放的 playItem 位置
         [self.shortVideoPlayerViewCache changePosition:[cell.modelKey intValue]];
+        //更新正在播放的cell
         _currentCell = cell;
-        
+        //将播放器视图添加给正在播放的 cell
         self.currentCell.playerView = self.player;
-//        NSLog(@" second self.currentPlayingNum %d , self.currentCell.modelKey %@",self.currentPlayingNum,self.currentCell.modelKey);
     }
 
 }
@@ -456,9 +364,6 @@ QIMediaItemCommandNotAllowListener
     [self.player.controlHandler stop];
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-
-
 
 - (UIImage *)originImage:(UIImage *)image scaleToSize:(CGSize)size{
     UIGraphicsBeginImageContext(size);
