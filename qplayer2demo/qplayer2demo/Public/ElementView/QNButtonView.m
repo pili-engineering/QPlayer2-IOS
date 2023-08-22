@@ -115,6 +115,7 @@ QIPlayerAudioListener
     [self.muteButton setImage:[[UIImage imageNamed:@"pl_mute"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     self.muteButton.tintColor = [UIColor whiteColor];
     self.muteButton.selected = YES;
+    self.muteButton.hidden = YES;
     [self.muteButton addTarget:self action:@selector(muteButtonClick:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:self.muteButton];
 }
@@ -219,9 +220,15 @@ QIPlayerAudioListener
     self.muteButton.selected = !isMute;
 }
 - (void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
-    if(state == QPLAYER_STATE_PLAYING){
+    if(state == QPLAYER_STATE_PLAYING || state == QPLAYER_STATE_PAUSED_RENDER){
         self.isNeedUpdatePrograss = true;
+        if(state == QPLAYER_STATE_PLAYING){
+            self.muteButton.hidden = NO;
+        }
     }else{
+        if(state == QPLAYER_STATE_PREPARE){
+            self.muteButton.hidden = YES;
+        }
         self.isNeedUpdatePrograss = false;
     }
 }
@@ -339,8 +346,8 @@ QIPlayerAudioListener
 
 #pragma mark 按钮点击事件
 -(void)muteButtonClick:(UIButton *)sender{
-//    sender.selected = !sender.selected;
     [self.player.controlHandler setMute:sender.selected];
+    sender.selected = !sender.selected;
 }
 -(void)stopButtonClick{
     [self.player.controlHandler stop];
