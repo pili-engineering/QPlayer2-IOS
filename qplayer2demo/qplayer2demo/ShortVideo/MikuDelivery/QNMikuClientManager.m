@@ -10,7 +10,7 @@
 #define kMiku_APPKEY @"44zpao7x7vyw9ncu"
 #define kMiku_APPSALT @"916c9boaawdlnxlle6k7472asee6h7y8"
 #define CACHE_PATH @""
-#define CACHE_SIZE_MB 400
+#define CACHE_SIZE_MB 100
 #define MAX_WORKERS 8
 #define IS_USE_HTTP_DNS false
 @interface QNMikuClientManager()
