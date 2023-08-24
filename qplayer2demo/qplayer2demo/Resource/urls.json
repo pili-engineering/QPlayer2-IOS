@@ -101,41 +101,9 @@
         "streamElements": [
             {
                 "userType": "",
-                "urlType": 1,
-                "url": "http://demo-videos.qnsdk.com/song.mp3",
-                "quality": 0,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-          
-        "isLive": 1,
-        "streamElements": [
-            {
-                "userType": "",
                 "urlType": 0,
-                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/Hera",
-                "quality": 100,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-          
-        "isLive": 1,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/841666",
-                "quality": 100,
+                "url": "http://demo-videos.qnsdk.com/shortvideo/nike.mp4",
+                "quality": 960,
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
@@ -149,9 +117,9 @@
         "streamElements": [
             {
                 "userType": "",
-                "urlType": 0,
-                "url": "http://pili-playback.qnsdk.com/recordings/z1.sdk-live.841666/1672908481_1672910686.m3u8",
-                "quality": 100,
+                "urlType": 1,
+                "url": "http://demo-videos.qnsdk.com/song.mp3",
+                "quality": 0,
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
@@ -198,54 +166,6 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/shortvideo/nike.mp4",
-                "quality": 960,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-          
-        "isLive": 0,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://pili-playback.qnsdk.com/recordings/z1.sdk-live.Hera/1673340696_1673340783.m3u8",
-                "quality": 960,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-          
-        "isLive": 0,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://pili-vod.live-test.dgzq.com.cn/test2.m3u8",
-                "quality": 960,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-          
-        "isLive": 0,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
                 "url": "http://demo-videos.qnsdk.com/Sync-Footage-V1-H264.mp4",
                 "quality": 1080,
                 "isSelected": 1,
@@ -278,7 +198,17 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666",
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/zengtest",
+                "quality": 1080,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/zengtest@hugo720p",
                 "quality": 720,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -288,8 +218,18 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666@480p",
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/zengtest@hugo480p",
                 "quality": 480,
+                "isSelected": 0,
+                "backupUrl": "",
+                "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/zengtest@hugo240p",
+                "quality": 240,
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
@@ -304,9 +244,39 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://pili-hls.qnsdk.com/sdk-live/6666.m3u8",
-                "quality": 360,
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/test6666",
+                "quality": 1080,
                 "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/test6666@hugo720p",
+                "quality": 720,
+                "isSelected": 0,
+                "backupUrl": "",
+                "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/test6666@hugo480p",
+                "quality": 480,
+                "isSelected": 0,
+                "backupUrl": "",
+                "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/test6666@hugo240p",
+                "quality": 240,
+                "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
                  
@@ -320,9 +290,34 @@
             {
                 "userType": "",
                 "urlType": 0,
+                "url": "rtmp://pili-live-rtmp.cdn-stg1.zhi-niao.com/zhiniao-stg1/851131_59199A60361D4C54B944130794B1AEEE_1",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+        "isLive": 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/test6666",
+                "quality": 1080,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
                 "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/test6666@zn720p",
                 "quality": 720,
-                "isSelected": 1,
+                "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
                  
@@ -356,8 +351,8 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/zengtest@zn720p",
-                "quality": 720,
+                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666",
+                "quality": 1080,
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
@@ -366,7 +361,17 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/zengtest@zn480p",
+                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666@zn720p",
+                "quality": 720,
+                "isSelected": 0,
+                "backupUrl": "",
+                "referer": "",
+                 
+            },
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666@zn480p",
                 "quality": 480,
                 "isSelected": 0,
                 "backupUrl": "",
@@ -376,7 +381,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/zengtest@zn240p",
+                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666@zn240p",
                 "quality": 240,
                 "isSelected": 0,
                 "backupUrl": "",
@@ -385,6 +390,40 @@
             }
         ]
     },
+    {
+          
+        "isLive": 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://pili-hls.qnsdk.com/sdk-live/6666.m3u8",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    {
+          
+        "isLive": 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "https://stg1-cdn-vod.zhi-niao.com/replays/2023/02/24/853909/853909_D0F915234FC648C7BDE4D62281E7575F.m3u8",
+                "quality": 360,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                 
+            }
+        ]
+    },
+    
+    
     {
           
         "isLive": 1,
@@ -408,7 +447,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "https://sdk-release.qnsdk.com/zeng.m3u8",
+                "url": "http://10008gi.playback1.z1.pili.qiniucdn.com/zhiniao-stg1/852373_E1FEB4E6C5B64D06A4B6C6962940BC6C_1.m3u8?start=1676961021&end=1676961045",
                 "quality": 760,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -809,38 +848,6 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "srt://cdn-pull-tx.hntv.tv:10080?streamid=#!::h=cdn-pull-tx.hntv.tv/saas_live/38edfba79447461ba3c46440cf474822,m=request,wsSecret=69fb58c54ff2a0c13fb14c793a6aad58,wsTime=1909811783",
-                "quality": 360,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-          
-        "isLive": 1,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "srt://cdn-pull-tx-1.hndt.com:10080?streamid=#!::h=cdn-pull-tx-1.hndt.com/saas_live/a5d19ff5c5a24cf99e77b9acd91e1128,m=request,wsSecret=81e31374ab905f273517886ef8446164,wsTime=1910504903",
-                "quality": 360,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-          
-        "isLive": 1,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
                 "url": "srt://180.101.136.81:1935?streamid=#!::h=pilidemo/timestamp,m=request,domain=live-pilidemo.cloudvdn.com",
                 "quality": 360,
                 "isSelected": 1,
@@ -852,28 +859,12 @@
     },
     {
           
-        "isLive": 0,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "https://playback-vpaas.cloudlinks.cn/vas/playback/m3u8?ownerid=9223372043328869169&deviceid=7391983055&startTime=1669959976&endTime=1669959984&sign=18aca951c5b70194ba51f31e5c662949c3cb0d88&port=47807",
-                "quality": 360,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-          
         "isLive": 1,
         "streamElements": [
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://219.151.31.38/liveplay-kk.rtxapp.com/live/program/live/hnwshd/4000000/mnf.m3u8",
+                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/Hera",
                 "quality": 360,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -905,16 +896,17 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/qiniu-vr.mov",
+                "url": "http://80rjmu.com1.z0.glb.clouddn.com/ncyY3ioGAakS-Lg252IscrXNxyo=/Fgny-rvibYqoFP-lPkI53JfmoIx5",
                 "quality": 360,
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                "renderType": 1,
+                "hlsDrmKey": "testtesttesttest"
                  
             }
         ]
     },
+    
     {
           
         "isLive": 0,
@@ -964,37 +956,18 @@
         ]
     },
     {
-          
-        "isLive": 0,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://80rjmu.com1.z0.glb.clouddn.com/ncyY3ioGAakS-Lg252IscrXNxyo=/Fgny-rvibYqoFP-lPkI53JfmoIx5",
-                "quality": 720,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                "hlsDrmKey": "testtesttesttest",
-                 
-            }
-        ]
-    },
-    {
-        
-        "isLive": 0,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/bbk-H265-50fps.mp4",
-                "quality": 360,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    }
+            "isLive": 0,
+            "streamElements": [
+                {
+                    "userType": "",
+                    "urlType": 0,
+                    "url": "https://sdk-release.qnsdk.com/CENC_AES-CTR.mp4",
+                    "quality": 720,
+                    "isSelected": 1,
+                    "backupUrl": "",
+                    "referer": ""
+                }
+            ]
+        }
     
 ]

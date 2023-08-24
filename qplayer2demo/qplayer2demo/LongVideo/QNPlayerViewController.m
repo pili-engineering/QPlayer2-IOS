@@ -833,7 +833,12 @@ QIPlayerSubtitleListener
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QNURLListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"listCell" forIndexPath:indexPath];
-    [cell configureListURLString:_playerModels[indexPath.row].streamElements[0].url index:indexPath.row];
+    if([_playerModels[indexPath.row].streamElements[0].url isEqual:@"rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/test6666"]){
+        [cell configureListURLString:_playerModels[indexPath.row].streamElements[1].url index:indexPath.row];
+        
+    }else{
+        [cell configureListURLString:_playerModels[indexPath.row].streamElements[0].url index:indexPath.row];
+    }
     cell.deleteButton.tag = 100 + indexPath.row;
     [cell.deleteButton addTarget:self action:@selector(deleteUrlString:) forControlEvents:UIControlEventTouchDown];
     if (indexPath.row == _selectedIndex) {
