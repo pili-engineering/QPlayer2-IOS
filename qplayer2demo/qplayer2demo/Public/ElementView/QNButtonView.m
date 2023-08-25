@@ -107,6 +107,11 @@ QIPlayerAudioListener
     }
     return self;
 }
+-(void)resumeListeners{
+    
+    [self.player.controlHandler addPlayerProgressChangeListener:self];
+    [self.player.controlHandler addPlayerStateListener:self];
+}
 #pragma mark 添加控件
 -(void)addMuteButton{
     self.muteButton = [[UIButton alloc] initWithFrame:CGRectMake(playerWidth - 82, 0, 35, 30)];

@@ -57,7 +57,6 @@ QIPlayerFPSListener
 - (void)setPlayerView:(QNSamplePlayerWithQRenderView *)playerView{
 
     _playerView = playerView;
-    [self addListeners];
     playerView.frame = self.contentView.bounds;
     if (playerView) {
         [self.contentView insertSubview:playerView atIndex:0];
@@ -66,10 +65,12 @@ QIPlayerFPSListener
         if (playerView != nil) {
             
             [self addPlayerMaskView:playerView];
+            return;
         }
     }else{
         self.maskView.player = playerView;
     }
+    [self addListeners];
     
 }
 -(void)addListeners{
@@ -77,6 +78,9 @@ QIPlayerFPSListener
     [self.playerView.controlHandler addPlayerStateListener:self];
     [self.playerView.controlHandler addPlayerDownloadChangeListener:self];
     [self.playerView.renderHandler addPlayerRenderListener:self];
+    if(self.maskView){
+        [self.maskView resumeListeners];
+    }
 }
 -(void)addCoverImage:(UIImage *)coverImage{
     if(self.coverImageView){

@@ -54,6 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)sliderStartCallBack:(void (^)(BOOL seeking))callBack;
 ///进度条结束拖动回调
 -(void)sliderEndCallBack:(void (^)(BOOL seeking))callBack;
+//恢复对QPlayer的监听
+-(void)resumeListeners;
 @end
 
 NS_ASSUME_NONNULL_END

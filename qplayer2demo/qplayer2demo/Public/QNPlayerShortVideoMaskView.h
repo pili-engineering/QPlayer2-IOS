@@ -40,6 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
  修改播放按钮的状态
  */
 -(void)setPlayButtonState:(BOOL)state;
+
+
+-(void)resumeListeners;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -40,6 +40,9 @@
     return  self;
 }
 
+-(void)resumeListeners{
+    [self.buttomView resumeListeners];
+}
 #pragma mark - public methods
 -(void)setPlayButtonState:(BOOL)state{
     [self.buttomView setPlayButtonState:state];
