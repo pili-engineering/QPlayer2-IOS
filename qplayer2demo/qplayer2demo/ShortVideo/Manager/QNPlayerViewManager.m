@@ -87,8 +87,8 @@
         if(self.mCurrentCacheCount < MAX_COUNT){
             NSString *documentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
             self.mCurrentCacheCount ++;
-            QNSamplePlayerWithQRenderView * playerView = [[QNSamplePlayerWithQRenderView alloc]initWithFrame:CGRectMake(0, 0, 1, 1) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_DEBUG];
-            playerView.hidden = NO;
+            QNSamplePlayerWithQRenderView * playerView = [[QNSamplePlayerWithQRenderView alloc]initWithFrame:CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_DEBUG];
+            playerView.hidden = YES;
             return playerView;
         }else{
             return nil;
