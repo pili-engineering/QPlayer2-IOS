@@ -65,7 +65,6 @@ QIPlayerFPSListener
         if (playerView != nil) {
             
             [self addPlayerMaskView:playerView];
-            return;
         }
     }else{
         self.maskView.player = playerView;
