@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>QIPlayerFPSListener Protocol Reference</title>
+	<title>QIPlayerVideoDataListener Protocol Reference</title>
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
@@ -43,8 +43,6 @@
 							<select id="jump-to">
 	<option value="top">Jump To&#133;</option>
 	
-	<option value="overview">Overview</option>
-	
 
 	
 	
@@ -60,7 +58,7 @@
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/onFPSChanged:FPS:">- onFPSChanged:FPS:</option>
+		<option value="//api/name/onVideoData:width:height:videoType:buffer:">- onVideoData:width:height:videoType:buffer:</option>
 		
 	</optgroup>
 	
@@ -77,7 +75,7 @@
 		<div id="overview_contents" class="container">
 			<div id="content">
 				<main role="main">
-					<h1 class="title">QIPlayerFPSListener Protocol Reference</h1>
+					<h1 class="title">QIPlayerVideoDataListener Protocol Reference</h1>
 
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
@@ -86,20 +84,12 @@
 	<td>NSObject</td>
 </tr><tr>
 	<th>Declared in</th>
-	<td>QIPlayerFPSListener.h</td>
+	<td>QIPlayerVideoDataListener.h</td>
 </tr>
 						</tbody></table></div>
 					
 
                     
-					
-					<div class="section section-overview">
-						<a title="Overview" name="overview"></a>
-						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>实时帧率监听</p>
-					</div>
-					
-					
 
 					
 					
@@ -112,8 +102,8 @@
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/onFPSChanged:FPS:" title="onFPSChanged:FPS:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/onFPSChanged:FPS:">&ndash;&nbsp;onFPSChanged:FPS:</a></code>
+	<a name="//api/name/onVideoData:width:height:videoType:buffer:" title="onVideoData:width:height:videoType:buffer:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onVideoData:width:height:videoType:buffer:">&ndash;&nbsp;onVideoData:width:height:videoType:buffer:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -123,12 +113,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>fps 改变的回调</p>
+				<p>视频数据回调</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)onFPSChanged:(QPlayerContext *)<em>context</em> FPS:(NSInteger)<em>fps</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)onVideoData:(QPlayerContext *)<em>context</em> width:(int)<em>width</em> height:(int)<em>height</em> videoType:(QVideoType)<em>videoType</em> buffer:(CVPixelBufferRef)<em>buffer</em></code></div>
 
 		    
 			
@@ -138,12 +128,19 @@
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>context</code></th>
-						<td><p>当前的播放器</p></td>
+						<td><p>音频数据</p></td>
 					</tr>
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>fps</code></th>
-						<td><p>帧率</p></td>
+						<th scope="row" class="argument-name"><code>channelNum</code></th>
+						<td><p>通道数
+@param channelLayout</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>sampleRate</code></th>
+						<td><p>采样率
+@param format</p></td>
 					</tr>
 				
 				</table>
@@ -155,6 +152,11 @@
 			
 
 			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>视频数据回调</p>
+			</div>
+			
 
 			
 
@@ -163,7 +165,7 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QIPlayerFPSListener.h</code></p>
+				<p><code class="declared-in-ref">QIPlayerVideoDataListener.h</code></p>
 			</div>
 			
 			

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>QIPlayerFPSListener Protocol Reference</title>
+	<title>QSubtitleElement Class Reference</title>
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
@@ -43,8 +43,6 @@
 							<select id="jump-to">
 	<option value="top">Jump To&#133;</option>
 	
-	<option value="overview">Overview</option>
-	
 
 	
 	
@@ -54,15 +52,19 @@
 
 	
 	
-
-	
-
-	
-	<optgroup label="Instance Methods">
+	<optgroup label="Properties">
 		
-		<option value="//api/name/onFPSChanged:FPS:">- onFPSChanged:FPS:</option>
+		<option value="//api/name/isSelected">isSelected</option>
+		
+		<option value="//api/name/name">name</option>
+		
+		<option value="//api/name/url">url</option>
 		
 	</optgroup>
+	
+
+	
+
 	
 	
 </select>
@@ -77,29 +79,21 @@
 		<div id="overview_contents" class="container">
 			<div id="content">
 				<main role="main">
-					<h1 class="title">QIPlayerFPSListener Protocol Reference</h1>
+					<h1 class="title">QSubtitleElement Class Reference</h1>
 
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
-	<th>Conforms to</th>
+	<th>Inherits from</th>
 	<td>NSObject</td>
 </tr><tr>
 	<th>Declared in</th>
-	<td>QIPlayerFPSListener.h</td>
+	<td>QMediaModel.h</td>
 </tr>
 						</tbody></table></div>
 					
 
                     
-					
-					<div class="section section-overview">
-						<a title="Overview" name="overview"></a>
-						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>实时帧率监听</p>
-					</div>
-					
-					
 
 					
 					
@@ -112,8 +106,8 @@
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/onFPSChanged:FPS:" title="onFPSChanged:FPS:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/onFPSChanged:FPS:">&ndash;&nbsp;onFPSChanged:FPS:</a></code>
+	<a name="//api/name/name" title="name"></a>
+	<h3 class="method-title"><code><a href="#//api/name/name">&nbsp;&nbsp;name</a></code>
 </h3>
 
 	<div class="method-info">
@@ -123,31 +117,14 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>fps 改变的回调</p>
+				<p>自定义字幕名称</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)onFPSChanged:(QPlayerContext *)<em>context</em> FPS:(NSInteger)<em>fps</em></code></div>
+			<div class="method-subsection method-declaration"><code>@property (copy, nonatomic) NSString *name</code></div>
 
 		    
-			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>context</code></th>
-						<td><p>当前的播放器</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>fps</code></th>
-						<td><p>帧率</p></td>
-					</tr>
-				
-				</table>
-			</div>
 			
 
 			
@@ -163,7 +140,89 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QIPlayerFPSListener.h</code></p>
+				<p><code class="declared-in-ref">QMediaModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/url" title="url"></a>
+	<h3 class="method-title"><code><a href="#//api/name/url">&nbsp;&nbsp;url</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>字幕地址</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (copy, nonatomic) NSString *url</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QMediaModel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/isSelected" title="isSelected"></a>
+	<h3 class="method-title"><code><a href="#//api/name/isSelected">&nbsp;&nbsp;isSelected</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>是否起播加载该URL字幕</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (assign, nonatomic) BOOL isSelected</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QMediaModel.h</code></p>
 			</div>
 			
 			

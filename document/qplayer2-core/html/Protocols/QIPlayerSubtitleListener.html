@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>QPlayerContext Class Reference</title>
+	<title>QIPlayerSubtitleListener Protocol Reference</title>
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
@@ -54,29 +54,21 @@
 
 	
 	
-	<optgroup label="Properties">
-		
-		<option value="//api/name/controlHandler">controlHandler</option>
-		
-		<option value="//api/name/renderHandler">renderHandler</option>
-		
-	</optgroup>
-	
 
-	
-	<optgroup label="Class Methods">
-		
-		<option value="//api/name/new">+ new</option>
-		
-	</optgroup>
 	
 
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/initPlayerAPPVersion:localStorageDir:logLevel:">- initPlayerAPPVersion:localStorageDir:logLevel:</option>
+		<option value="//api/name/onSubtitleDecoded:name:result:">- onSubtitleDecoded:name:result:</option>
 		
-		<option value="//api/name/initPlayerAPPVersion:localStorageDir:logLevel:authorid:">- initPlayerAPPVersion:localStorageDir:logLevel:authorid:</option>
+		<option value="//api/name/onSubtitleEnable:enable:">- onSubtitleEnable:enable:</option>
+		
+		<option value="//api/name/onSubtitleLoaded:name:result:">- onSubtitleLoaded:name:result:</option>
+		
+		<option value="//api/name/onSubtitleNameChange:name:">- onSubtitleNameChange:name:</option>
+		
+		<option value="//api/name/onSubtitleTextChange:text:">- onSubtitleTextChange:text:</option>
 		
 	</optgroup>
 	
@@ -93,16 +85,16 @@
 		<div id="overview_contents" class="container">
 			<div id="content">
 				<main role="main">
-					<h1 class="title">QPlayerContext Class Reference</h1>
+					<h1 class="title">QIPlayerSubtitleListener Protocol Reference</h1>
 
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
-	<th>Inherits from</th>
+	<th>Conforms to</th>
 	<td>NSObject</td>
 </tr><tr>
 	<th>Declared in</th>
-	<td>QPlayerContext.h</td>
+	<td>QIPlayerSubtitleListener.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -112,7 +104,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>播放器上下文</p>
+						<p>seek监听</p>
 					</div>
 					
 					
@@ -128,8 +120,8 @@
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/new" title="new"></a>
-	<h3 class="method-title"><code><a href="#//api/name/new">+&nbsp;new</a></code>
+	<a name="//api/name/onSubtitleTextChange:text:" title="onSubtitleTextChange:text:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onSubtitleTextChange:text:">&ndash;&nbsp;onSubtitleTextChange:text:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -139,58 +131,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>方法废弃: new    <a href="#//api/name/init">init</a></p>
+				<p>seek成功回调</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>+ (instancetype)new</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>方法废弃: new    <a href="#//api/name/init">init</a></p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerContext.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/initPlayerAPPVersion:localStorageDir:logLevel:" title="initPlayerAPPVersion:localStorageDir:logLevel:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/initPlayerAPPVersion:localStorageDir:logLevel:">&ndash;&nbsp;initPlayerAPPVersion:localStorageDir:logLevel:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>初始化</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>- (instancetype)initPlayerAPPVersion:(NSString *)<em>APPVersion</em> localStorageDir:(NSString *)<em>localStorageDir</em> logLevel:(QLogLevel)<em>logLevel</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)onSubtitleTextChange:(QPlayerContext *)<em>context</em> text:(NSString *)<em>text</em></code></div>
 
 		    
 			
@@ -199,18 +145,8 @@
 				<table class="argument-def parameter-def">
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>APPVersion</code></th>
-						<td><p>APP版本号</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>localStorageDir</code></th>
-						<td><p>持久化相关的路径（注意权限） 目前只存日志</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>logLevel</code></th>
-						<td><p>日志等级</p></td>
+						<th scope="row" class="argument-name"><code>context</code></th>
+						<td><p>当前的播放器</p></td>
 					</tr>
 				
 				</table>
@@ -224,7 +160,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>初始化</p>
+				<p>seek成功回调</p>
 			</div>
 			
 
@@ -235,15 +171,15 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerContext.h</code></p>
+				<p><code class="declared-in-ref">QIPlayerSubtitleListener.h</code></p>
 			</div>
 			
 			
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/initPlayerAPPVersion:localStorageDir:logLevel:authorid:" title="initPlayerAPPVersion:localStorageDir:logLevel:authorid:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/initPlayerAPPVersion:localStorageDir:logLevel:authorid:">&ndash;&nbsp;initPlayerAPPVersion:localStorageDir:logLevel:authorid:</a></code>
+	<a name="//api/name/onSubtitleNameChange:name:" title="onSubtitleNameChange:name:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onSubtitleNameChange:name:">&ndash;&nbsp;onSubtitleNameChange:name:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -253,12 +189,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>初始化</p>
+				<p>seek失败回调</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (instancetype)initPlayerAPPVersion:(NSString *)<em>APPVersion</em> localStorageDir:(NSString *)<em>localStorageDir</em> logLevel:(QLogLevel)<em>logLevel</em> authorid:(NSString *)<em>authorid</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)onSubtitleNameChange:(QPlayerContext *)<em>context</em> name:(NSString *)<em>name</em></code></div>
 
 		    
 			
@@ -267,23 +203,8 @@
 				<table class="argument-def parameter-def">
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>APPVersion</code></th>
-						<td><p>APP版本号</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>localStorageDir</code></th>
-						<td><p>持久化相关的路径（注意权限） 目前只存日志</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>logLevel</code></th>
-						<td><p>日志等级</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>authorid</code></th>
-						<td><p>authorid</p></td>
+						<th scope="row" class="argument-name"><code>context</code></th>
+						<td><p>当前的播放器</p></td>
 					</tr>
 				
 				</table>
@@ -297,7 +218,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>初始化</p>
+				<p>seek失败回调</p>
 			</div>
 			
 
@@ -308,15 +229,15 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerContext.h</code></p>
+				<p><code class="declared-in-ref">QIPlayerSubtitleListener.h</code></p>
 			</div>
 			
 			
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/controlHandler" title="controlHandler"></a>
-	<h3 class="method-title"><code><a href="#//api/name/controlHandler">&nbsp;&nbsp;controlHandler</a></code>
+	<a name="//api/name/onSubtitleEnable:enable:" title="onSubtitleEnable:enable:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onSubtitleEnable:enable:">&ndash;&nbsp;onSubtitleEnable:enable:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -326,14 +247,26 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>获取播放控制Handler</p>
+				<p>seek失败回调</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) QPlayerControlHandler *controlHandler</code></div>
+			<div class="method-subsection method-declaration"><code>- (void)onSubtitleEnable:(QPlayerContext *)<em>context</em> enable:(BOOL)<em>enable</em></code></div>
 
 		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>context</code></th>
+						<td><p>当前的播放器</p></td>
+					</tr>
+				
+				</table>
+			</div>
 			
 
 			
@@ -343,7 +276,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>获取播放控制Handler</p>
+				<p>seek失败回调</p>
 			</div>
 			
 
@@ -354,15 +287,15 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerContext.h</code></p>
+				<p><code class="declared-in-ref">QIPlayerSubtitleListener.h</code></p>
 			</div>
 			
 			
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/renderHandler" title="renderHandler"></a>
-	<h3 class="method-title"><code><a href="#//api/name/renderHandler">&nbsp;&nbsp;renderHandler</a></code>
+	<a name="//api/name/onSubtitleLoaded:name:result:" title="onSubtitleLoaded:name:result:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onSubtitleLoaded:name:result:">&ndash;&nbsp;onSubtitleLoaded:name:result:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -372,14 +305,26 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>获取渲染控制Handler</p>
+				<p>seek失败回调</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) QPlayerRenderHandler *renderHandler</code></div>
+			<div class="method-subsection method-declaration"><code>- (void)onSubtitleLoaded:(QPlayerContext *)<em>context</em> name:(NSString *)<em>name</em> result:(BOOL)<em>result</em></code></div>
 
 		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>context</code></th>
+						<td><p>当前的播放器</p></td>
+					</tr>
+				
+				</table>
+			</div>
 			
 
 			
@@ -389,7 +334,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>获取渲染控制Handler</p>
+				<p>seek失败回调</p>
 			</div>
 			
 
@@ -400,7 +345,65 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QPlayerContext.h</code></p>
+				<p><code class="declared-in-ref">QIPlayerSubtitleListener.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/onSubtitleDecoded:name:result:" title="onSubtitleDecoded:name:result:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onSubtitleDecoded:name:result:">&ndash;&nbsp;onSubtitleDecoded:name:result:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>seek失败回调</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)onSubtitleDecoded:(QPlayerContext *)<em>context</em> name:(NSString *)<em>name</em> result:(BOOL)<em>result</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>context</code></th>
+						<td><p>当前的播放器</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>seek失败回调</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QIPlayerSubtitleListener.h</code></p>
 			</div>
 			
 			
