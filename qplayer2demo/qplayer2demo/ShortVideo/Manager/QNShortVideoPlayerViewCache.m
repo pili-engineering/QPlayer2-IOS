@@ -70,7 +70,6 @@
 }
 -(void)recyclePlayerView:(QNSamplePlayerWithQRenderView *)playerView{
     [self removeAllListers:playerView];
-    [playerView.controlHandler addPlayerStateListener:self];
     [playerView.controlHandler stop];
 //    [self removeAllListers:playerView];
     playerView.hidden = YES;
@@ -102,10 +101,6 @@
 -(void)dealloc{
     NSLog(@"%@ dealloc",TAG);
 }
--(void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
-    if(state == QPLAYER_STATE_STOPPED){
-        NSLog(@"stop");
-    }
-}
+
 @end
 

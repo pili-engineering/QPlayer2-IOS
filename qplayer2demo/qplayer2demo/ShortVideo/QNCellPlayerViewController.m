@@ -61,9 +61,7 @@ QIMediaItemCommandNotAllowListener
     
     NSLog(@"PLCellPlayerViewController - dealloc");
 }
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+- (void)viewDidDisappear:(BOOL)animated{
     //回收播放器
     [self.shortVideoPlayerViewCache recyclePlayerView:self.player];
     //停止并释放 shortVideoPlayerViewCache
@@ -71,6 +69,10 @@ QIMediaItemCommandNotAllowListener
     _toastView = nil;
     _currentCell = nil;
     self.player = nil;
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+
     
 }
 - (void)viewWillAppear:(BOOL)animated {
