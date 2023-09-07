@@ -362,9 +362,13 @@ QIPlayerSeekListener
 
 
 -(void)onBufferingEnd:(QPlayerContext *)context{
+    NSLog(@"mybuffer onBufferingEnd");
+    
     [self.maskView removeActivityIndicatorView];
 }
 -(void)onBufferingStart:(QPlayerContext *)context{
+    NSLog(@"mybuffer onBufferingstart");
+    
     [self.maskView loadActivityIndicatorView];
 }
 -(void)onQualitySwitchComplete:(QPlayerContext *)context usertype:(NSString *)usertype urlType:(QPlayerURLType)urlType oldQuality:(NSInteger)oldQuality newQuality:(NSInteger)newQuality{

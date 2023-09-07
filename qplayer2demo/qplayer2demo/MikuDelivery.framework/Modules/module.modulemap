@@ -1,0 +1,6 @@
+framework module MikuDelivery {
+  umbrella header "MikuDelivery.h"
+
+  export *
+  module * { export * }
+}

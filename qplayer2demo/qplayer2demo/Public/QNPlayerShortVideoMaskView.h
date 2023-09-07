@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "QNSamplePlayerWithQRenderView.h"
 NS_ASSUME_NONNULL_BEGIN
 @class QNPlayerShortVideoMaskView;
 @protocol QNPlayerShortVideoMaskViewDelegate <NSObject>
@@ -27,11 +27,11 @@ NS_ASSUME_NONNULL_BEGIN
  @return QNPlayerMaskView 的实例子
  */
 
--(instancetype)initWithShortVideoFrame:(CGRect)frame player:(QPlayerContext *)player isLiving:(BOOL)isLiving;
+-(instancetype)initWithShortVideoFrame:(CGRect)frame player:(QNSamplePlayerWithQRenderView *)player isLiving:(BOOL)isLiving;
 
 //@property (nonatomic, weak) QPlayer *player;
 
-@property (nonatomic, weak) QPlayerContext *player;
+@property (nonatomic, weak) QNSamplePlayerWithQRenderView *player;
 @property (nonatomic, assign) id<QNPlayerShortVideoMaskViewDelegate> delegate;
 @property (nonatomic, assign) BOOL isLiving;
 
@@ -40,6 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
  修改播放按钮的状态
  */
 -(void)setPlayButtonState:(BOOL)state;
+
+
+-(void)resumeListeners;
 @end
 
 NS_ASSUME_NONNULL_END

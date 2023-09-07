@@ -62,7 +62,13 @@
 		
 		<option value="//api/name/addStreamElementWithUserType:urlType:url:quality:isSelected:backupUrl:referer:renderType:">- addStreamElementWithUserType:urlType:url:quality:isSelected:backupUrl:referer:renderType:</option>
 		
+		<option value="//api/name/addStreamElementWithUserType:urlType:url:quality:isSelected:backupUrl:referer:renderType:hlsDrmKey:">- addStreamElementWithUserType:urlType:url:quality:isSelected:backupUrl:referer:renderType:hlsDrmKey:</option>
+		
 		<option value="//api/name/addStreamElements:">- addStreamElements:</option>
+		
+		<option value="//api/name/addSubtitleElement:url:isDefault:">- addSubtitleElement:url:isDefault:</option>
+		
+		<option value="//api/name/addSubtitleElements:">- addSubtitleElements:</option>
 		
 		<option value="//api/name/build">- build</option>
 		
@@ -269,6 +275,104 @@
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/addStreamElementWithUserType:urlType:url:quality:isSelected:backupUrl:referer:renderType:hlsDrmKey:" title="addStreamElementWithUserType:urlType:url:quality:isSelected:backupUrl:referer:renderType:hlsDrmKey:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/addStreamElementWithUserType:urlType:url:quality:isSelected:backupUrl:referer:renderType:hlsDrmKey:">&ndash;&nbsp;addStreamElementWithUserType:urlType:url:quality:isSelected:backupUrl:referer:renderType:hlsDrmKey:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>添加视频资源</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)addStreamElementWithUserType:(NSString *)<em>userType</em> urlType:(QPlayerURLType)<em>urlType</em> url:(NSString *)<em>url</em> quality:(int)<em>quality</em> isSelected:(BOOL)<em>isSelected</em> backupUrl:(NSString *)<em>backupUrl</em> referer:(NSString *)<em>referer</em> renderType:(QPlayerRenderType)<em>renderType</em> hlsDrmKey:(NSString *)<em>hlsDrmKey</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>userType</code></th>
+						<td><p>预留字段可以填空</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>urlType</code></th>
+						<td><p>媒体的资源属性 只包含视频/只包含音频/同时有视频音频</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>url</code></th>
+						<td><p>资源地址</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>quality</code></th>
+						<td><p>清晰度</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>isSelected</code></th>
+						<td><p>是否起播时播放该流</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>backupUrl</code></th>
+						<td><p>备用地址</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>referer</code></th>
+						<td><p>http/https 协议的地址 支持该属性</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>renderType</code></th>
+						<td><p>视频的渲染类型</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>hlsDrmKey</code></th>
+						<td><p>七牛私有HLS解密密钥</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>添加视频资源</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QMediaModelBuilder.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/addStreamElements:" title="addStreamElements:"></a>
 	<h3 class="method-title"><code><a href="#//api/name/addStreamElements:">&ndash;&nbsp;addStreamElements:</a></code>
 </h3>
@@ -310,6 +414,132 @@
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
 				<p>添加视频资源数组</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QMediaModelBuilder.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/addSubtitleElement:url:isDefault:" title="addSubtitleElement:url:isDefault:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/addSubtitleElement:url:isDefault:">&ndash;&nbsp;addSubtitleElement:url:isDefault:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>添加 subtitleElement</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)addSubtitleElement:(NSString *)<em>name</em> url:(NSString *)<em>url</em> isDefault:(BOOL)<em>isDefault</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>name</code></th>
+						<td><p>srt字幕名称</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>url</code></th>
+						<td><p>srt文件地址</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>isDefault</code></th>
+						<td><p>是否默认加载此字幕</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>添加 subtitleElement</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">QMediaModelBuilder.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/addSubtitleElements:" title="addSubtitleElements:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/addSubtitleElements:">&ndash;&nbsp;addSubtitleElements:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>添加字幕资源数组</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)addSubtitleElements:(NSArray&lt;QSubtitleElement*&gt; *)<em>subtitleElements</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>subtitleElements</code></th>
+						<td><p>字幕资源数组</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>添加字幕资源数组</p>
 			</div>
 			
 
@@ -392,7 +622,7 @@
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2023 七牛云. All rights reserved. Updated: 2023-01-17</p>
+						<p class="copyright">Copyright &copy; 2023 七牛云. All rights reserved. Updated: 2023-08-30</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

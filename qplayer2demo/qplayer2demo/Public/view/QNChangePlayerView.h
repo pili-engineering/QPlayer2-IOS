@@ -29,15 +29,20 @@ typedef NS_ENUM(NSInteger, ChangeButtonType){
     UIButtonTypeActionPause,            //起播暂停
     
     
-    UIButtonTypeSEIData = 500,            //sei
+    UIButtonTypeSEIData = 500,                  //sei
     
     UIButtonTypeAuthentication = 600,            //鉴权
     
     UIButtonTypeBackgroundPlay = 700,            //后台播放
     
     UIButtonTypeImmediatelyTrue = 800,            //立即切换
-    UIButtonTypeImmediatelyFalse,            //无缝切换
-    UIButtonTypeImmediatelyCustom          //直播立即切换，点播无缝立即切换
+    UIButtonTypeImmediatelyFalse,                //无缝切换
+    UIButtonTypeImmediatelyCustom,               //直播立即切换，点播无缝立即切换
+    
+    
+    UIButtonTypeSubtitleClose = 900,         //关闭字幕
+    UIButtonTypeSubtitleChinese,             //中文字幕
+    UIButtonTypeSubtitleEnglish              //英文字幕
     
 };
 NS_ASSUME_NONNULL_BEGIN
