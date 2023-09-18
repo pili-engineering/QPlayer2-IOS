@@ -94,17 +94,20 @@ QIPlayerSubtitleListener
 @property (nonatomic, assign) int seiNum;
 @property (nonatomic, strong) NSString *seiString;
 
+@property (nonatomic, assign) BOOL isStartPush;
 @end
 
 @implementation QNPlayerViewController
 
 - (void)dealloc {
+    
     NSLog(@"QNPlayerViewController dealloc");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
+    self.isStartPush = false;
     self.scanClick = NO;
     if (appDelegate.isFlip) {
         [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -121,7 +124,7 @@ QIPlayerSubtitleListener
         self.myPlayerView = nil;
         self.playerConfigArray = nil;
     }
-    
+
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -204,8 +207,10 @@ QIPlayerSubtitleListener
         _topSpace = 64;
     }
     
+    // PLPlayer 应用
     [self setUpPlayer:self.playerConfigArray];
     
+//    self.subtitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.myPlayerView.frame.size.width/2, self.myPlayerView.frame.size.height-60, 50, 30)];
     self.subtitleLabel = [[UILabel alloc]init];
 
     self.subtitleLabel.backgroundColor = [UIColor clearColor];
@@ -254,6 +259,63 @@ QIPlayerSubtitleListener
 #pragma mark - 初始化 PLPlayer
 
 
+- (CVPixelBufferRef)createSampleBufferFromData:(NSData *)data width:(int)width height:(int)height {
+    // 创建CVPixelBufferRef
+    CVPixelBufferRef pixelBuffer = NULL;
+//    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelFormatType_420YpCbCr8Planar, (__bridge CFDictionaryRef)pixelAttributes, &pixelBuffer);
+    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelFormatType_420YpCbCr8Planar, NULL, &pixelBuffer);
+    if (status != kCVReturnSuccess) {
+        NSLog(@"Unable to create pixel buffer");
+        return NULL;
+    }
+
+    // 锁定pixel buffer的基地址
+    CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+
+    // 获取pixel buffer的Y和UV平面基地址
+    uint8_t *baseAddressY = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
+    uint8_t *baseAddressU = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
+    uint8_t *baseAddressV = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 2);
+
+    // 从NSData中复制Y和UV平面的数据
+    NSLog(@"data.bytes width : %d height : %d length :%lu",width,height,(unsigned long)data.length);
+    memcpy(baseAddressY, data.bytes, width * height);
+    memcpy(baseAddressU, data.bytes + width * height, width * height / 4);
+    
+    memcpy(baseAddressV, data.bytes + (width * height)*5/4, width * height / 4);
+    
+    // 解锁pixel buffer的基地址
+    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
+    
+
+    return pixelBuffer;
+}
+
+
+-(CMSampleBufferRef)CVPixelBufferRefToCMSampleBufferRef : (CVPixelBufferRef) pixelBuffer{
+
+    // 创建一个视频信息描述
+    CMVideoFormatDescriptionRef videoFormatDescription;
+    CMVideoFormatDescriptionCreateForImageBuffer(NULL, pixelBuffer, &videoFormatDescription);
+
+    // 创建一个时间戳
+    CMTime presentationTimeStamp = CMTimeMake(0, 30000);
+
+    // 创建一个 CMSampleTimingInfo 结构
+    CMSampleTimingInfo timingInfo = kCMTimingInfoInvalid;
+    timingInfo.duration = kCMTimeInvalid;
+    timingInfo.decodeTimeStamp = kCMTimeInvalid;
+    timingInfo.presentationTimeStamp = presentationTimeStamp;
+
+    // 创建一个 CMSampleBufferRef
+    CMSampleBufferRef sampleBuffer;
+    CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault, pixelBuffer, true, NULL, NULL, videoFormatDescription, &timingInfo, &sampleBuffer);
+    
+    CFRelease(videoFormatDescription);
+    return sampleBuffer;
+
+}
+
 - (void)setUpPlayer:(NSArray<QNClassModel*>*)models {
     NSMutableArray *configs = [NSMutableArray array];
     
@@ -274,7 +336,6 @@ QIPlayerSubtitleListener
 
     self.myPlayerView = [[QPlayerView alloc]initWithFrame:CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
     [self.view addSubview:self.myPlayerView];
-//    [self.playerContext.controlHandler forceAuthenticationFromNetwork];
     [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
     QMediaModel *model = _playerModels.firstObject;
 
@@ -376,6 +437,10 @@ QIPlayerSubtitleListener
 -(void)onQualitySwitchFailed:(QPlayerContext *)context usertype:(NSString *)usertype urlType:(QPlayerURLType)urlType oldQuality:(NSInteger)oldQuality newQuality:(NSInteger)newQuality{
     [_toastView addText:[NSString stringWithFormat:@"切换失败"]];
 }
+
+
+
+
 
 -(void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
     if (state == QPLAYER_STATE_PREPARE) {
@@ -487,6 +552,8 @@ QIPlayerSubtitleListener
 }
 
 
+
+
 #pragma mark - 保存图片到相册出错回调
 -(void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
@@ -550,6 +617,7 @@ QIPlayerSubtitleListener
                                        @(QPLAYER_STATE_SEEKING):@"seek",
                                        @(QPLAYER_STATE_COMPLETED):@"Completed"
                                        };
+//    return statusDictionary[@(self.playerContext.controlHandler.currentPlayerState)];
     return  statusDictionary[@(self.myPlayerView.controlHandler.currentPlayerState)];;
 
 }
@@ -673,6 +741,7 @@ QIPlayerSubtitleListener
         }
         
     }
+//    [UIViewController attemptRotationToDeviceOrientation];
     
 }
 

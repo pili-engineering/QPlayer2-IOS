@@ -22,7 +22,6 @@
     
     [Bugly startWithAppId:@"f562ca3299"];
     
-//    [PLStreamingEnv initEnv];
     QNHomeViewController *mainVC = [[QNHomeViewController alloc] init];
     UINavigationController *navigationController = [[UINavigationController alloc]initWithRootViewController:mainVC];
     
