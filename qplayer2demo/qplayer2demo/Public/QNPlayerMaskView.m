@@ -22,7 +22,8 @@ typedef NS_ENUM(NSInteger, PLMoveDirectionType)
 <
 UIGestureRecognizerDelegate,
 QIPlayerQualityListener,
-QIPlayerAuthenticationListener
+QIPlayerAuthenticationListener,
+QIPlayerSubtitleListener
 >{
     CGRect fullFrame;
 }
@@ -86,6 +87,8 @@ QIPlayerAuthenticationListener
 
 @property (nonatomic, assign) QPlayerDecoder decoderType;
 @property (nonatomic, assign) BOOL seeking;
+
+@property (nonatomic, assign) BOOL subtitleEnable;
 @end
 
 @implementation QNPlayerMaskView
@@ -100,8 +103,10 @@ QIPlayerAuthenticationListener
 - (id)initWithFrame:(CGRect)frame player:(QPlayerView *)player isLiving:(BOOL)isLiving{
     if (self = [super initWithFrame:frame]) {
         self.player = player;
+        self.subtitleEnable = false;
         [self.player.controlHandler addPlayerQualityListener:self];
         [self.player.controlHandler addPlayerAuthenticationListener:self];
+        [self.player.controlHandler addPlayerSubtitleListener:self];
         self.isLiving = isLiving;
         self.motionPitch = 0;
         self.motionRoll = 0;
@@ -509,6 +514,23 @@ QIPlayerAuthenticationListener
 -(void)onAuthenticationFailed:(QPlayerContext *)context error:(QPlayerAuthenticationErrorType)error{
     if (error == QPLAYER_AUTHENTICATION_ERROR_TYPE_AET_NO_BLIND_AUTH) {
         [_settingView setChangeDefault:UIButtonTypeFilterNone];
+    }
+}
+
+- (void)onSubtitleEnable:(QPlayerContext *)context enable:(BOOL)enable{
+    if (enable == false) {
+        [self.settingView setChangeDefault:UIButtonTypeSubtitleClose];
+    }
+    self.subtitleEnable = enable;
+}
+- (void)onSubtitleNameChange:(QPlayerContext *)context name:(NSString *)name{
+    if(self.subtitleEnable == false){
+        return;
+    }
+    if ([name isEqual: @"中文"]) {
+        [self.settingView setChangeDefault:UIButtonTypeSubtitleChinese];
+    }else if([name isEqual:@"英文"]){
+        [self.settingView setChangeDefault:UIButtonTypeSubtitleEnglish];
     }
 }
 
