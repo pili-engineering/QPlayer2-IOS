@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (QDataHandle *)shareInstance;
 
-@property (nonatomic, strong) NSArray<QNClassModel*> *playerConfigArray;
+@property (nonatomic, strong) NSArray<QNClassModel*> *mPlayerConfigArray;
 
 -(void)setSelConfiguraKey:(NSString *)tittle selIndex:(int)selIndex;
 

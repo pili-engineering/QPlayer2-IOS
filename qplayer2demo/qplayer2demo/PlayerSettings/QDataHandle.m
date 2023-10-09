@@ -40,7 +40,7 @@
         for (NSData *data in dataArray) {
             QNClassModel *classModel = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             for (PLConfigureModel *config in classModel.classValue) {
-                [piliOptionNameArray removeObject:config.configuraKey];
+                [piliOptionNameArray removeObject:config.mConfiguraKey];
             }
             if(piliOptionNameArray.count!=0){
                 
@@ -56,7 +56,7 @@
             }
             [array addObject:classModel];
         }
-        _playerConfigArray = [array copy];
+        _mPlayerConfigArray = [array copy];
         
     } else {
 
@@ -70,7 +70,7 @@
         NSArray *configureArray = @[PLPlayerOptionDict];
 
         // 装入属性配置数组
-        _playerConfigArray = [QNClassModel classArrayWithArray:configureArray];
+        _mPlayerConfigArray = [QNClassModel classArrayWithArray:configureArray];
     }
 }
 -(NSDictionary *)getDefult:(NSString *)key{
@@ -104,10 +104,10 @@
     }
 }
 -(void)setSelConfiguraKey:(NSString *)tittle selIndex:(int)selIndex{
-    for (QNClassModel *classModel in _playerConfigArray){
+    for (QNClassModel *classModel in _mPlayerConfigArray){
         for (PLConfigureModel *cMode in classModel.classValue) {
-            if ([cMode.configuraKey containsString:tittle]) {
-                cMode.selectedNum = @(selIndex);
+            if ([cMode.mConfiguraKey containsString:tittle]) {
+                cMode.mSelectedNum = @(selIndex);
             }
         }
     }
@@ -116,7 +116,7 @@
 
 - (void)saveConfigurations {
     NSMutableArray *dataArr = [NSMutableArray array];
-    for (QNClassModel * classModel in _playerConfigArray) {
+    for (QNClassModel * classModel in _mPlayerConfigArray) {
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:classModel];
         [dataArr addObject:data];
     }
@@ -125,11 +125,11 @@
     [userdafault synchronize];
 }
 -(void)setValueConfiguraKey:(NSString *)tittle selValue:(int)value{
-    for (QNClassModel *classModel in _playerConfigArray){
+    for (QNClassModel *classModel in _mPlayerConfigArray){
         for (PLConfigureModel *cMode in classModel.classValue) {
-            if ([cMode.configuraKey containsString:tittle]) {
-                if (cMode.configuraValue.count > 1) {
-                    cMode.configuraValue[0] = @(value);
+            if ([cMode.mConfiguraKey containsString:tittle]) {
+                if (cMode.mConfiguraValue.count > 1) {
+                    cMode.mConfiguraValue[0] = @(value);
                     
                 }
             }
@@ -139,13 +139,13 @@
 }
 
 -(int)getConfiguraPostion{
-    for (QNClassModel *classModel in _playerConfigArray){
+    for (QNClassModel *classModel in _mPlayerConfigArray){
         for (PLConfigureModel *cMode in classModel.classValue) {
-            if ([cMode.configuraKey containsString:@"播放起始"]) {
+            if ([cMode.mConfiguraKey containsString:@"播放起始"]) {
                 
-                NSLog(@"起播位置-----%d",[cMode.configuraValue[0] intValue]);
+                NSLog(@"起播位置-----%d",[cMode.mConfiguraValue[0] intValue]);
                 
-                return  [cMode.configuraValue[0] intValue];
+                return  [cMode.mConfiguraValue[0] intValue];
             }
         }
     }
@@ -153,10 +153,10 @@
     return 0;
 }
 -(BOOL)getAuthenticationState{
-    for (QNClassModel *classModel in _playerConfigArray){
+    for (QNClassModel *classModel in _mPlayerConfigArray){
         for (PLConfigureModel *cMode in classModel.classValue) {
-            if ([cMode.configuraKey containsString:@"鉴权"]) {
-                if ([cMode.selectedNum intValue] == 0) {
+            if ([cMode.mConfiguraKey containsString:@"鉴权"]) {
+                if ([cMode.mSelectedNum intValue] == 0) {
                     return YES;
                 }
                 else{

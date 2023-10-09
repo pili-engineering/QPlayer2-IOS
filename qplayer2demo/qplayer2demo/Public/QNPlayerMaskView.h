@@ -38,15 +38,13 @@
 
 @interface QNPlayerMaskView : UIView
 
-@property (nonatomic, assign) id<QNPlayerMaskViewDelegate> delegate;
-@property (nonatomic, assign) BOOL isLiving;
+@property (nonatomic, assign) id<QNPlayerMaskViewDelegate> mDelegate;
+@property (nonatomic, assign) BOOL mIsLiving;
 
 /** QPlayer **/
-//@property (nonatomic, weak) QPlayer *player;
-//@property (nonatomic, weak) QPlayerContext *player;
-@property (nonatomic, weak) QPlayerView *player;
+@property (nonatomic, weak) QPlayerView *mPlayer;
 
-@property (nonatomic, strong) UISegmentedControl *qualitySegMc;
+@property (nonatomic, strong) UISegmentedControl *mQualitySegMc;
 
 
 
@@ -58,7 +56,7 @@
  @param isLiving 是否是直播
  @return QNPlayerMaskView 的实例子
  */
-//- (id)initWithFrame:(CGRect)frame player:(QPlayerContext *)player isLiving:(BOOL)isLiving  renderView:(RenderView *)view;
+
 
 - (id)initWithFrame:(CGRect)frame player:(QPlayerView *)player isLiving:(BOOL)isLiving;
 

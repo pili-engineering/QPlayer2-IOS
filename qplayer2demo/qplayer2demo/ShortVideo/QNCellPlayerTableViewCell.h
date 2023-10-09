@@ -10,10 +10,10 @@
 #import "QNSamplePlayerWithQRenderView.h"
 @interface QNCellPlayerTableViewCell : UITableViewCell
 
-@property (nonatomic, assign) BOOL state;
-@property (nonatomic, weak) QNSamplePlayerWithQRenderView *playerView;
-@property (nonatomic, assign) long firstFrameTime;
-@property (nonatomic, strong) NSNumber *modelKey;
+@property (nonatomic, assign) BOOL mState;
+@property (nonatomic, weak) QNSamplePlayerWithQRenderView *mPlayerView;
+@property (nonatomic, assign) long mFirstFrameTime;
+@property (nonatomic, strong) NSNumber *mModelKey;
 -(instancetype)initWithImage:(UIImage *)coverImage;
 -(void)removePlayerViewFromSuperView;
 -(void)showCoverImage;

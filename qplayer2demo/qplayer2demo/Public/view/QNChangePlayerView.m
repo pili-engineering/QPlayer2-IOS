@@ -9,65 +9,62 @@
 
 @implementation QNChangePlayerView{
     
-    NSMutableArray * buttonArray;
-    NSMutableArray * titleArray;
-//    NSArray * buttonTypeArray;
-    NSMutableArray * labelArray;
-    UIImage * selectedImage;
-    UIImage * notSelectedImage;
-    UIColor * selectedColor;
-    UIColor * notSelectedColor;
-    UIFont * font;
-    UILabel *titleLabel;
+    NSMutableArray * mButtonArray;
+    NSMutableArray * mLabelArray;
+    UIImage * mSelectedImage;
+    UIImage * mNotSelectedImage;
+    UIColor * mSelectedColor;
+    UIColor * mNotSelectedColor;
+    UIFont * mFont;
+    UILabel * mTitleLabel;
 }
 -(instancetype)initWithFrame:(CGRect)frame backgroudColor:(UIColor*)color{
     self = [super initWithFrame:frame];
     if (self) {
-        buttonArray = [NSMutableArray array];
-        labelArray = [NSMutableArray array];
-        titleArray = [NSMutableArray array];
-        selectedImage = [UIImage imageNamed:@"selected"];
-        notSelectedImage = [UIImage imageNamed:@"notSelected"];
-        notSelectedColor = [UIColor whiteColor];
-        selectedColor = [UIColor redColor];
-        font = [UIFont systemFontOfSize:12.0f];
+        mButtonArray = [NSMutableArray array];
+        mLabelArray = [NSMutableArray array];
+        mSelectedImage = [UIImage imageNamed:@"selected"];
+        mNotSelectedImage = [UIImage imageNamed:@"notSelected"];
+        mNotSelectedColor = [UIColor whiteColor];
+        mSelectedColor = [UIColor redColor];
+        mFont = [UIFont systemFontOfSize:12.0f];
         self.backgroundColor = color;
         
     }
     return self;
 }
 -(void)setTitleLabelText:(NSString *)text frame:(CGRect)frame textColor:(UIColor *)textColor{
-    if (titleLabel) {
-        titleLabel.frame = frame;
-        titleLabel.text = text;
-        titleLabel.textColor =textColor;
+    if (mTitleLabel) {
+        mTitleLabel.frame = frame;
+        mTitleLabel.text = text;
+        mTitleLabel.textColor =textColor;
     }
     else{
         
-        titleLabel = [[UILabel alloc]initWithFrame:frame];
-        titleLabel.text = text;
-        titleLabel.textColor =textColor;
-        [self addSubview:titleLabel];
+        mTitleLabel = [[UILabel alloc]initWithFrame:frame];
+        mTitleLabel.text = text;
+        mTitleLabel.textColor =textColor;
+        [self addSubview:mTitleLabel];
     }
 }
 -(void)setDefault:(ChangeButtonType)type{
-    for (UIButton *btn in buttonArray) {
+    for (UIButton *btn in mButtonArray) {
         if (btn.tag == type) {
-            [btn setImage:selectedImage forState:UIControlStateNormal];
+            [btn setImage:mSelectedImage forState:UIControlStateNormal];
             btn.selected = YES;
         }
         else{
-            [btn setImage:notSelectedImage forState:UIControlStateNormal];
+            [btn setImage:mNotSelectedImage forState:UIControlStateNormal];
             btn.selected = NO;
         }
     }
-    for (UILabel *lab in labelArray) {
+    for (UILabel *lab in mLabelArray) {
         if (lab.tag == type) {
-            lab.textColor = selectedColor;
+            lab.textColor = mSelectedColor;
             
         }
         else{
-            lab.textColor = notSelectedColor;
+            lab.textColor = mNotSelectedColor;
         }
     }
 }
@@ -76,7 +73,7 @@
     UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width +btn.frame.origin.x + 3, frame.origin.y, frame.size.width - frame.size.height -6, frame.size.height)];
     bool isExist = false;
     
-    for (UIButton *arrbtn in buttonArray) {
+    for (UIButton *arrbtn in mButtonArray) {
         if (arrbtn.tag == type) {
             btn = arrbtn;
             isExist = true;
@@ -84,7 +81,7 @@
         }
     }
     if (isExist) {
-        for (UILabel *arrlab in labelArray) {
+        for (UILabel *arrlab in mLabelArray) {
             if(arrlab.tag == type){
                 lab = arrlab;
                 break;
@@ -93,16 +90,16 @@
     }
     
     [btn setBackgroundColor:[UIColor clearColor]];
-    [btn setImage:notSelectedImage forState:UIControlStateNormal];
+    [btn setImage:mNotSelectedImage forState:UIControlStateNormal];
     btn.selected = NO;
     btn.tag = type;
     [btn addTarget:self action:@selector(Click:) forControlEvents:UIControlEventTouchUpInside];
     [btn addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     lab.backgroundColor = [UIColor clearColor];
     lab.text = text;
-    lab.textColor = notSelectedColor;
+    lab.textColor = mNotSelectedColor;
     lab.tag = type;
-    lab.font = font;
+    lab.font = mFont;
     lab.userInteractionEnabled =YES;
     UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(GestureClick:)];
     [tag addTarget:target action:selectorTag];
@@ -110,82 +107,82 @@
     if (!isExist) {
         [lab addGestureRecognizer:tag];
         
-        [buttonArray addObject:btn];
-        [labelArray addObject:lab];
+        [mButtonArray addObject:btn];
+        [mLabelArray addObject:lab];
         [self addSubview:btn];
         [self addSubview:lab];
     }
 }
 -(void)GestureClick:(UITapGestureRecognizer *)tap{
 
-    for (int i = 0; i < buttonArray.count; i++) {
-        UIButton *midBtn = buttonArray[i];
-        UILabel *midlab = labelArray[i];
+    for (int i = 0; i < mButtonArray.count; i++) {
+        UIButton *midBtn = mButtonArray[i];
+        UILabel *midlab = mLabelArray[i];
         if (midBtn.tag == tap.view.tag) {
-            if ((ChangeButtonType)midBtn.tag == UIButtonTypeSEIData || (ChangeButtonType)midBtn.tag == UIButtonTypeAuthentication || (ChangeButtonType)midBtn.tag == UIButtonTypeBackgroundPlay) {
+            if ((ChangeButtonType)midBtn.tag == BUTTON_TYPE_SEI_DATA || (ChangeButtonType)midBtn.tag == BUTTON_TYPE_AUTHENTICATION || (ChangeButtonType)midBtn.tag == BUTTON_TYPE_BACKGROUND_PLAY) {
                 if (midBtn.selected) {
                     midBtn.selected = NO;
-                    [midBtn setImage:notSelectedImage forState:UIControlStateNormal];
-                    midlab.textColor = notSelectedColor;
+                    [midBtn setImage:mNotSelectedImage forState:UIControlStateNormal];
+                    midlab.textColor = mNotSelectedColor;
                 }else{
                     midBtn.selected = YES;
-                    [midBtn setImage:selectedImage forState:UIControlStateNormal];
-                    midlab.textColor = selectedColor;
+                    [midBtn setImage:mSelectedImage forState:UIControlStateNormal];
+                    midlab.textColor = mSelectedColor;
                 }
                 return;
             }
             else{
                 
-                [midBtn setImage:selectedImage forState:UIControlStateNormal];
-                midlab.textColor = selectedColor;
+                [midBtn setImage:mSelectedImage forState:UIControlStateNormal];
+                midlab.textColor = mSelectedColor;
                 midBtn.selected = YES;
             }
         }
         else{
-            [midBtn setImage:notSelectedImage forState:UIControlStateNormal];
-            midlab.textColor = notSelectedColor;
+            [midBtn setImage:mNotSelectedImage forState:UIControlStateNormal];
+            midlab.textColor = mNotSelectedColor;
             midBtn.selected = NO;
         }
     }
 }
 -(void)Click:(UIButton *)btn{
-    for (int i = 0; i < buttonArray.count; i++) {
-        UIButton *midBtn = buttonArray[i];
-        UILabel *midlab = labelArray[i];
+    for (int i = 0; i < mButtonArray.count; i++) {
+        UIButton *midBtn = mButtonArray[i];
+        UILabel *midlab = mLabelArray[i];
         if (midBtn.tag == btn.tag) {
-            if ((ChangeButtonType)btn.tag == UIButtonTypeSEIData || (ChangeButtonType)btn.tag == UIButtonTypeAuthentication || (ChangeButtonType)btn.tag == UIButtonTypeBackgroundPlay) {
+            if ((ChangeButtonType)btn.tag == BUTTON_TYPE_SEI_DATA || (ChangeButtonType)btn.tag == BUTTON_TYPE_AUTHENTICATION || (ChangeButtonType)btn.tag == BUTTON_TYPE_BACKGROUND_PLAY) {
                 if (midBtn.selected) {
                     midBtn.selected = NO;
-                    [midBtn setImage:notSelectedImage forState:UIControlStateNormal];
-                    midlab.textColor = notSelectedColor;
+                    [midBtn setImage:mNotSelectedImage forState:UIControlStateNormal];
+                    midlab.textColor = mNotSelectedColor;
                 }else{
                     midBtn.selected = YES;
-                    [midBtn setImage:selectedImage forState:UIControlStateNormal];
-                    midlab.textColor = selectedColor;
+                    [midBtn setImage:mSelectedImage forState:UIControlStateNormal];
+                    midlab.textColor = mSelectedColor;
                 }
                 return;
             }
 
-            [midBtn setImage:selectedImage forState:UIControlStateNormal];
-            midlab.textColor = selectedColor;
+            [midBtn setImage:mSelectedImage forState:UIControlStateNormal];
+            midlab.textColor = mSelectedColor;
             midBtn.selected = YES;
         }
         else{
-            [midBtn setImage:notSelectedImage forState:UIControlStateNormal];
-            midlab.textColor = notSelectedColor;
+            [midBtn setImage:mNotSelectedImage forState:UIControlStateNormal];
+            midlab.textColor = mNotSelectedColor;
             midBtn.selected = NO;
         }
     }
 }
 -(void)setButtonFrame:(CGRect)frame type:(ChangeButtonType)type{
     BOOL success = false;
-    for (UIButton *btn in buttonArray) {
+    for (UIButton *btn in mButtonArray) {
         if (btn.tag == type) {
             success = true;
             btn.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.height, frame.size.height);
         }
     }
-    for (UILabel *lab in labelArray) {
+    for (UILabel *lab in mLabelArray) {
         if (lab.tag == type) {
             success = true;
             lab.frame = CGRectMake(frame.origin.x + frame.size.height + 3, frame.origin.y, frame.size.width - frame.size.height -3, frame.size.height);
@@ -197,7 +194,7 @@
 }
 -(void)setButtonTitle:(NSString *)title type:(ChangeButtonType)type{
     BOOL success = false;
-    for (UILabel *lab in labelArray) {
+    for (UILabel *lab in mLabelArray) {
         if (lab.tag == type) {
             success = true;
             lab.text = title;
@@ -208,21 +205,21 @@
     }
 }
 -(void)setButtonFont:(UIFont *)myfont{
-    font = myfont;
-    for (UILabel  *lab in labelArray) {
+    mFont = myfont;
+    for (UILabel  *lab in mLabelArray) {
         lab.font = myfont;
     }
 }
 -(void)setButtonNotSelectedTitleColor:(UIColor *)titleColor{
 
-    notSelectedColor = titleColor;
-    for (UILabel *lab in labelArray) {
-        lab.textColor = notSelectedColor;
+    mNotSelectedColor = titleColor;
+    for (UILabel *lab in mLabelArray) {
+        lab.textColor = mNotSelectedColor;
     }
 }
 
 -(void)setButtonSelectedTitleColor:(UIColor *)titleColor{
-    selectedColor = titleColor;
+    mSelectedColor = titleColor;
 }
 
 
@@ -230,9 +227,9 @@
     BOOL success = false;
     NSMutableArray *arr = [NSMutableArray array];
     NSMutableArray *arrlab = [NSMutableArray array];
-    for (int i =0 ; i < buttonArray.count; i++) {
-        UIButton * btn = buttonArray[i];
-        UILabel *lab = labelArray [i];
+    for (int i =0 ; i < mButtonArray.count; i++) {
+        UIButton * btn = mButtonArray[i];
+        UILabel *lab = mLabelArray [i];
         if (btn.tag == type) {
             [btn removeFromSuperview];
             [lab removeFromSuperview];
@@ -247,25 +244,25 @@
     if (!success) {
         NSLog(@"StretchingPlayerView 删除button失败，不存在改button。");
     }else{
-        buttonArray = arr;
-        labelArray = arrlab;
+        mButtonArray = arr;
+        mLabelArray = arrlab;
     }
 }
 
 
 
 -(void)setButtonNotSelectedImage:(UIImage *)Image{
-    notSelectedImage = Image;
-    for (UIButton *btn in buttonArray) {
-        [btn setImage:notSelectedImage forState:UIControlStateNormal];
+    mNotSelectedImage = Image;
+    for (UIButton *btn in mButtonArray) {
+        [btn setImage:mNotSelectedImage forState:UIControlStateNormal];
     }
 }
 -(void)setButtonSelectedImage:(UIImage *)Image{
-    selectedImage = Image;
+    mSelectedImage = Image;
 }
 
 -(BOOL)getButtonSelected:(ChangeButtonType)type{
-    for (UIButton *midBtn in buttonArray) {
+    for (UIButton *midBtn in mButtonArray) {
         if (midBtn.tag == type) {
             return midBtn.selected;
         }

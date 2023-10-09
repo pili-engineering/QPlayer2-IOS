@@ -10,7 +10,7 @@
 #import "QNButtonView.h"
 @interface QNPlayerShortVideoMaskView()
 
-@property (nonatomic, strong) QNButtonView *buttomView;
+@property (nonatomic, strong) QNButtonView *mButtomView;
 
 @end
 
@@ -19,19 +19,18 @@
 -(instancetype)initWithShortVideoFrame:(CGRect)frame player:(QNSamplePlayerWithQRenderView *)player isLiving:(BOOL)isLiving{
     self = [super initWithFrame:frame];
     if (self) {
-        self.player = player;
-        self.isLiving = isLiving;
+        self.mPlayer = player;
 
         CGFloat playerWidth = CGRectGetWidth(frame);
         CGFloat playerHeight = CGRectGetHeight(frame);
         
-        self.buttomView = [[QNButtonView alloc]initWithShortVideoFrame:CGRectMake(8, playerHeight - 28, playerWidth - 16, 28) player:player playerFrame:frame isLiving:isLiving];
-        [self addSubview:_buttomView];
+        self.mButtomView = [[QNButtonView alloc]initWithShortVideoFrame:CGRectMake(8, playerHeight - 28, playerWidth - 16, 28) player:player playerFrame:frame isLiving:isLiving];
+        [self addSubview:_mButtomView];
         __weak typeof(self) weakSelf = self;
-        [self.buttomView playButtonClickCallBack:^(BOOL selectedState) {
-            if(weakSelf.player.controlHandler.currentPlayerState == QPLAYER_STATE_COMPLETED){
-                if (weakSelf.delegate != nil && [weakSelf.delegate respondsToSelector:@selector(reOpenPlayPlayerMaskView:)]) {
-                    [weakSelf.delegate reOpenPlayPlayerMaskView:weakSelf];
+        [self.mButtomView playButtonClickCallBack:^(BOOL selectedState) {
+            if(weakSelf.mPlayer.controlHandler.currentPlayerState == QPLAYER_STATE_COMPLETED){
+                if (weakSelf.mDelegate != nil && [weakSelf.mDelegate respondsToSelector:@selector(reOpenPlayPlayerMaskView:)]) {
+                    [weakSelf.mDelegate reOpenPlayPlayerMaskView:weakSelf];
                 }
             }
         }];
@@ -41,16 +40,16 @@
 }
 
 -(void)resumeListeners{
-    [self.buttomView resumeListeners];
+    [self.mButtomView resumeListeners];
 }
 #pragma mark - public methods
 -(void)setPlayButtonState:(BOOL)state{
-    [self.buttomView setPlayButtonState:state];
+    [self.mButtomView setPlayButtonState:state];
 }
--(void)setPlayer:(QPlayerContext *)player{
-    _player = player;
-    if (self.buttomView) {
-        self.buttomView.player = player;
+-(void)setMPlayer:(QPlayerContext *)player{
+    _mPlayer = player;
+    if (self.mButtomView) {
+        self.mButtomView.mPlayer = player;
     }
 }
 /*

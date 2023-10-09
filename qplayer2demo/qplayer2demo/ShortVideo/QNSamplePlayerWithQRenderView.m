@@ -11,7 +11,7 @@
 
 @interface QNSamplePlayerWithQRenderView()<QIPlayerStateChangeListener>
 
-@property (nonatomic,strong) QPlayerContext *playerContext;
+@property (nonatomic,strong) QPlayerContext *mPlayerContext;
 @end
 @implementation QNSamplePlayerWithQRenderView
 
@@ -31,12 +31,12 @@
         eaglLayer.opaque = true;
         eaglLayer.drawableProperties = @{ kEAGLDrawablePropertyRetainedBacking :[NSNumber numberWithBool:NO],
                                           kEAGLDrawablePropertyColorFormat : kEAGLColorFormatRGBA8};
-        self.playerContext = [[QPlayerContext alloc]initPlayerAPPVersion:APPVersion localStorageDir:localStorageDir logLevel:logLevel authorid:authorid];
-        self.controlHandler = self.playerContext.controlHandler;
-        self.renderHandler = self.playerContext.renderHandler;
+        self.mPlayerContext = [[QPlayerContext alloc]initPlayerAPPVersion:APPVersion localStorageDir:localStorageDir logLevel:logLevel authorid:authorid];
+        self.controlHandler = self.mPlayerContext.controlHandler;
+        self.renderHandler = self.mPlayerContext.renderHandler;
         
         
-        [self.playerContext.controlHandler addPlayerStateListener:self];
+        [self.mPlayerContext.controlHandler addPlayerStateListener:self];
         [self.renderHandler setRenderViewLayer:(CAEAGLLayer *)self.layer];
         
         [self.renderHandler setRenderViewFrame:CGSizeMake(self.frame.size.width * [UIScreen mainScreen].scale, self.frame.size.height * [UIScreen mainScreen].scale)];
@@ -58,7 +58,7 @@
     if (state == QPLAYER_STATE_END) {
 
         self.renderHandler = nil;
-        self.playerContext = nil;
+        self.mPlayerContext = nil;
         self.controlHandler = nil;
     }
 }

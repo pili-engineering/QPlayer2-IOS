@@ -10,16 +10,16 @@
 #include <pthread.h>
 #import "ShowMassageView.h"
 @implementation QNToastView{
-   __block NSMutableArray *arr;
+   __block NSMutableArray *mMessageArray;
    
 }
-static pthread_rwlock_t w_plock;
+static pthread_rwlock_t sWPlock;
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        arr = [NSMutableArray array];
+        mMessageArray = [NSMutableArray array];
         self.backgroundColor = [UIColor clearColor];
-        pthread_rwlock_init(&w_plock,NULL);
+        pthread_rwlock_init(&sWPlock,NULL);
         self.userInteractionEnabled = NO;
         self.layer.zPosition = MAXFLOAT;
     }
@@ -56,26 +56,26 @@ static pthread_rwlock_t w_plock;
         showView = [[ShowMassageView alloc]initWithFrame:CGRectMake(0, self.frame.size.height - 60, self.frame.size.width, 30) Massage:str];
     }
     [self addSubview:showView];
-    pthread_rwlock_wrlock(&w_plock);
-    for (ShowMassageView *view in arr) {
+    pthread_rwlock_wrlock(&sWPlock);
+    for (ShowMassageView *view in mMessageArray) {
         view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y - 40, view.frame.size.width, view.frame.size.height);
     }
-    [arr addObject:showView];
-    pthread_rwlock_unlock(&w_plock);
+    [mMessageArray addObject:showView];
+    pthread_rwlock_unlock(&sWPlock);
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         sleep(3);
         dispatch_async(dispatch_get_main_queue(), ^{
             [showView removeFromSuperview];
-            pthread_rwlock_wrlock(&w_plock);
-            [self->arr removeObject:showView];
-            pthread_rwlock_unlock(&w_plock);
+            pthread_rwlock_wrlock(&sWPlock);
+            [self->mMessageArray removeObject:showView];
+            pthread_rwlock_unlock(&sWPlock);
         });
     });
 }
 -(void)dealloc{
     
-    [arr removeAllObjects];
-    arr = nil;
+    [mMessageArray removeAllObjects];
+    mMessageArray = nil;
 }
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -11,6 +11,6 @@
 
 @interface QNPlayerViewController : UIViewController
 
-@property (nonatomic, strong) NSArray<QNClassModel*> *playerConfigArray;
+@property (nonatomic, strong) NSArray<QNClassModel*> *mPlayerConfigArray;
 
 @end

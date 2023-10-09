@@ -10,10 +10,9 @@
 #import "QNClassModel.h"
 
 @interface QNConfigSegTableViewCell : UITableViewCell
-@property (nonatomic, strong) UILabel *configLabel;
-@property (nonatomic, strong) UISegmentedControl *segmentControl;
-@property (nonatomic, strong) UIView *lineView;
-@property (nonatomic, assign) NSInteger index;
+@property (nonatomic, strong) UILabel *mConfigLabel;
+@property (nonatomic, strong) UISegmentedControl *mSegmentControl;
+@property (nonatomic, strong) UIView *mLineView;
 
 
 /**

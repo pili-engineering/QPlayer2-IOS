@@ -12,38 +12,38 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        _configLabel = [[UILabel alloc] initWithFrame:CGRectMake(28, 15, PL_SCREEN_WIDTH - 56, 30)];
-        _configLabel.numberOfLines = 0;
-        _configLabel.textAlignment = NSTextAlignmentLeft;
-        _configLabel.font = PL_FONT_LIGHT(14);
-        [self.contentView addSubview:_configLabel];
+        self.mConfigLabel = [[UILabel alloc] initWithFrame:CGRectMake(28, 15, PL_SCREEN_WIDTH - 56, 30)];
+        self.mConfigLabel.numberOfLines = 0;
+        self.mConfigLabel.textAlignment = NSTextAlignmentLeft;
+        self.mConfigLabel.font = PL_FONT_LIGHT(14);
+        [self.contentView addSubview:self.mConfigLabel];
         
-        _lineView = [[UIView alloc] initWithFrame:CGRectMake(28, 98, PL_SCREEN_WIDTH - 56, 0.5)];
-        _lineView.backgroundColor = PL_LINE_COLOR;
-        [self.contentView addSubview:_lineView];
+        _mLineView = [[UIView alloc] initWithFrame:CGRectMake(28, 98, PL_SCREEN_WIDTH - 56, 0.5)];
+        _mLineView.backgroundColor = PL_LINE_COLOR;
+        [self.contentView addSubview:_mLineView];
     }
     return self;
 }
 
 - (void)configureSegmentCellWithConfigureModel:(PLConfigureModel *)configureModel {
-    _configLabel.text = configureModel.configuraKey;
+    self.mConfigLabel.text = configureModel.mConfiguraKey;
     
-    [_segmentControl removeFromSuperview];
-    UISegmentedControl *seg = [[UISegmentedControl alloc] initWithItems:configureModel.configuraValue];
+    [_mSegmentControl removeFromSuperview];
+    UISegmentedControl *seg = [[UISegmentedControl alloc] initWithItems:configureModel.mConfiguraValue];
     seg.backgroundColor = [UIColor whiteColor];
     seg.tintColor = PL_COLOR_RGB(16, 169, 235, 1);
-    NSInteger index = [configureModel.selectedNum integerValue];
+    NSInteger index = [configureModel.mSelectedNum integerValue];
     seg.selectedSegmentIndex = index;
-    _segmentControl = seg;
-    [self.contentView addSubview:_segmentControl];
+    _mSegmentControl = seg;
+    [self.contentView addSubview:_mSegmentControl];
 
-    CGRect bounds = [configureModel.configuraKey boundingRectWithSize:CGSizeMake(PL_SCREEN_WIDTH - 56, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:PL_FONT_LIGHT(14) forKey:NSFontAttributeName] context:nil];
+    CGRect bounds = [configureModel.mConfiguraKey boundingRectWithSize:CGSizeMake(PL_SCREEN_WIDTH - 56, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:PL_FONT_LIGHT(14) forKey:NSFontAttributeName] context:nil];
     if (bounds.size.height > 30) {
-        _configLabel.frame = CGRectMake(28, 15, PL_SCREEN_WIDTH - 56, bounds.size.height);
-        _segmentControl.frame = CGRectMake(28, 60 + bounds.size.height - 30, PL_SCREEN_WIDTH - 56, 30);
-        _lineView.frame = CGRectMake(28, 98 + bounds.size.height - 30, PL_SCREEN_WIDTH - 56, 0.5);
+        self.mConfigLabel.frame = CGRectMake(28, 15, PL_SCREEN_WIDTH - 56, bounds.size.height);
+        _mSegmentControl.frame = CGRectMake(28, 60 + bounds.size.height - 30, PL_SCREEN_WIDTH - 56, 30);
+        _mLineView.frame = CGRectMake(28, 98 + bounds.size.height - 30, PL_SCREEN_WIDTH - 56, 0.5);
     } else{
-        _segmentControl.frame = CGRectMake(28, 60, PL_SCREEN_WIDTH - 56, 30);
+        _mSegmentControl.frame = CGRectMake(28, 60, PL_SCREEN_WIDTH - 56, 30);
     }
 }
 

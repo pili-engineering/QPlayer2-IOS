@@ -11,9 +11,9 @@
 -(instancetype)initWithId:(int)itemId mediaModel:(QMediaModel *)mediaModel coverUrl:(NSString *)coverUrl{
     self = [super init];
     if(self){
-        self.itemId = itemId;
-        self.mediaModel = mediaModel;
-        self.coverUrl = coverUrl;
+        self.mItemId = itemId;
+        self.mMediaModel = mediaModel;
+        self.mCoverUrl = coverUrl;
     }
     return self;
 }
@@ -96,7 +96,7 @@
 
 -(QNPlayItem *)getOrNullById:(int)itemId{
     for (QNPlayItem *innerItem in self.mPlayItemArray) {
-        if(innerItem.itemId == itemId){
+        if(innerItem.mItemId == itemId){
             return innerItem;
         }
     }

@@ -49,52 +49,47 @@ QIPlayerSubtitleListener
 >
 
 /** 播放器蒙版视图 **/
-@property (nonatomic, strong) QNPlayerMaskView *maskView;
+@property (nonatomic, strong) QNPlayerMaskView *mMaskView;
 
 /** 界面显示的播放信息数组 **/
-@property (nonatomic, strong) NSArray *titleArray;
+@property (nonatomic, strong) NSArray *mTitleArray;
 
-@property (nonatomic, strong) QNInfoHeaderView *infoHeaderView;
-@property (nonatomic, strong) UITableView *urlListTableView;
+@property (nonatomic, strong) QNInfoHeaderView *mInfoHeaderView;
+@property (nonatomic, strong) UITableView *mUrlListTableView;
 
 /** 被选中 URL 在列表中的下标 **/
-@property (nonatomic, assign) NSInteger selectedIndex;
+@property (nonatomic, assign) NSInteger mSelectedIndex;
 /** 是否显示 URL 列表 **/
-@property (nonatomic, assign) BOOL isPull;
+@property (nonatomic, assign) BOOL mIsPull;
 
-@property (nonatomic, copy) NSString *playerLogFileName;
-
-@property (nonatomic) int immediatelyType;
+@property (nonatomic) int mImmediatelyType;
 /** 无可显示 URL 的提示 **/
-@property (nonatomic, strong) UILabel *hintLabel;
+@property (nonatomic, strong) UILabel *mHintLabel;
 
-@property (nonatomic, strong) UILabel *subtitleLabel;
-@property (nonatomic, strong) NSTimer *durationTimer;
-@property (nonatomic, assign) BOOL isFlip;
-@property (nonatomic, assign) CGFloat topSpace;
+@property (nonatomic, strong) UILabel *mSubtitleLabel;
+@property (nonatomic, strong) NSTimer *mDurationTimer;
+@property (nonatomic, assign) BOOL mIsFlip;
+@property (nonatomic, assign) CGFloat mTopSpace;
 
 /** 分栏选择 **/
-@property (nonatomic, strong) UISegmentedControl *segment;
-@property (nonatomic, assign) BOOL isLiving;
-@property (nonatomic, assign) NSInteger modeCount;
+@property (nonatomic, strong) UISegmentedControl *mSegment;
+@property (nonatomic, assign) BOOL mIsLiving;
+@property (nonatomic, assign) NSInteger mModeCount;
 
-@property (nonatomic, strong) NSMutableArray<QMediaModel *> *playerModels;
+@property (nonatomic, strong) NSMutableArray<QMediaModel *> *mPlayerModels;
 
 /**toast **/
-@property (nonatomic, strong) QNToastView *toastView;
+@property (nonatomic, strong) QNToastView *mToastView;
 
-//@property (nonatomic, strong) QPlayerContext *playerContext;
-@property (nonatomic, assign) BOOL scanClick;
-//@property (nonatomic, strong) QRenderView *myRenderView;
-@property (nonatomic, strong) QPlayerView *myPlayerView;
-@property (nonatomic, assign) BOOL isPlaying;
-@property (nonatomic, assign) BOOL beInterruptedByOtherAudio;
-@property (nonatomic, assign) NSInteger UpQualityIndex;
-@property (nonatomic, assign) NSInteger firstVideoTime;
-@property (nonatomic, assign) int seiNum;
-@property (nonatomic, strong) NSString *seiString;
+@property (nonatomic, assign) BOOL mScanClick;
+@property (nonatomic, strong) QPlayerView *mPlayerView;
+@property (nonatomic, assign) BOOL mIsPlaying;
+@property (nonatomic, assign) NSInteger mUpQualityIndex;
+@property (nonatomic, assign) NSInteger mFirstVideoTime;
+@property (nonatomic, assign) int mSEINum;
+@property (nonatomic, strong) NSString *mSEIString;
 
-@property (nonatomic, assign) BOOL isStartPush;
+@property (nonatomic, assign) BOOL mIsStartPush;
 @end
 
 @implementation QNPlayerViewController
@@ -107,9 +102,9 @@ QIPlayerSubtitleListener
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
-    self.isStartPush = false;
-    self.scanClick = NO;
-    if (appDelegate.isFlip) {
+    self.mIsStartPush = false;
+    self.mScanClick = NO;
+    if (appDelegate.mIsFlip) {
         [self.navigationController setNavigationBarHidden:YES animated:NO];
     } else{
         [self.navigationController setNavigationBarHidden:NO animated:NO];
@@ -117,24 +112,24 @@ QIPlayerSubtitleListener
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    if (!self.scanClick) {
-        self.toastView = nil;
-        [_playerModels removeAllObjects];
-        _playerModels = nil;
-        self.myPlayerView = nil;
-        self.playerConfigArray = nil;
+    if (!self.mScanClick) {
+        self.mToastView = nil;
+        [self.mPlayerModels removeAllObjects];
+        self.mPlayerModels = nil;
+        self.mPlayerView = nil;
+        self.mPlayerConfigArray = nil;
     }
 
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    if (!self.scanClick) {
+    if (!self.mScanClick) {
         
-        [self.durationTimer invalidate];
-        self.durationTimer = nil;
-        [self.myPlayerView.controlHandler stop];
+        [self.mDurationTimer invalidate];
+        self.mDurationTimer = nil;
+        [self.mPlayerView.controlHandler stop];
         
-        [self.myPlayerView.controlHandler playerRelease];
+        [self.mPlayerView.controlHandler playerRelease];
         
         
     }
@@ -147,9 +142,9 @@ QIPlayerSubtitleListener
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.scanClick = NO;
-    self.isPlaying = NO;
-    _playerConfigArray = [QDataHandle shareInstance].playerConfigArray;
+    self.mScanClick = NO;
+    self.mIsPlaying = NO;
+    self.mPlayerConfigArray = [QDataHandle shareInstance].mPlayerConfigArray;
     
     NSString *documentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *path = [documentsDir stringByAppendingPathComponent:@"urls.json"];
@@ -161,7 +156,7 @@ QIPlayerSubtitleListener
     }
     NSArray *urlArray=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
     
-    _playerModels = [NSMutableArray array];
+    self.mPlayerModels = [NSMutableArray array];
    
     for (NSDictionary *dic in urlArray) {
         BOOL islive =  [[dic valueForKey:@"isLive"] intValue]==0? NO:YES;
@@ -188,58 +183,58 @@ QIPlayerSubtitleListener
         [modleBuilder addStreamElements:streams];
         [modleBuilder addSubtitleElements:subtitiles];
         QMediaModel *model = [modleBuilder build];
-        [_playerModels addObject:model];
+        [self.mPlayerModels addObject:model];
         
     }
 
-    [self.durationTimer invalidate];
-    self.durationTimer = nil;
-    self.durationTimer = [NSTimer scheduledTimerWithTimeInterval:0.05f target:self selector:@selector(onTimer:) userInfo:nil repeats:YES];
+    [self.mDurationTimer invalidate];
+    self.mDurationTimer = nil;
+    self.mDurationTimer = [NSTimer scheduledTimerWithTimeInterval:0.05f target:self selector:@selector(onTimer:) userInfo:nil repeats:YES];
     // Do any additional setup after loading the view.
     self.navigationController.navigationBar.barTintColor = PL_SEGMENT_BG_COLOR;
     [self.navigationItem setHidesBackButton:YES];
         
-    self.modeCount = 0;
+    self.mModeCount = 0;
 
     if (PL_HAS_NOTCH) {
-        _topSpace = 88;
+        self.mTopSpace = 88;
     } else {
-        _topSpace = 64;
+        self.mTopSpace = 64;
     }
     
     // PLPlayer 应用
-    [self setUpPlayer:self.playerConfigArray];
+    [self setUpPlayer:self.mPlayerConfigArray];
     
 //    self.subtitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.myPlayerView.frame.size.width/2, self.myPlayerView.frame.size.height-60, 50, 30)];
-    self.subtitleLabel = [[UILabel alloc]init];
+    self.mSubtitleLabel = [[UILabel alloc]init];
 
-    self.subtitleLabel.backgroundColor = [UIColor clearColor];
-    self.subtitleLabel.textColor = [UIColor whiteColor];
-    self.subtitleLabel.numberOfLines = 0;
-    [self.subtitleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    self.mSubtitleLabel.backgroundColor = [UIColor clearColor];
+    self.mSubtitleLabel.textColor = [UIColor whiteColor];
+    self.mSubtitleLabel.numberOfLines = 0;
+    [self.mSubtitleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-    self.subtitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [self.myPlayerView addSubview:self.subtitleLabel];
-    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+    self.mSubtitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    [self.mPlayerView addSubview:self.mSubtitleLabel];
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel
                                                                        attribute:NSLayoutAttributeWidth
                                                                        relatedBy:NSLayoutRelationLessThanOrEqual
-                                                                          toItem:self.myPlayerView
+                                                                          toItem:self.mPlayerView
                                                                        attribute:NSLayoutAttributeWidth
                                                                       multiplier:1.0
                                                                         constant:0.0];
     
-    NSLayoutConstraint *centerXConstraint = [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+    NSLayoutConstraint *centerXConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel
                                                                          attribute:NSLayoutAttributeCenterX
                                                                          relatedBy:NSLayoutRelationEqual
-                                                                            toItem:self.myPlayerView
+                                                                            toItem:self.mPlayerView
                                                                          attribute:NSLayoutAttributeCenterX
                                                                         multiplier:1.0
                                                                           constant:0.0];
 
-    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel
                                                                         attribute:NSLayoutAttributeBottom
                                                                         relatedBy:NSLayoutRelationEqual
-                                                                           toItem:self.myPlayerView
+                                                                           toItem:self.mPlayerView
                                                                         attribute:NSLayoutAttributeBottom
                                                                        multiplier:1.0
                                                                          constant:-70.0];
@@ -249,8 +244,8 @@ QIPlayerSubtitleListener
 
     [self layoutUrlListTableView];
     
-    _toastView = [[QNToastView alloc]initWithFrame:CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300)];
-    [self.view addSubview:_toastView];
+    self.mToastView = [[QNToastView alloc]initWithFrame:CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300)];
+    [self.view addSubview:self.mToastView];
     [self playerContextAllCallBack];
     
     
@@ -334,12 +329,12 @@ QIPlayerSubtitleListener
     
     NSString *documentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 
-    self.myPlayerView = [[QPlayerView alloc]initWithFrame:CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
-    [self.view addSubview:self.myPlayerView];
-    [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
-    QMediaModel *model = _playerModels.firstObject;
+    self.mPlayerView = [[QPlayerView alloc]initWithFrame:CGRectMake(0, self.mTopSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT) APPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
+    [self.view addSubview:self.mPlayerView];
+    [self.mPlayerView.controlHandler forceAuthenticationFromNetwork];
+    QMediaModel *model = self.mPlayerModels.firstObject;
 
-    [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
+    [self.mPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     for (QNClassModel* model in configs) {
         for (PLConfigureModel* configModel in model.classValue) {
             if ([model.classKey isEqualToString:@"PLPlayerOption"]) {
@@ -355,34 +350,34 @@ QIPlayerSubtitleListener
 
 -(void)playerContextAllCallBack{
 
-    [self.myPlayerView.controlHandler addPlayerStateListener:self];
-    [self.myPlayerView.controlHandler addPlayerBufferingChangeListener:self];
-    [self.myPlayerView.controlHandler addPlayerQualityListener:self];
-    [self.myPlayerView.controlHandler addPlayerSpeedChangeListener:self];
-    [self.myPlayerView.controlHandler addPlayerAuthenticationListener:self];
-    [self.myPlayerView.controlHandler addPlayerSEIDataListener:self];
-    [self.myPlayerView.renderHandler addPlayerRenderListener:self];
-    [self.myPlayerView.controlHandler addPlayerShootVideoListener:self];
-    [self.myPlayerView.controlHandler addPlayerVideoFrameSizeChangeListener:self];
-    [self.myPlayerView.controlHandler addPlayerSeekListener:self];
-    [self.myPlayerView.controlHandler addPlayerSubtitleListener:self];
+    [self.mPlayerView.controlHandler addPlayerStateListener:self];
+    [self.mPlayerView.controlHandler addPlayerBufferingChangeListener:self];
+    [self.mPlayerView.controlHandler addPlayerQualityListener:self];
+    [self.mPlayerView.controlHandler addPlayerSpeedChangeListener:self];
+    [self.mPlayerView.controlHandler addPlayerAuthenticationListener:self];
+    [self.mPlayerView.controlHandler addPlayerSEIDataListener:self];
+    [self.mPlayerView.renderHandler addPlayerRenderListener:self];
+    [self.mPlayerView.controlHandler addPlayerShootVideoListener:self];
+    [self.mPlayerView.controlHandler addPlayerVideoFrameSizeChangeListener:self];
+    [self.mPlayerView.controlHandler addPlayerSeekListener:self];
+    [self.mPlayerView.controlHandler addPlayerSubtitleListener:self];
     
     
 }
 -(void)onSeekFailed:(QPlayerContext *)context{
-    [_toastView addText:@"seek失败"];
+    [self.mToastView addText:@"seek失败"];
 }
 -(void)onSeekSuccess:(QPlayerContext *)context{
-    [_toastView addText:@"seek成功"];
+    [self.mToastView addText:@"seek成功"];
     
-    [self.maskView removeActivityIndicatorView];
+    [self.mMaskView removeActivityIndicatorView];
 }
 -(void)onVideoFrameSizeChanged:(QPlayerContext *)context width:(int)width height:(int)height{
     
-    [_toastView addText:[NSString stringWithFormat:@"视频宽高 width:%d height:%d",width,height]];
+    [self.mToastView addText:[NSString stringWithFormat:@"视频宽高 width:%d height:%d",width,height]];
 }
 -(void)onFirstFrameRendered:(QPlayerContext *)context elapsedTime:(NSInteger)elapsedTime{
-    self.firstVideoTime = elapsedTime;
+    self.mFirstVideoTime = elapsedTime;
 }
 -(void)onSEIData:(QPlayerContext *)context data:(NSData *)data{
     NSString * uuidString = @"";
@@ -394,11 +389,11 @@ QIPlayerSubtitleListener
         seiData = [data subdataWithRange:NSMakeRange(16, data.length-16)];
     }
     NSString *str = [[NSString alloc]initWithData:seiData encoding:NSUTF8StringEncoding];
-    if ([self.seiString isEqual:str]){
-        self.seiNum++;
+    if ([self.mSEIString isEqual:str]){
+        self.mSEINum++;
     }else{
-        self.seiNum = 1;
-        self.seiString = str;
+        self.mSEINum = 1;
+        self.mSEIString = str;
     }
     NSLog(@"sei回调 data.length: %lu",(unsigned long)data.length);
     NSLog(@"sei回调 :UUID : %@         seiString = %@",uuidString,str);
@@ -417,25 +412,25 @@ QIPlayerSubtitleListener
     [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
         [seitext removeFromSuperview];
     }];
-    [_toastView addText:[NSString stringWithFormat:@"sei 条数 ： %d",self.seiNum]];
+    [self.mToastView addText:[NSString stringWithFormat:@"sei 条数 ： %d",self.mSEINum]];
     
 }
 
 -(void)onAuthenticationFailed:(QPlayerContext *)context error:(QPlayerAuthenticationErrorType)error{
     
-    [_toastView addText:[NSString stringWithFormat:@"鉴权失败 : %d",(int)error]];
+    [self.mToastView addText:[NSString stringWithFormat:@"鉴权失败 : %d",(int)error]];
 
 }
 -(void)onAuthenticationSuccess:(QPlayerContext *)context{
-    [_toastView addText:@"鉴权成功"];
+    [self.mToastView addText:@"鉴权成功"];
     
 }
 -(void)onSpeedChanged:(QPlayerContext *)context speed:(float)speed{
-    [_toastView addText:[NSString stringWithFormat:@"倍速切换为%.2f",speed]];
+    [self.mToastView addText:[NSString stringWithFormat:@"倍速切换为%.2f",speed]];
 }
 
 -(void)onQualitySwitchFailed:(QPlayerContext *)context usertype:(NSString *)usertype urlType:(QPlayerURLType)urlType oldQuality:(NSInteger)oldQuality newQuality:(NSInteger)newQuality{
-    [_toastView addText:[NSString stringWithFormat:@"切换失败"]];
+    [self.mToastView addText:[NSString stringWithFormat:@"切换失败"]];
 }
 
 
@@ -445,56 +440,56 @@ QIPlayerSubtitleListener
 -(void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
     if (state == QPLAYER_STATE_PREPARE) {
         
-        self.subtitleLabel.text = @"";
-        [self.maskView loadActivityIndicatorView];
-        [_toastView addText:@"开始拉视频数据"];
-        [_toastView addDecoderType:[self.maskView getDecoderType]];
+        self.mSubtitleLabel.text = @"";
+        [self.mMaskView loadActivityIndicatorView];
+        [self.mToastView addText:@"开始拉视频数据"];
+        [self.mToastView addDecoderType:[self.mMaskView getDecoderType]];
     } else if (state == QPLAYER_STATE_PLAYING) {
         //            _maskView.player = _player;
-        self.isPlaying = YES;
-        [_maskView setPlayButtonState:YES];
+        self.mIsPlaying = YES;
+        [self.mMaskView setPlayButtonState:YES];
         [self showHintViewWithText:@"开始播放器"];
-        [_toastView addText:@"播放中"];
-        [self.maskView removeActivityIndicatorView];
+        [self.mToastView addText:@"播放中"];
+        [self.mMaskView removeActivityIndicatorView];
         
     } else if (state == QPLAYER_STATE_PAUSED_RENDER) {
-        [_toastView addText:@"暂停播放"];
-        [_maskView setPlayButtonState:NO];
-        [self.maskView removeActivityIndicatorView];
+        [self.mToastView addText:@"暂停播放"];
+        [self.mMaskView setPlayButtonState:NO];
+        [self.mMaskView removeActivityIndicatorView];
     }else if (state == QPLAYER_STATE_STOPPED){
         
-        [_toastView addText:@"停止播放"];
-        self.subtitleLabel.text = @"";
-        [_maskView setPlayButtonState:NO];
+        [self.mToastView addText:@"停止播放"];
+        self.mSubtitleLabel.text = @"";
+        [self.mMaskView setPlayButtonState:NO];
     }
     else if (state == QPLAYER_STATE_ERROR){
-        [_toastView addText:@"播放错误"];
-        [_maskView setPlayButtonState:NO];
+        [self.mToastView addText:@"播放错误"];
+        [self.mMaskView setPlayButtonState:NO];
     }else if (state == QPLAYER_STATE_COMPLETED){
         
-        [_toastView addText:@"播放完成"];
-        [_maskView setPlayButtonState:NO];
+        [self.mToastView addText:@"播放完成"];
+        [self.mMaskView setPlayButtonState:NO];
     }
     else if (state == QPLAYER_STATE_SEEKING){
         
-        [self.maskView loadActivityIndicatorView];
+        [self.mMaskView loadActivityIndicatorView];
     }
     
 }
 
 
 -(void)onBufferingEnd:(QPlayerContext *)context{
-    [self.maskView removeActivityIndicatorView];
+    [self.mMaskView removeActivityIndicatorView];
 }
 -(void)onBufferingStart:(QPlayerContext *)context{
-    [self.maskView loadActivityIndicatorView];
+    [self.mMaskView loadActivityIndicatorView];
 }
 -(void)onQualitySwitchComplete:(QPlayerContext *)context usertype:(NSString *)usertype urlType:(QPlayerURLType)urlType oldQuality:(NSInteger)oldQuality newQuality:(NSInteger)newQuality{
     NSString *string = [NSString stringWithFormat:@"清晰度 %ld p",(long)newQuality];
-    [self.toastView addText:string];
+    [self.mToastView addText:string];
 }
 -(void)onShootFailed:(QPlayerContext *)context{
-    [_toastView addText:@"截图失败"];
+    [self.mToastView addText:@"截图失败"];
 }
 -(void)onShootSuccessful:(QPlayerContext *)context imageData:(NSData *)imageData width:(int)width height:(int)height type:(QPlayerShootVideoType)type{
     if(type == QPLAYER_SHOOT_VIDEO_JPEG){
@@ -506,48 +501,48 @@ QIPlayerSubtitleListener
         [self.view addSubview:shootImageView];
         
         UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-        [_toastView addText:@"截图成功"];
+        [self.mToastView addText:@"截图成功"];
         [NSTimer scheduledTimerWithTimeInterval:2 repeats:NO block:^(NSTimer * _Nonnull timer) {
             [shootImageView removeFromSuperview];
         }];
     }else{
-        [_toastView addText:@"截图格式为None"];
+        [self.mToastView addText:@"截图格式为None"];
     }
 }
 
 -(void)onSubtitleEnable:(QPlayerContext *)context enable:(BOOL)enable{
-    self.subtitleLabel.text = @"";
+    self.mSubtitleLabel.text = @"";
     if (enable) {
         
-        [_toastView addText:@"字幕开启"];
+        [self.mToastView addText:@"字幕开启"];
     }else{
         
-        [_toastView addText:@"字幕关闭"];
+        [self.mToastView addText:@"字幕关闭"];
     }
 }
 
 -(void)onSubtitleNameChange:(QPlayerContext *)context name:(NSString *)name{
-    [_toastView addText:[NSString stringWithFormat:@"name 更改为 %@",name]];
+    [self.mToastView addText:[NSString stringWithFormat:@"name 更改为 %@",name]];
 }
 -(void)onSubtitleTextChange:(QPlayerContext *)context text:(NSString *)text{
     NSLog(@"text is :%@",text);
-    self.subtitleLabel.text = text;
+    self.mSubtitleLabel.text = text;
 
 }
 - (void)onSubtitleLoaded:(QPlayerContext *)context name:(NSString *)name result:(BOOL)result{
     if(result){
-        [_toastView addText:[NSString stringWithFormat:@"字幕加载成功：%@",name]];
+        [self.mToastView addText:[NSString stringWithFormat:@"字幕加载成功：%@",name]];
     }
     else{
-        [_toastView addText:[NSString stringWithFormat:@"字幕加载失败：%@",name]];
+        [self.mToastView addText:[NSString stringWithFormat:@"字幕加载失败：%@",name]];
     }
 }
 -(void)onSubtitleDecoded:(QPlayerContext *)context name:(NSString *)name result:(BOOL)result{
     if(result){
-        [_toastView addText:[NSString stringWithFormat:@"字幕Decoded成功：%@",name]];
+        [self.mToastView addText:[NSString stringWithFormat:@"字幕Decoded成功：%@",name]];
     }
     else{
-        [_toastView addText:[NSString stringWithFormat:@"字幕Decoded失败：%@",name]];
+        [self.mToastView addText:[NSString stringWithFormat:@"字幕Decoded失败：%@",name]];
     }
 }
 
@@ -558,31 +553,31 @@ QIPlayerSubtitleListener
 -(void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
     if(error == nil){
-        [_toastView addText:@"保存成功"];
+        [self.mToastView addText:@"保存成功"];
     }
     else{
-        [_toastView addText: [NSString stringWithFormat:@"保存失败：%@",error]];
+        [self.mToastView addText: [NSString stringWithFormat:@"保存失败：%@",error]];
     }
 }
 #pragma mark - 计时器方法
 
 - (void)onTimer:(NSTimer *)timer {
-    self.urlListTableView.tableHeaderView = [_infoHeaderView updateInfoWithInfoArray:[self updateInfoArray]];
+    self.mUrlListTableView.tableHeaderView = [self.mInfoHeaderView updateInfoWithInfoArray:[self updateInfoArray]];
 }
 
 #pragma mark - 更新播放信息数组
 
 - (NSArray *)updateInfoArray {
     NSString *statusStr = [self updatePlayerStatus];
-    NSString *firstVideoTimeStr = [NSString stringWithFormat:@"%d ms",self.firstVideoTime];
+    NSString *firstVideoTimeStr = [NSString stringWithFormat:@"%d ms",self.mFirstVideoTime];
 //    NSString *renderFPSStr = [NSString stringWithFormat:@"%dfps", self.playerContext.controlHandler.fps];
-    NSString *renderFPSStr = [NSString stringWithFormat:@"%dfps", self.myPlayerView.controlHandler.fps];
+    NSString *renderFPSStr = [NSString stringWithFormat:@"%dfps", self.mPlayerView.controlHandler.fps];
 //    NSString *downSpeedStr = [NSString stringWithFormat:@"%.2fkb/s", self.playerContext.controlHandler.downloadSpeed * 1.0/1000];
-    NSString *downSpeedStr = [NSString stringWithFormat:@"%.2fkb/s", self.myPlayerView.controlHandler.downloadSpeed * 1.0/1000];
+    NSString *downSpeedStr = [NSString stringWithFormat:@"%.2fkb/s", self.mPlayerView.controlHandler.downloadSpeed * 1.0/1000];
 
     NSArray *array = @[statusStr,firstVideoTimeStr,renderFPSStr,downSpeedStr];
 
-    long bufferPositon = self.myPlayerView.controlHandler.bufferPostion;
+    long bufferPositon = self.mPlayerView.controlHandler.bufferPostion;
     NSString *fileUnit = @"ms";
 
     NSString *fileSizeStr = [NSString stringWithFormat:@"%d%@", bufferPositon, fileUnit];
@@ -618,7 +613,7 @@ QIPlayerSubtitleListener
                                        @(QPLAYER_STATE_COMPLETED):@"Completed"
                                        };
 //    return statusDictionary[@(self.playerContext.controlHandler.currentPlayerState)];
-    return  statusDictionary[@(self.myPlayerView.controlHandler.currentPlayerState)];;
+    return  statusDictionary[@(self.mPlayerView.controlHandler.currentPlayerState)];;
 
 }
 
@@ -626,36 +621,36 @@ QIPlayerSubtitleListener
 
 
 - (void)addPlayerMaskView{
-    self.maskView = [[QNPlayerMaskView alloc] initWithFrame:CGRectMake(0, 0, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT) player:self.myPlayerView isLiving:NO];
+    self.mMaskView = [[QNPlayerMaskView alloc] initWithFrame:CGRectMake(0, 0, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT) player:self.mPlayerView isLiving:NO];
     
-    self.maskView.center = self.myPlayerView.center;
-    self.maskView.delegate = self;
-    self.maskView.backgroundColor = PL_COLOR_RGB(0, 0, 0, 0.35);
-        [self.view insertSubview:_maskView aboveSubview:self.myPlayerView];
+    self.mMaskView.center = self.mPlayerView.center;
+    self.mMaskView.mDelegate = self;
+    self.mMaskView.backgroundColor = PL_COLOR_RGB(0, 0, 0, 0.35);
+        [self.view insertSubview:self.mMaskView aboveSubview:self.mPlayerView];
 
-    [self.maskView.qualitySegMc addTarget:self action:@selector(qualityAction:) forControlEvents:UIControlEventValueChanged];
+    [self.mMaskView.mQualitySegMc addTarget:self action:@selector(qualityAction:) forControlEvents:UIControlEventValueChanged];
 }
 
 #pragma mark - QNPlayerMaskView 代理方法
 -(void)setImmediately:(int)immediately{
-    self.immediatelyType = immediately;
+    self.mImmediatelyType = immediately;
 }
 -(void)shootVideoButtonClick{
-    [self.myPlayerView.controlHandler shootVideo];
+    [self.mPlayerView.controlHandler shootVideo];
 
 }
 
 
 - (void)playerMaskView:(QNPlayerMaskView *)playerMaskView didGetBack:(UIButton *)backButton {
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
-    if (appDelegate.isFlip) {
+    if (appDelegate.mIsFlip) {
         [self forceOrientationLandscape:NO];
     } else{
-        [self.myPlayerView.controlHandler stop];
-        [self.durationTimer invalidate];
-        self.durationTimer = nil;
+        [self.mPlayerView.controlHandler stop];
+        [self.mDurationTimer invalidate];
+        self.mDurationTimer = nil;
         
-        self.maskView = nil;
+        self.mMaskView = nil;
         // 更新日志
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -667,9 +662,9 @@ QIPlayerSubtitleListener
 }
 
 -(void)reOpenPlayPlayerMaskView:(QNPlayerMaskView *)playerMaskView{
-    QMediaModel *model = _playerModels[_selectedIndex];
-    [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
-    [_maskView setPlayButtonState:YES];
+    QMediaModel *model = self.mPlayerModels[self.mSelectedIndex];
+    [self.mPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
+    [self.mMaskView setPlayButtonState:YES];
 
 }
 - (BOOL)shouldAutorotate
@@ -682,14 +677,14 @@ QIPlayerSubtitleListener
 
 - (void)forceOrientationLandscape:(BOOL)isLandscape {
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
-    appDelegate.isFlip = isLandscape;
+    appDelegate.mIsFlip = isLandscape;
     if ([UIDevice currentDevice].orientation == UIDeviceOrientationUnknown) {
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     }
     [appDelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
     
     UIDeviceOrientation ori = [UIDevice currentDevice].orientation;
-    _isFlip = appDelegate.isFlip;
+    self.mIsFlip = appDelegate.mIsFlip;
     if(@available(iOS 16.0,*)){
         [UIViewController attemptRotationToDeviceOrientation];
         [self setNeedsUpdateOfSupportedInterfaceOrientations];
@@ -703,17 +698,17 @@ QIPlayerSubtitleListener
         
         if(isLandscape){
             [self.navigationController setNavigationBarHidden:YES animated:NO];
-            [self.urlListTableView removeFromSuperview];
-            self.myPlayerView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
-            self.maskView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
-            _toastView.frame = CGRectMake(40, scene.screen.bounds.size.width-220, 200, 150);
+            [self.mUrlListTableView removeFromSuperview];
+            self.mPlayerView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
+            self.mMaskView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
+            self.mToastView.frame = CGRectMake(40, scene.screen.bounds.size.width-220, 200, 150);
         }else{
             [self.navigationController setNavigationBarHidden:NO animated:NO];
-            [self.view addSubview:_urlListTableView];
-            self.myPlayerView.frame = CGRectMake(0, _topSpace, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.height*9/16);
-            self.maskView.frame = CGRectMake(0, _topSpace, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.height*9/16);
+            [self.view addSubview:self.mUrlListTableView];
+            self.mPlayerView.frame = CGRectMake(0, self.mTopSpace, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.height*9/16);
+            self.mMaskView.frame = CGRectMake(0, self.mTopSpace, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.height*9/16);
             
-            _toastView.frame = CGRectMake(0, scene.screen.bounds.size.width-300, 200, 300);
+            self.mToastView.frame = CGRectMake(0, scene.screen.bounds.size.width-300, 200, 300);
         }
         
     }else{
@@ -727,17 +722,17 @@ QIPlayerSubtitleListener
                 
                 [[UIDevice currentDevice] setValue:@(UIInterfaceOrientationLandscapeLeft) forKey:@"orientation"];
             }
-            [self.urlListTableView removeFromSuperview];
-            self.myPlayerView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT);
-            self.maskView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT);
-            _toastView.frame = CGRectMake(40, PL_SCREEN_HEIGHT-220, 200, 150);
+            [self.mUrlListTableView removeFromSuperview];
+            self.mPlayerView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT);
+            self.mMaskView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT);
+            self.mToastView.frame = CGRectMake(40, PL_SCREEN_HEIGHT-220, 200, 150);
         } else {
             [self.navigationController setNavigationBarHidden:NO animated:NO];
             [[UIDevice currentDevice] setValue:@(UIDeviceOrientationPortrait) forKey:@"orientation"];
-            [self.view addSubview:_urlListTableView];
-            self.myPlayerView.frame = CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT);
-            self.maskView.frame = CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT);
-            _toastView.frame = CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300);
+            [self.view addSubview:self.mUrlListTableView];
+            self.mPlayerView.frame = CGRectMake(0, self.mTopSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT);
+            self.mMaskView.frame = CGRectMake(0, self.mTopSpace, PLAYER_PORTRAIT_WIDTH, PLAYER_PORTRAIT_HEIGHT);
+            self.mToastView.frame = CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300);
         }
         
     }
@@ -749,24 +744,24 @@ QIPlayerSubtitleListener
 
 - (void)layoutUrlListTableView
 {
-    self.isPull = YES;
+    self.mIsPull = YES;
     
-    self.urlListTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _topSpace + PLAYER_PORTRAIT_HEIGHT, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT - _topSpace - PLAYER_PORTRAIT_HEIGHT) style:UITableViewStylePlain];
-    self.urlListTableView.delegate = self;
-    self.urlListTableView.dataSource = self;
-    self.urlListTableView.sectionHeaderHeight = 36;
-    [self.urlListTableView registerClass:[QNURLListTableViewCell class] forCellReuseIdentifier:@"listCell"];
-    self.urlListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.mUrlListTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.mTopSpace + PLAYER_PORTRAIT_HEIGHT, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT - self.mTopSpace - PLAYER_PORTRAIT_HEIGHT) style:UITableViewStylePlain];
+    self.mUrlListTableView.delegate = self;
+    self.mUrlListTableView.dataSource = self;
+    self.mUrlListTableView.sectionHeaderHeight = 36;
+    [self.mUrlListTableView registerClass:[QNURLListTableViewCell class] forCellReuseIdentifier:@"listCell"];
+    self.mUrlListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.titleArray = @[@"status - PLPlayer 的播放状态 :",@"firstVideoTime - 首开时间 :",@"renderFPS - 播放渲染帧率 :",@"downSpeed - 下载速率(kb/s) :"];
+    self.mTitleArray = @[@"status - PLPlayer 的播放状态 :",@"firstVideoTime - 首开时间 :",@"renderFPS - 播放渲染帧率 :",@"downSpeed - 下载速率(kb/s) :"];
     
-        NSMutableArray *mutableArray = [NSMutableArray arrayWithArray:_titleArray];
+        NSMutableArray *mutableArray = [NSMutableArray arrayWithArray:self.mTitleArray];
         [mutableArray addObjectsFromArray:@[@"bufferPostion - 缓存大小 :"]];
-        _titleArray = [mutableArray copy];
-    self.infoHeaderView = [[QNInfoHeaderView alloc] initWithTopMargin:0 titleArray:_titleArray infoArray:[self updateInfoArray]];
+        self.mTitleArray = [mutableArray copy];
+    self.mInfoHeaderView = [[QNInfoHeaderView alloc] initWithTopMargin:0 titleArray:self.mTitleArray infoArray:[self updateInfoArray]];
     
-    self.urlListTableView.tableHeaderView = _infoHeaderView;
-    [self.view addSubview:_urlListTableView];
+    self.mUrlListTableView.tableHeaderView = self.mInfoHeaderView;
+    [self.view addSubview:self.mUrlListTableView];
 }
 
 
@@ -777,65 +772,65 @@ QIPlayerSubtitleListener
 }
 
 - (void)configurePlayerWithConfigureModel:(PLConfigureModel *)configureModel classModel:(QNClassModel *)classModel {
-    NSInteger index = [configureModel.selectedNum integerValue];
+    NSInteger index = [configureModel.mSelectedNum integerValue];
     
     if ([classModel.classKey isEqualToString:@"PLPlayerOption"]) {
-        if ([configureModel.configuraKey containsString:@"播放速度"]) {
-            [self.myPlayerView.controlHandler setSpeed:[configureModel.configuraValue[index] floatValue]];
+        if ([configureModel.mConfiguraKey containsString:@"播放速度"]) {
+            [self.mPlayerView.controlHandler setSpeed:[configureModel.mConfiguraValue[index] floatValue]];
         }
 
-        if ([configureModel.configuraKey containsString:@"播放起始"]){
+        if ([configureModel.mConfiguraKey containsString:@"播放起始"]){
 
-        } else if ([configureModel.configuraKey containsString:@"Decoder"]) {
-            [self.myPlayerView.controlHandler setDecoderType:(QPlayerDecoder)index];
+        } else if ([configureModel.mConfiguraKey containsString:@"Decoder"]) {
+            [self.mPlayerView.controlHandler setDecoderType:(QPlayerDecoder)index];
             
             
-        } else if ([configureModel.configuraKey containsString:@"Seek"]) {
-            [self.myPlayerView.controlHandler  setSeekMode:index];
+        } else if ([configureModel.mConfiguraKey containsString:@"Seek"]) {
+            [self.mPlayerView.controlHandler  setSeekMode:index];
 
-        } else if ([configureModel.configuraKey containsString:@"Start Action"]) {
-            [self.myPlayerView.controlHandler setStartAction:(QPlayerStart)index];
+        } else if ([configureModel.mConfiguraKey containsString:@"Start Action"]) {
+            [self.mPlayerView.controlHandler setStartAction:(QPlayerStart)index];
             
-        } else if ([configureModel.configuraKey containsString:@"Render ratio"]) {
-            [self.myPlayerView.renderHandler setRenderRatio:(QPlayerRenderRatio)(index + 1)];
+        } else if ([configureModel.mConfiguraKey containsString:@"Render ratio"]) {
+            [self.mPlayerView.renderHandler setRenderRatio:(QPlayerRenderRatio)(index + 1)];
             
-        } else if ([configureModel.configuraKey containsString:@"色盲模式"]) {
-            [self.myPlayerView.renderHandler setBlindType:(QPlayerBlind)index];
+        } else if ([configureModel.mConfiguraKey containsString:@"色盲模式"]) {
+            [self.mPlayerView.renderHandler setBlindType:(QPlayerBlind)index];
         }
-        else if ([configureModel.configuraKey containsString:@"SEI"]) {
+        else if ([configureModel.mConfiguraKey containsString:@"SEI"]) {
             if (index == 0) {
                 
-                [self.myPlayerView.controlHandler setSEIEnable:YES];
+                [self.mPlayerView.controlHandler setSEIEnable:YES];
             }else{
-                [self.myPlayerView.controlHandler setSEIEnable:NO];
+                [self.mPlayerView.controlHandler setSEIEnable:NO];
             }
         }
-        else if ([configureModel.configuraKey containsString:@"鉴权"]) {
+        else if ([configureModel.mConfiguraKey containsString:@"鉴权"]) {
             if (index == 0) {
-                [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
+                [self.mPlayerView.controlHandler forceAuthenticationFromNetwork];
             }
         }
-        else if ([configureModel.configuraKey containsString:@"后台播放"]){
+        else if ([configureModel.mConfiguraKey containsString:@"后台播放"]){
             if (index == 0) {
-                [self.myPlayerView.controlHandler setBackgroundPlayEnable:YES];
+                [self.mPlayerView.controlHandler setBackgroundPlayEnable:YES];
             }
             else{
-                [self.myPlayerView.controlHandler setBackgroundPlayEnable:NO];
+                [self.mPlayerView.controlHandler setBackgroundPlayEnable:NO];
             }
         }
-        else if ([configureModel.configuraKey containsString:@"清晰度切换"]){
-            _immediatelyType =(int)index;
+        else if ([configureModel.mConfiguraKey containsString:@"清晰度切换"]){
+            self.mImmediatelyType =(int)index;
         }
-        else if ([configureModel.configuraKey containsString:@"字幕"]){
-            [self.myPlayerView.controlHandler setSubtitleEnable:index==0?NO:YES];
+        else if ([configureModel.mConfiguraKey containsString:@"字幕"]){
+            [self.mPlayerView.controlHandler setSubtitleEnable:index==0?NO:YES];
             if(index == 1 ){
-                if(![self.myPlayerView.controlHandler.subtitleName isEqual:@"中文"]){
-                    [self.myPlayerView.controlHandler setSubtitle:@"中文"];
+                if(![self.mPlayerView.controlHandler.subtitleName isEqual:@"中文"]){
+                    [self.mPlayerView.controlHandler setSubtitle:@"中文"];
                 }
             }
             else if (index == 2){
-                if(![self.myPlayerView.controlHandler.subtitleName isEqual:@"英文"]){
-                    [self.myPlayerView.controlHandler setSubtitle:@"英文"];
+                if(![self.mPlayerView.controlHandler.subtitleName isEqual:@"英文"]){
+                    [self.mPlayerView.controlHandler setSubtitle:@"英文"];
                 }
             }
         }
@@ -847,7 +842,7 @@ QIPlayerSubtitleListener
 - (void)scanQRResult:(NSString *)qrString isLive:(BOOL)isLive{
 
     if (!isLive) {
-        [self.myPlayerView.controlHandler resumeRender];
+        [self.mPlayerView.controlHandler resumeRender];
     }
     NSURL *url;
     if (qrString) {
@@ -862,11 +857,11 @@ QIPlayerSubtitleListener
         
         [modleBuilder addStreamElementWithUserType:@"" urlType:QURL_TYPE_QAUDIO_AND_VIDEO url:qrString quality:0 isSelected:YES backupUrl:@"" referer:@"" renderType:QPLAYER_RENDER_TYPE_PLANE];
         QMediaModel *model = [modleBuilder build];
-        [_playerModels addObject:model];
-        _selectedIndex = _playerModels.count - 1;
-        [self tableView:self.urlListTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForItem:_selectedIndex inSection:0]];
+        [self.mPlayerModels addObject:model];
+        self.mSelectedIndex = self.mPlayerModels.count - 1;
+        [self tableView:self.mUrlListTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForItem:self.mSelectedIndex inSection:0]];
 
-        [self.urlListTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_selectedIndex inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self.mUrlListTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.mSelectedIndex inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 //        [self.urlListTableView reloadData];
 
     } else {
@@ -879,10 +874,10 @@ QIPlayerSubtitleListener
 
 - (void)scanCodeAction:(UIButton *)scanButton {
     
-    if (self.myPlayerView.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING) {
-        [self.myPlayerView.controlHandler pauseRender];
+    if (self.mPlayerView.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING) {
+        [self.mPlayerView.controlHandler pauseRender];
     }
-    self.scanClick = YES;
+    self.mScanClick = YES;
     QNScanViewController *scanViewController = [[QNScanViewController alloc] init];
     scanViewController.delegate = self;
     [self.navigationController pushViewController:scanViewController animated:YES];
@@ -897,47 +892,47 @@ QIPlayerSubtitleListener
 #pragma mark - TableView 代理方法
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _playerModels.count;
+    return self.mPlayerModels.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QNURLListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"listCell" forIndexPath:indexPath];
-    if([_playerModels[indexPath.row].streamElements[0].url isEqual:@"rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/test6666"]){
-        [cell configureListURLString:_playerModels[indexPath.row].streamElements[1].url index:indexPath.row];
+    if([self.mPlayerModels[indexPath.row].streamElements[0].url isEqual:@"rtmp://pili-live-rtmp.test.qnsdk.com/sdk-live-test/test6666"]){
+        [cell configureListURLString:self.mPlayerModels[indexPath.row].streamElements[1].url index:indexPath.row];
         
     }else{
-        [cell configureListURLString:_playerModels[indexPath.row].streamElements[0].url index:indexPath.row];
+        [cell configureListURLString:self.mPlayerModels[indexPath.row].streamElements[0].url index:indexPath.row];
     }
-    cell.deleteButton.tag = 100 + indexPath.row;
-    [cell.deleteButton addTarget:self action:@selector(deleteUrlString:) forControlEvents:UIControlEventTouchDown];
-    if (indexPath.row == _selectedIndex) {
-        cell.urlLabel.textColor = PL_SELECTED_BLUE;
-        cell.urlLabel.font = PL_FONT_MEDIUM(14);
+    cell.mDeleteButton.tag = 100 + indexPath.row;
+    [cell.mDeleteButton addTarget:self action:@selector(deleteUrlString:) forControlEvents:UIControlEventTouchDown];
+    if (indexPath.row == self.mSelectedIndex) {
+        cell.mUrlLabel.textColor = PL_SELECTED_BLUE;
+        cell.mUrlLabel.font = PL_FONT_MEDIUM(14);
     } else {
-        cell.urlLabel.textColor = [UIColor blackColor];
-        cell.urlLabel.font = PL_FONT_LIGHT(13);
+        cell.mUrlLabel.textColor = [UIColor blackColor];
+        cell.mUrlLabel.font = PL_FONT_LIGHT(13);
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [QNURLListTableViewCell configureListCellHeightWithURLString:_playerModels[indexPath.row].streamElements[0].url index:indexPath.row];
+    return [QNURLListTableViewCell configureListCellHeightWithURLString:self.mPlayerModels[indexPath.row].streamElements[0].url index:indexPath.row];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSURL *selectedURL = [NSURL URLWithString:_playerModels[indexPath.row].streamElements[0].url];
-    if (self.myPlayerView.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING) {
-        [self.myPlayerView.controlHandler pauseRender];
+    NSURL *selectedURL = [NSURL URLWithString:self.mPlayerModels[indexPath.row].streamElements[0].url];
+    if (self.mPlayerView.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING) {
+        [self.mPlayerView.controlHandler pauseRender];
     }
     
-    _selectedIndex = indexPath.row;
-    [_urlListTableView reloadData];
+    self.mSelectedIndex = indexPath.row;
+    [self.mUrlListTableView reloadData];
     
-    QMediaModel *model = _playerModels[indexPath.row];
-    self.maskView.isLiving = model.isLive;
+    QMediaModel *model = self.mPlayerModels[indexPath.row];
+    self.mMaskView.mIsLiving = model.isLive;
     if(model.streamElements.count > 1){
-        [self.maskView.qualitySegMc removeAllSegments];
+        [self.mMaskView.mQualitySegMc removeAllSegments];
         int index = 0;
         int indexSel = 0;
         for (QStreamElement* modle0 in model.streamElements) {
@@ -951,21 +946,21 @@ QIPlayerSubtitleListener
         for (QStreamElement* modle0 in model.streamElements) {
             if ([modle0.url isEqual:@"http://demo-videos.qnsdk.com/only-video-1080p-60fps.m4s"]) {
                 
-                self.maskView.qualitySegMc.hidden = YES;
+                self.mMaskView.mQualitySegMc.hidden = YES;
             }else{
                 
-                [self.maskView.qualitySegMc insertSegmentWithTitle:[NSString stringWithFormat:@"%dp",modle0.quality] atIndex:index animated:NO];
+                [self.mMaskView.mQualitySegMc insertSegmentWithTitle:[NSString stringWithFormat:@"%dp",modle0.quality] atIndex:index animated:NO];
                 index++;
             }
         }
-        self.maskView.qualitySegMc.selectedSegmentIndex = indexSel;
+        self.mMaskView.mQualitySegMc.selectedSegmentIndex = indexSel;
     }else{
-        [self.maskView.qualitySegMc removeAllSegments];
-        self.maskView.qualitySegMc.hidden = YES;
+        [self.mMaskView.mQualitySegMc removeAllSegments];
+        self.mMaskView.mQualitySegMc.hidden = YES;
     }
     
     if ([[QDataHandle shareInstance] getAuthenticationState]) {
-        [self.myPlayerView.controlHandler forceAuthenticationFromNetwork];
+        [self.mPlayerView.controlHandler forceAuthenticationFromNetwork];
     }
     
     //开启此处即开启VR的陀螺仪，未验证，可能存在未知bug
@@ -982,8 +977,8 @@ QIPlayerSubtitleListener
 //    else{
 //        [self.maskView gyroscopeEnd];
 //    }
-    [self.myPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
-    [_maskView setPlayButtonState:NO];
+    [self.mPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
+    [self.mMaskView setPlayButtonState:NO];
     [self judgeWeatherIsLiveWithURL:selectedURL];
     
 }
@@ -1012,21 +1007,21 @@ QIPlayerSubtitleListener
 
 - (void)deleteUrlString:(UIButton *)button {
     NSInteger index = button.tag - 100;
-    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"删除播放地址" message:[NSString stringWithFormat:@"亲，是否确定要删除播放地址：%@ ？", _playerModels[index]] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"删除播放地址" message:[NSString stringWithFormat:@"亲，是否确定要删除播放地址：%@ ？", self.mPlayerModels[index]] preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action){
     }];
     UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self.playerModels removeObjectAtIndex:index];
-        if(index == self.selectedIndex){
-            self.selectedIndex = 0;
-            [self tableView:self.urlListTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndex inSection:0]];
-            [self.urlListTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.selectedIndex inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self.mPlayerModels removeObjectAtIndex:index];
+        if(index == self.mSelectedIndex){
+            self.mSelectedIndex = 0;
+            [self tableView:self.mUrlListTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForItem:self.mSelectedIndex inSection:0]];
+            [self.mUrlListTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.mSelectedIndex inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 
         }
-        if (self.playerModels.count != 0) {
-            [self.urlListTableView reloadData];
+        if (self.mPlayerModels.count != 0) {
+            [self.mUrlListTableView reloadData];
         } else{
-            [self.urlListTableView removeFromSuperview];
+            [self.mUrlListTableView removeFromSuperview];
             [self showHintViewWithText:@"暂无直播记录，快去扫描二维码观看吧 ~"];
         }
     }];
@@ -1039,11 +1034,11 @@ QIPlayerSubtitleListener
 
 - (void)showHintViewWithText:(NSString *)hintStr
 {
-    self.hintLabel.text = hintStr;
-    if ([self.view.subviews containsObject:_hintLabel]) {
-        [self.hintLabel removeFromSuperview];
+    self.mHintLabel.text = hintStr;
+    if ([self.view.subviews containsObject:self.mHintLabel]) {
+        [self.mHintLabel removeFromSuperview];
     }
-    [self.view addSubview:_hintLabel];
+    [self.view addSubview:self.mHintLabel];
 }
 
 
@@ -1063,11 +1058,11 @@ QIPlayerSubtitleListener
 
 - (void)updateSegmentAndInfomationWithLive:(BOOL)isLive {
     if (isLive) {
-        self.segment.selectedSegmentIndex = 1;
+        self.mSegment.selectedSegmentIndex = 1;
     } else{
-        self.segment.selectedSegmentIndex = 0;
+        self.mSegment.selectedSegmentIndex = 0;
     }
-    [_urlListTableView removeFromSuperview];
+    [self.mUrlListTableView removeFromSuperview];
     [self layoutUrlListTableView];
 }
 
@@ -1081,7 +1076,7 @@ QIPlayerSubtitleListener
 
 -(void)qualityAction:(UISegmentedControl *)segm{
     NSInteger index = segm.selectedSegmentIndex;
-    QMediaModel *model = self.playerModels[_selectedIndex];
+    QMediaModel *model = self.mPlayerModels[self.mSelectedIndex];
     
     int tempIndex = 0;
     for (QStreamElement* modle0 in model.streamElements) {
@@ -1093,24 +1088,24 @@ QIPlayerSubtitleListener
         tempIndex ++;
     }
     BOOL switchQualityBool;
-    if(self.immediatelyType == 0){
+    if(self.mImmediatelyType == 0){
         
-        switchQualityBool = [self.myPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:true];
-    }else if(self.immediatelyType == 1){
+        switchQualityBool = [self.mPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:true];
+    }else if(self.mImmediatelyType == 1){
         
-        switchQualityBool = [self.myPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:false];
+        switchQualityBool = [self.mPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:false];
     }
     else{
-        switchQualityBool = [self.myPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:model.isLive];
+        switchQualityBool = [self.mPlayerView.controlHandler switchQuality:model.streamElements[index].userType urlType:model.streamElements[index].urlType quality:model.streamElements[index].quality immediately:model.isLive];
     }
     if (!switchQualityBool) {
-        self.maskView.qualitySegMc.selectedSegmentIndex = self.UpQualityIndex;
+        self.mMaskView.mQualitySegMc.selectedSegmentIndex = self.mUpQualityIndex;
 
-        [_toastView addText:@"不可重复切换"];
+        [self.mToastView addText:@"不可重复切换"];
     }else{
-        _UpQualityIndex = index;
+        self.mUpQualityIndex = index;
         
-        [_toastView addText:[NSString stringWithFormat:@"即将切换为：%d p",model.streamElements[index].quality]];
+        [self.mToastView addText:[NSString stringWithFormat:@"即将切换为：%d p",model.streamElements[index].quality]];
     }
 }
 

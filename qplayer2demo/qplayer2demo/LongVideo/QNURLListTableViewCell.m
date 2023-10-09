@@ -14,46 +14,46 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.contentView.backgroundColor = PL_LINE_COLOR;
         
-        self.cellBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PL_SCREEN_WIDTH, 34)];
-        self.cellBgView.backgroundColor = PL_BACKGROUND_COLOR;
-        [self.contentView addSubview:_cellBgView];
+        self.mCellBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, PL_SCREEN_WIDTH, 34)];
+        self.mCellBgView.backgroundColor = PL_BACKGROUND_COLOR;
+        [self.contentView addSubview:self.mCellBgView];
         
-        self.numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 2, 60, 30)];
-        self.numberLabel.font = PL_FONT_LIGHT(13);
-        self.numberLabel.textColor = PL_DARKRED_COLOR;
-        self.numberLabel.textAlignment = NSTextAlignmentLeft;
-        [self.cellBgView addSubview:_numberLabel];
+        self.mNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 2, 60, 30)];
+        self.mNumberLabel.font = PL_FONT_LIGHT(13);
+        self.mNumberLabel.textColor = PL_DARKRED_COLOR;
+        self.mNumberLabel.textAlignment = NSTextAlignmentLeft;
+        [self.mCellBgView addSubview:self.mNumberLabel];
         
-        self.urlLabel = [[UILabel alloc] initWithFrame:CGRectMake(65, 2, PL_SCREEN_WIDTH - 41, 30)];
-        self.urlLabel.numberOfLines = 0;
-        self.urlLabel.font = PL_FONT_LIGHT(14);
-        self.urlLabel.textColor = PL_DARK_COLOR;
-        self.urlLabel.textAlignment = NSTextAlignmentLeft;
-        [self.cellBgView addSubview:_urlLabel];
+        self.mUrlLabel = [[UILabel alloc] initWithFrame:CGRectMake(65, 2, PL_SCREEN_WIDTH - 41, 30)];
+        self.mUrlLabel.numberOfLines = 0;
+        self.mUrlLabel.font = PL_FONT_LIGHT(14);
+        self.mUrlLabel.textColor = PL_DARK_COLOR;
+        self.mUrlLabel.textAlignment = NSTextAlignmentLeft;
+        [self.mCellBgView addSubview:self.mUrlLabel];
         
-        self.deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(PL_SCREEN_WIDTH - 31, 5, 26, 24)];
-        self.deleteButton.userInteractionEnabled = YES;
-        [self.deleteButton setImage:[UIImage imageNamed:@"pl_delete"] forState:UIControlStateNormal];
-        [self.cellBgView addSubview:_deleteButton];
+        self.mDeleteButton = [[UIButton alloc] initWithFrame:CGRectMake(PL_SCREEN_WIDTH - 31, 5, 26, 24)];
+        self.mDeleteButton.userInteractionEnabled = YES;
+        [self.mDeleteButton setImage:[UIImage imageNamed:@"pl_delete"] forState:UIControlStateNormal];
+        [self.mCellBgView addSubview:self.mDeleteButton];
     }
     return self;
 }
 
 - (void)configureListURLString:(NSString *)urlString index:(NSInteger)index{
-    self.numberLabel.text = [NSString stringWithFormat:@"No.%ld", index + 1];
-    CGRect numberBounds = [self.numberLabel.text boundingRectWithSize:CGSizeMake(10000, 30) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:PL_FONT_LIGHT(13) forKey:NSFontAttributeName] context:nil];
-    self.urlLabel.text = urlString;
-    CGRect bounds = [self.urlLabel.text boundingRectWithSize:CGSizeMake(PL_SCREEN_WIDTH - 46 - numberBounds.size.width, 10000) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:PL_FONT_MEDIUM(14) forKey:NSFontAttributeName] context:nil];
+    self.mNumberLabel.text = [NSString stringWithFormat:@"No.%ld", index + 1];
+    CGRect numberBounds = [self.mNumberLabel.text boundingRectWithSize:CGSizeMake(10000, 30) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:PL_FONT_LIGHT(13) forKey:NSFontAttributeName] context:nil];
+    self.mUrlLabel.text = urlString;
+    CGRect bounds = [self.mUrlLabel.text boundingRectWithSize:CGSizeMake(PL_SCREEN_WIDTH - 46 - numberBounds.size.width, 10000) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:PL_FONT_MEDIUM(14) forKey:NSFontAttributeName] context:nil];
     if (bounds.size.height > 30) {
-        self.urlLabel.frame = CGRectMake(10 + numberBounds.size.width, 2, PL_SCREEN_WIDTH - 46 - numberBounds.size.width, bounds.size.height);
-        self.numberLabel.frame = CGRectMake(5, bounds.size.height/2 - 13, numberBounds.size.width, 30);
-        self.deleteButton.frame = CGRectMake(PL_SCREEN_WIDTH - 31, bounds.size.height/2 - 10, 26, 24);
-        self.cellBgView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, bounds.size.height + 4);
+        self.mUrlLabel.frame = CGRectMake(10 + numberBounds.size.width, 2, PL_SCREEN_WIDTH - 46 - numberBounds.size.width, bounds.size.height);
+        self.mNumberLabel.frame = CGRectMake(5, bounds.size.height/2 - 13, numberBounds.size.width, 30);
+        self.mDeleteButton.frame = CGRectMake(PL_SCREEN_WIDTH - 31, bounds.size.height/2 - 10, 26, 24);
+        self.mCellBgView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, bounds.size.height + 4);
     } else{
-        self.urlLabel.frame = CGRectMake(10 + numberBounds.size.width, 2, PL_SCREEN_WIDTH - 46 - numberBounds.size.width, 30);
-        self.numberLabel.frame = CGRectMake(5, 2, numberBounds.size.width, 30);
-        self.deleteButton.frame = CGRectMake(PL_SCREEN_WIDTH - 31, 5, 26, 24);
-        self.cellBgView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, 34);
+        self.mUrlLabel.frame = CGRectMake(10 + numberBounds.size.width, 2, PL_SCREEN_WIDTH - 46 - numberBounds.size.width, 30);
+        self.mNumberLabel.frame = CGRectMake(5, 2, numberBounds.size.width, 30);
+        self.mDeleteButton.frame = CGRectMake(PL_SCREEN_WIDTH - 31, 5, 26, 24);
+        self.mCellBgView.frame = CGRectMake(0, 0, PL_SCREEN_WIDTH, 34);
     }
 }
 

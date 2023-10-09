@@ -25,14 +25,14 @@
     QNHomeViewController *mainVC = [[QNHomeViewController alloc] init];
     UINavigationController *navigationController = [[UINavigationController alloc]initWithRootViewController:mainVC];
     
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.mWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.mWindow.backgroundColor = [UIColor whiteColor];
     
-    self.window.rootViewController = navigationController;
-    self.window.rootViewController.view.frame = self.window.bounds;
-    self.window.rootViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+    self.mWindow.rootViewController = navigationController;
+    self.mWindow.rootViewController.view.frame = self.mWindow.bounds;
+    self.mWindow.rootViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth |
     UIViewAutoresizingFlexibleHeight;
-    [self.window makeKeyAndVisible];
+    [self.mWindow makeKeyAndVisible];
     
     return YES;
 }
@@ -40,7 +40,7 @@
 #pragma mark ---- 确定返回手机翻转的样式 ----
 
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
-    if (self.isFlip) {
+    if (self.mIsFlip) {
         return UIInterfaceOrientationMaskLandscape;
     }
     return UIInterfaceOrientationMaskPortrait;
@@ -52,7 +52,7 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    UINavigationController *nav = (UINavigationController*)self.window.rootViewController;
+    UINavigationController *nav = (UINavigationController*)self.mWindow.rootViewController;
 
 }
 

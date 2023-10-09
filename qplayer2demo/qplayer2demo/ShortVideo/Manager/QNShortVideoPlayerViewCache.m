@@ -47,9 +47,9 @@
     QNPlayItem * playItem = [self.mPlayItemManager getOrNullByPosition:position +1];
     if(playItem){
         if(![self.mPlayerViewManager isPreRenderValaid]){
-            QMediaItemContext * item = [self.mMediaItemContextManager fetchMediaItemContextById:playItem.itemId];
+            QMediaItemContext * item = [self.mMediaItemContextManager fetchMediaItemContextById:playItem.mItemId];
             if(item){
-                [self.mPlayerViewManager prepare:playItem.itemId mediaItemContext:item];
+                [self.mPlayerViewManager prepare:playItem.mItemId mediaItemContext:item];
             }
         }
     }

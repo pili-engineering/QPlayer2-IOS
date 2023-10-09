@@ -10,9 +10,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QNPlayItem : NSObject
-@property (nonatomic , assign) int itemId;
-@property (nonatomic , strong) QMediaModel * mediaModel;
-@property (nonatomic , strong) NSString * coverUrl;
+@property (nonatomic , assign) int mItemId;
+@property (nonatomic , strong) QMediaModel * mMediaModel;
+@property (nonatomic , strong) NSString * mCoverUrl;
 
 -(instancetype)init NS_UNAVAILABLE;
 -(instancetype)new NS_UNAVAILABLE;

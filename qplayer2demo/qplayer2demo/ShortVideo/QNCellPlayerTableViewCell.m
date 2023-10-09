@@ -17,12 +17,11 @@ QIPlayerStateChangeListener,
 QIPlayerDownloadListener,
 QIPlayerFPSListener
 >
-@property (nonatomic, assign) CGFloat width;
-@property (nonatomic, assign) CGFloat height;
-@property (nonatomic, strong) QNPlayerShortVideoMaskView* maskView;
-@property (nonatomic, strong) NSMutableDictionary<NSNumber *,UILabel *>* infoLabelDictionary;
-@property (nonatomic, strong) NSDictionary<NSNumber *,NSString *>* infoNameDictionary;
-@property (nonatomic, strong) UIImageView *coverImageView;
+@property (nonatomic, assign) CGFloat mWidth;
+@property (nonatomic, strong) QNPlayerShortVideoMaskView* mMaskView;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *,UILabel *>* mInfoLabelDictionary;
+@property (nonatomic, strong) NSDictionary<NSNumber *,NSString *>* mInfoNameDictionary;
+@property (nonatomic, strong) UIImageView *mCoverImageView;
 
 @end
 
@@ -32,11 +31,11 @@ QIPlayerFPSListener
     if(self){
         
         self.contentView.backgroundColor = [UIColor blackColor];
-        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, _width, 0.5)];
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.mWidth, 0.5)];
         lineView.backgroundColor = [UIColor whiteColor];
         [self.contentView addSubview:lineView];
         [self addCoverImage:coverImage];
-        self.infoNameDictionary = @{@(0):@"fristFrame",@(1):@"fps",@(2):@"downSpeed",@(3):@"bufferPosition",@(4):@"status"};
+        self.mInfoNameDictionary = @{@(0):@"fristFrame",@(1):@"fps",@(2):@"downSpeed",@(3):@"bufferPosition",@(4):@"status"};
     }
     return self;
 }
@@ -45,62 +44,62 @@ QIPlayerFPSListener
     if (self) {
         self.contentView.backgroundColor = [UIColor blackColor];
 
-        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, _width, 0.5)];
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.mWidth, 0.5)];
         lineView.backgroundColor = [UIColor whiteColor];
         [self.contentView addSubview:lineView];
         
-        self.infoNameDictionary = @{@(0):@"fristFrame",@(1):@"fps",@(2):@"downSpeed",@(3):@"bufferPosition",@(4):@"status"};
+        self.mInfoNameDictionary = @{@(0):@"fristFrame",@(1):@"fps",@(2):@"downSpeed",@(3):@"bufferPosition",@(4):@"status"};
     }
     return self;
 }
 
-- (void)setPlayerView:(QNSamplePlayerWithQRenderView *)playerView{
+- (void)setMPlayerView:(QNSamplePlayerWithQRenderView *)playerView{
 
-    _playerView = playerView;
+    self.mPlayerView = playerView;
     playerView.frame = self.contentView.bounds;
     if (playerView) {
         [self.contentView insertSubview:playerView atIndex:0];
     }
-    if (!self.maskView) {
+    if (!self.mMaskView) {
         if (playerView != nil) {
             
             [self addPlayerMaskView:playerView];
         }
     }else{
-        self.maskView.player = playerView;
+        self.mMaskView.mPlayer = playerView;
     }
     [self addListeners];
     
 }
 -(void)addListeners{
-    [self.playerView.controlHandler addPlayerFPSChangeListener:self];
-    [self.playerView.controlHandler addPlayerStateListener:self];
-    [self.playerView.controlHandler addPlayerDownloadChangeListener:self];
-    [self.playerView.renderHandler addPlayerRenderListener:self];
-    if(self.maskView){
-        [self.maskView resumeListeners];
+    [self.mPlayerView.controlHandler addPlayerFPSChangeListener:self];
+    [self.mPlayerView.controlHandler addPlayerStateListener:self];
+    [self.mPlayerView.controlHandler addPlayerDownloadChangeListener:self];
+    [self.mPlayerView.renderHandler addPlayerRenderListener:self];
+    if(self.mMaskView){
+        [self.mMaskView resumeListeners];
     }
 }
 -(void)addCoverImage:(UIImage *)coverImage{
-    if(self.coverImageView){
-        self.coverImageView.image = coverImage;
-        self.coverImageView.hidden = NO;
+    if(self.mCoverImageView){
+        self.mCoverImageView.image = coverImage;
+        self.mCoverImageView.hidden = NO;
         return;
         
     }
-    self.coverImageView = [[UIImageView alloc]initWithImage:coverImage];
-    self.coverImageView.backgroundColor = [UIColor clearColor];
-    self.coverImageView.frame = CGRectMake(0, 92, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT-170);
-    [self.contentView insertSubview:self.coverImageView atIndex:1];
+    self.mCoverImageView = [[UIImageView alloc]initWithImage:coverImage];
+    self.mCoverImageView.backgroundColor = [UIColor clearColor];
+    self.mCoverImageView.frame = CGRectMake(0, 92, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT-170);
+    [self.contentView insertSubview:self.mCoverImageView atIndex:1];
 }
 -(void)hideCoverImage{
-    if(self.coverImageView){
-        self.coverImageView.hidden = YES;
+    if(self.mCoverImageView){
+        self.mCoverImageView.hidden = YES;
     }
 }
 -(void)showCoverImage{
-    if(self.coverImageView){
-        self.coverImageView.hidden = NO;
+    if(self.mCoverImageView){
+        self.mCoverImageView.hidden = NO;
     }
 }
 - (void)awakeFromNib {
@@ -110,36 +109,36 @@ QIPlayerFPSListener
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    if (!self.maskView && self.playerView != nil) {
-        [self addPlayerMaskView:self.playerView];
+    if (!self.mMaskView && self.mPlayerView != nil) {
+        [self addPlayerMaskView:self.mPlayerView];
     }
     // Configure the view for the selected state
 }
--(void)setState:(BOOL)state{
-    if (self.maskView) {
-        [self.maskView setPlayButtonState:state];
+-(void)setMState:(BOOL)state{
+    if (self.mMaskView) {
+        [self.mMaskView setPlayButtonState:state];
     }
     
 }
 -(void)removePlayerViewFromSuperView{
-    [self.playerView removeFromSuperview];
-    self.playerView = nil;
+    [self.mPlayerView removeFromSuperview];
+    self.mPlayerView = nil;
 }
 #pragma mark - 添加点播界面蒙版
 
 - (void)addPlayerMaskView:(QNSamplePlayerWithQRenderView *)player{
-    self.maskView = [[QNPlayerShortVideoMaskView alloc] initWithShortVideoFrame:CGRectMake(0, PL_SCREEN_HEIGHT-90, PL_SCREEN_WIDTH, 50) player:player isLiving:NO];
-    self.maskView.delegate = self;
-    self.maskView.backgroundColor = [UIColor clearColor];
-    [self.contentView addSubview:_maskView];
-    if(self.infoLabelDictionary){
+    self.mMaskView = [[QNPlayerShortVideoMaskView alloc] initWithShortVideoFrame:CGRectMake(0, PL_SCREEN_HEIGHT-90, PL_SCREEN_WIDTH, 50) player:player isLiving:NO];
+    self.mMaskView.mDelegate = self;
+    self.mMaskView.backgroundColor = [UIColor clearColor];
+    [self.contentView addSubview:self.mMaskView];
+    if(self.mInfoLabelDictionary){
         return;
     }
-    self.infoLabelDictionary = [[NSMutableDictionary alloc]init];
-    for (NSNumber *tag in self.infoNameDictionary.allKeys) {
+    self.mInfoLabelDictionary = [[NSMutableDictionary alloc]init];
+    for (NSNumber *tag in self.mInfoNameDictionary.allKeys) {
         [self setInfoLabelWithtag:tag frame:CGRectMake(0, 130 + [tag intValue] *30, 0, 30)];
     }
-    [self onStateChange:nil state:self.playerView.controlHandler.currentPlayerState];
+    [self onStateChange:nil state:self.mPlayerView.controlHandler.currentPlayerState];
 }
 -(void)setInfoLabelWithtag:(NSNumber *)tag frame:(CGRect)frame{
     UILabel *infoLabel = [[UILabel alloc]initWithFrame:frame];
@@ -149,21 +148,21 @@ QIPlayerFPSListener
     infoLabel.textColor = [UIColor whiteColor];
     [infoLabel sizeToFit];
     [self.contentView addSubview:infoLabel];
-    self.infoLabelDictionary[tag] = infoLabel;
+    self.mInfoLabelDictionary[tag] = infoLabel;
 }
 -(void)updateInfoLabelWithTag:(NSNumber *)tag massage:(NSString *)massage{
-    UILabel *innerLabel = self.infoLabelDictionary[tag];
-    NSString *titleName = self.infoNameDictionary[tag];
+    UILabel *innerLabel = self.mInfoLabelDictionary[tag];
+    NSString *titleName = self.mInfoNameDictionary[tag];
     innerLabel.text = [NSString stringWithFormat:@"%@:%@",titleName,massage];
     [innerLabel sizeToFit];
 }
--(void)setFirstFrameTime:(long)firstFrameTime{
-    [self updateInfoLabelWithTag:[self.infoNameDictionary allKeysForObject:@"fristFrame"][0] massage:[NSString stringWithFormat:@"%ld ms",(long)firstFrameTime]];
+-(void)setMFirstFrameTime:(long)firstFrameTime{
+    [self updateInfoLabelWithTag:[self.mInfoNameDictionary allKeysForObject:@"fristFrame"][0] massage:[NSString stringWithFormat:@"%ld ms",(long)firstFrameTime]];
 }
 #pragma mark - QNPlayerShortVideoMaskViewDelegate
 
 -(void)reOpenPlayPlayerMaskView:(QNPlayerShortVideoMaskView *)playerMaskView{
-    [_maskView setPlayButtonState:YES];
+    [self.mMaskView setPlayButtonState:YES];
 
 }
 
@@ -188,20 +187,20 @@ QIPlayerFPSListener
     else if (state == QPLAYER_STATE_SEEKING){
         statusStr = @"正在seek";
     }
-    [self updateInfoLabelWithTag:[self.infoNameDictionary allKeysForObject:@"status"][0] massage:statusStr];
+    [self updateInfoLabelWithTag:[self.mInfoNameDictionary allKeysForObject:@"status"][0] massage:statusStr];
 }
 
 - (void)onDownloadChanged:(QPlayerContext *)context speed:(NSInteger)downloadSpeed bufferPos:(NSInteger)bufferPos{
-    [self updateInfoLabelWithTag:[self.infoNameDictionary allKeysForObject:@"downSpeed"][0] massage:[NSString stringWithFormat:@"%.2lf kb/s",downloadSpeed/1000.0]];
-    [self updateInfoLabelWithTag:[self.infoNameDictionary allKeysForObject:@"bufferPosition"][0] massage:[NSString stringWithFormat:@"%ld ms",(long)bufferPos]];
+    [self updateInfoLabelWithTag:[self.mInfoNameDictionary allKeysForObject:@"downSpeed"][0] massage:[NSString stringWithFormat:@"%.2lf kb/s",downloadSpeed/1000.0]];
+    [self updateInfoLabelWithTag:[self.mInfoNameDictionary allKeysForObject:@"bufferPosition"][0] massage:[NSString stringWithFormat:@"%ld ms",(long)bufferPos]];
 }
 
 - (void)onFPSChanged:(QPlayerContext *)context FPS:(NSInteger)fps{
-    [self updateInfoLabelWithTag:[self.infoNameDictionary allKeysForObject:@"fps"][0] massage:[NSString stringWithFormat:@"%ld fps",(long)fps]];
+    [self updateInfoLabelWithTag:[self.mInfoNameDictionary allKeysForObject:@"fps"][0] massage:[NSString stringWithFormat:@"%ld fps",(long)fps]];
 }
 
 - (void)onFirstFrameRendered:(QPlayerContext *)context elapsedTime:(NSInteger)elapsedTime{
-    [self updateInfoLabelWithTag:[self.infoNameDictionary allKeysForObject:@"fristFrame"][0] massage:[NSString stringWithFormat:@"%ld ms",(long)elapsedTime]];
+    [self updateInfoLabelWithTag:[self.mInfoNameDictionary allKeysForObject:@"fristFrame"][0] massage:[NSString stringWithFormat:@"%ld ms",(long)elapsedTime]];
 }
 
 @end

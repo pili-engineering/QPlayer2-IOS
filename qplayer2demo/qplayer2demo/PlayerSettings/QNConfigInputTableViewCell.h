@@ -11,12 +11,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QNConfigInputTableViewCell : UITableViewCell<UITextFieldDelegate>
-@property (nonatomic, strong) UILabel *configLabel;
-@property (nonatomic, strong) UITextField *textField;
-@property (nonatomic, strong) UIView *lineView;
-@property (nonatomic, assign) NSInteger index;
+@property (nonatomic, strong) UILabel *mConfigLabel;
+@property (nonatomic, strong) UITextField *mTextField;
+@property (nonatomic, strong) UIView *mLineView;
 
-@property (nonatomic, assign) PLConfigureModel *configureModel;
+@property (nonatomic, assign) PLConfigureModel *mConfigureModel;
 
 
 /**

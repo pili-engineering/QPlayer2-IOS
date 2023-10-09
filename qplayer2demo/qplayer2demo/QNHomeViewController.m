@@ -18,7 +18,6 @@
 
 @interface QNHomeViewController ()
 
-@property (nonatomic, strong) NSArray<QNClassModel*> *playerConfigArray;
 
 
 @end

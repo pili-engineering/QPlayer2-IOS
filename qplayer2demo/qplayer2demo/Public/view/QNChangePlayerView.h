@@ -7,42 +7,42 @@
 
 #import <UIKit/UIKit.h>
 typedef NS_ENUM(NSInteger, ChangeButtonType){
-    UIButtonTypeStreAutomatic = 0,      //自动
-    UIButtonTypeStretching,             //拉伸
-    UIButtonTypeSpreadOver,             //铺满
-    UIButtonType16and9,                 //16:9
-    UIButtonType4and3,                  //4:3
+    BUTTON_TYPE_AUTOMATIC = 0,      //自动
+    BUTTON_TYPE_STRETCHING,             //拉伸
+    BUTTON_TYPE_SPREAD_OVER,             //铺满
+    BUTTON_TYPE_16_9,                 //16:9
+    BUTTON_TYPE_4_3,                  //4:3
     
-    UIButtonTypeFilterNone = 100,             //无滤镜
-    UIButtonTypeFilterRedAndGreen,      //红/绿滤镜
-    UIButtonTypeFilterGreenAndRed,      //绿/红滤镜
-    UIButtonTypeFilterBlueAndYellow,    //蓝/黄滤镜
+    BUTTON_TYPE_FILTER_NONE = 100,             //无滤镜
+    BUTTON_TYPE_FILTER_RED_GREEN,      //红/绿滤镜
+    BUTTON_TYPE_FILTER_GREEN_RED,      //绿/红滤镜
+    BUTTON_TYPE_FILTER_BLUE_YELLOW,    //蓝/黄滤镜
     
-    UIButtonTypeDectorAutomatic = 200,        //自动
-    UIButtonTypeDectorHard,             //硬解
-    UIButtonTypeDectorSoft,             //软解
+    BUTTON_TYPE_DECTOR_AUTOMATIC = 200,        //自动
+    BUTTON_TYPE_DECTOR_HARD,             //硬解
+    BUTTON_TYPE_DECTOR_SOFT,             //软解
     
-    UIButtonTypeSeekKey = 300,                //关键帧seek
-    UIButtonTypeSeekAccurate,           //精准seek
+    BUTTON_TYPE_SEEK_KEY = 300,                //关键帧seek
+    BUTTON_TYPE_SEEK_ACCURATE,           //精准seek
     
-    UIButtonTypeActionPlay = 400,             //起播播放
-    UIButtonTypeActionPause,            //起播暂停
-    
-    
-    UIButtonTypeSEIData = 500,                  //sei
-    
-    UIButtonTypeAuthentication = 600,            //鉴权
-    
-    UIButtonTypeBackgroundPlay = 700,            //后台播放
-    
-    UIButtonTypeImmediatelyTrue = 800,            //立即切换
-    UIButtonTypeImmediatelyFalse,                //无缝切换
-    UIButtonTypeImmediatelyCustom,               //直播立即切换，点播无缝立即切换
+    BUTTON_TYPE_ACTION_PLAY = 400,             //起播播放
+    BUTTON_TYPE_ACTION_PAUSE,            //起播暂停
     
     
-    UIButtonTypeSubtitleClose = 900,         //关闭字幕
-    UIButtonTypeSubtitleChinese,             //中文字幕
-    UIButtonTypeSubtitleEnglish              //英文字幕
+    BUTTON_TYPE_SEI_DATA = 500,                  //sei
+    
+    BUTTON_TYPE_AUTHENTICATION = 600,            //鉴权
+    
+    BUTTON_TYPE_BACKGROUND_PLAY = 700,            //后台播放
+    
+    BUTTON_TYPE_IMMEDIATELY_TRUE = 800,            //立即切换
+    BUTTON_TYPE_IMMEDIATELY_FALSE,                //无缝切换
+    BUTTON_TYPE_IMMEDIATELY_CUSTOM,               //直播立即切换，点播无缝立即切换
+    
+    
+    BUTTON_TYPE_SUBTITLE_CLOSE = 900,         //关闭字幕
+    BUTTON_TYPE_SUBTITLE_CHINESE,             //中文字幕
+    BUTTON_TYPE_SUBTITLE_ENGLISH              //英文字幕
     
 };
 NS_ASSUME_NONNULL_BEGIN

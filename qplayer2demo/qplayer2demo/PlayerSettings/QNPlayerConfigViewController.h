@@ -10,7 +10,6 @@
 #import "QNClassModel.h"
 
 @interface QNPlayerConfigViewController : UIViewController
-@property (nonatomic, copy) NSString *URLString;
 
 
 @end

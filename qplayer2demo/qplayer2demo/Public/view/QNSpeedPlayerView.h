@@ -9,12 +9,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, SpeedUIButtonType){
-    UIButtonTypeFor05 = 0,                    //0.5倍速
-    UIButtonTypeFor075,                  //0.75倍速
-    UIButtonTypeFor10,                   //1.0倍速
-    UIButtonTypeFor125,                  //1.25倍速
-    UIButtonTypeFor15,                   //1.5倍速
-    UIButtonTypeFor20               //2.0倍速
+    BUTTON_TYPE_PLAY_SPEED_0_5 = 0,                    //0.5倍速
+    BUTTON_TYPE_PLAY_SPEED_0_75,                  //0.75倍速
+    BUTTON_TYPE_PLAY_SPEED_1_0,                   //1.0倍速
+    BUTTON_TYPE_PLAY_SPEED_1_25,                  //1.25倍速
+    BUTTON_TYPE_PLAY_SPEED_1_5,                   //1.5倍速
+    BUTTON_TYPE_PLAY_SPEED_2_0               //2.0倍速
 };
 @interface QNSpeedPlayerView : UIView
 
