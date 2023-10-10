@@ -55,7 +55,7 @@ QIPlayerFPSListener
 
 - (void)setMPlayerView:(QNSamplePlayerWithQRenderView *)playerView{
 
-    self.mPlayerView = playerView;
+    _mPlayerView = playerView;
     playerView.frame = self.contentView.bounds;
     if (playerView) {
         [self.contentView insertSubview:playerView atIndex:0];
