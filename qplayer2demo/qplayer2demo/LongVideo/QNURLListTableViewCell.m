@@ -43,6 +43,7 @@
     self.mNumberLabel.text = [NSString stringWithFormat:@"No.%ld", index + 1];
     CGRect numberBounds = [self.mNumberLabel.text boundingRectWithSize:CGSizeMake(10000, 30) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:PL_FONT_LIGHT(13) forKey:NSFontAttributeName] context:nil];
     self.mUrlLabel.text = urlString;
+    self.accessibilityIdentifier = [NSString stringWithFormat:@"urlCell %ld",index + 1];
     CGRect bounds = [self.mUrlLabel.text boundingRectWithSize:CGSizeMake(PL_SCREEN_WIDTH - 46 - numberBounds.size.width, 10000) options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:PL_FONT_MEDIUM(14) forKey:NSFontAttributeName] context:nil];
     if (bounds.size.height > 30) {
         self.mUrlLabel.frame = CGRectMake(10 + numberBounds.size.width, 2, PL_SCREEN_WIDTH - 46 - numberBounds.size.width, bounds.size.height);

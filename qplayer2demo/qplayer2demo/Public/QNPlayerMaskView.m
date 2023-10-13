@@ -137,6 +137,7 @@ QIPlayerSubtitleListener
         self.mBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 6, 44, 44)];
         [self.mBackButton setImage:[UIImage imageNamed:@"pl_back"] forState:UIControlStateNormal];
         [self.mBackButton addTarget:self action:@selector(getBackAction:) forControlEvents:UIControlEventTouchDown];
+        self.mBackButton.accessibilityIdentifier = @"longVideoBack";
         [self addSubview:_mBackButton];
         
         

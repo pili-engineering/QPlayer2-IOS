@@ -77,6 +77,7 @@ QIMediaItemCommandNotAllowListener
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.mCurrentPlayingNum = 0;
+    self.view.accessibilityIdentifier = @"shortViewController";
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -103,6 +104,7 @@ QIMediaItemCommandNotAllowListener
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 6, 34, 34)];
     UIImage *image = [UIImage imageNamed:@"pl_back"];
+    backButton.accessibilityIdentifier = @"shortViewController back";
     // iOS 11 之后， UIBarButtonItem 在 initWithCustomView 是图片按钮的情况下变形
     if ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f) {
         image = [self originImage:image scaleToSize:CGSizeMake(34, 34)];

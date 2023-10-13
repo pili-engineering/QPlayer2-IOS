@@ -48,6 +48,7 @@
     [playerButton addTarget:self action:@selector(enterPlayerAction:) forControlEvents:UIControlEventTouchDown];
     [playerButton setTitle:@"长视频" forState:UIControlStateNormal];
     playerButton.titleLabel.font = PL_FONT_MEDIUM(14);
+    playerButton.accessibilityIdentifier = @"longVideoButton";
     [self.view addSubview:playerButton];
     
     // 单 player 多 cell
@@ -59,7 +60,7 @@
     [cellPlayerButton setTitle:@"短视频" forState:UIControlStateNormal];
     cellPlayerButton.titleLabel.font = PL_FONT_MEDIUM(14);
     [self.view addSubview:cellPlayerButton];
-    
+    cellPlayerButton.accessibilityIdentifier = @"shortVideoButton";
     // 多 player 多 item
     UIButton *itemPlayerButton = [[UIButton alloc] initWithFrame:CGRectMake(70, (PL_SCREEN_HEIGHT - kLogoSizeHeight - 116)/4 + kLogoSizeHeight + 50 + 140, PL_SCREEN_WIDTH - 140, 34)];
     itemPlayerButton.backgroundColor = PL_BUTTON_BACKGROUNDCOLOR;
