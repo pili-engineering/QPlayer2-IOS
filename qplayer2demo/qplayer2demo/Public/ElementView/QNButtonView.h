@@ -12,9 +12,9 @@
 NS_ASSUME_NONNULL_BEGIN
 @interface QNButtonView : UIView
 
-@property (nonatomic, weak) QPlayerContext *player;
+@property (nonatomic, weak) QPlayerContext *mPlayer;
 ///是否是直播
-@property (nonatomic, assign) BOOL isLiving;
+@property (nonatomic, assign) BOOL mIsLiving;
 ///初始化
 ///@param frame 添加的buttomView的frame
 ///@param player 播放器

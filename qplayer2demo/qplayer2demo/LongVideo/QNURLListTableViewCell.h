@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface QNURLListTableViewCell : UITableViewCell
-@property (nonatomic, strong) UIView *cellBgView;
-@property (nonatomic, strong) UILabel *numberLabel;
-@property (nonatomic, strong) UILabel *urlLabel;
-@property (nonatomic, strong) UIButton *deleteButton;
+@property (nonatomic, strong) UIView *mCellBgView;
+@property (nonatomic, strong) UILabel *mNumberLabel;
+@property (nonatomic, strong) UILabel *mUrlLabel;
+@property (nonatomic, strong) UIButton *mDeleteButton;
 
 
 /**

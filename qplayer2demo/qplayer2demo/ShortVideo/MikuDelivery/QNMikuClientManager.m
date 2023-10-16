@@ -14,7 +14,7 @@
 #define MAX_WORKERS 8
 #define IS_USE_HTTP_DNS false
 @interface QNMikuClientManager()
-@property (nonatomic , strong)MDClient * mikuClient;
+@property (nonatomic , strong)MDClient * mMikuClient;
 @end
 @implementation QNMikuClientManager
 + (instancetype)sharedInstance {
@@ -36,8 +36,8 @@
         config.httpDNS = httpDNS;
         config.cacheConfig = [[MDCacheConfig alloc]init];
         config.cacheConfig.cacheSize = cacheSizeMb*1024*1024;
-        self.mikuClient = [MDClient createClient:kMiku_APPKEY appSalt:kMiku_APPSALT config:config];
-        if(self.mikuClient == nil){
+        self.mMikuClient = [MDClient createClient:kMiku_APPKEY appSalt:kMiku_APPSALT config:config];
+        if(self.mMikuClient == nil){
             NSLog(@"mikuClient create failed");
         }
         
@@ -46,17 +46,17 @@
 }
 -(void)uninit{
     
-    if(self.mikuClient != nil){
+    if(self.mMikuClient != nil){
         
-        [self.mikuClient close];
-        self.mikuClient = nil;
+        [self.mMikuClient close];
+        self.mMikuClient = nil;
     }
 }
 -(MDClient *)getMikuClient{
-    if(self.mikuClient == nil){
+    if(self.mMikuClient == nil){
         [self initWithQN];
     }
-    return self.mikuClient;
+    return self.mMikuClient;
 }
 
 @end

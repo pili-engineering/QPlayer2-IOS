@@ -35,19 +35,16 @@ QIMediaItemStateChangeListener,
 QIMediaItemCommandNotAllowListener
 >
 
-@property (nonatomic, strong) QPlayerContext *player;
-@property (nonatomic, strong) QPlayerContext * player_other;
-@property (nonatomic, strong) QRenderView *myRenderView;
-@property (nonatomic, strong) QRenderView *otherRenderView;
+@property (nonatomic, strong) QPlayerContext *mPlayer;
+@property (nonatomic, strong) QPlayerContext * mPlayerOther;
+@property (nonatomic, strong) QRenderView *mRenderView;
+@property (nonatomic, strong) QRenderView *mOtherRenderView;
 
-@property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
-@property (nonatomic, assign) CGFloat topSpace;
-@property (nonatomic, strong) QNToastView *toastView;
+@property (nonatomic, assign) CGFloat mTopSpace;
 
 //交换player
-@property (nonatomic, strong) QMediaModelBuilder *modleBuilder_main;
-@property (nonatomic, strong) QMediaModelBuilder *modelBuilder_other;
-//@property (nonatomic, assign, getter=true) Boolean *PlayerSwitchFlag;
+@property (nonatomic, strong) QMediaModelBuilder *mModleBuilderMain;
+@property (nonatomic, strong) QMediaModelBuilder *mModelBuilderOther;
 
 
 
@@ -64,28 +61,28 @@ QIMediaItemCommandNotAllowListener
 -(void)viewDidLoad {
     [super viewDidLoad];
     [self configView];
-    [self setupPlayer: _playerConfigArray];
-    [self setupPlayer_other: _playerConfigArray];
+    [self setupPlayer: _mPlayerConfigArray];
+    [self setupPlayer_other: _mPlayerConfigArray];
     
     [self makeSwitch];
 }
 
 
 - (void)dealloc {
-    NSLog(@"dealloc");
+    NSLog(@"QNDoublePlayerViewController dealloc");
 }
 
 - (void)viewWillDisAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.player.controlHandler stop];
-    [self.player_other.controlHandler stop];
+    [self.mPlayer.controlHandler stop];
+    [self.mPlayerOther.controlHandler stop];
 
-    _toastView = nil;
-    [self.player.controlHandler playerRelease];
-    self.myRenderView = nil;
-    self.otherRenderView = nil;
-    self.player = nil;
-    self.player_other = nil;
+    [self.mPlayer.controlHandler playerRelease];
+    [self.mPlayerOther.controlHandler playerRelease];
+    self.mRenderView = nil;
+    self.mOtherRenderView = nil;
+    self.mPlayer = nil;
+    self.mPlayerOther = nil;
 }
 
 #pragma mark - configPlayerANDconfigDefaults
@@ -111,7 +108,7 @@ QIMediaItemCommandNotAllowListener
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:backButton];
     
     //configDefaults
-    _playerConfigArray = [QDataHandle shareInstance].playerConfigArray;
+    _mPlayerConfigArray = [QDataHandle shareInstance].mPlayerConfigArray;
     
 }
 
@@ -119,37 +116,23 @@ QIMediaItemCommandNotAllowListener
 #pragma mark setup
 - (void)setupPlayer:(NSArray<QNClassModel*>*)models {
     if (PL_HAS_NOTCH) {
-        _topSpace = 88;
+        _mTopSpace = 88;
     } else {
-        _topSpace = 64;
-    }
-    NSMutableArray *configs = [NSMutableArray array];
-    
-    if (models) {
-        configs = [models mutableCopy];
-    } else {
-        NSUserDefaults *userdafault = [NSUserDefaults standardUserDefaults];
-        NSArray *dataArray = [userdafault objectForKey:@"PLPlayer_settings"];
-        if (dataArray.count != 0 ) {
-            for (NSData *data in dataArray) {
-                QNClassModel *classModel = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-                [configs addObject:classModel];
-            }
-        }
+        _mTopSpace = 64;
     }
     NSString *documentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     
-    _myRenderView = [[QRenderView alloc]initWithFrame:CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PL_SCREEN_HEIGHT)];
+    _mRenderView = [[QRenderView alloc]initWithFrame:CGRectMake(0, _mTopSpace, PLAYER_PORTRAIT_WIDTH, PL_SCREEN_HEIGHT)];
     
-    [self.view addSubview:_myRenderView];
+    [self.view addSubview:_mRenderView];
     
     QPlayerContext *player = [[QPlayerContext alloc]initPlayerAPPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
 
-    self.player = player;
-    [self.myRenderView attachPlayerContext:self.player];
+    self.mPlayer = player;
+    [self.mRenderView attachPlayerContext:self.mPlayer];
     
-    _modleBuilder_main = [[QMediaModelBuilder alloc] initWithIsLive:NO];
-        [_modleBuilder_main addStreamElementWithUserType:@""
+    _mModleBuilderMain = [[QMediaModelBuilder alloc] initWithIsLive:NO];
+        [_mModleBuilderMain addStreamElementWithUserType:@""
                                  urlType:QURL_TYPE_QAUDIO_AND_VIDEO                      //资源的类型，这里的url对应的资源是音视频
                                  url:@"http://demo-videos.qnsdk.com/shortvideo/nike.mp4"     //播放地址
                                  quality:1080                                            //清晰度数值标记为1080
@@ -157,48 +140,24 @@ QIMediaItemCommandNotAllowListener
                                  backupUrl:@""                                            //备用地址
                                  referer:@""                                              //http/https 协议的地址 支持该属性
                                  renderType:QPLAYER_RENDER_TYPE_PLANE];
-    for (QNClassModel* model in configs) {
-        for (PLConfigureModel* configModel in model.classValue) {
-            if ([model.classKey isEqualToString:@"PLPlayerOption"]) {
-                [self configurePlayerWithConfigureModel:configModel classModel:model isMain:true];
-            }
-        }
-    }
-    QMediaModel *model = [_modleBuilder_main build];
-    [self.player.controlHandler playMediaModel:model startPos:0];
-    
-
-
+    QMediaModel *model = [_mModleBuilderMain build];
+    [self.mPlayer.controlHandler playMediaModel:model startPos:0];
 }
 - (void)setupPlayer_other:(NSArray<QNClassModel*>*)models {
     if (PL_HAS_NOTCH) {
-        _topSpace = 88;
+        _mTopSpace = 88;
     } else {
-        _topSpace = 64;
-    }
-    NSMutableArray *configs = [NSMutableArray array];
-    
-    if (models) {
-        configs = [models mutableCopy];
-    } else {
-        NSUserDefaults *userdafault = [NSUserDefaults standardUserDefaults];
-        NSArray *dataArray = [userdafault objectForKey:@"PLPlayer_settings"];
-        if (dataArray.count != 0 ) {
-            for (NSData *data in dataArray) {
-                QNClassModel *classModel = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-                [configs addObject:classModel];
-            }
-        }
+        _mTopSpace = 64;
     }
     
     NSString *documentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    _otherRenderView = [[QRenderView alloc]initWithFrame:CGRectMake(0, PL_SCREEN_HEIGHT-350, PL_SCREEN_WIDTH, PL_SCREEN_WIDTH)];
-    [self.view addSubview:_otherRenderView];
+    _mOtherRenderView = [[QRenderView alloc]initWithFrame:CGRectMake(0, PL_SCREEN_HEIGHT-(PL_SCREEN_HEIGHT - _mTopSpace)/2, PL_SCREEN_WIDTH, (PL_SCREEN_HEIGHT - _mTopSpace)/2)];
+    [self.view addSubview:_mOtherRenderView];
     QPlayerContext *player_other = [[QPlayerContext alloc]initPlayerAPPVersion:@"" localStorageDir:documentsDir logLevel:LOG_VERBOSE];
-    self.player_other = player_other;
-    [self.otherRenderView attachPlayerContext:self.player_other];
-    _modelBuilder_other = [[QMediaModelBuilder alloc] initWithIsLive:NO];
-        [_modelBuilder_other addStreamElementWithUserType:@""
+    self.mPlayerOther = player_other;
+    [self.mOtherRenderView attachPlayerContext:self.mPlayerOther];
+    _mModelBuilderOther = [[QMediaModelBuilder alloc] initWithIsLive:NO];
+        [_mModelBuilderOther addStreamElementWithUserType:@""
                                  urlType:QURL_TYPE_QAUDIO_AND_VIDEO
                                  url:@"http://demo-videos.qnsdk.com/shortvideo/桃花.mp4"
                                  quality:1080
@@ -206,20 +165,14 @@ QIMediaItemCommandNotAllowListener
                                  backupUrl:@""
                                  referer:@""
                                  renderType:QPLAYER_RENDER_TYPE_PLANE];
-    for (QNClassModel* model in configs) {
-        for (PLConfigureModel* configModel in model.classValue) {
-            if ([model.classKey isEqualToString:@"PLPlayerOption"]) {
-                [self configurePlayerWithConfigureModel:configModel classModel:model isMain:false];;
-            }
-        }
-    }
-    QMediaModel *model = [_modelBuilder_other build];
-    [self.player_other.controlHandler playMediaModel:model startPos:0];
+
+    QMediaModel *model = [_mModelBuilderOther build];
+    [self.mPlayerOther.controlHandler playMediaModel:model startPos:0];
     
 }
 - (void)getBack {
-    [self.player.controlHandler stop];
-    [self.player_other.controlHandler stop];
+    [self.mPlayer.controlHandler stop];
+    [self.mPlayerOther.controlHandler stop];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -236,159 +189,31 @@ QIMediaItemCommandNotAllowListener
 
 - (void)makeSwitch {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swithActionPlayer)];
-    UITapGestureRecognizer *tapGesture_other = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swithActionPlayer_other)];
+    UITapGestureRecognizer *tapGesture_other = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(swithActionPlayer)];
     tapGesture.numberOfTapsRequired = 1;
     tapGesture.cancelsTouchesInView = NO;
     tapGesture_other.numberOfTapsRequired = 1;
     tapGesture_other.cancelsTouchesInView = NO;
-    [_otherRenderView addGestureRecognizer:tapGesture];
-    [_myRenderView addGestureRecognizer:tapGesture_other];
-}
-//交换rendview
-- (void)switchAction {
-    BOOL isPlaying_player = (_player.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING);
-    if(isPlaying_player) {
-        [_player.controlHandler pauseRender];
-        [_player_other.controlHandler pauseRender];
-    }
-    _myRenderView.frame = CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PL_SCREEN_HEIGHT);
-    _otherRenderView.frame = CGRectMake(0, _topSpace, PLAYER_PORTRAIT_WIDTH, PL_SCREEN_HEIGHT);
-    
-    [_player_other.controlHandler resumeRender];
-    [_player.controlHandler resumeRender];
+    [_mOtherRenderView addGestureRecognizer:tapGesture];
+    [_mRenderView addGestureRecognizer:tapGesture_other];
+
     
 }
 
 //交换player
 - (void)swithActionPlayer {
-    BOOL isPlaying_player = (_player.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING);
-    BOOL isPlaying_player_other = (_player_other.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING);
-    
-    BOOL bothPlaying = (isPlaying_player && isPlaying_player_other);
-    BOOL onlyPlayerplaying = (isPlaying_player && !isPlaying_player_other);
-    BOOL onlyPlayerOtherplaying = (!isPlaying_player && isPlaying_player_other);
-    
-    if(bothPlaying) {
-        if(playerSwitchFlag) {
-            [self.otherRenderView attachPlayerContext:self.player];
-            [self.myRenderView attachPlayerContext:self.player_other];
-            playerSwitchFlag = false;
-        } else {
-            [self.otherRenderView attachPlayerContext:self.player_other];
-            [self.myRenderView attachPlayerContext:self.player];
-            playerSwitchFlag = true;
-        }
-    } else if(onlyPlayerplaying) {
-        [_player.controlHandler resumeRender];
-    } else if(onlyPlayerOtherplaying) {
-        [_player_other.controlHandler resumeRender];
-    } else {
-        [self switchAction];
+    [self.mRenderView removeFromSuperview];
+    [self.mOtherRenderView removeFromSuperview];
+    if(playerSwitchFlag){
+        [self.view addSubview:self.mOtherRenderView];
+        [self.view addSubview:self.mRenderView];
+        playerSwitchFlag = false;
+    }else{
+        [self.view addSubview:self.mRenderView];
+        [self.view addSubview:self.mOtherRenderView];
+        playerSwitchFlag = true;
     }
-}
-- (void)swithActionPlayer_other {
-    BOOL isPlaying_player = (_player.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING);
-    BOOL isPlaying_player_other = (_player_other.controlHandler.currentPlayerState == QPLAYER_STATE_PLAYING);
-    
-    BOOL bothPlaying = (isPlaying_player && isPlaying_player_other);
-    BOOL onlyPlayerplaying = (isPlaying_player && !isPlaying_player_other);
-    BOOL onlyPlayerOtherplaying = (!isPlaying_player && isPlaying_player_other);
-    
-    if(bothPlaying) {
-        if(playerSwitchFlag) {
-            [self.otherRenderView attachPlayerContext:self.player];
-            [self.myRenderView attachPlayerContext:self.player_other];
-            playerSwitchFlag = false;
-        } else {
-            [self.otherRenderView attachPlayerContext:self.player_other];
-            [self.myRenderView attachPlayerContext:self.player];
-            playerSwitchFlag = true;
-        }
-    } else if(onlyPlayerplaying) {
-        [_player.controlHandler resumeRender];
-    } else if(onlyPlayerOtherplaying) {
-        [_player_other.controlHandler resumeRender];
-    } else {
-        [self switchAction];
-    }
-}
 
-#pragma mark - PLPlayerSettingsVcDelegate
-
-
-- (void)configurePlayerWithConfigureModel:(PLConfigureModel *)configureModel classModel:(QNClassModel *)classModel isMain:(BOOL)isMain {
-    NSInteger index = [configureModel.selectedNum integerValue];
-    
-    if ([classModel.classKey isEqualToString:@"PLPlayerOption"]) {
-        if ([configureModel.configuraKey containsString:@"播放速度"]) {
-            if(isMain) {
-                [self.player.controlHandler setSpeed:[configureModel.configuraValue[index] floatValue]];
-            } else {
-                [self.player_other.controlHandler setSpeed:[configureModel.configuraValue[index] floatValue]];
-            }
-            
-        }
-
-        if ([configureModel.configuraKey containsString:@"播放起始"]){
-
-        } else if ([configureModel.configuraKey containsString:@"Decoder"]) {
-            [self.player.controlHandler setDecoderType:(QPlayerDecoder)index];
-            
-            
-        } else if ([configureModel.configuraKey containsString:@"Seek"]) {
-            [self.player.controlHandler  setSeekMode:index];
-
-        } else if ([configureModel.configuraKey containsString:@"Start Action"]) {
-            [self.player.controlHandler setStartAction:(QPlayerStart)index];
-            
-        } else if ([configureModel.configuraKey containsString:@"Render ratio"]) {
-            if(isMain) {
-                [self.player.renderHandler setRenderRatio:(QPlayerRenderRatio)(index + 1)];
-            } else {
-                [self.player_other.renderHandler setRenderRatio:(QPlayerRenderRatio)(index + 1)];
-            }
-            
-        } else if ([configureModel.configuraKey containsString:@"色盲模式"]) {
-            [self.player.renderHandler setBlindType:(QPlayerBlind)index];
-        }
-        else if ([configureModel.configuraKey containsString:@"SEI"]) {
-            if (index == 0) {
-                
-                [self.player.controlHandler setSEIEnable:YES];
-            }else{
-                [self.player.controlHandler setSEIEnable:NO];
-            }
-        }
-        else if ([configureModel.configuraKey containsString:@"鉴权"]) {
-            if (index == 0) {
-                [self.player.controlHandler forceAuthenticationFromNetwork];
-            }
-        }
-        else if ([configureModel.configuraKey containsString:@"后台播放"]){
-            if (index == 0) {
-                [self.player.controlHandler setBackgroundPlayEnable:YES];
-            }
-            else{
-                [self.player.controlHandler setBackgroundPlayEnable:NO];
-            }
-        }
-        else if ([configureModel.configuraKey containsString:@"清晰度切换"]){
-//            _immediatelyType =(int)index;
-        }
-        else if ([configureModel.configuraKey containsString:@"字幕"]){
-            [self.player.controlHandler setSubtitleEnable:index==0?NO:YES];
-            if(index == 1 ){
-                if(![self.player.controlHandler.subtitleName isEqual:@"中文"]){
-                    [self.player.controlHandler setSubtitle:@"中文"];
-                }
-            }
-            else if (index == 2){
-                if(![self.player.controlHandler.subtitleName isEqual:@"英文"]){
-                    [self.player.controlHandler setSubtitle:@"英文"];
-                }
-            }
-        }
-    }
 }
 
 @end

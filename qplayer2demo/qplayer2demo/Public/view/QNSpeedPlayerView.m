@@ -8,17 +8,17 @@
 #import "QNSpeedPlayerView.h"
 
 @implementation QNSpeedPlayerView{
-    UIColor *selectColor;
-    UIColor *notSelectColor;
-    NSMutableArray *buttonArray;
+    UIColor *mSelectColor;
+    UIColor *mNotSelectColor;
+    NSMutableArray *mButtonArray;
 }
 -(instancetype)initWithFrame:(CGRect)frame backgroudColor:(UIColor*)color{
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = color;
-        selectColor = [UIColor redColor];
-        notSelectColor = [UIColor whiteColor];
-        buttonArray = [NSMutableArray array];
+        mSelectColor = [UIColor redColor];
+        mNotSelectColor = [UIColor whiteColor];
+        mButtonArray = [NSMutableArray array];
     }
     return self;
 }
@@ -26,33 +26,33 @@
 -(void)addButtonText:(NSString *)text frame:(CGRect)frame type:(SpeedUIButtonType)type target:(id)target selector:(SEL)selector{
     UIButton *btn = [[UIButton alloc]initWithFrame:frame];
     [btn setTitle:text forState:UIControlStateNormal];
-    [btn setTitleColor:notSelectColor forState:UIControlStateNormal];
+    [btn setTitleColor:mNotSelectColor forState:UIControlStateNormal];
     btn.backgroundColor = [UIColor clearColor];
     btn.tag = type;
     
     [btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
     [btn addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:btn];
-    [buttonArray addObject:btn];
+    [mButtonArray addObject:btn];
 }
 -(void)click:(UIButton *)btn{
-    for (UIButton *midbtn in buttonArray) {
+    for (UIButton *midbtn in mButtonArray) {
         if (midbtn.tag == btn.tag) {
-            [midbtn setTitleColor:selectColor forState:UIControlStateNormal];
+            [midbtn setTitleColor:mSelectColor forState:UIControlStateNormal];
         }
         else{
-            [midbtn setTitleColor:notSelectColor forState:UIControlStateNormal];
+            [midbtn setTitleColor:mNotSelectColor forState:UIControlStateNormal];
         }
     }
 }
 
 -(void)setDefault:(SpeedUIButtonType)type{
-    for (UIButton *midbtn in buttonArray) {
+    for (UIButton *midbtn in mButtonArray) {
         if (midbtn.tag == type) {
-            [midbtn setTitleColor:selectColor forState:UIControlStateNormal];
+            [midbtn setTitleColor:mSelectColor forState:UIControlStateNormal];
         }
         else{
-            [midbtn setTitleColor:notSelectColor forState:UIControlStateNormal];
+            [midbtn setTitleColor:mNotSelectColor forState:UIControlStateNormal];
         }
     }
 }

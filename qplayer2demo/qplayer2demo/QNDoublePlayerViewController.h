@@ -12,7 +12,7 @@
 @interface QNDoublePlayerViewController: UIViewController
 
 //configArray
-@property (nonatomic, strong) NSArray<QNClassModel*> *playerConfigArray;
+@property (nonatomic, strong) NSArray<QNClassModel*> *mPlayerConfigArray;
 
 @end
 

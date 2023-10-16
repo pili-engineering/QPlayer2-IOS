@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface PLConfigureModel : NSObject
-@property (nonatomic, copy) NSString *configuraKey;
-@property (nonatomic, strong) NSMutableArray *configuraValue;
-@property (nonatomic, strong) NSNumber *selectedNum;
+@property (nonatomic, copy) NSString *mConfiguraKey;
+@property (nonatomic, strong) NSMutableArray *mConfiguraValue;
+@property (nonatomic, strong) NSNumber *mSelectedNum;
 
 + (PLConfigureModel *)configureModelWithDictionary:(NSDictionary *)dictionary;
 @end

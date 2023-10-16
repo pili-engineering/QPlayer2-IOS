@@ -11,7 +11,7 @@
 
 @interface QNAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, assign) BOOL isFlip;
+@property (strong, nonatomic) UIWindow *mWindow;
+@property (nonatomic, assign) BOOL mIsFlip;
 
 @end

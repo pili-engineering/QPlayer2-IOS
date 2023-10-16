@@ -43,27 +43,27 @@
 @implementation PLConfigureModel
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {
-        self.configuraKey = [aDecoder decodeObjectForKey:@"configuraKey"];
-        self.configuraValue = [aDecoder decodeObjectForKey:@"configuraValue"];
-        self.selectedNum = [aDecoder decodeObjectForKey:@"selectedNum"];
+        self.mConfiguraKey = [aDecoder decodeObjectForKey:@"configuraKey"];
+        self.mConfiguraValue = [aDecoder decodeObjectForKey:@"configuraValue"];
+        self.mSelectedNum = [aDecoder decodeObjectForKey:@"selectedNum"];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:self.configuraKey forKey:@"configuraKey"];
-    [aCoder encodeObject:self.configuraValue forKey:@"configuraValue"];
-    [aCoder encodeObject:self.selectedNum forKey:@"selectedNum"];
+    [aCoder encodeObject:self.mConfiguraKey forKey:@"configuraKey"];
+    [aCoder encodeObject:self.mConfiguraValue forKey:@"configuraValue"];
+    [aCoder encodeObject:self.mSelectedNum forKey:@"selectedNum"];
 }
 
 + (PLConfigureModel *)configureModelWithDictionary:(NSDictionary *)dictionary {
     PLConfigureModel *configureModel = [[PLConfigureModel alloc] init];
     for (NSString *key in dictionary) {
         if ([key isEqualToString:@"default"]) {
-            configureModel.selectedNum = dictionary[key];
+            configureModel.mSelectedNum = dictionary[key];
         } else{
-            configureModel.configuraKey = key;
-            configureModel.configuraValue = [dictionary[key] mutableCopy];
+            configureModel.mConfiguraKey = key;
+            configureModel.mConfiguraValue = [dictionary[key] mutableCopy];
         }
     }
     return configureModel;

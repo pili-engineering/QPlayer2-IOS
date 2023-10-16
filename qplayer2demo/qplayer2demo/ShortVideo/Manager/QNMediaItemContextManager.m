@@ -69,7 +69,7 @@ IPlayItemArrayRefreshListener
     for (int i = start; i <= end; i++) {
         QNPlayItem * item = [self.mPlayItemManager getOrNullByPosition:i];
         if(item){
-            [newContextIds addObject:[NSNumber numberWithInt:item.itemId]];
+            [newContextIds addObject:[NSNumber numberWithInt:item.mItemId]];
         }
     }
     start = currentPosition +1;
@@ -77,7 +77,7 @@ IPlayItemArrayRefreshListener
     for (int i = start; i <= end; i++) {
         QNPlayItem * item = [self.mPlayItemManager getOrNullByPosition:i];
         if(item){
-            [newContextIds addObject:[NSNumber numberWithInt:item.itemId]];
+            [newContextIds addObject:[NSNumber numberWithInt:item.mItemId]];
         }
     }
     NSMutableSet *addContextIdsSet = [NSMutableSet set];
@@ -89,7 +89,7 @@ IPlayItemArrayRefreshListener
     for (NSNumber * contextId in addContextIdsSet) {
         QNPlayItem * item = [self.mPlayItemManager getOrNullById:[contextId intValue]];
         if(item){
-            [self load:item.itemId mediaModel:item.mediaModel startPos:0 logLevel:LOG_VERBOSE localStorageDir:self.mExternalFilesDir];
+            [self load:item.mItemId mediaModel:item.mMediaModel startPos:0 logLevel:LOG_VERBOSE localStorageDir:self.mExternalFilesDir];
         }
     }
     NSLog(@"%@ add preload ids = %@",TAG,addContextIdsSet);
@@ -142,7 +142,7 @@ IPlayItemArrayRefreshListener
 }
 
 - (void)onDelete:(int)position deletePlayItem:(nonnull QNPlayItem *)deletePlayItem {
-    [self discardMediaItemContext:[NSNumber numberWithInt:deletePlayItem.itemId]];
+    [self discardMediaItemContext:[NSNumber numberWithInt:deletePlayItem.mItemId]];
     [self updateMediaItemContext:self.mCurrentPosition];
 }
 

@@ -20,14 +20,14 @@ UITableViewDelegate,
 UITableViewDataSource
 >
 
-@property (nonatomic, strong) UITableView *playerConfigTableView;
-@property (nonatomic, strong) NSArray<QNClassModel*> *playerConfigArray;
+@property (nonatomic, strong) UITableView *mPlayerConfigTableView;
+@property (nonatomic, strong) NSArray<QNClassModel*> *mPlayerConfigArray;
 
 @end
 
 @implementation QNPlayerConfigViewController
-static NSString *segmentIdentifier = @"segmentCell";
-static NSString *listIdentifier = @"listCell";
+static NSString *sSegmentIdentifier = @"segmentCell";
+static NSString *sListIdentifier = @"listCell";
 
 - (void)dealloc {
     NSLog(@"QNPlayerConfigViewController - dealloc");
@@ -48,7 +48,7 @@ static NSString *listIdentifier = @"listCell";
     
     [self layoutPlayerConfigView];
     
-    self.playerConfigArray =  [QDataHandle shareInstance].playerConfigArray;
+    self.mPlayerConfigArray =  [QDataHandle shareInstance].mPlayerConfigArray;
 }
 
 
@@ -87,19 +87,19 @@ static NSString *listIdentifier = @"listCell";
         make.topMargin.mas_equalTo(topSpace);
     }];
     
-    self.playerConfigTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 78, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT - 78) style:UITableViewStylePlain];
-    self.playerConfigTableView.backgroundColor = [UIColor whiteColor];
-    self.playerConfigTableView.delegate = self;
-    self.playerConfigTableView.dataSource = self;
-    self.playerConfigTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.playerConfigTableView registerClass:[QNConfigSegTableViewCell class] forCellReuseIdentifier:segmentIdentifier];
-    [self.playerConfigTableView registerClass:[QNConfigInputTableViewCell class] forCellReuseIdentifier:listIdentifier];
-    [self.view addSubview:_playerConfigTableView];
+    self.mPlayerConfigTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 78, PL_SCREEN_WIDTH, PL_SCREEN_HEIGHT - 78) style:UITableViewStylePlain];
+    self.mPlayerConfigTableView.backgroundColor = [UIColor whiteColor];
+    self.mPlayerConfigTableView.delegate = self;
+    self.mPlayerConfigTableView.dataSource = self;
+    self.mPlayerConfigTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.mPlayerConfigTableView registerClass:[QNConfigSegTableViewCell class] forCellReuseIdentifier:sSegmentIdentifier];
+    [self.mPlayerConfigTableView registerClass:[QNConfigInputTableViewCell class] forCellReuseIdentifier:sListIdentifier];
+    [self.view addSubview:_mPlayerConfigTableView];
     
     UITapGestureRecognizer *singleTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeKeyboard:)];
     singleTapGesture.numberOfTapsRequired = 1;
     singleTapGesture.cancelsTouchesInView = NO;
-    [self.playerConfigTableView addGestureRecognizer:singleTapGesture];
+    [self.mPlayerConfigTableView addGestureRecognizer:singleTapGesture];
 }
 
 
@@ -113,41 +113,41 @@ static NSString *listIdentifier = @"listCell";
 #pragma mark - tableview delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return _playerConfigArray.count;
+    return _mPlayerConfigArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    QNClassModel *classModel = _playerConfigArray[section];
+    QNClassModel *classModel = _mPlayerConfigArray[section];
     NSArray *array = classModel.classValue;
     return array.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {    
-    QNClassModel *classModel = _playerConfigArray[indexPath.section];
+    QNClassModel *classModel = _mPlayerConfigArray[indexPath.section];
     NSArray *array = classModel.classValue;
     PLConfigureModel *configureModel = array[indexPath.row];
-    NSArray *rowArray = configureModel.configuraValue;
+    NSArray *rowArray = configureModel.mConfiguraValue;
     if (indexPath.row != 0) {
-        QNConfigSegTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:segmentIdentifier forIndexPath:indexPath];
+        QNConfigSegTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:sSegmentIdentifier forIndexPath:indexPath];
         [cell configureSegmentCellWithConfigureModel:configureModel];
-        cell.segmentControl.tag = 100 * indexPath.section + indexPath.row;
-        [cell.segmentControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+        cell.mSegmentControl.tag = 100 * indexPath.section + indexPath.row;
+        [cell.mSegmentControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else{
-        QNConfigInputTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:listIdentifier forIndexPath:indexPath];
+        QNConfigInputTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:sListIdentifier forIndexPath:indexPath];
         [cell configureSegmentCellWithConfigureModel:configureModel];
-        cell.textField.tag = 100 * indexPath.section + indexPath.row;
+        cell.mTextField.tag = 100 * indexPath.section + indexPath.row;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    QNClassModel *classModel = _playerConfigArray[indexPath.section];
+    QNClassModel *classModel = _mPlayerConfigArray[indexPath.section];
     NSArray *array = classModel.classValue;
     PLConfigureModel *configureModel = array[indexPath.row];
-    return [QNConfigSegTableViewCell configureSegmentCellHeightWithString:configureModel.configuraKey];
+    return [QNConfigSegTableViewCell configureSegmentCellHeightWithString:configureModel.mConfiguraKey];
 }
 
 
@@ -160,7 +160,7 @@ static NSString *listIdentifier = @"listCell";
 - (void)segmentAction:(UISegmentedControl *)segment {
     NSInteger section = segment.tag / 100;
     NSInteger row = segment.tag % 100;
-    QNClassModel *classModel = _playerConfigArray[section];
+    QNClassModel *classModel = _mPlayerConfigArray[section];
     NSArray *array = classModel.classValue;
     PLConfigureModel *configureModel = array[row];
     
@@ -168,8 +168,8 @@ static NSString *listIdentifier = @"listCell";
 }
 
 - (void)controlPropertiesWithIndex:(NSInteger)index configureModel:(PLConfigureModel *)configureModel classModel:(QNClassModel *)classModel {
-    configureModel.selectedNum = [NSNumber numberWithInteger:index];
-    [_playerConfigTableView reloadData];
+    configureModel.mSelectedNum = [NSNumber numberWithInteger:index];
+    [_mPlayerConfigTableView reloadData];
     
     
 }
@@ -182,7 +182,7 @@ static NSString *listIdentifier = @"listCell";
 
 - (void)saveConfigurations {
     NSMutableArray *dataArr = [NSMutableArray array];
-    for (QNClassModel * classModel in _playerConfigArray) {
+    for (QNClassModel * classModel in _mPlayerConfigArray) {
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:classModel];
         [dataArr addObject:data];
     }

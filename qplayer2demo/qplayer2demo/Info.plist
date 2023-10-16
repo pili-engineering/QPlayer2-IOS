@@ -6,8 +6,6 @@
 	<string>是否允许使用网络</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>是否允许使用网络</string>
-	<key>NSCameraUsageDescription</key>
-	<string>是否开启相机权限</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

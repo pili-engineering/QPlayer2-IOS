@@ -97,27 +97,27 @@
 }
 
 -(QNSamplePlayerWithQRenderView *)fetchPlayerView:(QNPlayItem *)playItem mediaItemContext:(QMediaItemContext *)mediaItemContext{
-    if (playItem.itemId == self.mPreRenderVideoId && self.mPreRenderPlayerView != nil){
+    if (playItem.mItemId == self.mPreRenderVideoId && self.mPreRenderPlayerView != nil){
         QNSamplePlayerWithQRenderView *ret = self.mPreRenderPlayerView;
         self.mPreRenderPlayerView = nil;
         self.mPreRenderVideoId = INVALID_VIDEO_ID;
         ret.hidden = NO;
         [ret.controlHandler resumeRender];
-        [self Log:[NSString stringWithFormat:@"fetchPlayerView::PreRender playerview id=%d size=%ld current-count=%d",playItem.itemId,self.mPlayerViews.count,self.mCurrentCacheCount]];
+        [self Log:[NSString stringWithFormat:@"fetchPlayerView::PreRender playerview id=%d size=%ld current-count=%d",playItem.mItemId,self.mPlayerViews.count,self.mCurrentCacheCount]];
         return ret;
     }else if (mediaItemContext != nil){
         QNSamplePlayerWithQRenderView *ret = [self fetchPlayerView];
         ret.hidden = NO;
         [ret.controlHandler setStartAction:QPLAYER_START_SETTING_PLAYING];
         [ret.controlHandler playMediaItem:mediaItemContext];
-        [self Log:[NSString stringWithFormat:@"fetchPlayerView::PreLoad playerview id=%d size=%ld current-count=%d",playItem.itemId,self.mPlayerViews.count,self.mCurrentCacheCount]];
+        [self Log:[NSString stringWithFormat:@"fetchPlayerView::PreLoad playerview id=%d size=%ld current-count=%d",playItem.mItemId,self.mPlayerViews.count,self.mCurrentCacheCount]];
         return ret;
     }else{
         QNSamplePlayerWithQRenderView *ret = [self fetchPlayerView];
         ret.hidden = NO;
         [ret.controlHandler setStartAction:QPLAYER_START_SETTING_PLAYING];
-        [ret.controlHandler playMediaModel:playItem.mediaModel startPos:0];
-        [self Log:[NSString stringWithFormat:@"fetchPlayerView::normal playerview id=%d size=%ld current-count=%d",playItem.itemId,self.mPlayerViews.count,self.mCurrentCacheCount]];
+        [ret.controlHandler playMediaModel:playItem.mMediaModel startPos:0];
+        [self Log:[NSString stringWithFormat:@"fetchPlayerView::normal playerview id=%d size=%ld current-count=%d",playItem.mItemId,self.mPlayerViews.count,self.mCurrentCacheCount]];
         return ret;
     }
 }

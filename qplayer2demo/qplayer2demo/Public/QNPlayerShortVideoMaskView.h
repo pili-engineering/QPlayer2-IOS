@@ -31,9 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 //@property (nonatomic, weak) QPlayer *player;
 
-@property (nonatomic, weak) QNSamplePlayerWithQRenderView *player;
-@property (nonatomic, assign) id<QNPlayerShortVideoMaskViewDelegate> delegate;
-@property (nonatomic, assign) BOOL isLiving;
+@property (nonatomic, weak) QNSamplePlayerWithQRenderView *mPlayer;
+@property (nonatomic, assign) id<QNPlayerShortVideoMaskViewDelegate> mDelegate;
 
 
 /**

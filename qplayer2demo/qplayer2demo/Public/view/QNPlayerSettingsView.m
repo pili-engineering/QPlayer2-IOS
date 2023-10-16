@@ -9,21 +9,18 @@
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
 #define ScreenHeight [UIScreen mainScreen].bounds.size.height
 @implementation QNPlayerSettingsView{
-    UIScrollView *backScrollView;
-    UITextField *position;
-    NSMutableArray *buttonArray;
-    NSString *startPosition;   //起播位置
-    QNSpeedPlayerView *speedView;
-    QNChangePlayerView *eyeView;
-    QNChangePlayerView *actionView;
-    QNChangePlayerView *seekView;
-    QNChangePlayerView *decoderView;
-    QNChangePlayerView *stretchPlayerView;
-    QNChangePlayerView *SEIPlayerView;
-    QNChangePlayerView *authenticationPlayerView;
-    QNChangePlayerView *backgroundPlayPlayerView;
-    QNChangePlayerView *immediatelyPlayerView;
-    QNChangePlayerView *subtitlePlayerView;
+    UITextField *mPosition;
+    QNSpeedPlayerView *mSpeedView;
+    QNChangePlayerView *mEyeView;
+    QNChangePlayerView *mActionView;
+    QNChangePlayerView *mSeekView;
+    QNChangePlayerView *mDecoderView;
+    QNChangePlayerView *mStretchPlayerView;
+    QNChangePlayerView *mSEIPlayerView;
+    QNChangePlayerView *mAuthenticationPlayerView;
+    QNChangePlayerView *mBackgroundPlayPlayerView;
+    QNChangePlayerView *mImmediatelyPlayerView;
+    QNChangePlayerView *mSubtitlePlayerView;
     void (^changePlayerViewCallback)(ChangeButtonType type , NSString * startPosition,BOOL selected);
     void (^speedViewCallback)(SpeedUIButtonType type);
 }
@@ -34,7 +31,6 @@
         self.frame = CGRectMake(ScreenWidth-390, 0, 390, ScreenHeight);
         self.backgroundColor = [UIColor blackColor];
         self.alpha =0.8;
-        startPosition =@"0";
         changePlayerViewCallback = back;
         [self addScrollView:CGRectMake(0, 0, 390, ScreenHeight)];
         
@@ -50,7 +46,6 @@
         self.backgroundColor = [UIColor blackColor];
         self.alpha =0.8;
         speedViewCallback = back;
-        buttonArray = [NSMutableArray array];
         [self addSpeedView];
 //        self.userInteractionEnabled = YES;
     }
@@ -58,20 +53,20 @@
 }
 
 -(void)setPostioTittle:(int)value{
-    if (position) {
-        position.text = [NSString stringWithFormat:@"%d",value];
+    if (mPosition) {
+        mPosition.text = [NSString stringWithFormat:@"%d",value];
     }
 }
 
 
 -(void)setSpeedDefault:(SpeedUIButtonType)type{
     switch (type) {
-        case UIButtonTypeFor20:
-        case UIButtonTypeFor15:
-        case UIButtonTypeFor10:
-        case UIButtonTypeFor075:
-        case UIButtonTypeFor05:
-            [speedView setDefault:type];
+        case BUTTON_TYPE_PLAY_SPEED_2_0:
+        case BUTTON_TYPE_PLAY_SPEED_1_5:
+        case BUTTON_TYPE_PLAY_SPEED_1_0:
+        case BUTTON_TYPE_PLAY_SPEED_0_75:
+        case BUTTON_TYPE_PLAY_SPEED_0_5:
+            [mSpeedView setDefault:type];
             break;
             
         default:
@@ -80,51 +75,51 @@
 }
 -(void)setChangeDefault:(ChangeButtonType)type{
     switch (type) {
-        case UIButtonTypeStreAutomatic:
-        case UIButtonTypeStretching:
-        case UIButtonTypeSpreadOver:
-        case UIButtonType16and9:
-        case UIButtonType4and3:
-            [stretchPlayerView setDefault:type];
+        case BUTTON_TYPE_AUTOMATIC:
+        case BUTTON_TYPE_STRETCHING:
+        case BUTTON_TYPE_SPREAD_OVER:
+        case BUTTON_TYPE_16_9:
+        case BUTTON_TYPE_4_3:
+            [mStretchPlayerView setDefault:type];
             break;
-        case UIButtonTypeFilterNone:
-        case UIButtonTypeFilterGreenAndRed:
-        case UIButtonTypeFilterBlueAndYellow:
-        case UIButtonTypeFilterRedAndGreen:
-            [eyeView setDefault:type];
+        case BUTTON_TYPE_FILTER_NONE:
+        case BUTTON_TYPE_FILTER_GREEN_RED:
+        case BUTTON_TYPE_FILTER_BLUE_YELLOW:
+        case BUTTON_TYPE_FILTER_RED_GREEN:
+            [mEyeView setDefault:type];
             break;
-        case UIButtonTypeActionPlay:
-        case UIButtonTypeActionPause:
-            [actionView setDefault:type];
+        case BUTTON_TYPE_ACTION_PLAY:
+        case BUTTON_TYPE_ACTION_PAUSE:
+            [mActionView setDefault:type];
             break;
-        case UIButtonTypeSeekAccurate:
-        case UIButtonTypeSeekKey:
-            [seekView setDefault:type];
+        case BUTTON_TYPE_SEEK_ACCURATE:
+        case BUTTON_TYPE_SEEK_KEY:
+            [mSeekView setDefault:type];
             break;
-        case UIButtonTypeDectorHard:
-        case UIButtonTypeDectorSoft:
-        case UIButtonTypeDectorAutomatic:
-            [decoderView setDefault:type];
+        case BUTTON_TYPE_DECTOR_HARD:
+        case BUTTON_TYPE_DECTOR_SOFT:
+        case BUTTON_TYPE_DECTOR_AUTOMATIC:
+            [mDecoderView setDefault:type];
             break;
-        case UIButtonTypeSEIData:
-            [SEIPlayerView setDefault:type];
+        case BUTTON_TYPE_SEI_DATA:
+            [mSEIPlayerView setDefault:type];
             break;
-        case UIButtonTypeAuthentication:
-            [authenticationPlayerView setDefault:type];
+        case BUTTON_TYPE_AUTHENTICATION:
+            [mAuthenticationPlayerView setDefault:type];
             break;
-        case UIButtonTypeBackgroundPlay:
-            [backgroundPlayPlayerView setDefault:type];
+        case BUTTON_TYPE_BACKGROUND_PLAY:
+            [mBackgroundPlayPlayerView setDefault:type];
             break;
             
-        case UIButtonTypeImmediatelyTrue:
-        case UIButtonTypeImmediatelyFalse:
-        case UIButtonTypeImmediatelyCustom:
-            [immediatelyPlayerView setDefault:type];
+        case BUTTON_TYPE_IMMEDIATELY_TRUE:
+        case BUTTON_TYPE_IMMEDIATELY_FALSE:
+        case BUTTON_TYPE_IMMEDIATELY_CUSTOM:
+            [mImmediatelyPlayerView setDefault:type];
             break;
-        case UIButtonTypeSubtitleClose:
-        case UIButtonTypeSubtitleChinese:
-        case UIButtonTypeSubtitleEnglish:
-            [subtitlePlayerView setDefault:type];
+        case BUTTON_TYPE_SUBTITLE_CLOSE:
+        case BUTTON_TYPE_SUBTITLE_CHINESE:
+        case BUTTON_TYPE_SUBTITLE_ENGLISH:
+            [mSubtitlePlayerView setDefault:type];
             break;
         default:
             NSLog(@"设置出错");
@@ -133,15 +128,15 @@
 }
 
 -(void)addSpeedView{
-    speedView = [[QNSpeedPlayerView alloc]initWithFrame:CGRectMake(0, 0, 100, ScreenWidth) backgroudColor:[UIColor clearColor]];
-    [speedView addButtonText:@"2.0x" frame:CGRectMake((speedView.frame.size.width-100)/2, 50, 100, 50) type:UIButtonTypeFor20 target:self selector:@selector(SpeedButtonClick:)];
-    [speedView addButtonText:@"1.5x" frame:CGRectMake((speedView.frame.size.width-100)/2, (speedView.frame.size.height -100)/6+50, 100, 50) type:UIButtonTypeFor15 target:self selector:@selector(SpeedButtonClick:)];
-    [speedView addButtonText:@"1.25x" frame:CGRectMake((speedView.frame.size.width-100)/2, (speedView.frame.size.height -100)*2/6+50, 100, 50) type:UIButtonTypeFor125 target:self selector:@selector(SpeedButtonClick:)];
-    [speedView addButtonText:@"1.0x" frame:CGRectMake((speedView.frame.size.width-100)/2, (speedView.frame.size.height -100)*3/6+50, 100, 50) type:UIButtonTypeFor10 target:self selector:@selector(SpeedButtonClick:)];
-    [speedView addButtonText:@"0.75x" frame:CGRectMake((speedView.frame.size.width-100)/2, (speedView.frame.size.height -100)*4/6+50, 100, 50) type:UIButtonTypeFor075 target:self selector:@selector(SpeedButtonClick:)];
-    [speedView addButtonText:@"0.5x" frame:CGRectMake((speedView.frame.size.width-100)/2, (speedView.frame.size.height -100)*5/6+50, 100, 50) type:UIButtonTypeFor05 target:self selector:@selector(SpeedButtonClick:)];
-    [speedView setDefault:UIButtonTypeFor10];
-    [self addSubview:speedView];
+    mSpeedView = [[QNSpeedPlayerView alloc]initWithFrame:CGRectMake(0, 0, 100, ScreenWidth) backgroudColor:[UIColor clearColor]];
+    [mSpeedView addButtonText:@"2.0x" frame:CGRectMake((mSpeedView.frame.size.width-100)/2, 50, 100, 50) type:BUTTON_TYPE_PLAY_SPEED_2_0 target:self selector:@selector(SpeedButtonClick:)];
+    [mSpeedView addButtonText:@"1.5x" frame:CGRectMake((mSpeedView.frame.size.width-100)/2, (mSpeedView.frame.size.height -100)/6+50, 100, 50) type:BUTTON_TYPE_PLAY_SPEED_1_5 target:self selector:@selector(SpeedButtonClick:)];
+    [mSpeedView addButtonText:@"1.25x" frame:CGRectMake((mSpeedView.frame.size.width-100)/2, (mSpeedView.frame.size.height -100)*2/6+50, 100, 50) type:BUTTON_TYPE_PLAY_SPEED_1_25 target:self selector:@selector(SpeedButtonClick:)];
+    [mSpeedView addButtonText:@"1.0x" frame:CGRectMake((mSpeedView.frame.size.width-100)/2, (mSpeedView.frame.size.height -100)*3/6+50, 100, 50) type:BUTTON_TYPE_PLAY_SPEED_1_0 target:self selector:@selector(SpeedButtonClick:)];
+    [mSpeedView addButtonText:@"0.75x" frame:CGRectMake((mSpeedView.frame.size.width-100)/2, (mSpeedView.frame.size.height -100)*4/6+50, 100, 50) type:BUTTON_TYPE_PLAY_SPEED_0_75 target:self selector:@selector(SpeedButtonClick:)];
+    [mSpeedView addButtonText:@"0.5x" frame:CGRectMake((mSpeedView.frame.size.width-100)/2, (mSpeedView.frame.size.height -100)*5/6+50, 100, 50) type:BUTTON_TYPE_PLAY_SPEED_0_5 target:self selector:@selector(SpeedButtonClick:)];
+    [mSpeedView setDefault:BUTTON_TYPE_PLAY_SPEED_1_0];
+    [self addSubview:mSpeedView];
     
 }
 
@@ -223,40 +218,40 @@
     
 }
 -(void)addImmediately:(CGRect)frame{
-    immediatelyPlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
-    [immediatelyPlayerView setTitleLabelText:@"清晰度切换" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
-    [immediatelyPlayerView addButtonText:@"立即切换" frame:CGRectMake(10, 50, 90, 20) type:UIButtonTypeImmediatelyTrue target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [immediatelyPlayerView addButtonText:@"无缝切换(只适用点播)" frame:CGRectMake(100, 50, 160, 20) type:UIButtonTypeImmediatelyFalse target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [immediatelyPlayerView addButtonText:@"直播立即点播无缝" frame:CGRectMake(260, 50, 150, 20) type:UIButtonTypeImmediatelyCustom target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [immediatelyPlayerView setDefault:UIButtonTypeImmediatelyCustom];
-    [self addSubview:immediatelyPlayerView];
+    mImmediatelyPlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mImmediatelyPlayerView setTitleLabelText:@"清晰度切换" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mImmediatelyPlayerView addButtonText:@"立即切换" frame:CGRectMake(10, 50, 90, 20) type:BUTTON_TYPE_IMMEDIATELY_TRUE target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mImmediatelyPlayerView addButtonText:@"无缝切换(只适用点播)" frame:CGRectMake(100, 50, 160, 20) type:BUTTON_TYPE_IMMEDIATELY_FALSE target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mImmediatelyPlayerView addButtonText:@"直播立即点播无缝" frame:CGRectMake(260, 50, 150, 20) type:BUTTON_TYPE_IMMEDIATELY_CUSTOM target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mImmediatelyPlayerView setDefault:BUTTON_TYPE_IMMEDIATELY_CUSTOM];
+    [self addSubview:mImmediatelyPlayerView];
 }
 
 
 -(void)addBackgroundPlay:(CGRect)frame{
     
     
-    backgroundPlayPlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
-    [backgroundPlayPlayerView setTitleLabelText:@"后台播放" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
-    [backgroundPlayPlayerView addButtonText:@"是否支持后台播放" frame:CGRectMake(10, 50, 150, 20) type:UIButtonTypeBackgroundPlay target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    mBackgroundPlayPlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mBackgroundPlayPlayerView setTitleLabelText:@"后台播放" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mBackgroundPlayPlayerView addButtonText:@"是否支持后台播放" frame:CGRectMake(10, 50, 150, 20) type:BUTTON_TYPE_BACKGROUND_PLAY target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
 
-    [self addSubview:backgroundPlayPlayerView];
+    [self addSubview:mBackgroundPlayPlayerView];
 }
 -(void)addAuthentication:(CGRect)frame{
     
-    authenticationPlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
-    [authenticationPlayerView setTitleLabelText:@"鉴权" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
-    [authenticationPlayerView addButtonText:@"下一次刷新鉴权信息" frame:CGRectMake(10, 50, 150, 20) type:UIButtonTypeAuthentication target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    mAuthenticationPlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mAuthenticationPlayerView setTitleLabelText:@"鉴权" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mAuthenticationPlayerView addButtonText:@"下一次刷新鉴权信息" frame:CGRectMake(10, 50, 150, 20) type:BUTTON_TYPE_AUTHENTICATION target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
 
-    [self addSubview:authenticationPlayerView];
+    [self addSubview:mAuthenticationPlayerView];
 }
 -(void)addSEI:(CGRect)frame{
     
-    SEIPlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
-    [SEIPlayerView setTitleLabelText:@"SEI回调" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
-    [SEIPlayerView addButtonText:@"是否开启SEI回调" frame:CGRectMake(10, 50, 150, 20) type:UIButtonTypeSEIData target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    mSEIPlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mSEIPlayerView setTitleLabelText:@"SEI回调" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mSEIPlayerView addButtonText:@"是否开启SEI回调" frame:CGRectMake(10, 50, 150, 20) type:BUTTON_TYPE_SEI_DATA target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
 
-    [self addSubview:SEIPlayerView];
+    [self addSubview:mSEIPlayerView];
 }
 -(void)addPositionTexfield:(CGRect)frame{
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(frame.origin.x+5, frame.origin.y+5, frame.size.width, 30)];
@@ -265,27 +260,27 @@
     [self addSubview:titleLabel];
     
     
-    position = [[UITextField alloc]initWithFrame:CGRectMake(frame.origin.x+5, titleLabel.frame.origin.y + titleLabel.frame.size.height +5, frame.size.width, 30)];
+    mPosition = [[UITextField alloc]initWithFrame:CGRectMake(frame.origin.x+5, titleLabel.frame.origin.y + titleLabel.frame.size.height +5, frame.size.width, 30)];
 //    position.placeholder = @"0";
-    position.text = @"0";
-    position.textColor = [UIColor whiteColor];
-    position.delegate  = self;
-    position.keyboardType = UIKeyboardTypeNumberPad;
-    position.backgroundColor = [UIColor clearColor];
-    position.clearButtonMode = UITextFieldViewModeWhileEditing;
-    [self addSubview:position];
+    mPosition.text = @"0";
+    mPosition.textColor = [UIColor whiteColor];
+    mPosition.delegate  = self;
+    mPosition.keyboardType = UIKeyboardTypeNumberPad;
+    mPosition.backgroundColor = [UIColor clearColor];
+    mPosition.clearButtonMode = UITextFieldViewModeWhileEditing;
+    [self addSubview:mPosition];
     
-    [self addLine:CGRectMake(position.frame.origin.x, position.frame.origin.y+position.frame.size.height +1, position.frame.size.width, 1)];
+    [self addLine:CGRectMake(mPosition.frame.origin.x, mPosition.frame.origin.y+mPosition.frame.size.height +1, mPosition.frame.size.width, 1)];
     
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if ([position.text isEqual:@""]) {
-        position.text = @"0";
+    if ([mPosition.text isEqual:@""]) {
+        mPosition.text = @"0";
     }
     if (changePlayerViewCallback) {
-        changePlayerViewCallback(nil,position.text,NO);
+        changePlayerViewCallback(nil,mPosition.text,NO);
     }
     [textField resignFirstResponder]; //回收键盘
     return YES;
@@ -293,42 +288,42 @@
 
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if ([position.text isEqual:@""]) {
-        position.text = @"0";
+    if ([mPosition.text isEqual:@""]) {
+        mPosition.text = @"0";
     }
     if (changePlayerViewCallback) {
-        changePlayerViewCallback(nil,position.text,NO);
+        changePlayerViewCallback(nil,mPosition.text,NO);
     }
 
 }
 
 
 -(void)addFilter:(CGRect)frame{
-    eyeView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
-    [eyeView setTitleLabelText:@"色觉变化" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
-    [eyeView addButtonText:@"无滤镜" frame:CGRectMake(10, 50, 90, 20) type:UIButtonTypeFilterNone target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [eyeView addButtonText:@"红/绿滤镜" frame:CGRectMake(105, 50, 90, 20) type:UIButtonTypeFilterRedAndGreen target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [eyeView addButtonText:@"绿/红滤镜" frame:CGRectMake(200, 50, 90, 20) type:UIButtonTypeFilterGreenAndRed target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [eyeView addButtonText:@"蓝/黄滤镜" frame:CGRectMake(295, 50, 90, 20) type:UIButtonTypeFilterBlueAndYellow target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [eyeView setDefault:UIButtonTypeFilterNone];
-    [self addSubview:eyeView];
+    mEyeView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mEyeView setTitleLabelText:@"色觉变化" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mEyeView addButtonText:@"无滤镜" frame:CGRectMake(10, 50, 90, 20) type:BUTTON_TYPE_FILTER_NONE target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mEyeView addButtonText:@"红/绿滤镜" frame:CGRectMake(105, 50, 90, 20) type:BUTTON_TYPE_FILTER_RED_GREEN target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mEyeView addButtonText:@"绿/红滤镜" frame:CGRectMake(200, 50, 90, 20) type:BUTTON_TYPE_FILTER_GREEN_RED target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mEyeView addButtonText:@"蓝/黄滤镜" frame:CGRectMake(295, 50, 90, 20) type:BUTTON_TYPE_FILTER_BLUE_YELLOW target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mEyeView setDefault:BUTTON_TYPE_FILTER_NONE];
+    [self addSubview:mEyeView];
 }
 -(void)addAction:(CGRect)frame{
-    actionView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
-    [actionView setTitleLabelText:@"Start Seek" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
-    [actionView addButtonText:@"起播播放" frame:CGRectMake(10, 50, 100, 20) type:UIButtonTypeActionPlay target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [actionView addButtonText:@"起播暂停" frame:CGRectMake(225, 50, 100, 20) type:UIButtonTypeActionPause target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [actionView setDefault:UIButtonTypeActionPlay];
-    [self addSubview:actionView];
+    mActionView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mActionView setTitleLabelText:@"Start Seek" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mActionView addButtonText:@"起播播放" frame:CGRectMake(10, 50, 100, 20) type:BUTTON_TYPE_ACTION_PLAY target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mActionView addButtonText:@"起播暂停" frame:CGRectMake(225, 50, 100, 20) type:BUTTON_TYPE_ACTION_PAUSE target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mActionView setDefault:BUTTON_TYPE_ACTION_PLAY];
+    [self addSubview:mActionView];
 }
 
 -(void)addSeek:(CGRect)frame{
-    seekView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
-    [seekView setTitleLabelText:@"Seek" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
-    [seekView addButtonText:@"关键帧Seek" frame:CGRectMake(10, 50, 100, 20) type:UIButtonTypeSeekKey target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [seekView addButtonText:@"精准Seek" frame:CGRectMake(225, 50, 100, 20) type:UIButtonTypeSeekAccurate target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [seekView setDefault:UIButtonTypeSeekKey];
-    [self addSubview:seekView];
+    mSeekView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mSeekView setTitleLabelText:@"Seek" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mSeekView addButtonText:@"关键帧Seek" frame:CGRectMake(10, 50, 100, 20) type:BUTTON_TYPE_SEEK_KEY target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mSeekView addButtonText:@"精准Seek" frame:CGRectMake(225, 50, 100, 20) type:BUTTON_TYPE_SEEK_ACCURATE target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mSeekView setDefault:BUTTON_TYPE_SEEK_KEY];
+    [self addSubview:mSeekView];
 }
 -(void)addLine:(CGRect)frame {
     UIView *line = [[UIView alloc]initWithFrame:frame];
@@ -336,59 +331,59 @@
     [self addSubview:line];
 }
 -(void)addDecoder:(CGRect)frame{
-    decoderView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
-    [decoderView setTitleLabelText:@"Decoder" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
-    [decoderView addButtonText:@"自动" frame:CGRectMake(10, 50, 60, 20) type:UIButtonTypeDectorAutomatic target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [decoderView addButtonText:@"软解" frame:CGRectMake(125, 50, 60, 20) type:UIButtonTypeDectorSoft target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [decoderView addButtonText:@"硬解" frame:CGRectMake(240, 50, 60, 20) type:UIButtonTypeDectorHard target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [decoderView setDefault:UIButtonTypeDectorAutomatic];
-    [self addSubview:decoderView];
+    mDecoderView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mDecoderView setTitleLabelText:@"Decoder" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mDecoderView addButtonText:@"自动" frame:CGRectMake(10, 50, 60, 20) type:BUTTON_TYPE_DECTOR_AUTOMATIC target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mDecoderView addButtonText:@"软解" frame:CGRectMake(125, 50, 60, 20) type:BUTTON_TYPE_DECTOR_SOFT target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mDecoderView addButtonText:@"硬解" frame:CGRectMake(240, 50, 60, 20) type:BUTTON_TYPE_DECTOR_HARD target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mDecoderView setDefault:BUTTON_TYPE_DECTOR_AUTOMATIC];
+    [self addSubview:mDecoderView];
 }
 -(void)addSubtitleView:(CGRect)frame{
-    subtitlePlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
-    [subtitlePlayerView setTitleLabelText:@"字幕设置" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
-    [subtitlePlayerView addButtonText:@"关闭" frame:CGRectMake(10, 50, 60, 20) type:UIButtonTypeSubtitleClose target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [subtitlePlayerView addButtonText:@"中文" frame:CGRectMake(125, 50, 60, 20) type:UIButtonTypeSubtitleChinese target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [subtitlePlayerView addButtonText:@"英文" frame:CGRectMake(240, 50, 60, 20) type:UIButtonTypeSubtitleEnglish target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [subtitlePlayerView setDefault:UIButtonTypeSubtitleClose];
-    [self addSubview:subtitlePlayerView];
+    mSubtitlePlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mSubtitlePlayerView setTitleLabelText:@"字幕设置" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mSubtitlePlayerView addButtonText:@"关闭" frame:CGRectMake(10, 50, 60, 20) type:BUTTON_TYPE_SUBTITLE_CLOSE target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mSubtitlePlayerView addButtonText:@"中文" frame:CGRectMake(125, 50, 60, 20) type:BUTTON_TYPE_SUBTITLE_CHINESE target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mSubtitlePlayerView addButtonText:@"英文" frame:CGRectMake(240, 50, 60, 20) type:BUTTON_TYPE_SUBTITLE_ENGLISH target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mSubtitlePlayerView setDefault:BUTTON_TYPE_SUBTITLE_CLOSE];
+    [self addSubview:mSubtitlePlayerView];
 }
 -(void)addRender:(CGRect)frame{
     
-    stretchPlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
-    [stretchPlayerView setTitleLabelText:@"Render ratio" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
-    [stretchPlayerView addButtonText:@"自动" frame:CGRectMake(10, 50, 60, 20) type:UIButtonTypeStreAutomatic target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [stretchPlayerView addButtonText:@"拉伸" frame:CGRectMake(80, 50, 60, 20) type:UIButtonTypeStretching target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [stretchPlayerView addButtonText:@"铺满" frame:CGRectMake(150, 50, 60, 20) type:UIButtonTypeSpreadOver target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [stretchPlayerView addButtonText:@"16:9" frame:CGRectMake(220, 50, 60, 20) type:UIButtonType16and9 target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [stretchPlayerView addButtonText:@"4:3" frame:CGRectMake(290, 50, 60, 20) type:UIButtonType4and3 target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
-    [stretchPlayerView setDefault:UIButtonTypeStreAutomatic];
-    [self addSubview:stretchPlayerView];
+    mStretchPlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mStretchPlayerView setTitleLabelText:@"Render ratio" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mStretchPlayerView addButtonText:@"自动" frame:CGRectMake(10, 50, 60, 20) type:BUTTON_TYPE_AUTOMATIC target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mStretchPlayerView addButtonText:@"拉伸" frame:CGRectMake(80, 50, 60, 20) type:BUTTON_TYPE_STRETCHING target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mStretchPlayerView addButtonText:@"铺满" frame:CGRectMake(150, 50, 60, 20) type:BUTTON_TYPE_SPREAD_OVER target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mStretchPlayerView addButtonText:@"16:9" frame:CGRectMake(220, 50, 60, 20) type:BUTTON_TYPE_16_9 target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mStretchPlayerView addButtonText:@"4:3" frame:CGRectMake(290, 50, 60, 20) type:BUTTON_TYPE_4_3 target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mStretchPlayerView setDefault:BUTTON_TYPE_AUTOMATIC];
+    [self addSubview:mStretchPlayerView];
 }
 -(void)changePlayerViewClick:(UIButton *)btn{
     if (changePlayerViewCallback) {
-        changePlayerViewCallback(btn.tag,position.text,btn.selected);
+        changePlayerViewCallback(btn.tag,mPosition.text,btn.selected);
     }
 }
 -(void)changePlayerViewClickTag:(UIGestureRecognizer *)btn{
     BOOL selected = YES;
     switch (btn.view.tag) {
-        case UIButtonTypeAuthentication:
-            selected = [authenticationPlayerView getButtonSelected:UIButtonTypeAuthentication];
+        case BUTTON_TYPE_AUTHENTICATION:
+            selected = [mAuthenticationPlayerView getButtonSelected:BUTTON_TYPE_AUTHENTICATION];
             break;
-        case UIButtonTypeSEIData:
+        case BUTTON_TYPE_SEI_DATA:
             
-            selected = [SEIPlayerView getButtonSelected:UIButtonTypeSEIData];
+            selected = [mSEIPlayerView getButtonSelected:BUTTON_TYPE_SEI_DATA];
             break;
-        case UIButtonTypeBackgroundPlay:
-            selected = [backgroundPlayPlayerView getButtonSelected:UIButtonTypeBackgroundPlay];
+        case BUTTON_TYPE_BACKGROUND_PLAY:
+            selected = [mBackgroundPlayPlayerView getButtonSelected:BUTTON_TYPE_BACKGROUND_PLAY];
             break;
         default:
             break;
             
     }
     if (changePlayerViewCallback) {
-        changePlayerViewCallback(btn.view.tag,position.text,selected);
+        changePlayerViewCallback(btn.view.tag,mPosition.text,selected);
     }
 }
 @end

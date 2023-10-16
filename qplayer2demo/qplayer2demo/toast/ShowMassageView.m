@@ -8,7 +8,7 @@
 #import "ShowMassageView.h"
 
 @implementation ShowMassageView{
-    UITextView *textView;
+    UITextView *mTextView;
 }
 -(instancetype)initWithFrame:(CGRect)frame Massage:(NSString *)massage{
     self = [super initWithFrame:frame];
@@ -29,12 +29,12 @@
 
 -(void)ShowMassage:(NSString *)Massage{
     
-    textView  = [[UITextView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width , self.frame.size.height )];
-    textView.text = Massage;
-    textView.backgroundColor = [UIColor clearColor];
-    textView.textColor = [UIColor whiteColor];
-    textView.editable = NO;
-    [self addSubview:textView];
+    mTextView  = [[UITextView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width , self.frame.size.height )];
+    mTextView.text = Massage;
+    mTextView.backgroundColor = [UIColor clearColor];
+    mTextView.textColor = [UIColor whiteColor];
+    mTextView.editable = NO;
+    [self addSubview:mTextView];
 //    [NSTimer scheduledTimerWithTimeInterval:5 repeats:NO block:^(NSTimer * _Nonnull timer) {
 //            [self removeFromSuperview];
 //    }];
@@ -42,7 +42,7 @@
 
 
 -(void)setFrame:(CGRect)frame{
-    textView.bounds = CGRectMake(0, 0,frame.size.width, frame.size.height);
+    mTextView.bounds = CGRectMake(0, 0,frame.size.width, frame.size.height);
 //    _frame = frame;
     [super setFrame:frame];
 }
