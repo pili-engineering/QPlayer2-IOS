@@ -71,8 +71,6 @@
 		50B1F4C5289CC62D0074E02D /* QNHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B1F483289CC62D0074E02D /* QNHomeViewController.m */; };
 		616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0C2D1DB69E96781D80C1A2 /* libPods-qplayer2demo.a */; };
 		977927F029B71BF1006E7931 /* QNDoublePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 977927EF29B71BF1006E7931 /* QNDoublePlayerViewController.m */; };
-		BA322DA72B2AAEAD009DAA1F /* qplayer2_core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA322DA62B2AAEAD009DAA1F /* qplayer2_core.framework */; };
-		BA322DA82B2AAEAD009DAA1F /* qplayer2_core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA322DA62B2AAEAD009DAA1F /* qplayer2_core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA3E5B032A8CB85F00032327 /* MikuDelivery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA3E5B012A8CB85800032327 /* MikuDelivery.framework */; };
 		BA3E5B042A8CB85F00032327 /* MikuDelivery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA3E5B012A8CB85800032327 /* MikuDelivery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA67ABB02A6FE23000BE06FA /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA67ABAF2A6FE22F00BE06FA /* CoreAudio.framework */; };
@@ -103,7 +101,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				BA3E5B042A8CB85F00032327 /* MikuDelivery.framework in Embed Frameworks */,
-				BA322DA82B2AAEAD009DAA1F /* qplayer2_core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -246,7 +243,6 @@
 			files = (
 				50B1F3D5289BBF7A0074E02D /* Foundation.framework in Frameworks */,
 				BA3E5B032A8CB85F00032327 /* MikuDelivery.framework in Frameworks */,
-				BA322DA72B2AAEAD009DAA1F /* qplayer2_core.framework in Frameworks */,
 				BA67ABB02A6FE23000BE06FA /* CoreAudio.framework in Frameworks */,
 				50387155292CA3410000C4DD /* CoreMotion.framework in Frameworks */,
 				616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */,
@@ -540,6 +536,7 @@
 				CA90B80C289A7AF60087543B /* Frameworks */,
 				CA90B80D289A7AF60087543B /* Resources */,
 				BA576B1A2A8B1537008BD482 /* Embed Frameworks */,
+				5D10B73D1234589B8D8AA9DA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -644,6 +641,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5D10B73D1234589B8D8AA9DA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-qplayer2demo/Pods-qplayer2demo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-qplayer2demo/Pods-qplayer2demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-qplayer2demo/Pods-qplayer2demo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BCE00659F2CD2729AB902DE7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
