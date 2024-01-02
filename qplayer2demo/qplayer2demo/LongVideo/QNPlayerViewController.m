@@ -45,7 +45,8 @@ QIPlayerRenderListener,
 QIPlayerShootVideoListener,
 QIPlayerVideoFrameSizeChangeListener,
 QIPlayerSeekListener,
-QIPlayerSubtitleListener
+QIPlayerSubtitleListener,
+QIPlayerVideoDecodeListener
 >
 
 /** 播放器蒙版视图 **/
@@ -361,6 +362,7 @@ QIPlayerSubtitleListener
     [self.mPlayerView.controlHandler addPlayerVideoFrameSizeChangeListener:self];
     [self.mPlayerView.controlHandler addPlayerSeekListener:self];
     [self.mPlayerView.controlHandler addPlayerSubtitleListener:self];
+    [self.mPlayerView.controlHandler addPlayerVideoDecodeTypeListener:self];
     
     
 }
@@ -433,7 +435,14 @@ QIPlayerSubtitleListener
     [self.mToastView addText:[NSString stringWithFormat:@"切换失败"]];
 }
 
-
+-(void)onDecodeFailed:(QPlayerContext *)context retry:(BOOL)retry{
+    if(retry){
+        
+        [self.mToastView addText:[NSString stringWithFormat:@"解码失败 ： retry true"]];
+    }else{
+        [self.mToastView addText:[NSString stringWithFormat:@"解码失败 ： retry false"]];
+    }
+}
 
 
 
