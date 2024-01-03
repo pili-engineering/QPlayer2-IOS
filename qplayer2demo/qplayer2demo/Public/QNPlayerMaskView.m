@@ -166,7 +166,7 @@ QIPlayerSubtitleListener
         [self.mPushStreamButton setImage:[UIImage imageNamed:@"pl_stopStream"] forState:UIControlStateSelected];
         self.mPushStreamButton.tintColor = [UIColor whiteColor];
         self.mPushStreamButton.hidden = YES;
-//        [self addSubview:self.pushStreamButton];
+        [self addSubview:self.mPushStreamButton];
         
         [self createGesture];
         

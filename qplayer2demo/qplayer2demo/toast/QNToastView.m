@@ -32,17 +32,17 @@ static pthread_rwlock_t sWPlock;
 -(void)addDecoderType:(QPlayerDecoder)type{
     switch (type) {
         case QPLAYER_DECODER_SETTING_AUTO:
-            [self addView:@"解码方式：自动"];
+            [self addView:@"设置的解码类型：自动"];
             break;
         case QPLAYER_DECODER_SETTING_HARDWARE_PRIORITY:
-            [self addView:@"解码方式：硬解"];
+            [self addView:@"设置的解码类型：硬解优先"];
             break;
         case QPLAYER_DECODER_SETTING_SOFT_PRIORITY:
-            [self addView:@"解码方式：软解"];
+            [self addView:@"设置的解码类型：软解优先"];
             break;
             
         default:
-            [self addView:@"解码方式：NULL"];
+            [self addView:@"设置的解码类型：NULL"];
             break;
     }
 }

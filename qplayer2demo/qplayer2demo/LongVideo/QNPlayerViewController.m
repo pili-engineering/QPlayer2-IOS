@@ -28,7 +28,7 @@
 #define PL_PLAYER_VIDEO_ROOT_FOLDER @"PLPlayerFloder"
 #define GET_PL_PLAYER_VIDEO_FOLDER(folderName) [PL_PLAYER_VIDEO_ROOT_FOLDER stringByAppendingPathComponent:folderName]
 #define PL_PLAYER_VIDEO_REVERSER GET_PL_PLAYER_VIDEO_FOLDER(@"PLPlayerCacheFile")
-
+#define PL_PUSH_STREAMING_URL @"rtmp://pili-publish.qnsdk.com/sdk-live/1234"
 @interface QNPlayerViewController ()
 <
 UITableViewDelegate,
@@ -46,7 +46,9 @@ QIPlayerShootVideoListener,
 QIPlayerVideoFrameSizeChangeListener,
 QIPlayerSeekListener,
 QIPlayerSubtitleListener,
-QIPlayerVideoDecodeListener
+QIPlayerVideoDecodeListener,
+QIPlayerAudioDataListener,
+QIPlayerVideoDataListener
 >
 
 /** 播放器蒙版视图 **/
@@ -91,12 +93,19 @@ QIPlayerVideoDecodeListener
 @property (nonatomic, strong) NSString *mSEIString;
 
 @property (nonatomic, assign) BOOL mIsStartPush;
+@property (nonatomic, strong) PLStreamingSession *mSession;
+
 @end
 
 @implementation QNPlayerViewController
 
 - (void)dealloc {
-    
+    if (self.mSession.isRunning) {
+        [self.mSession stop];
+        self.mSession.delegate = nil;
+        self.mSession = nil;
+    }
+
     NSLog(@"QNPlayerViewController dealloc");
 }
 
@@ -244,12 +253,73 @@ QIPlayerVideoDecodeListener
     [self addPlayerMaskView];
 
     [self layoutUrlListTableView];
-    
+    [self setPLStream];
+
     self.mToastView = [[QNToastView alloc]initWithFrame:CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300)];
     [self.view addSubview:self.mToastView];
     [self playerContextAllCallBack];
     
     
+}
+
+#pragma mark - 初始化 PLStreaming
+-(void)setPLStream{
+    //默认配置
+    PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
+    PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
+    videoStreamingConfiguration.videoSize =CGSizeMake(1080, 720);
+    self.mSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+    
+}
+-(void)pushStreamButtonClick:(BOOL)isSelected{
+    self.mIsStartPush = isSelected;
+    if(isSelected){
+        __weak typeof(self) weakSelf = self;
+        NSURL *url = [NSURL URLWithString:PL_PUSH_STREAMING_URL];
+        [self.mSession startWithPushURL:url feedback:^(PLStreamStartStateFeedback feedback) {
+            [weakSelf streamStateAlert:feedback];
+            
+            [self.mPlayerView.controlHandler addPlayerVideoDataListener:self];
+            [self.mPlayerView.controlHandler addPlayerAudioDataListener:self];
+        }];
+    }else{
+        [self.mSession stop];
+        [self.mPlayerView.controlHandler removePlayerAudioDataListener:self];
+        [self.mPlayerView.controlHandler removePlayerVideoDataListener:self];
+    }
+}
+- (void)streamStateAlert:(PLStreamStartStateFeedback)feedback {
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        switch (feedback) {
+            case PLStreamStartStateSuccess:
+                NSLog(@"成功开始推流!");
+                [weakSelf.mToastView addText:@"成功开始推流!"];
+                break;
+            case PLStreamStartStateSessionUnknownError:
+                NSLog(@"发生未知错误无法启动!");
+                [weakSelf.mToastView addText:@"发生未知错误无法启动!"];
+                break;
+            case PLStreamStartStateSessionStillRunning:
+                NSLog(@"已经在运行中，无需重复启动!");
+                [weakSelf.mToastView addText:@"已经在运行中，无需重复启动!"];
+                break;
+            case PLStreamStartStateStreamURLUnauthorized:
+                NSLog(@"当前的 StreamURL 没有被授权!");
+                [weakSelf.mToastView addText:@"当前的 StreamURL 没有被授权!"];
+                break;
+            case PLStreamStartStateSessionConnectStreamError:
+                NSLog(@"建立 socket 连接错误!");
+                [weakSelf.mToastView addText:@"建立 socket 连接错误!"];
+                break;
+            case PLStreamStartStateSessionPushURLInvalid:
+                NSLog(@"当前传入的 pushURL 无效!");
+                [weakSelf.mToastView addText:@"当前传入的 pushURL 无效!"];
+                break;
+            default:
+                break;
+        }
+    });
 }
 
 #pragma mark - 初始化 PLPlayer
@@ -335,7 +405,6 @@ QIPlayerVideoDecodeListener
     [self.mPlayerView.controlHandler forceAuthenticationFromNetwork];
     QMediaModel *model = self.mPlayerModels.firstObject;
 
-    [self.mPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     for (QNClassModel* model in configs) {
         for (PLConfigureModel* configModel in model.classValue) {
             if ([model.classKey isEqualToString:@"PLPlayerOption"]) {
@@ -344,6 +413,7 @@ QIPlayerVideoDecodeListener
         }
     }
     
+    [self.mPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
 
 }
 
@@ -443,8 +513,67 @@ QIPlayerVideoDecodeListener
         [self.mToastView addText:[NSString stringWithFormat:@"解码失败 ： retry false"]];
     }
 }
+-(void)onVideoDecodeByType:(QPlayerContext *)context Type:(QPlayerDecoderType)type{
+    NSString* text = @"使用的解码类型：";
+    switch (type) {
+        case QPLAYER_DECODER_TYPE_NONE:
+            text = [NSString stringWithFormat:@"%@ none",text];
+            break;
+        case QPLAYER_DECODER_TYPE_SOFTWARE:
+            text = [NSString stringWithFormat:@"%@ 软解",text];
+            break;
+        case QPLAYER_DECODER_TYPE_HARDWARE:
+            text = [NSString stringWithFormat:@"%@ 硬解",text];
+            break;
+        default:
+            text = [NSString stringWithFormat:@"%@ none",text];
+            break;
+    }
+    [self.mToastView addText:text];
+}
+-(void)onVideoData:(QPlayerContext *)context width:(int)width height:(int)height videoType:(QVideoType)videoType buffer:(CVPixelBufferRef)buffer{
+    if(self.mIsStartPush &&videoType == QVIDEO_TYPE_RGBA){
 
+    }
+    if(self.mIsStartPush && videoType==QVIDEO_TYPE_YUV_420P){
+        [self.mSession pushPixelBuffer:buffer completion:^(BOOL success) {
+            if (success) {
+                NSLog(@"push stream success");
+            }else{
+                NSLog(@"push stream false");
+            }
+        }];
+    }
+}
+-(void)onAudioData:(QPlayerContext *)context sampleRate:(int)sampleRate format:(QSampleFormat)format channelNum:(int)channelNum channelLayout:(QChannelLayout)channelLayout data:(NSData *)data{
+    if (self.mIsStartPush) {
+        
+        AudioStreamBasicDescription audioFormatDesc;
+        audioFormatDesc.mSampleRate = sampleRate;
+        audioFormatDesc.mFormatID = kAudioFormatLinearPCM;
+        audioFormatDesc.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+        audioFormatDesc.mFramesPerPacket = 1;
+        audioFormatDesc.mChannelsPerFrame = channelNum;
+        audioFormatDesc.mBitsPerChannel = 16;
+        audioFormatDesc.mBytesPerFrame = (audioFormatDesc.mBitsPerChannel/8)  * audioFormatDesc.mChannelsPerFrame;
+        audioFormatDesc.mBytesPerPacket = audioFormatDesc.mBytesPerFrame * audioFormatDesc.mFramesPerPacket;
+        audioFormatDesc.mReserved = 0;
 
+        AudioBuffer audioBuffer;
+
+        audioBuffer.mNumberChannels = channelNum;
+        audioBuffer.mDataByteSize = (UInt32)[data length];
+
+        audioBuffer.mData = malloc( audioBuffer.mDataByteSize );
+
+        [data getBytes:audioBuffer.mData length:audioBuffer.mDataByteSize];
+        [self.mSession pushAudioBuffer:&audioBuffer asbd:&audioFormatDesc completion:^(BOOL success) {
+            
+        }];
+    }
+    
+
+}
 
 -(void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
     if (state == QPLAYER_STATE_PREPARE) {
@@ -692,7 +821,6 @@ QIPlayerVideoDecodeListener
     }
     [appDelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
     
-    UIDeviceOrientation ori = [UIDevice currentDevice].orientation;
     self.mIsFlip = appDelegate.mIsFlip;
     if(@available(iOS 16.0,*)){
         [UIViewController attemptRotationToDeviceOrientation];
@@ -792,8 +920,6 @@ QIPlayerVideoDecodeListener
 
         } else if ([configureModel.mConfiguraKey containsString:@"Decoder"]) {
             [self.mPlayerView.controlHandler setDecoderType:(QPlayerDecoder)index];
-            
-            
         } else if ([configureModel.mConfiguraKey containsString:@"Seek"]) {
             [self.mPlayerView.controlHandler  setSeekMode:index];
 

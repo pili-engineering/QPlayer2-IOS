@@ -94,4 +94,6 @@
 返回解码类型
  */
 -(QPlayerDecoder)getDecoderType;
+
+- (void)pushStreamButtonClick:(BOOL)isSelected;
 @end

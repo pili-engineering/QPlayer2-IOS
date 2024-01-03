@@ -67,6 +67,7 @@ else if (@available(iOS 11.0, *)) {\
 #import <AVFoundation/AVFoundation.h>
 #import <qplayer2_core/qplayer2_core.h>
 /** 第三方 **/
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 
 // 轻量级布局框架
 #import <Masonry/Masonry.h>
