@@ -236,7 +236,6 @@ QIPlayerSubtitleListener
                     [[QDataHandle shareInstance] setSelConfiguraKey:@"后台播放" selIndex:1];
                 }
             }
-            
             else if (800 <= type && type <= 802){
                 if(weakSelf.mDelegate != nil && [weakSelf.mDelegate respondsToSelector:@selector(setImmediately:)]){
                     [weakSelf.mDelegate setImmediately:(int)(type-800)];
@@ -256,6 +255,16 @@ QIPlayerSubtitleListener
                 }
                 
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"字幕" selIndex:(int)(type-900)];
+                
+            }else if (1000 <= type && type <= 1002){
+                if(weakSelf.mDelegate != nil && [weakSelf.mDelegate respondsToSelector:@selector(setImmediately:)]){
+                    if(type == 1000){
+                        [weakSelf.mPlayer.controlHandler setVideoDataType:QVIDEO_TYPE_YUV_420P];
+                    }else if(type == 1001){
+                        [weakSelf.mPlayer.controlHandler setVideoDataType:QVIDEO_TYPE_NV12];
+                    }
+                }
+                [[QDataHandle shareInstance] setSelConfiguraKey:@"video 回调数据类型" selIndex:(int)(type-1000)];
                 
             }
             
@@ -388,6 +397,9 @@ QIPlayerSubtitleListener
             
         }else if ([configureModel.mConfiguraKey containsString:@"字幕"]) {
             [_mSettingView setChangeDefault:(ChangeButtonType)(index+900)];
+            
+        }else if ([configureModel.mConfiguraKey containsString:@"video 回调数据类型"]) {
+            [_mSettingView setChangeDefault:(ChangeButtonType)(index+1000)];
             
         }
         

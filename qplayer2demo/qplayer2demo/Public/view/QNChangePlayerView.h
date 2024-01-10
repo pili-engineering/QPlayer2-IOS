@@ -42,7 +42,10 @@ typedef NS_ENUM(NSInteger, ChangeButtonType){
     
     BUTTON_TYPE_SUBTITLE_CLOSE = 900,         //关闭字幕
     BUTTON_TYPE_SUBTITLE_CHINESE,             //中文字幕
-    BUTTON_TYPE_SUBTITLE_ENGLISH              //英文字幕
+    BUTTON_TYPE_SUBTITLE_ENGLISH,              //英文字幕
+    
+    BUTTON_TYPE_VIDEO_DATA_YUV420P = 1000,         //YUV420p
+    BUTTON_TYPE_VIDEO_DATA_NV12               //NV12
     
 };
 NS_ASSUME_NONNULL_BEGIN

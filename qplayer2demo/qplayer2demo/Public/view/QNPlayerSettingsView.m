@@ -21,6 +21,7 @@
     QNChangePlayerView *mBackgroundPlayPlayerView;
     QNChangePlayerView *mImmediatelyPlayerView;
     QNChangePlayerView *mSubtitlePlayerView;
+    QNChangePlayerView *mVideoDataTypePlayerView;
     void (^changePlayerViewCallback)(ChangeButtonType type , NSString * startPosition,BOOL selected);
     void (^speedViewCallback)(SpeedUIButtonType type);
 }
@@ -121,6 +122,10 @@
         case BUTTON_TYPE_SUBTITLE_ENGLISH:
             [mSubtitlePlayerView setDefault:type];
             break;
+        case BUTTON_TYPE_VIDEO_DATA_NV12:
+        case BUTTON_TYPE_VIDEO_DATA_YUV420P:
+            [mVideoDataTypePlayerView setDefault:type];
+            break;
         default:
             NSLog(@"设置出错");
             break;
@@ -150,7 +155,7 @@
 }
 -(void)addScrollView:(CGRect)frame{
 //    self = [[UIScrollView alloc]initWithFrame:frame];
-    self.contentSize = CGSizeMake(frame.size.width, 1170);
+    self.contentSize = CGSizeMake(frame.size.width, 1290);
 //    self.backgroundColor = [UIColor clearColor];
     self.userInteractionEnabled = YES;
     self.scrollEnabled = YES;
@@ -215,6 +220,9 @@
     
     [self addSubtitleView:CGRectMake(0, 1065, 350, 90)];
     
+    [self addLine:CGRectMake(5, 1163, self.frame.size.width, 2)];
+    
+    [self addVideoDataType:CGRectMake(0, 1165, 350, 90)];
     
 }
 -(void)addImmediately:(CGRect)frame{
@@ -347,6 +355,14 @@
     [mSubtitlePlayerView addButtonText:@"英文" frame:CGRectMake(240, 50, 60, 20) type:BUTTON_TYPE_SUBTITLE_ENGLISH target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
     [mSubtitlePlayerView setDefault:BUTTON_TYPE_SUBTITLE_CLOSE];
     [self addSubview:mSubtitlePlayerView];
+}
+-(void)addVideoDataType:(CGRect)frame{
+    mVideoDataTypePlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mVideoDataTypePlayerView setTitleLabelText:@"video 回调数据类型" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mVideoDataTypePlayerView addButtonText:@"YUV420p" frame:CGRectMake(10, 50, 100, 20) type:BUTTON_TYPE_VIDEO_DATA_YUV420P target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mVideoDataTypePlayerView addButtonText:@"NV12" frame:CGRectMake(165, 50, 100, 20) type:BUTTON_TYPE_VIDEO_DATA_NV12 target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mVideoDataTypePlayerView setDefault:BUTTON_TYPE_VIDEO_DATA_YUV420P];
+    [self addSubview:mVideoDataTypePlayerView];
 }
 -(void)addRender:(CGRect)frame{
     

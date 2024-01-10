@@ -23,8 +23,9 @@
 #import <CoreVideo/CoreVideo.h>
 #import <CoreMedia/CoreMedia.h>
 #import <CoreAudio/CoreAudioTypes.h>
-
-
+#import "NSDataToCVPixelBufferRefHelper.h"
+#import <Photos/Photos.h>
+#import <PhotosUI/PhotosUI.h>
 #define PL_PLAYER_VIDEO_ROOT_FOLDER @"PLPlayerFloder"
 #define GET_PL_PLAYER_VIDEO_FOLDER(folderName) [PL_PLAYER_VIDEO_ROOT_FOLDER stringByAppendingPathComponent:folderName]
 #define PL_PLAYER_VIDEO_REVERSER GET_PL_PLAYER_VIDEO_FOLDER(@"PLPlayerCacheFile")
@@ -225,30 +226,12 @@ QIPlayerVideoDataListener
 
     self.mSubtitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self.mPlayerView addSubview:self.mSubtitleLabel];
-    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel
-                                                                       attribute:NSLayoutAttributeWidth
-                                                                       relatedBy:NSLayoutRelationLessThanOrEqual
-                                                                          toItem:self.mPlayerView
-                                                                       attribute:NSLayoutAttributeWidth
-                                                                      multiplier:1.0
-                                                                        constant:0.0];
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.mPlayerView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
     
-    NSLayoutConstraint *centerXConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel
-                                                                         attribute:NSLayoutAttributeCenterX
-                                                                         relatedBy:NSLayoutRelationEqual
-                                                                            toItem:self.mPlayerView
-                                                                         attribute:NSLayoutAttributeCenterX
-                                                                        multiplier:1.0
-                                                                          constant:0.0];
-
-    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                        relatedBy:NSLayoutRelationEqual
-                                                                           toItem:self.mPlayerView
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                       multiplier:1.0
-                                                                         constant:-70.0];
-
+    NSLayoutConstraint *centerXConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.mPlayerView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+    
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.mPlayerView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-70.0];
+    
     [NSLayoutConstraint activateConstraints:@[widthConstraint, centerXConstraint, bottomConstraint]];
     [self addPlayerMaskView];
 
@@ -281,6 +264,7 @@ QIPlayerVideoDataListener
             
             [self.mPlayerView.controlHandler addPlayerVideoDataListener:self];
             [self.mPlayerView.controlHandler addPlayerAudioDataListener:self];
+            [NSDataToCVPixelBufferRefHelper ClearDataFile];
         }];
     }else{
         [self.mSession stop];
@@ -414,7 +398,8 @@ QIPlayerVideoDataListener
     }
     
     [self.mPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
-
+    
+//    [self.mPlayerView.controlHandler setVideoDataType:QVIDEO_TYPE_NV12];
 }
 
 #pragma mark - PlayerListenerDelegate
@@ -531,18 +516,115 @@ QIPlayerVideoDataListener
     }
     [self.mToastView addText:text];
 }
--(void)onVideoData:(QPlayerContext *)context width:(int)width height:(int)height videoType:(QVideoType)videoType buffer:(CVPixelBufferRef)buffer{
+//n 用于限制文件写入次数的，此处仅写入100帧。发布前要删除该内容，不限制会导致文件过大 发生crash
+int n = 0;
+-(void)onVideoData:(QPlayerContext *)context width:(int)width height:(int)height videoType:(QVideoType)videoType buffer:(NSData *)buffer{
     if(self.mIsStartPush &&videoType == QVIDEO_TYPE_RGBA){
-
+        if(n>100){
+            return;
+        }
+        n++;
+        CVPixelBufferRef piexel = [NSDataToCVPixelBufferRefHelper NSDataToCVPixelBufferRef:buffer height:height width:width type:videoType];
+        if(piexel != nil){
+            CFRelease(piexel);
+        }
     }
-    if(self.mIsStartPush && videoType==QVIDEO_TYPE_YUV_420P){
-        [self.mSession pushPixelBuffer:buffer completion:^(BOOL success) {
+    if(self.mIsStartPush && videoType == QVIDEO_TYPE_NV12){
+        CVPixelBufferRef piexel = [NSDataToCVPixelBufferRefHelper NSDataToCVPixelBufferRef:buffer height:height width:width type:videoType];
+        [self.mSession pushPixelBuffer:piexel completion:^(BOOL success) {
             if (success) {
                 NSLog(@"push stream success");
             }else{
                 NSLog(@"push stream false");
             }
         }];
+        if(piexel != nil){
+            CFRelease(piexel);
+        }
+    }
+    if(self.mIsStartPush && videoType==QVIDEO_TYPE_YUV_420P){
+        CVPixelBufferRef piexel = [NSDataToCVPixelBufferRefHelper NSDataToCVPixelBufferRef:buffer height:height width:width type:videoType];
+        CVPixelBufferLockBaseAddress(piexel, 0);
+
+        // Y 分量
+        uint8_t *yData = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(piexel, 0);
+        size_t yBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(piexel, 0);
+
+        // U 分量
+        uint8_t *uData = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(piexel, 1);
+        size_t uBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(piexel, 1);
+
+        // V 分量
+        uint8_t *vData = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(piexel, 2);
+        size_t vBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(piexel, 2);
+
+        // 图像宽度和高度
+        size_t width = CVPixelBufferGetWidth(piexel);
+        size_t height = CVPixelBufferGetHeight(piexel);
+
+        // 创建 YUV 数据的 RGB 数据
+        size_t rgbBytesPerRow = width * 4; // RGBA 格式
+        uint8_t *rgbData = (uint8_t *)malloc(rgbBytesPerRow * height);
+        memset(rgbData, 0, rgbBytesPerRow * height);
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                uint8_t y = yData[i * yBytesPerRow + j];
+                uint8_t u = uData[(i / 2) * uBytesPerRow + (j / 2)];
+                uint8_t v = vData[(i / 2) * vBytesPerRow + (j / 2)];
+
+                int32_t r = (int32_t)(y + 1.4075 * (v - 128));
+                int32_t g = (int32_t)(y - 0.3455 * (u - 128) - 0.7169 * (v - 128));
+                int32_t b = (int32_t)(y + 1.779 * (u - 128));
+
+                r = MIN(MAX(0, r), 255);
+                g = MIN(MAX(0, g), 255);
+                b = MIN(MAX(0, b), 255);
+
+                rgbData[i * rgbBytesPerRow + j * 4] = (uint8_t)r;
+                rgbData[i * rgbBytesPerRow + j * 4 + 1] = (uint8_t)g;
+                rgbData[i * rgbBytesPerRow + j * 4 + 2] = (uint8_t)b;
+                rgbData[i * rgbBytesPerRow + j * 4 + 3] = 255; // 不透明度设置为255
+            }
+        }
+
+        // 创建 RGB 数据的 CGDataProviderRef
+        CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, rgbData, rgbBytesPerRow * height, NULL);
+        
+        // 创建 RGB 的位图上下文
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+        CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault | kCGImageAlphaNoneSkipLast;
+        CGImageRef rgbImageRef = CGImageCreate(width, height, 8, 32, rgbBytesPerRow, colorSpace, bitmapInfo, dataProvider, NULL, NO, kCGRenderingIntentDefault);
+
+        // 创建 UIImage
+        UIImage *image = [UIImage imageWithCGImage:rgbImageRef];
+
+        // 释放资源
+        CVPixelBufferUnlockBaseAddress(piexel, 0);
+        CGColorSpaceRelease(colorSpace);
+        CGDataProviderRelease(dataProvider);
+        CGImageRelease(rgbImageRef);
+        free(rgbData);
+
+        // 将 UIImage 保存到相册
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+        } completionHandler:^(BOOL success, NSError *error) {
+            if (success) {
+                NSLog(@"Image saved to photo library");
+            } else {
+                NSLog(@"Error saving image to photo library: %@", error);
+            }
+        }];
+//        [self.mSession pushPixelBuffer:piexel completion:^(BOOL success) {
+//            if (success) {
+//                NSLog(@"push stream success");
+//            }else{
+//                NSLog(@"push stream false");
+//            }
+//        }];
+        if(piexel != nil){
+            CFRelease(piexel);
+        }
     }
 }
 -(void)onAudioData:(QPlayerContext *)context sampleRate:(int)sampleRate format:(QSampleFormat)format channelNum:(int)channelNum channelLayout:(QChannelLayout)channelLayout data:(NSData *)data{
@@ -955,6 +1037,9 @@ QIPlayerVideoDataListener
         }
         else if ([configureModel.mConfiguraKey containsString:@"清晰度切换"]){
             self.mImmediatelyType =(int)index;
+        }
+        else if ([configureModel.mConfiguraKey containsString:@"video 回调数据类型"]){
+            [self.mPlayerView.controlHandler setVideoDataType:(QVideoType)(index+1)];
         }
         else if ([configureModel.mConfiguraKey containsString:@"字幕"]){
             [self.mPlayerView.controlHandler setSubtitleEnable:index==0?NO:YES];
