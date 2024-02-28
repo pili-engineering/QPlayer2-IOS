@@ -117,8 +117,6 @@ QIPlayerVideoDataListener
     QNAppDelegate *appDelegate = (QNAppDelegate *)[UIApplication sharedApplication].delegate;
     self.mIsStartPush = false;
     self.mScanClick = NO;
-    self.mVideoWidth = 0;
-    self.mVideoHeight = 0;
     if (appDelegate.mIsFlip) {
         [self.navigationController setNavigationBarHidden:YES animated:NO];
     } else{
@@ -254,7 +252,9 @@ QIPlayerVideoDataListener
     //默认配置
     PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
     PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
-    videoStreamingConfiguration.videoSize =CGSizeMake(1920/2, 1080/2);
+    self.mVideoHeight = 1080/2;
+    self.mVideoWidth = 1920/2;
+    videoStreamingConfiguration.videoSize =CGSizeMake(self.mVideoWidth, self.mVideoHeight);
     self.mSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
     
 }
