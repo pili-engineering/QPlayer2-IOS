@@ -15,51 +15,115 @@
     uint8_t* pdata = (uint8_t*)pixeldata.bytes;
     CVPixelBufferRef pixelBuffer = NULL;
     CVReturn status;
+    
+    int inner_width = 0;
+    int inner_height = 0;
+    if (width*1.0 / height*1.0 != 16.0/9 || width*1.0 / height*1.0 != 1.0 || width*1.0 / height*1.0 != 4.0/3 || width%32 != 0 || height%32 != 0 ) {
+        inner_width = 1920;
+        inner_height = 1080;
+    }else{
+        inner_width = width;
+        inner_height = height;
+    }
     if(type == QVIDEO_TYPE_YUV_420P){
         //420p
-        status = CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelFormatType_420YpCbCr8Planar, NULL, &pixelBuffer);
+        status = CVPixelBufferCreate(kCFAllocatorDefault, inner_width, inner_height, kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange, NULL, &pixelBuffer);
+        
         
         if (status != kCVReturnSuccess) {
             NSLog(@"Unable to create pixel buffer");
         }else{
-
-            // 锁定pixel buffer的基地址
+            
             CVPixelBufferLockBaseAddress(pixelBuffer, 0);
-
-            // 获取pixel buffer的Y和UV平面基地址
-            uint8_t *baseAddressY = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
-            uint8_t *baseAddressU = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
-            uint8_t *baseAddressV = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 2);
-            memcpy(baseAddressY, pdata, width * height);
-            memcpy(baseAddressU, pdata + width * height, width * height / 4);
-
-            memcpy(baseAddressV, pdata + (width * height)*5/4, width * height / 4);
-
-            // 解锁pixel buffer的基地址
+            unsigned char *yDestPlane = (unsigned char *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
+            for (int i = 0, k = 0; i < inner_height; i++) {
+                for (int j = 0; j< inner_width; j++) {
+                    if (inner_width > width && j >= width) {
+                        if (i >= height) {
+                            yDestPlane[k++] = pdata[height*width];
+                            continue;
+                        }
+                        yDestPlane[k++] = pdata[i*width + width];
+                        continue;
+                    }
+                    if (inner_height > height && i >= height) {
+                        
+                        yDestPlane[k++] = pdata[height * width];
+                        continue;
+                    }
+                    yDestPlane[k++] = pdata[i*width + j];
+                }
+            }
+            unsigned char *uvDestPlane = (unsigned char *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
+            for (int i = 0, k = 0; i < inner_height / 2; i++) {
+                for (int j = 0; j< inner_width / 2; j ++) {
+                    if (inner_width > width && j >= width/2) {
+                        if (i > height/2) {
+                            
+                            uvDestPlane[k++] = pdata[height *width/4  + width * height];
+                            uvDestPlane[k++] = pdata[height *width/4  + width * height * 5 / 4];
+                        }else{
+                            uvDestPlane[k++] = pdata[i *width/2 + width/2 + width * height];
+                            uvDestPlane[k++] = pdata[i *width/2 + width/2 + width * height * 5 / 4];
+                            
+                        }
+                        continue;
+                    }
+                    if (inner_height > height && i >= height/2) {
+                        
+                        uvDestPlane[k++] = pdata[height *width/4 + width * height];
+                        uvDestPlane[k++] = pdata[height *width/4 + width * height * 5 / 4];
+                        continue;
+                    }
+                    uvDestPlane[k++] = pdata[i *width/2 + j + width * height];
+                    uvDestPlane[k++] = pdata[i *width/2 + j + width * height * 5 / 4];
+                }
+            }
             CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
 
         }
     }else if (type == QVIDEO_TYPE_NV12){
         //nv12
-        status = CVPixelBufferCreate(kCFAllocatorDefault, width, height, kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange, NULL, &pixelBuffer);
-        // 锁定pixel buffer的基地址
+        status = CVPixelBufferCreate(kCFAllocatorDefault, inner_width, inner_height, kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange, NULL, &pixelBuffer);
         CVPixelBufferLockBaseAddress(pixelBuffer, 0);
-        // 获取 pixel buffer 的 Y 平面和 UV 平面基地址
-        uint8_t *baseAddressY = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
-        uint8_t *baseAddressUV = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
-
-        // 将图像数据复制到 Y 平面
-        memcpy(baseAddressY, pdata, width * height);
-
-        // 将图像数据复制到 UV 平面（NV12 格式）
-        size_t uvPlaneSize = width * height / 2;
-        uint8_t *sourceUV = pdata + width * height;
-        uint8_t *destinationUV = baseAddressUV;
-
-        for (size_t i = 0; i < uvPlaneSize; i++) {
-            *destinationUV++ = *sourceUV++;
+        unsigned char *yDestPlane = (unsigned char *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 0);
+        for (int i = 0, k = 0; i < inner_height; i++) {
+            for (int j = 0; j< inner_width; j++) {
+                if (inner_width > width && j >= width) {
+                    if (i >= height) {
+                        yDestPlane[k++] = pdata[height*width];
+                        continue;
+                    }
+                    yDestPlane[k++] = pdata[i*width + width];
+                    continue;
+                }
+                if (inner_height > height && i >= height) {
+                    
+                    yDestPlane[k++] = pdata[height * width];
+                    continue;
+                }
+                yDestPlane[k++] = pdata[i*width + j];
+            }
         }
-        // 解锁pixel buffer的基地址
+        unsigned char *uvDestPlane = (unsigned char *)CVPixelBufferGetBaseAddressOfPlane(pixelBuffer, 1);
+        for (int i = 0, k = 0; i < inner_height/2; i++) {
+            for (int j = 0; j< inner_width; j ++) {
+                if (inner_width > width && j >= width) {
+                    if (i > height/2) {
+                        uvDestPlane[k++] = pdata[height *width/2  + width * height];
+                    }else{
+                        uvDestPlane[k++] = pdata[i *width + width + width * height];
+                    }
+                    continue;
+                }
+                if (inner_height > height && i >= height/2) {
+                    
+                    uvDestPlane[k++] = pdata[height *width/2 + width * height];
+                    continue;
+                }
+                uvDestPlane[k++] = pdata[i *width + j + width * height];
+            }
+        }
         CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
 
     }

@@ -521,18 +521,25 @@ QIPlayerVideoDataListener
     }
     [self.mToastView addText:text];
 }
-//n 用于限制文件写入次数的，此处仅写入100帧。发布前要删除该内容，不限制会导致文件过大 发生crash
 -(void)onVideoData:(QPlayerContext *)context width:(int)width height:(int)height videoType:(QVideoType)videoType buffer:(NSData *)buffer{
-    
-    if (self.mIsStartPush && self.mVideoWidth != 0 && self.mVideoHeight != 0 && (self.mVideoHeight != height || self.mVideoWidth != width)) {
+    int inner_width = 0;
+    int inner_height = 0;
+    if (width*1.0 / height*1.0 != 16.0/9 || width*1.0 / height*1.0 != 1.0 || width*1.0 / height*1.0 != 4.0/3 || width%32 != 0 || height%32 != 0 ) {
+        inner_width = 1920;
+        inner_height = 1080;
+    }else{
+        inner_width = width;
+        inner_height = height;
+    }
+    if (self.mIsStartPush && self.mVideoWidth != 0 && self.mVideoHeight != 0 && (self.mVideoHeight != inner_height || self.mVideoWidth != inner_width)) {
         if (self.mSession != nil) {
             [self.mSession stop];
             [self.mSession destroy];
             self.mSession = nil;
         }
-        self.mVideoHeight = height;
-        self.mVideoWidth = width;
         //推流端视频编码参数要求最大值为 width：1280 height：720 故超过该值的等比例缩小
+        self.mVideoHeight = inner_height;
+        self.mVideoWidth = inner_width;
         while (self.mVideoWidth > 1280||self.mVideoHeight>720) {
             self.mVideoWidth = self.mVideoWidth/2;
             self.mVideoHeight = self.mVideoHeight/2;
@@ -548,9 +555,10 @@ QIPlayerVideoDataListener
             [weakSelf streamStateAlert:feedback];
             [NSDataToCVPixelBufferRefHelper ClearDataFile];
         }];
+        
     }
-    self.mVideoHeight = height;
-    self.mVideoWidth = width;
+    self.mVideoHeight = inner_height;
+    self.mVideoWidth = inner_width;
     if(self.mIsStartPush &&videoType == QVIDEO_TYPE_RGBA){
         CVPixelBufferRef piexel = [NSDataToCVPixelBufferRefHelper NSDataToCVPixelBufferRef:buffer height:height width:width type:videoType];
         if(piexel != nil){
