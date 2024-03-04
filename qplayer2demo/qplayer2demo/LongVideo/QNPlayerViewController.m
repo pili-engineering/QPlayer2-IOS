@@ -30,6 +30,7 @@
 #define GET_PL_PLAYER_VIDEO_FOLDER(folderName) [PL_PLAYER_VIDEO_ROOT_FOLDER stringByAppendingPathComponent:folderName]
 #define PL_PLAYER_VIDEO_REVERSER GET_PL_PLAYER_VIDEO_FOLDER(@"PLPlayerCacheFile")
 #define PL_PUSH_STREAMING_URL @"rtmp://pili-publish.qnsdk.com/sdk-live/1234"
+// 拉流地址 rtmp://pili-rtmp.qnsdk.com/sdk-live/1234
 @interface QNPlayerViewController ()
 <
 UITableViewDelegate,
