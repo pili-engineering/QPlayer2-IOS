@@ -71,8 +71,6 @@
 		50B1F4C5289CC62D0074E02D /* QNHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B1F483289CC62D0074E02D /* QNHomeViewController.m */; };
 		616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0C2D1DB69E96781D80C1A2 /* libPods-qplayer2demo.a */; };
 		977927F029B71BF1006E7931 /* QNDoublePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 977927EF29B71BF1006E7931 /* QNDoublePlayerViewController.m */; };
-		BA0FD0B42B43B822009C9390 /* qplayer2_core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0FD0B32B43B822009C9390 /* qplayer2_core.framework */; };
-		BA0FD0B52B43B822009C9390 /* qplayer2_core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA0FD0B32B43B822009C9390 /* qplayer2_core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA0FD0BB2B480048009C9390 /* NSDataToCVPixelBufferRefHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0FD0BA2B480048009C9390 /* NSDataToCVPixelBufferRefHelper.m */; };
 		BA3E5B032A8CB85F00032327 /* MikuDelivery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA3E5B012A8CB85800032327 /* MikuDelivery.framework */; };
 		BA3E5B042A8CB85F00032327 /* MikuDelivery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA3E5B012A8CB85800032327 /* MikuDelivery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -106,7 +104,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				BA3E5B042A8CB85F00032327 /* MikuDelivery.framework in Embed Frameworks */,
-				BA0FD0B52B43B822009C9390 /* qplayer2_core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,7 +250,6 @@
 			files = (
 				50B1F3D5289BBF7A0074E02D /* Foundation.framework in Frameworks */,
 				BA3E5B032A8CB85F00032327 /* MikuDelivery.framework in Frameworks */,
-				BA0FD0B42B43B822009C9390 /* qplayer2_core.framework in Frameworks */,
 				BA67ABB02A6FE23000BE06FA /* CoreAudio.framework in Frameworks */,
 				50387155292CA3410000C4DD /* CoreMotion.framework in Frameworks */,
 				616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */,
