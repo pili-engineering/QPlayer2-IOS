@@ -23,12 +23,14 @@
 #import <CoreVideo/CoreVideo.h>
 #import <CoreMedia/CoreMedia.h>
 #import <CoreAudio/CoreAudioTypes.h>
-
-
+#import "NSDataToCVPixelBufferRefHelper.h"
+#import <Photos/Photos.h>
+#import <PhotosUI/PhotosUI.h>
 #define PL_PLAYER_VIDEO_ROOT_FOLDER @"PLPlayerFloder"
 #define GET_PL_PLAYER_VIDEO_FOLDER(folderName) [PL_PLAYER_VIDEO_ROOT_FOLDER stringByAppendingPathComponent:folderName]
 #define PL_PLAYER_VIDEO_REVERSER GET_PL_PLAYER_VIDEO_FOLDER(@"PLPlayerCacheFile")
-
+#define PL_PUSH_STREAMING_URL @"rtmp://pili-publish.qnsdk.com/sdk-live/1234"
+// 拉流地址 rtmp://pili-rtmp.qnsdk.com/sdk-live/1234
 @interface QNPlayerViewController ()
 <
 UITableViewDelegate,
@@ -46,7 +48,9 @@ QIPlayerShootVideoListener,
 QIPlayerVideoFrameSizeChangeListener,
 QIPlayerSeekListener,
 QIPlayerSubtitleListener,
-QIPlayerVideoDecodeListener
+QIPlayerVideoDecodeListener,
+QIPlayerAudioDataListener,
+QIPlayerVideoDataListener
 >
 
 /** 播放器蒙版视图 **/
@@ -91,12 +95,21 @@ QIPlayerVideoDecodeListener
 @property (nonatomic, strong) NSString *mSEIString;
 
 @property (nonatomic, assign) BOOL mIsStartPush;
+@property (nonatomic, assign) int mVideoHeight;
+@property (nonatomic, assign) int mVideoWidth;
+@property (nonatomic, strong) PLStreamingSession *mSession;
+
 @end
 
 @implementation QNPlayerViewController
 
 - (void)dealloc {
-    
+    if (self.mSession.isRunning) {
+        [self.mSession stop];
+        self.mSession.delegate = nil;
+        self.mSession = nil;
+    }
+
     NSLog(@"QNPlayerViewController dealloc");
 }
 
@@ -216,40 +229,87 @@ QIPlayerVideoDecodeListener
 
     self.mSubtitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self.mPlayerView addSubview:self.mSubtitleLabel];
-    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel
-                                                                       attribute:NSLayoutAttributeWidth
-                                                                       relatedBy:NSLayoutRelationLessThanOrEqual
-                                                                          toItem:self.mPlayerView
-                                                                       attribute:NSLayoutAttributeWidth
-                                                                      multiplier:1.0
-                                                                        constant:0.0];
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.mPlayerView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
     
-    NSLayoutConstraint *centerXConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel
-                                                                         attribute:NSLayoutAttributeCenterX
-                                                                         relatedBy:NSLayoutRelationEqual
-                                                                            toItem:self.mPlayerView
-                                                                         attribute:NSLayoutAttributeCenterX
-                                                                        multiplier:1.0
-                                                                          constant:0.0];
-
-    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                        relatedBy:NSLayoutRelationEqual
-                                                                           toItem:self.mPlayerView
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                       multiplier:1.0
-                                                                         constant:-70.0];
-
+    NSLayoutConstraint *centerXConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.mPlayerView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+    
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.mSubtitleLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.mPlayerView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-70.0];
+    
     [NSLayoutConstraint activateConstraints:@[widthConstraint, centerXConstraint, bottomConstraint]];
     [self addPlayerMaskView];
 
     [self layoutUrlListTableView];
-    
+    [self setPLStream];
+
     self.mToastView = [[QNToastView alloc]initWithFrame:CGRectMake(0, PL_SCREEN_HEIGHT-300, 200, 300)];
     [self.view addSubview:self.mToastView];
     [self playerContextAllCallBack];
     
     
+}
+
+#pragma mark - 初始化 PLStreaming
+-(void)setPLStream{
+    //默认配置
+    PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
+    PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
+    self.mVideoHeight = 1080/2;
+    self.mVideoWidth = 1920/2;
+    videoStreamingConfiguration.videoSize =CGSizeMake(self.mVideoWidth, self.mVideoHeight);
+    self.mSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+    
+}
+-(void)pushStreamButtonClick:(BOOL)isSelected{
+    self.mIsStartPush = isSelected;
+    if(isSelected){
+        __weak typeof(self) weakSelf = self;
+        NSURL *url = [NSURL URLWithString:PL_PUSH_STREAMING_URL];
+        [self.mSession startWithPushURL:url feedback:^(PLStreamStartStateFeedback feedback) {
+            [weakSelf streamStateAlert:feedback];
+            
+            [self.mPlayerView.controlHandler addPlayerVideoDataListener:self];
+            [self.mPlayerView.controlHandler addPlayerAudioDataListener:self];
+            [NSDataToCVPixelBufferRefHelper ClearDataFile];
+        }];
+    }else{
+        [self.mSession stop];
+        [self.mPlayerView.controlHandler removePlayerAudioDataListener:self];
+        [self.mPlayerView.controlHandler removePlayerVideoDataListener:self];
+    }
+}
+- (void)streamStateAlert:(PLStreamStartStateFeedback)feedback {
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        switch (feedback) {
+            case PLStreamStartStateSuccess:
+                NSLog(@"成功开始推流!");
+                self.mIsStartPush = true;
+                [weakSelf.mToastView addText:@"成功开始推流!"];
+                break;
+            case PLStreamStartStateSessionUnknownError:
+                NSLog(@"发生未知错误无法启动!");
+                [weakSelf.mToastView addText:@"发生未知错误无法启动!"];
+                break;
+            case PLStreamStartStateSessionStillRunning:
+                NSLog(@"已经在运行中，无需重复启动!");
+                [weakSelf.mToastView addText:@"已经在运行中，无需重复启动!"];
+                break;
+            case PLStreamStartStateStreamURLUnauthorized:
+                NSLog(@"当前的 StreamURL 没有被授权!");
+                [weakSelf.mToastView addText:@"当前的 StreamURL 没有被授权!"];
+                break;
+            case PLStreamStartStateSessionConnectStreamError:
+                NSLog(@"建立 socket 连接错误!");
+                [weakSelf.mToastView addText:@"建立 socket 连接错误!"];
+                break;
+            case PLStreamStartStateSessionPushURLInvalid:
+                NSLog(@"当前传入的 pushURL 无效!");
+                [weakSelf.mToastView addText:@"当前传入的 pushURL 无效!"];
+                break;
+            default:
+                break;
+        }
+    });
 }
 
 #pragma mark - 初始化 PLPlayer
@@ -335,7 +395,6 @@ QIPlayerVideoDecodeListener
     [self.mPlayerView.controlHandler forceAuthenticationFromNetwork];
     QMediaModel *model = self.mPlayerModels.firstObject;
 
-    [self.mPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     for (QNClassModel* model in configs) {
         for (PLConfigureModel* configModel in model.classValue) {
             if ([model.classKey isEqualToString:@"PLPlayerOption"]) {
@@ -344,7 +403,9 @@ QIPlayerVideoDecodeListener
         }
     }
     
-
+    [self.mPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
+    
+//    [self.mPlayerView.controlHandler setVideoDataType:QVIDEO_TYPE_NV12];
 }
 
 #pragma mark - PlayerListenerDelegate
@@ -443,8 +504,195 @@ QIPlayerVideoDecodeListener
         [self.mToastView addText:[NSString stringWithFormat:@"解码失败 ： retry false"]];
     }
 }
+-(void)onVideoDecodeByType:(QPlayerContext *)context Type:(QPlayerDecoderType)type{
+    NSString* text = @"使用的解码类型：";
+    switch (type) {
+        case QPLAYER_DECODER_TYPE_NONE:
+            text = [NSString stringWithFormat:@"%@ none",text];
+            break;
+        case QPLAYER_DECODER_TYPE_SOFTWARE:
+            text = [NSString stringWithFormat:@"%@ 软解",text];
+            break;
+        case QPLAYER_DECODER_TYPE_HARDWARE:
+            text = [NSString stringWithFormat:@"%@ 硬解",text];
+            break;
+        default:
+            text = [NSString stringWithFormat:@"%@ none",text];
+            break;
+    }
+    [self.mToastView addText:text];
+}
+-(void)onVideoData:(QPlayerContext *)context width:(int)width height:(int)height videoType:(QVideoType)videoType buffer:(NSData *)buffer{
+    int inner_width = 0;
+    int inner_height = 0;
+    if (width*1.0 / height*1.0 != 16.0/9 || width*1.0 / height*1.0 != 1.0 || width*1.0 / height*1.0 != 4.0/3 || width%32 != 0 || height%32 != 0 ) {
+        inner_width = 1920;
+        inner_height = 1080;
+    }else{
+        inner_width = width;
+        inner_height = height;
+    }
+    if (self.mIsStartPush && self.mVideoWidth != 0 && self.mVideoHeight != 0 && (self.mVideoHeight != inner_height || self.mVideoWidth != inner_width)) {
+        if (self.mSession != nil) {
+            [self.mSession stop];
+            [self.mSession destroy];
+            self.mSession = nil;
+        }
+        //推流端视频编码参数要求最大值为 width：1280 height：720 故超过该值的等比例缩小
+        self.mVideoHeight = inner_height;
+        self.mVideoWidth = inner_width;
+        while (self.mVideoWidth > 1280||self.mVideoHeight>720) {
+            self.mVideoWidth = self.mVideoWidth/2;
+            self.mVideoHeight = self.mVideoHeight/2;
+        }
+        self.mIsStartPush = false;
+        PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
+        videoStreamingConfiguration.videoSize =CGSizeMake(self.mVideoWidth, self.mVideoHeight);
+        PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
+        self.mSession = [[PLStreamingSession alloc] initWithVideoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+        __weak typeof(self) weakSelf = self;
+        NSURL *url = [NSURL URLWithString:PL_PUSH_STREAMING_URL];
+        [self.mSession startWithPushURL:url feedback:^(PLStreamStartStateFeedback feedback) {
+            [weakSelf streamStateAlert:feedback];
+            [NSDataToCVPixelBufferRefHelper ClearDataFile];
+        }];
+        
+    }
+    self.mVideoHeight = inner_height;
+    self.mVideoWidth = inner_width;
+    if(self.mIsStartPush &&videoType == QVIDEO_TYPE_RGBA){
+        CVPixelBufferRef piexel = [NSDataToCVPixelBufferRefHelper NSDataToCVPixelBufferRef:buffer height:height width:width type:videoType];
+        if(piexel != nil){
+            CFRelease(piexel);
+        }
+    }
+    if(self.mIsStartPush && videoType == QVIDEO_TYPE_NV12){
+        CVPixelBufferRef piexel = [NSDataToCVPixelBufferRefHelper NSDataToCVPixelBufferRef:buffer height:height width:width type:videoType];
+        [self.mSession pushPixelBuffer:piexel completion:^(BOOL success) {
+            if (success) {
+                NSLog(@"push stream success");
+            }else{
+                NSLog(@"push stream false");
+            }
+        }];
+        if(piexel != nil){
+            CFRelease(piexel);
+        }
+    }
+    if(self.mIsStartPush && videoType==QVIDEO_TYPE_YUV_420P){
+        CVPixelBufferRef piexel = [NSDataToCVPixelBufferRefHelper NSDataToCVPixelBufferRef:buffer height:height width:width type:videoType];
+//        CVPixelBufferLockBaseAddress(piexel, 0);
+//
+//        // Y 分量
+//        uint8_t *yData = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(piexel, 0);
+//        size_t yBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(piexel, 0);
+//
+//        // U 分量
+//        uint8_t *uData = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(piexel, 1);
+//        size_t uBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(piexel, 1);
+//
+//        // V 分量
+//        uint8_t *vData = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(piexel, 2);
+//        size_t vBytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(piexel, 2);
+//
+//        // 图像宽度和高度
+//        size_t width = CVPixelBufferGetWidth(piexel);
+//        size_t height = CVPixelBufferGetHeight(piexel);
+//
+//        // 创建 YUV 数据的 RGB 数据
+//        size_t rgbBytesPerRow = width * 4; // RGBA 格式
+//        uint8_t *rgbData = (uint8_t *)malloc(rgbBytesPerRow * height);
+//        memset(rgbData, 0, rgbBytesPerRow * height);
+//        for (int i = 0; i < height; i++) {
+//            for (int j = 0; j < width; j++) {
+//                uint8_t y = yData[i * yBytesPerRow + j];
+//                uint8_t u = uData[(i / 2) * uBytesPerRow + (j / 2)];
+//                uint8_t v = vData[(i / 2) * vBytesPerRow + (j / 2)];
+//
+//                int32_t r = (int32_t)(y + 1.4075 * (v - 128));
+//                int32_t g = (int32_t)(y - 0.3455 * (u - 128) - 0.7169 * (v - 128));
+//                int32_t b = (int32_t)(y + 1.779 * (u - 128));
+//
+//                r = MIN(MAX(0, r), 255);
+//                g = MIN(MAX(0, g), 255);
+//                b = MIN(MAX(0, b), 255);
+//
+//                rgbData[i * rgbBytesPerRow + j * 4] = (uint8_t)r;
+//                rgbData[i * rgbBytesPerRow + j * 4 + 1] = (uint8_t)g;
+//                rgbData[i * rgbBytesPerRow + j * 4 + 2] = (uint8_t)b;
+//                rgbData[i * rgbBytesPerRow + j * 4 + 3] = 255; // 不透明度设置为255
+//            }
+//        }
+//
+//        // 创建 RGB 数据的 CGDataProviderRef
+//        CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, rgbData, rgbBytesPerRow * height, NULL);
+//        
+//        // 创建 RGB 的位图上下文
+//        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+//        CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault | kCGImageAlphaNoneSkipLast;
+//        CGImageRef rgbImageRef = CGImageCreate(width, height, 8, 32, rgbBytesPerRow, colorSpace, bitmapInfo, dataProvider, NULL, NO, kCGRenderingIntentDefault);
+//
+//        // 创建 UIImage
+//        UIImage *image = [UIImage imageWithCGImage:rgbImageRef];
+//
+//        // 释放资源
+//        CVPixelBufferUnlockBaseAddress(piexel, 0);
+//        CGColorSpaceRelease(colorSpace);
+//        CGDataProviderRelease(dataProvider);
+//        CGImageRelease(rgbImageRef);
+//        free(rgbData);
+//
+//        // 将 UIImage 保存到相册
+//        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+//            [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+//        } completionHandler:^(BOOL success, NSError *error) {
+//            if (success) {
+//                NSLog(@"Image saved to photo library");
+//            } else {
+//                NSLog(@"Error saving image to photo library: %@", error);
+//            }
+//        }];
+        [self.mSession pushPixelBuffer:piexel completion:^(BOOL success) {
+            if (success) {
+                NSLog(@"push stream success");
+            }else{
+                NSLog(@"push stream false");
+            }
+        }];
+        if(piexel != nil){
+            CFRelease(piexel);
+        }
+    }
+}
+-(void)onAudioData:(QPlayerContext *)context sampleRate:(int)sampleRate format:(QSampleFormat)format channelNum:(int)channelNum channelLayout:(QChannelLayout)channelLayout data:(NSData *)data{
+    if (self.mIsStartPush) {
+        
+        AudioStreamBasicDescription audioFormatDesc;
+        audioFormatDesc.mSampleRate = sampleRate;
+        audioFormatDesc.mFormatID = kAudioFormatLinearPCM;
+        audioFormatDesc.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+        audioFormatDesc.mFramesPerPacket = 1;
+        audioFormatDesc.mChannelsPerFrame = channelNum;
+        audioFormatDesc.mBitsPerChannel = 16;
+        audioFormatDesc.mBytesPerFrame = (audioFormatDesc.mBitsPerChannel/8)  * audioFormatDesc.mChannelsPerFrame;
+        audioFormatDesc.mBytesPerPacket = audioFormatDesc.mBytesPerFrame * audioFormatDesc.mFramesPerPacket;
+        audioFormatDesc.mReserved = 0;
 
+        AudioBuffer audioBuffer;
 
+        audioBuffer.mNumberChannels = channelNum;
+        audioBuffer.mDataByteSize = (UInt32)[data length];
+
+        audioBuffer.mData = malloc( audioBuffer.mDataByteSize );
+
+        [data getBytes:audioBuffer.mData length:audioBuffer.mDataByteSize];
+        [self.mSession pushAudioBuffer:&audioBuffer asbd:&audioFormatDesc completion:^(BOOL success) {
+            
+        }];
+    }
+    
+
+}
 
 -(void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
     if (state == QPLAYER_STATE_PREPARE) {
@@ -692,7 +940,6 @@ QIPlayerVideoDecodeListener
     }
     [appDelegate application:[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:self.view.window];
     
-    UIDeviceOrientation ori = [UIDevice currentDevice].orientation;
     self.mIsFlip = appDelegate.mIsFlip;
     if(@available(iOS 16.0,*)){
         [UIViewController attemptRotationToDeviceOrientation];
@@ -792,8 +1039,6 @@ QIPlayerVideoDecodeListener
 
         } else if ([configureModel.mConfiguraKey containsString:@"Decoder"]) {
             [self.mPlayerView.controlHandler setDecoderType:(QPlayerDecoder)index];
-            
-            
         } else if ([configureModel.mConfiguraKey containsString:@"Seek"]) {
             [self.mPlayerView.controlHandler  setSeekMode:index];
 
@@ -829,6 +1074,9 @@ QIPlayerVideoDecodeListener
         }
         else if ([configureModel.mConfiguraKey containsString:@"清晰度切换"]){
             self.mImmediatelyType =(int)index;
+        }
+        else if ([configureModel.mConfiguraKey containsString:@"video 回调数据类型"]){
+            [self.mPlayerView.controlHandler setVideoDataType:(QVideoType)(index+1)];
         }
         else if ([configureModel.mConfiguraKey containsString:@"字幕"]){
             [self.mPlayerView.controlHandler setSubtitleEnable:index==0?NO:YES];

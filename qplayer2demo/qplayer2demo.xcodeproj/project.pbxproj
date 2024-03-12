@@ -71,6 +71,7 @@
 		50B1F4C5289CC62D0074E02D /* QNHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B1F483289CC62D0074E02D /* QNHomeViewController.m */; };
 		616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0C2D1DB69E96781D80C1A2 /* libPods-qplayer2demo.a */; };
 		977927F029B71BF1006E7931 /* QNDoublePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 977927EF29B71BF1006E7931 /* QNDoublePlayerViewController.m */; };
+		BA0FD0BB2B480048009C9390 /* NSDataToCVPixelBufferRefHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0FD0BA2B480048009C9390 /* NSDataToCVPixelBufferRefHelper.m */; };
 		BA3E5B032A8CB85F00032327 /* MikuDelivery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA3E5B012A8CB85800032327 /* MikuDelivery.framework */; };
 		BA3E5B042A8CB85F00032327 /* MikuDelivery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA3E5B012A8CB85800032327 /* MikuDelivery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA67ABB02A6FE23000BE06FA /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA67ABAF2A6FE22F00BE06FA /* CoreAudio.framework */; };
@@ -81,6 +82,8 @@
 		BA78EDAA2A89FAFE001DE624 /* QNShortVideoPlayerViewCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78EDA92A89FAFE001DE624 /* QNShortVideoPlayerViewCache.m */; };
 		BA78EDB02A8A205A001DE624 /* QNMikuClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78EDAF2A8A205A001DE624 /* QNMikuClientManager.m */; };
 		BA8977B62A6E52EB007C1F84 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA8977B52A6E52EB007C1F84 /* CoreMedia.framework */; };
+		BAD4CFDE2AD642B900D7F9FC /* qplayer2demoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD4CFDD2AD642B900D7F9FC /* qplayer2demoUITests.m */; };
+		BAD4CFE02AD642B900D7F9FC /* qplayer2demoUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD4CFDF2AD642B900D7F9FC /* qplayer2demoUITestsLaunchTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,8 +203,10 @@
 		977927EE29B71BE5006E7931 /* QNDoublePlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDoublePlayerViewController.h; sourceTree = "<group>"; };
 		977927EF29B71BF1006E7931 /* QNDoublePlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDoublePlayerViewController.m; sourceTree = "<group>"; };
 		B2BDA3706EA1C6372228C6C3 /* Pods-qplayer2demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-qplayer2demo.debug.xcconfig"; path = "Target Support Files/Pods-qplayer2demo/Pods-qplayer2demo.debug.xcconfig"; sourceTree = "<group>"; };
+		BA0FD0B32B43B822009C9390 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA0FD0B92B480048009C9390 /* NSDataToCVPixelBufferRefHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSDataToCVPixelBufferRefHelper.h; sourceTree = "<group>"; };
+		BA0FD0BA2B480048009C9390 /* NSDataToCVPixelBufferRefHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDataToCVPixelBufferRefHelper.m; sourceTree = "<group>"; };
 		BA1855D32A5C08BC009BD367 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA322DA62B2AAEAD009DAA1F /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA3E5B012A8CB85800032327 /* MikuDelivery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MikuDelivery.framework; sourceTree = "<group>"; };
 		BA40090E2AC565DF00059A15 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA44EB8E2A936A2700AE54A8 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -225,6 +230,8 @@
 		BAAD19762A65450000DB96FF /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC57C682AB84F7C006F2F8D /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAD4CFDB2AD642B900D7F9FC /* qplayer2demoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = qplayer2demoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAD4CFDD2AD642B900D7F9FC /* qplayer2demoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = qplayer2demoUITests.m; sourceTree = "<group>"; };
+		BAD4CFDF2AD642B900D7F9FC /* qplayer2demoUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = qplayer2demoUITestsLaunchTests.m; sourceTree = "<group>"; };
 		BAD5A6FE2AAEE93000EC706A /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA90B80F289A7AF60087543B /* qplayer2demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qplayer2demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -435,6 +442,8 @@
 				50B1F447289CC62D0074E02D /* QNPlayerViewController.m */,
 				50B1F455289CC62D0074E02D /* QNURLListTableViewCell.h */,
 				50B1F437289CC62D0074E02D /* QNURLListTableViewCell.m */,
+				BA0FD0B92B480048009C9390 /* NSDataToCVPixelBufferRefHelper.h */,
+				BA0FD0BA2B480048009C9390 /* NSDataToCVPixelBufferRefHelper.m */,
 			);
 			path = LongVideo;
 			sourceTree = "<group>";
@@ -463,10 +472,20 @@
 			path = MikuDelivery;
 			sourceTree = "<group>";
 		};
+		BAD4CFDC2AD642B900D7F9FC /* qplayer2demoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				BAD4CFDD2AD642B900D7F9FC /* qplayer2demoUITests.m */,
+				BAD4CFDF2AD642B900D7F9FC /* qplayer2demoUITestsLaunchTests.m */,
+			);
+			path = qplayer2demoUITests;
+			sourceTree = "<group>";
+		};
 		CA90B806289A7AF60087543B = {
 			isa = PBXGroup;
 			children = (
 				50B1F41C289CC62D0074E02D /* qplayer2demo */,
+				BAD4CFDC2AD642B900D7F9FC /* qplayer2demoUITests */,
 				CA90B810289A7AF60087543B /* Products */,
 				CA90BF8B289B846C0087543B /* Frameworks */,
 				36EE3C23CAAEDEE976CDECB3 /* Pods */,
@@ -485,7 +504,7 @@
 		CA90BF8B289B846C0087543B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BA322DA62B2AAEAD009DAA1F /* qplayer2_core.framework */,
+				BA0FD0B32B43B822009C9390 /* qplayer2_core.framework */,
 				BA4823782AD3A7AB009F43AA /* qplayer2_core.framework */,
 				BA40090E2AC565DF00059A15 /* qplayer2_core.framework */,
 				BAC57C682AB84F7C006F2F8D /* qplayer2_core.framework */,
@@ -536,7 +555,7 @@
 				CA90B80C289A7AF60087543B /* Frameworks */,
 				CA90B80D289A7AF60087543B /* Resources */,
 				BA576B1A2A8B1537008BD482 /* Embed Frameworks */,
-				5D10B73D1234589B8D8AA9DA /* [CP] Embed Pods Frameworks */,
+				6861C2044A02A2E0D4C87A38 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -641,7 +660,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5D10B73D1234589B8D8AA9DA /* [CP] Embed Pods Frameworks */ = {
+		6861C2044A02A2E0D4C87A38 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -687,6 +706,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAD4CFE02AD642B900D7F9FC /* qplayer2demoUITestsLaunchTests.m in Sources */,
+				BAD4CFDE2AD642B900D7F9FC /* qplayer2demoUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -698,6 +719,7 @@
 				50B1F48F289CC62D0074E02D /* QNURLListTableViewCell.m in Sources */,
 				5076C95E2906AD7C007763E7 /* QNCellPlayerTableViewCell.m in Sources */,
 				BA78EDB02A8A205A001DE624 /* QNMikuClientManager.m in Sources */,
+				BA0FD0BB2B480048009C9390 /* NSDataToCVPixelBufferRefHelper.m in Sources */,
 				50B1F487289CC62D0074E02D /* QNConfigSegTableViewCell.m in Sources */,
 				50B1F4A0289CC62D0074E02D /* QNScanViewController.m in Sources */,
 				BA78EDA42A8632B4001DE624 /* QNPlayItemManager.m in Sources */,
@@ -938,7 +960,6 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/Masonry\"",
-					"\"$(SRCROOT)/../../qplayer2-core/dependency/qplayer-ffmpeg\"",
 					"\"$(SRCROOT)/qplayer2demo\"",
 					"\"$(SRCROOT)/qplayer2demo/MikuDelivery.framework\"",
 				);
@@ -958,7 +979,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.4;
+				MARKETING_VERSION = 1.4.0;
 				PODS_PODFILE_DIR_PATH = "${SRCROOT}/.";
 				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.qplayer2demo;
@@ -1000,7 +1021,6 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/Masonry\"",
-					"\"$(SRCROOT)/../../qplayer2-core/dependency/qplayer-ffmpeg\"",
 					"\"$(SRCROOT)/qplayer2demo\"",
 					"\"$(SRCROOT)/qplayer2demo/MikuDelivery.framework\"",
 				);
@@ -1020,7 +1040,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.4;
+				MARKETING_VERSION = 1.4.0;
 				PODS_PODFILE_DIR_PATH = "${SRCROOT}/.";
 				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.qplayer2demo;

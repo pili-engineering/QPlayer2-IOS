@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>QMediaItemContext Class Reference</title>
+	<title>RenderView Class Reference</title>
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
@@ -43,6 +43,8 @@
 							<select id="jump-to">
 	<option value="top">Jump To&#133;</option>
 	
+	<option value="overview">Overview</option>
+	
 
 	
 	
@@ -52,23 +54,23 @@
 
 	
 	
-	<optgroup label="Properties">
+
+	
+	<optgroup label="Class Methods">
 		
-		<option value="//api/name/controlHandler">controlHandler</option>
+		<option value="//api/name/new">+ new</option>
 		
 	</optgroup>
 	
 
 	
-
-	
 	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/attachPlayerContext:">- attachPlayerContext:</option>
 		
 		<option value="//api/name/init">- init</option>
 		
-		<option value="//api/name/initItemComtextWithMediaModel:startPos:storageDir:logLevel:">- initItemComtextWithMediaModel:startPos:storageDir:logLevel:</option>
-		
-		<option value="//api/name/new">- new</option>
+		<option value="//api/name/initWithFrame:">- initWithFrame:</option>
 		
 	</optgroup>
 	
@@ -85,21 +87,29 @@
 		<div id="overview_contents" class="container">
 			<div id="content">
 				<main role="main">
-					<h1 class="title">QMediaItemContext Class Reference</h1>
+					<h1 class="title">RenderView Class Reference</h1>
 
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<th>Inherits from</th>
-	<td>NSObject</td>
+	<td>UIView</td>
 </tr><tr>
 	<th>Declared in</th>
-	<td>QMediaItemContext.h</td>
+	<td>RenderView.h</td>
 </tr>
 						</tbody></table></div>
 					
 
                     
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>渲染的view</p>
+					</div>
+					
+					
 
 					
 					
@@ -112,8 +122,8 @@
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/controlHandler" title="controlHandler"></a>
-	<h3 class="method-title"><code><a href="#//api/name/controlHandler">&nbsp;&nbsp;controlHandler</a></code>
+	<a name="//api/name/initWithFrame:" title="initWithFrame:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithFrame:">&ndash;&nbsp;initWithFrame:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -123,12 +133,70 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>预加载Item控制器</p>
+				<p>初始化</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) QMediaItemControlHandler *controlHandler</code></div>
+			<div class="method-subsection method-declaration"><code>- (instancetype)initWithFrame:(CGRect)<em>frame</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>frame</code></th>
+						<td><p>view的大小</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>初始化</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">RenderView.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/new" title="new"></a>
+	<h3 class="method-title"><code><a href="#//api/name/new">+&nbsp;new</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>方法废弃</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (instancetype)new</code></div>
 
 		    
 			
@@ -140,7 +208,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>预加载Item控制器</p>
+				<p>方法废弃</p>
 			</div>
 			
 
@@ -151,7 +219,7 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QMediaItemContext.h</code></p>
+				<p><code class="declared-in-ref">RenderView.h</code></p>
 			</div>
 			
 			
@@ -169,7 +237,7 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>废弃方法</p>
+				<p>方法废弃</p>
 			</div>
 			
 		    
@@ -186,7 +254,7 @@
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>废弃方法</p>
+				<p>方法废弃</p>
 			</div>
 			
 
@@ -197,15 +265,15 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QMediaItemContext.h</code></p>
+				<p><code class="declared-in-ref">RenderView.h</code></p>
 			</div>
 			
 			
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/new" title="new"></a>
-	<h3 class="method-title"><code><a href="#//api/name/new">&ndash;&nbsp;new</a></code>
+	<a name="//api/name/attachPlayerContext:" title="attachPlayerContext:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/attachPlayerContext:">&ndash;&nbsp;attachPlayerContext:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -215,58 +283,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>废弃方法</p>
+				<p>与播放器的 <a href="../Classes/QPlayerContext.html">QPlayerContext</a> 绑定,绑定之后便无需处理播放器相关的逻辑</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (instancetype)new</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<p>废弃方法</p>
-			</div>
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QMediaItemContext.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/initItemComtextWithMediaModel:startPos:storageDir:logLevel:" title="initItemComtextWithMediaModel:startPos:storageDir:logLevel:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/initItemComtextWithMediaModel:startPos:storageDir:logLevel:">&ndash;&nbsp;initItemComtextWithMediaModel:startPos:storageDir:logLevel:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>预加载初始化上下文</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>- (instancetype)initItemComtextWithMediaModel:(QMediaModel *)<em>mediaModel</em> startPos:(int64_t)<em>startPos</em> storageDir:(NSString *)<em>storageDir</em> logLevel:(QLogLevel)<em>logLevel</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (BOOL)attachPlayerContext:(QPlayerContext *)<em>handler</em></code></div>
 
 		    
 			
@@ -275,23 +297,8 @@
 				<table class="argument-def parameter-def">
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>mediaModel</code></th>
-						<td><p>预加载资源</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>startPos</code></th>
-						<td><p>起播位置</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>storageDir</code></th>
-						<td><p>持久化相关的路径（注意权限） 目前只存日志</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>logLevel</code></th>
-						<td><p>日志等级</p></td>
+						<th scope="row" class="argument-name"><code>handler</code></th>
+						<td><p>渲染句柄</p></td>
 					</tr>
 				
 				</table>
@@ -299,13 +306,18 @@
 			
 
 			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true 调用成功， false 调用失败</p>
+			</div>
+			
 
 			
 
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>预加载初始化上下文</p>
+				<p>与播放器的 <a href="../Classes/QPlayerContext.html">QPlayerContext</a> 绑定,绑定之后便无需处理播放器相关的逻辑</p>
 			</div>
 			
 
@@ -316,7 +328,7 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">QMediaItemContext.h</code></p>
+				<p><code class="declared-in-ref">RenderView.h</code></p>
 			</div>
 			
 			
