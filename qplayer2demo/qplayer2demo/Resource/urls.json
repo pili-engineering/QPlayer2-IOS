@@ -1,6 +1,6 @@
 [
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -11,7 +11,7 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -21,7 +21,7 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -31,7 +31,7 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -41,7 +41,7 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -51,7 +51,7 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ],
         "subtitleElements": [
@@ -59,13 +59,13 @@
                 "name": "中文",
                 "url": "http://demo-videos.qnsdk.com/qiniu-2023-chinese.srt",
                 "isSelected": 1,
-                 
+                
             },
             {
                 "name": "英文",
                 "url": "http://demo-videos.qnsdk.com/qiniu-2023-english.srt",
                 "isSelected": 0,
-                 
+                
             }
         ]
     },
@@ -81,7 +81,7 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -91,12 +91,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -107,12 +107,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -123,12 +123,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -139,12 +139,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -155,12 +155,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -171,12 +171,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -187,12 +187,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -203,12 +203,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -219,7 +219,7 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -229,7 +229,7 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -239,7 +239,7 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -249,12 +249,12 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -265,7 +265,7 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -275,7 +275,7 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -285,7 +285,7 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -295,12 +295,12 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -311,7 +311,7 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
@@ -326,7 +326,7 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -336,7 +336,7 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -346,7 +346,7 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -356,12 +356,12 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -372,7 +372,7 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -382,7 +382,7 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -392,7 +392,7 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             },
             {
                 "userType": "",
@@ -402,12 +402,12 @@
                 "isSelected": 0,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -418,12 +418,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -434,14 +434,14 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     
     
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -452,12 +452,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -468,12 +468,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -484,12 +484,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -500,12 +500,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -516,12 +516,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -532,12 +532,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -548,12 +548,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -564,12 +564,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -580,12 +580,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -596,12 +596,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -613,12 +613,12 @@
                 "backupUrl": "",
                 "referer": "",
                 "renderType": 1,
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -629,12 +629,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -645,12 +645,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -661,12 +661,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -677,12 +677,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -693,12 +693,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -709,12 +709,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -725,12 +725,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -741,12 +741,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -757,12 +757,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -773,12 +773,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -789,12 +789,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -805,12 +805,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -821,12 +821,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -837,12 +837,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -853,12 +853,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -869,12 +869,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -885,12 +885,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 1,
         "streamElements": [
             {
@@ -901,12 +901,12 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -918,13 +918,13 @@
                 "backupUrl": "",
                 "referer": "",
                 "hlsDrmKey": "testtesttesttest"
-                 
+                
             }
         ]
     },
     
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -935,7 +935,7 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ],
         "subtitleElements": [
@@ -943,12 +943,12 @@
                 "name": "英文",
                 "url": "http://demo-videos.qnsdk.com/EnglishVideo.srt",
                 "isSelected": 1,
-                 
+                
             }
         ]
     },
     {
-          
+        
         "isLive": 0,
         "streamElements": [
             {
@@ -959,7 +959,7 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",
-                 
+                
             }
         ],
         "subtitleElements": [
@@ -967,58 +967,58 @@
                 "name": "英文",
                 "url": "http://demo-videos.qnsdk.com/EnglishVideo.srt",
                 "isSelected": 1,
-                 
+                
             }
         ]
     },
     {
-            "isLive": 0,
-            "streamElements": [
-                {
-                    "userType": "",
-                    "urlType": 0,
-                    "url": "https://sdk-release.qnsdk.com/CENC_AES-CTR.mp4",
-                    "quality": 720,
-                    "isSelected": 1,
-                    "backupUrl": "",
-                    "referer": "",
-                    "mp4DrmKey" : "c7e16c4403654b85847037383f0c2db3"
-                }
-            ]
-        },
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "https://sdk-release.qnsdk.com/CENC_AES-CTR.mp4",
+                "quality": 720,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                "mp4DrmKey" : "c7e16c4403654b85847037383f0c2db3"
+            }
+        ]
+    },
     {
-    
-    "isLive": 0,
-    "streamElements": [
-        {
-            "userType": "",
-            "urlType": 0,
-            "url": "https://kodo.koafun.com/drm-EP77.mp4",
-            "quality": 960,
-            "isSelected": 1,
-            "backupUrl": "",
-            "referer": "",
-            "mp4QNDrmComKey" : "comep77",
-            "mp4QNDrmFileKey" : "fileep77",
-        }
-    ]
-},
+        
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "https://kodo.koafun.com/drm-EP77.mp4",
+                "quality": 960,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                "mp4QNDrmComKey" : "comep77",
+                "mp4QNDrmFileKey" : "fileep77",
+            }
+        ]
+    },
     {
-    
-    "isLive": 0,
-    "streamElements": [
-        {
-            "userType": "",
-            "urlType": 0,
-            "url": "https://kodo.koafun.com/drm-16884581530881688458153078-new.mp4",
-            "quality": 960,
-            "isSelected": 1,
-            "backupUrl": "",
-            "referer": "",
-            "mp4QNDrmComKey" : "comnew",
-            "mp4QNDrmFileKey" : "filenew",
-        }
-    ]
-},
+        
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "https://kodo.koafun.com/drm-16884581530881688458153078-new.mp4",
+                "quality": 960,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                "mp4QNDrmComKey" : "comnew",
+                "mp4QNDrmFileKey" : "filenew",
+            }
+        ]
+    }
     
 ]
