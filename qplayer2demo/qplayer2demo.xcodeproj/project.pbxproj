@@ -81,6 +81,8 @@
 		BA78EDA72A89D4F7001DE624 /* QNPlayerViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78EDA62A89D4F7001DE624 /* QNPlayerViewManager.m */; };
 		BA78EDAA2A89FAFE001DE624 /* QNShortVideoPlayerViewCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78EDA92A89FAFE001DE624 /* QNShortVideoPlayerViewCache.m */; };
 		BA78EDB02A8A205A001DE624 /* QNMikuClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78EDAF2A8A205A001DE624 /* QNMikuClientManager.m */; };
+		BA7F4CA32BA2A3EF005FDE98 /* qplayer2_core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1855D32A5C08BC009BD367 /* qplayer2_core.framework */; };
+		BA7F4CA42BA2A3EF005FDE98 /* qplayer2_core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA1855D32A5C08BC009BD367 /* qplayer2_core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA8977B62A6E52EB007C1F84 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA8977B52A6E52EB007C1F84 /* CoreMedia.framework */; };
 		BAD4CFDE2AD642B900D7F9FC /* qplayer2demoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD4CFDD2AD642B900D7F9FC /* qplayer2demoUITests.m */; };
 		BAD4CFE02AD642B900D7F9FC /* qplayer2demoUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD4CFDF2AD642B900D7F9FC /* qplayer2demoUITestsLaunchTests.m */; };
@@ -104,6 +106,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				BA3E5B042A8CB85F00032327 /* MikuDelivery.framework in Embed Frameworks */,
+				BA7F4CA42BA2A3EF005FDE98 /* qplayer2_core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,6 +228,7 @@
 		BA78EDA92A89FAFE001DE624 /* QNShortVideoPlayerViewCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNShortVideoPlayerViewCache.m; sourceTree = "<group>"; };
 		BA78EDAE2A8A205A001DE624 /* QNMikuClientManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNMikuClientManager.h; sourceTree = "<group>"; };
 		BA78EDAF2A8A205A001DE624 /* QNMikuClientManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNMikuClientManager.m; sourceTree = "<group>"; };
+		BA7F4C8A2B9EA22E005FDE98 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA8977B52A6E52EB007C1F84 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		BA908F322A5E53120080E10A /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAAD19762A65450000DB96FF /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -250,6 +254,7 @@
 			files = (
 				50B1F3D5289BBF7A0074E02D /* Foundation.framework in Frameworks */,
 				BA3E5B032A8CB85F00032327 /* MikuDelivery.framework in Frameworks */,
+				BA7F4CA32BA2A3EF005FDE98 /* qplayer2_core.framework in Frameworks */,
 				BA67ABB02A6FE23000BE06FA /* CoreAudio.framework in Frameworks */,
 				50387155292CA3410000C4DD /* CoreMotion.framework in Frameworks */,
 				616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */,
@@ -504,6 +509,7 @@
 		CA90BF8B289B846C0087543B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BA7F4C8A2B9EA22E005FDE98 /* qplayer2_core.framework */,
 				BA0FD0B32B43B822009C9390 /* qplayer2_core.framework */,
 				BA4823782AD3A7AB009F43AA /* qplayer2_core.framework */,
 				BA40090E2AC565DF00059A15 /* qplayer2_core.framework */,
@@ -979,7 +985,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.4.1;
 				PODS_PODFILE_DIR_PATH = "${SRCROOT}/.";
 				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.qplayer2demo;
@@ -1040,7 +1046,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.4.1;
 				PODS_PODFILE_DIR_PATH = "${SRCROOT}/.";
 				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.qplayer2demo;
