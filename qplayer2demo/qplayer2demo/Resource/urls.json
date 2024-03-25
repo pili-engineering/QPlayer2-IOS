@@ -993,23 +993,6 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "https://kodo.koafun.com/drm-EP77.mp4",
-                "quality": 960,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                "mp4QNDrmComKey" : "comep77",
-                "mp4QNDrmFileKey" : "fileep77",
-            }
-        ]
-    },
-    {
-        
-        "isLive": 0,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
                 "url": "https://kodo.koafun.com/drm-16884581530881688458153078-new.mp4",
                 "quality": 960,
                 "isSelected": 1,
