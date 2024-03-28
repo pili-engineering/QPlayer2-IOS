@@ -9,7 +9,7 @@ Qplayer2是一款跨平台的播放器SDK,除了基础的播放器能力外，�
  Platform | Build Status
  -------- | ------------
  Android | https://github.com/pili-engineering/QPlayer2-Android 
- IOS | Last Version: 1.4.1 
+ IOS | Last Version: 1.4.2 
  Windows | https://github.com/pili-engineering/QPlayer2-Windows 
  HarmonyOS NEXT | 敬请期待 
  Mac | 敬请期待 
@@ -49,7 +49,7 @@ Qplayer2是一款跨平台的播放器SDK,除了基础的播放器能力外，�
 ##### 引入依赖
 
 ```groovy
-pod 'qplayer2-core', '1.4.1'
+pod 'qplayer2-core', '1.4.2'
 ```
 
 
@@ -74,9 +74,15 @@ pod 'qplayer2-core', '1.4.1'
 
 请查阅document目录下的api文档
 
-#### 接入文档
+##### 接入文档
 
 https://developer.qiniu.com/pili/12225/qplayer2-ios-side
+
+
+
+##### QPlayer2 隐私文件介绍
+
+1. PrivacyInfo.xcprivacy 已包含在 qplayer2_core.framework 中
 
 
 
@@ -88,7 +94,7 @@ https://developer.qiniu.com/pili/12225/qplayer2-ios-side
 
    
 
-#### 技术支持与交流
+##### 技术支持与交流
 
 产品及服务咨询：400-808-9176
 
