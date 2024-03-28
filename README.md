@@ -74,9 +74,15 @@ pod 'qplayer2-core', '1.4.2'
 
 请查阅document目录下的api文档
 
-#### 接入文档
+##### 接入文档
 
 https://developer.qiniu.com/pili/12225/qplayer2-ios-side
+
+
+
+##### QPlayer2 隐私文件介绍
+
+1. PrivacyInfo.xcprivacy 已包含在 qplayer2_core.framework 中
 
 
 
@@ -86,11 +92,9 @@ https://developer.qiniu.com/pili/12225/qplayer2-ios-side
 
 1. demo 下载：https://testflight.apple.com/join/YocXmZ2j
 
-1. PrivacyInfo.xcprivacy 已包含在 QPlayer2 sdk 中
-
    
 
-#### 技术支持与交流
+##### 技术支持与交流
 
 产品及服务咨询：400-808-9176
 
