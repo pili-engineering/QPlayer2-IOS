@@ -381,7 +381,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "rtmp://internal-player.cloudvdn.com/.i/c2RrLWxpdmU6c2RrLWxpdmUvNjY2Ng==?role=portalio&cdn-src-referer=vdn",
+                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666",
                 "quality": 1080,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -428,7 +428,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666",
+                "url": "http://pili-hls.qnsdk.com/sdk-live/6666.m3u8",
                 "quality": 360,
                 "isSelected": 1,
                 "backupUrl": "",
