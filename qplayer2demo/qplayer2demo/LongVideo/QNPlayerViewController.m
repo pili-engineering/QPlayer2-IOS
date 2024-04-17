@@ -174,7 +174,8 @@ QIPlayerVideoDataListener
    
     for (NSDictionary *dic in urlArray) {
         BOOL islive =  [[dic valueForKey:@"isLive"] intValue]==0? NO:YES;
-        QMediaModelBuilder *modleBuilder = [[QMediaModelBuilder alloc] initWithIsLive:islive];
+        BOOL isReconstructTimeLine =  [[dic valueForKey:@"isReconstructTimeLine"] intValue]==0? NO:YES;
+        QMediaModelBuilder *modleBuilder = [[QMediaModelBuilder alloc] initWithIsLive:islive isReconstructTimeLine:isReconstructTimeLine];
 //        [modle setValuesForKeysWithDictionary:dic];
             
         NSMutableArray <QStreamElement*> *streams = [NSMutableArray array];

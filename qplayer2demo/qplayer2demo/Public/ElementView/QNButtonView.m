@@ -240,8 +240,6 @@ QIPlayerAudioListener
 
 -(void)onProgressChanged:(QPlayerContext *)context progress:(NSInteger)progress duration:(NSInteger)duration{
     if(self.mIsNeedUpdatePrograss){
-
- 
         long long currentSeconds = progress/1000;
         float currentSecondsDouble = progress/1000.0;
         long long totalSeconds = self.mPlayer.controlHandler.duration/1000;

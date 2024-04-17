@@ -2,6 +2,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -72,6 +73,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -98,6 +100,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -114,6 +117,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -130,6 +134,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -146,6 +151,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -162,6 +168,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -178,6 +185,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -194,6 +202,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -210,6 +219,7 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -256,6 +266,7 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -302,6 +313,7 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -317,6 +329,7 @@
     },
     {
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -363,11 +376,12 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666",
+                "url": "rtmp://internal-player.cloudvdn.com/.i/c2RrLWxpdmU6c2RrLWxpdmUvNjY2Ng==?role=portalio&cdn-src-referer=vdn",
                 "quality": 1080,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -409,11 +423,12 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://pili-hls.qnsdk.com/sdk-live/6666.m3u8",
+                "url": "rtmp://pili-rtmp.qnsdk.com/sdk-live/6666",
                 "quality": 360,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -425,6 +440,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -443,6 +459,7 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -459,6 +476,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -475,6 +493,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -491,6 +510,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -507,6 +527,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -523,6 +544,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -539,6 +561,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -555,6 +578,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -571,6 +595,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -587,6 +612,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -603,6 +629,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -620,6 +647,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -636,6 +664,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -652,6 +681,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -668,6 +698,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -684,6 +715,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -700,6 +732,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -716,6 +749,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -732,6 +766,7 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -748,6 +783,7 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -764,6 +800,7 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -780,6 +817,7 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -796,6 +834,7 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -812,6 +851,7 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -828,6 +868,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -844,6 +885,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -860,6 +902,7 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -876,6 +919,7 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -892,6 +936,7 @@
     {
         
         "isLive": 1,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -908,6 +953,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -926,6 +972,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -950,6 +997,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -973,6 +1021,7 @@
     },
     {
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -989,6 +1038,7 @@
     {
         
         "isLive": 0,
+        "isReconstructTimeLine" : 0,
         "streamElements": [
             {
                 "userType": "",
@@ -1000,6 +1050,39 @@
                 "referer": "",
                 "mp4QNDrmComKey" : "comnew",
                 "mp4QNDrmFileKey" : "filenew",
+            }
+        ]
+    },
+    {
+        
+        "isLive": 0,
+        "isReconstructTimeLine" : 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "https://video.medmeeting.com/recordings/z1.yihuibao-test.yihuibao-test_20240412181120417_140983/1712962721_1713006137.m3u8",
+                "quality": 960,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": ""
+            }
+        ]
+    },
+    {
+        
+        "isLive": 0,
+        "isReconstructTimeLine" : 1,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 0,
+                "url": "http://demo-videos.qnsdk.com/bbk-bt709.mp4",
+                "quality": 1280,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                
             }
         ]
     }
