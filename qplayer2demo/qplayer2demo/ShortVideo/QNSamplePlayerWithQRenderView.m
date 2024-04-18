@@ -11,7 +11,6 @@
 
 @interface QNSamplePlayerWithQRenderView()<QIPlayerStateChangeListener>
 
-@property (nonatomic,strong) QPlayerContext *mPlayerContext;
 @end
 @implementation QNSamplePlayerWithQRenderView
 

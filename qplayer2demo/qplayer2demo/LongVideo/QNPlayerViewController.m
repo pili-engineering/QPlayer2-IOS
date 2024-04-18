@@ -26,6 +26,7 @@
 #import "NSDataToCVPixelBufferRefHelper.h"
 #import <Photos/Photos.h>
 #import <PhotosUI/PhotosUI.h>
+#import "QNotificationCenterHelper.h"
 #define PL_PLAYER_VIDEO_ROOT_FOLDER @"PLPlayerFloder"
 #define GET_PL_PLAYER_VIDEO_FOLDER(folderName) [PL_PLAYER_VIDEO_ROOT_FOLDER stringByAppendingPathComponent:folderName]
 #define PL_PLAYER_VIDEO_REVERSER GET_PL_PLAYER_VIDEO_FOLDER(@"PLPlayerCacheFile")
@@ -93,7 +94,7 @@ QIPlayerVideoDataListener
 @property (nonatomic, assign) NSInteger mFirstVideoTime;
 @property (nonatomic, assign) int mSEINum;
 @property (nonatomic, strong) NSString *mSEIString;
-
+@property (nonatomic, strong) QNotificationCenterHelper* mNotifi;
 @property (nonatomic, assign) BOOL mIsStartPush;
 @property (nonatomic, assign) int mVideoHeight;
 @property (nonatomic, assign) int mVideoWidth;
@@ -109,7 +110,7 @@ QIPlayerVideoDataListener
         self.mSession.delegate = nil;
         self.mSession = nil;
     }
-
+    self.mNotifi = nil;
     NSLog(@"QNPlayerViewController dealloc");
 }
 
@@ -246,7 +247,8 @@ QIPlayerVideoDataListener
     [self.view addSubview:self.mToastView];
     [self playerContextAllCallBack];
     
-    
+    self.mNotifi = [[QNotificationCenterHelper alloc]initWithPlayerView:self.mPlayerView];
+    [self.mPlayerView.controlHandler setLogLevel:LOG_INFO];
 }
 
 #pragma mark - 初始化 PLStreaming
@@ -696,8 +698,8 @@ QIPlayerVideoDataListener
 }
 
 -(void)onStateChange:(QPlayerContext *)context state:(QPlayerState)state{
+    self.mIsPlaying = NO;
     if (state == QPLAYER_STATE_PREPARE) {
-        
         self.mSubtitleLabel.text = @"";
         [self.mMaskView loadActivityIndicatorView];
         [self.mToastView addText:@"开始拉视频数据"];
@@ -1287,6 +1289,7 @@ QIPlayerVideoDataListener
     [alertVc addAction:sureAction];
     [self presentViewController:alertVc animated:YES completion:nil];
 }
+
 
 #pragma mark - 显示提示信息
 
