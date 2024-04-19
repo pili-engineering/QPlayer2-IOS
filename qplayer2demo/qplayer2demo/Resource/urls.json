@@ -2,7 +2,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -73,7 +73,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -100,7 +100,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -117,7 +117,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -134,7 +134,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -151,7 +151,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -168,7 +168,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -185,7 +185,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -202,7 +202,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -219,7 +219,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -266,7 +266,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -313,7 +313,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -329,7 +329,7 @@
     },
     {
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -376,7 +376,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -423,7 +423,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -440,7 +440,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -459,7 +459,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -476,7 +476,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -493,7 +493,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -510,7 +510,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -527,7 +527,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -544,7 +544,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -561,7 +561,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -578,7 +578,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -612,7 +612,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -629,7 +629,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -647,7 +647,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -664,7 +664,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -681,7 +681,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -698,7 +698,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -715,7 +715,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -732,7 +732,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -749,7 +749,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -766,7 +766,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -783,7 +783,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -800,7 +800,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -817,7 +817,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -834,7 +834,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -851,7 +851,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -868,7 +868,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -885,7 +885,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -902,7 +902,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -919,7 +919,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -936,7 +936,7 @@
     {
         
         "isLive": 1,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -953,7 +953,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -972,7 +972,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -997,7 +997,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -1021,7 +1021,7 @@
     },
     {
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -1038,7 +1038,7 @@
     {
         
         "isLive": 0,
-        "isReconstructTimeLine" : 0,
+        "isReconstructTimeLine" : 1,
         "streamElements": [
             {
                 "userType": "",
@@ -1066,23 +1066,6 @@
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": ""
-            }
-        ]
-    },
-    {
-        
-        "isLive": 0,
-        "isReconstructTimeLine" : 1,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/bbk-bt709.mp4",
-                "quality": 1280,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                
             }
         ]
     }
