@@ -64,10 +64,10 @@
     }
 }
 - (void)onUIApplicationWillEnterForeground:(NSNotification *)note{
-    if (self.mPlayerView != nil) {
+    if (self.mPlayerView != nil && self.mIsPlaying) {
         [self.mPlayerView.controlHandler resumeAudioSessionCategory];
         [self.mPlayerView.controlHandler resumeRender];
-    }else if(self.mPlayerContext != nil){
+    }else if(self.mPlayerContext != nil && self.mIsPlaying){
         [self.mPlayerContext.controlHandler resumeAudioSessionCategory];
         [self.mPlayerContext.controlHandler resumeRender];
     }
