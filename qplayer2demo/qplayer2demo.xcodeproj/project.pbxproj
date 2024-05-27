@@ -82,8 +82,6 @@
 		BA78EDAA2A89FAFE001DE624 /* QNShortVideoPlayerViewCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78EDA92A89FAFE001DE624 /* QNShortVideoPlayerViewCache.m */; };
 		BA78EDB02A8A205A001DE624 /* QNMikuClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78EDAF2A8A205A001DE624 /* QNMikuClientManager.m */; };
 		BA8977B62A6E52EB007C1F84 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA8977B52A6E52EB007C1F84 /* CoreMedia.framework */; };
-		BAD375002BCE85BA00C04D12 /* qplayer2_core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAD374FF2BCE85BA00C04D12 /* qplayer2_core.framework */; };
-		BAD375012BCE85BA00C04D12 /* qplayer2_core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BAD374FF2BCE85BA00C04D12 /* qplayer2_core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAD375082BD0CBB200C04D12 /* QNotificationCenterHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD375072BD0CBB200C04D12 /* QNotificationCenterHelper.m */; };
 		BAD4CFDE2AD642B900D7F9FC /* qplayer2demoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD4CFDD2AD642B900D7F9FC /* qplayer2demoUITests.m */; };
 		BAD4CFE02AD642B900D7F9FC /* qplayer2demoUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD4CFDF2AD642B900D7F9FC /* qplayer2demoUITestsLaunchTests.m */; };
@@ -107,7 +105,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				BA3E5B042A8CB85F00032327 /* MikuDelivery.framework in Embed Frameworks */,
-				BAD375012BCE85BA00C04D12 /* qplayer2_core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -258,7 +255,6 @@
 			files = (
 				50B1F3D5289BBF7A0074E02D /* Foundation.framework in Frameworks */,
 				BA3E5B032A8CB85F00032327 /* MikuDelivery.framework in Frameworks */,
-				BAD375002BCE85BA00C04D12 /* qplayer2_core.framework in Frameworks */,
 				BA67ABB02A6FE23000BE06FA /* CoreAudio.framework in Frameworks */,
 				50387155292CA3410000C4DD /* CoreMotion.framework in Frameworks */,
 				616D0BA391829A738EA77F6B /* libPods-qplayer2demo.a in Frameworks */,
