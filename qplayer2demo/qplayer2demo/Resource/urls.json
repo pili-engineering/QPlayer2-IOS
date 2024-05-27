@@ -1003,67 +1003,6 @@
                 "mp4QNDrmFileKey" : "filenew",
             }
         ]
-    },
-    {
-        
-        "isLive": 0,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "https://video.medmeeting.com/recordings/z1.yihuibao-test.yihuibao-test_20240412181120417_140983/1712962721_1713006137.m3u8",
-                "quality": 960,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": ""
-            }
-        ]
-    },
-    {
-        
-        "isLive": 1,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://hdllive-main.autohome.com.cn/athmlive-main/z1_athmlive-main_908180.flv",
-                "quality": 960,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": ""
-            }
-        ]
-    },
-    {
-        
-        "isLive": 1,
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "rtmp://pili-live-rtmp.jixiangmei.zhongwei-info.com/jixiangmei/1662026811828",
-                "quality": 960,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": ""
-            }
-        ]
-    },
-    {
-        
-        "isLive": 0,
-        
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://live.zhongwei-info.com/recordings/z1.jixiangmei.1611802668861/1660906800_1660914000.m3u8",
-                "quality": 960,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": ""
-            }
-        ]
     }
 ]
  
