@@ -22,6 +22,7 @@
     QNChangePlayerView *mImmediatelyPlayerView;
     QNChangePlayerView *mSubtitlePlayerView;
     QNChangePlayerView *mVideoDataTypePlayerView;
+    QNChangePlayerView *mInSpeakerResumeView;
     void (^changePlayerViewCallback)(ChangeButtonType type , NSString * startPosition,BOOL selected);
     void (^speedViewCallback)(SpeedUIButtonType type);
 }
@@ -126,6 +127,10 @@
         case BUTTON_TYPE_VIDEO_DATA_YUV420P:
             [mVideoDataTypePlayerView setDefault:type];
             break;
+        case BUTTON_TYPE_IN_SPEAKER_RESUME:
+        case BUTTON_TYPE_IN_SPEAKER_NOT_RESUME:
+            [mInSpeakerResumeView setDefault:type];
+            break;
         default:
             NSLog(@"设置出错");
             break;
@@ -155,7 +160,7 @@
 }
 -(void)addScrollView:(CGRect)frame{
 //    self = [[UIScrollView alloc]initWithFrame:frame];
-    self.contentSize = CGSizeMake(frame.size.width, 1290);
+    self.contentSize = CGSizeMake(frame.size.width, 1400);
 //    self.backgroundColor = [UIColor clearColor];
     self.userInteractionEnabled = YES;
     self.scrollEnabled = YES;
@@ -223,6 +228,10 @@
     [self addLine:CGRectMake(5, 1163, self.frame.size.width, 2)];
     
     [self addVideoDataType:CGRectMake(0, 1165, 350, 90)];
+    
+    [self addLine:CGRectMake(5, 1268, self.frame.size.width, 2)];
+    
+    [self addInSpeakerResume:CGRectMake(0, 1265, 350, 90)];
     
 }
 -(void)addImmediately:(CGRect)frame{
@@ -355,6 +364,14 @@
     [mSubtitlePlayerView addButtonText:@"英文" frame:CGRectMake(240, 50, 60, 20) type:BUTTON_TYPE_SUBTITLE_ENGLISH target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
     [mSubtitlePlayerView setDefault:BUTTON_TYPE_SUBTITLE_CLOSE];
     [self addSubview:mSubtitlePlayerView];
+}
+-(void)addInSpeakerResume:(CGRect)frame{
+    mInSpeakerResumeView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mInSpeakerResumeView setTitleLabelText:@"切换扬声器继续播放" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mInSpeakerResumeView addButtonText:@"播放" frame:CGRectMake(10, 50, 60, 20) type:BUTTON_TYPE_IN_SPEAKER_RESUME target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mInSpeakerResumeView addButtonText:@"暂停" frame:CGRectMake(125, 50, 60, 20) type:BUTTON_TYPE_IN_SPEAKER_NOT_RESUME target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mInSpeakerResumeView setDefault:BUTTON_TYPE_IN_SPEAKER_RESUME];
+    [self addSubview:mInSpeakerResumeView];
 }
 -(void)addVideoDataType:(CGRect)frame{
     mVideoDataTypePlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];

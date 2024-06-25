@@ -267,6 +267,14 @@ QIPlayerSubtitleListener
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"video 回调数据类型" selIndex:(int)(type-1000)];
                 
             }
+            else if (type >= 1100 && type <= 1101){
+                if(type == 1100){
+                    [weakSelf.mPlayer.controlHandler setIsChangeInSpeakerResume:YES];
+                }else if(type == 1101){
+                    [weakSelf.mPlayer.controlHandler setIsChangeInSpeakerResume:NO];
+                }
+                [[QDataHandle shareInstance] setSelConfiguraKey:@"切换扬声器恢复播放" selIndex:(int)(type-1100)];
+            }
             
             if (startPosition) {
                 int satartPod = [startPosition intValue];
@@ -402,7 +410,10 @@ QIPlayerSubtitleListener
             [_mSettingView setChangeDefault:(ChangeButtonType)(index+1000)];
             
         }
-        
+        else if ([configureModel.mConfiguraKey containsString:@"切换扬声器恢复播放"]) {
+            [_mSettingView setChangeDefault:(ChangeButtonType)(index+1100)];
+            
+        }
     }
 }
 

@@ -80,6 +80,15 @@
     demoVersionLabel.font = [UIFont systemFontOfSize:10.0];
     [self.view addSubview:demoVersionLabel];
     
+    
+    NSString *appBundleIdString = [infoDic objectForKey:@"CFBundleIdentifier"];
+    UILabel *demoBundleIdLabel = [[UILabel alloc]initWithFrame:CGRectMake(PL_SCREEN_WIDTH-150, PL_SCREEN_HEIGHT-130 , 150, 30)];
+    demoBundleIdLabel.text = [NSString stringWithFormat:@"demo id : %@",appBundleIdString];
+    demoBundleIdLabel.textColor = [UIColor blackColor];
+    demoBundleIdLabel.backgroundColor = [UIColor clearColor];
+    demoBundleIdLabel.font = [UIFont systemFontOfSize:10.0];
+    [self.view addSubview:demoBundleIdLabel];
+    
     // 两个player切换
     UIButton *doublePlayerButton = [[UIButton alloc] initWithFrame:CGRectMake(70, (PL_SCREEN_HEIGHT - kLogoSizeHeight - 116)/4 + kLogoSizeHeight + 50 + 210, PL_SCREEN_WIDTH - 140, 34)];
     doublePlayerButton.backgroundColor = PL_BUTTON_BACKGROUNDCOLOR;

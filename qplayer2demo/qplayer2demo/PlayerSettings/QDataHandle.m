@@ -34,7 +34,7 @@
     NSUserDefaults *userdafault = [NSUserDefaults standardUserDefaults];
     NSArray *dataArray = [userdafault objectForKey:@"PLPlayer_settings"];
     
-    NSMutableArray *piliOptionNameArray = [NSMutableArray arrayWithArray:@[@"播放起始 (ms)",@"Decoder", @"Seek",@"Start Action",@"Render ratio",@"播放速度",@"色盲模式",@"鉴权",@"SEI",@"后台播放",@"清晰度切换",@"字幕",@"video 回调数据类型"]];
+    NSMutableArray *piliOptionNameArray = [NSMutableArray arrayWithArray:@[@"播放起始 (ms)",@"Decoder", @"Seek",@"Start Action",@"Render ratio",@"播放速度",@"色盲模式",@"鉴权",@"SEI",@"后台播放",@"清晰度切换",@"字幕",@"video 回调数据类型",@"切换扬声器恢复播放"]];
     if (dataArray.count != 0 ) {
         NSMutableArray *array = [NSMutableArray array];
         for (NSData *data in dataArray) {
@@ -100,6 +100,8 @@
         return @{@"字幕":@[@"关闭",@"中文",@"英文"], @"default":@0};
     }else if([key isEqual:@"video 回调数据类型"]){
         return @{@"video 回调数据类型":@[@"YUV420p",@"NV12"], @"default":@0};
+    }else if([key isEqual:@"切换扬声器恢复播放"]){
+        return @{@"切换扬声器恢复播放":@[@"播放",@"暂停"], @"default":@0};
     }else{
         NSLog(@"读取PLPlayerOption数据出错");
         return nil;

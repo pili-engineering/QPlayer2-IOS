@@ -45,7 +45,10 @@ typedef NS_ENUM(NSInteger, ChangeButtonType){
     BUTTON_TYPE_SUBTITLE_ENGLISH,              //英文字幕
     
     BUTTON_TYPE_VIDEO_DATA_YUV420P = 1000,         //YUV420p
-    BUTTON_TYPE_VIDEO_DATA_NV12               //NV12
+    BUTTON_TYPE_VIDEO_DATA_NV12,               //NV12
+    
+    BUTTON_TYPE_IN_SPEAKER_RESUME = 1100,         //切换扬声器恢复播放
+    BUTTON_TYPE_IN_SPEAKER_NOT_RESUME               //切换扬声器不恢复播放
     
 };
 NS_ASSUME_NONNULL_BEGIN

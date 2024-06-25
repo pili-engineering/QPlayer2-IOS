@@ -26,7 +26,6 @@
 #import "NSDataToCVPixelBufferRefHelper.h"
 #import <Photos/Photos.h>
 #import <PhotosUI/PhotosUI.h>
-#import "QNotificationCenterHelper.h"
 #define PL_PLAYER_VIDEO_ROOT_FOLDER @"PLPlayerFloder"
 #define GET_PL_PLAYER_VIDEO_FOLDER(folderName) [PL_PLAYER_VIDEO_ROOT_FOLDER stringByAppendingPathComponent:folderName]
 #define PL_PLAYER_VIDEO_REVERSER GET_PL_PLAYER_VIDEO_FOLDER(@"PLPlayerCacheFile")
@@ -94,7 +93,6 @@ QIPlayerVideoDataListener
 @property (nonatomic, assign) NSInteger mFirstVideoTime;
 @property (nonatomic, assign) int mSEINum;
 @property (nonatomic, strong) NSString *mSEIString;
-@property (nonatomic, strong) QNotificationCenterHelper* mNotifi;
 @property (nonatomic, assign) BOOL mIsStartPush;
 @property (nonatomic, assign) int mVideoHeight;
 @property (nonatomic, assign) int mVideoWidth;
@@ -110,7 +108,6 @@ QIPlayerVideoDataListener
         self.mSession.delegate = nil;
         self.mSession = nil;
     }
-    self.mNotifi = nil;
     NSLog(@"QNPlayerViewController dealloc");
 }
 
@@ -247,7 +244,6 @@ QIPlayerVideoDataListener
     [self.view addSubview:self.mToastView];
     [self playerContextAllCallBack];
     
-    self.mNotifi = [[QNotificationCenterHelper alloc]initWithPlayerView:self.mPlayerView];
     [self.mPlayerView.controlHandler setLogLevel:LOG_INFO];
 }
 
@@ -414,7 +410,6 @@ QIPlayerVideoDataListener
 #pragma mark - PlayerListenerDelegate
 
 -(void)playerContextAllCallBack{
-
     [self.mPlayerView.controlHandler addPlayerStateListener:self];
     [self.mPlayerView.controlHandler addPlayerBufferingChangeListener:self];
     [self.mPlayerView.controlHandler addPlayerQualityListener:self];
@@ -1073,6 +1068,14 @@ QIPlayerVideoDataListener
             }
             else{
                 [self.mPlayerView.controlHandler setBackgroundPlayEnable:NO];
+            }
+        }
+        else if ([configureModel.mConfiguraKey containsString:@"切换扬声器恢复播放"]){
+            if (index == 0) {
+                [self.mPlayerView.controlHandler setIsChangeInSpeakerResume:YES];
+            }
+            else{
+                [self.mPlayerView.controlHandler setIsChangeInSpeakerResume:NO];
             }
         }
         else if ([configureModel.mConfiguraKey containsString:@"清晰度切换"]){
