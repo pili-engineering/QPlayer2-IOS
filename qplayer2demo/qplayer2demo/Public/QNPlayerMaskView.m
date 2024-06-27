@@ -269,9 +269,9 @@ QIPlayerSubtitleListener
             }
             else if (type >= 1100 && type <= 1101){
                 if(type == 1100){
-                    [weakSelf.mPlayer.controlHandler setIsChangeInSpeakerResume:YES];
+                    [weakSelf.mPlayer.controlHandler shouldContinuePlayAfterSwitchInSpeaker:YES];
                 }else if(type == 1101){
-                    [weakSelf.mPlayer.controlHandler setIsChangeInSpeakerResume:NO];
+                    [weakSelf.mPlayer.controlHandler shouldContinuePlayAfterSwitchInSpeaker:NO];
                 }
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"切换扬声器恢复播放" selIndex:(int)(type-1100)];
             }

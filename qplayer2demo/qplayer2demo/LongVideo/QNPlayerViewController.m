@@ -1072,10 +1072,10 @@ QIPlayerVideoDataListener
         }
         else if ([configureModel.mConfiguraKey containsString:@"切换扬声器恢复播放"]){
             if (index == 0) {
-                [self.mPlayerView.controlHandler setIsChangeInSpeakerResume:YES];
+                [self.mPlayerView.controlHandler shouldContinuePlayAfterSwitchInSpeaker:YES];
             }
             else{
-                [self.mPlayerView.controlHandler setIsChangeInSpeakerResume:NO];
+                [self.mPlayerView.controlHandler shouldContinuePlayAfterSwitchInSpeaker:NO];
             }
         }
         else if ([configureModel.mConfiguraKey containsString:@"清晰度切换"]){
