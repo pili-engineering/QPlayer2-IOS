@@ -67,6 +67,8 @@
 		BA0FD0BB2B480048009C9390 /* NSDataToCVPixelBufferRefHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0FD0BA2B480048009C9390 /* NSDataToCVPixelBufferRefHelper.m */; };
 		BA3E5B032A8CB85F00032327 /* MikuDelivery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA3E5B012A8CB85800032327 /* MikuDelivery.framework */; };
 		BA3E5B042A8CB85F00032327 /* MikuDelivery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA3E5B012A8CB85800032327 /* MikuDelivery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BA4203842C7325D4004983FE /* qiniu-2023-1080p.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BA4203832C7325D4004983FE /* qiniu-2023-1080p.mp4 */; };
+		BA4203882C732A86004983FE /* nike.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BA4203872C732A86004983FE /* nike.mp4 */; };
 		BA67ABB02A6FE23000BE06FA /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA67ABAF2A6FE22F00BE06FA /* CoreAudio.framework */; };
 		BA78ED972A85CDA4001DE624 /* QNSamplePlayerWithQRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78ED962A85CDA4001DE624 /* QNSamplePlayerWithQRenderView.m */; };
 		BA78EDA12A8631C1001DE624 /* QNMediaItemContextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78EDA02A8631C1001DE624 /* QNMediaItemContextManager.m */; };
@@ -199,6 +201,8 @@
 		BA1855D32A5C08BC009BD367 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA3E5B012A8CB85800032327 /* MikuDelivery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MikuDelivery.framework; sourceTree = "<group>"; };
 		BA40090E2AC565DF00059A15 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA4203832C7325D4004983FE /* qiniu-2023-1080p.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "qiniu-2023-1080p.mp4"; sourceTree = "<group>"; };
+		BA4203872C732A86004983FE /* nike.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = nike.mp4; sourceTree = "<group>"; };
 		BA44EB8E2A936A2700AE54A8 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA4823782AD3A7AB009F43AA /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA576B172A8B1537008BD482 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -380,6 +384,7 @@
 				50B1F468289CC62D0074E02D /* pl_up.png */,
 				50B1F469289CC62D0074E02D /* pl_down.png */,
 				50B1F46A289CC62D0074E02D /* pl_min_blue_volume.png */,
+				BA4203872C732A86004983FE /* nike.mp4 */,
 				50B1F46B289CC62D0074E02D /* LOGO.png */,
 				50B1F46C289CC62D0074E02D /* pl_clip.png */,
 				50B1F46D289CC62D0074E02D /* urls.json */,
@@ -388,6 +393,7 @@
 				50B1F471289CC62D0074E02D /* lite_urls.json */,
 				50B1F472289CC62D0074E02D /* pl_close.png */,
 				50B1F473289CC62D0074E02D /* pl_stop.png */,
+				BA4203832C7325D4004983FE /* qiniu-2023-1080p.mp4 */,
 				50B1F474289CC62D0074E02D /* pl_minVolume.png */,
 				50B1F475289CC62D0074E02D /* pl_shoot.png */,
 				50B1F477289CC62D0074E02D /* pl_fullScreen.png */,
@@ -624,11 +630,13 @@
 				50B1F4B1289CC62D0074E02D /* pl_clip.png in Resources */,
 				50B1F4A2289CC62D0074E02D /* pl_smallScreen.png in Resources */,
 				50B1F4A8289CC62D0074E02D /* pl_backward.png in Resources */,
+				BA4203842C7325D4004983FE /* qiniu-2023-1080p.mp4 in Resources */,
 				50B1F4B9289CC62D0074E02D /* pl_minVolume.png in Resources */,
 				50B1F4AD289CC62D0074E02D /* pl_up.png in Resources */,
 				50B1F4A7289CC62D0074E02D /* pl_maxVolume.png in Resources */,
 				50B1F4B2289CC62D0074E02D /* urls.json in Resources */,
 				50B1F4A9289CC62D0074E02D /* pl_mirror.png in Resources */,
+				BA4203882C732A86004983FE /* nike.mp4 in Resources */,
 				50B1F4A5289CC62D0074E02D /* pl_play.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

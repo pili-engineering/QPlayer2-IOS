@@ -175,14 +175,24 @@ QIPlayerVideoDataListener
         BOOL isReconstructTimeLine =  [[dic valueForKey:@"isReconstructTimeLine"] intValue]==0? NO:YES;
         QMediaModelBuilder *modleBuilder = [[QMediaModelBuilder alloc] initWithIsLive:islive];
 //        [modle setValuesForKeysWithDictionary:dic];
-            
         NSMutableArray <QStreamElement*> *streams = [NSMutableArray array];
         NSMutableArray <QSubtitleElement*> *subtitiles = [NSMutableArray array];
         for (NSDictionary *elDic in dic[@"streamElements"]) {
             QStreamElement *subModle = [[QStreamElement alloc] init];
             [subModle setValuesForKeysWithDictionary:elDic];
+            if ([subModle.url hasPrefix:@"file:"]) {
+                NSString *filePath = [subModle.url substringFromIndex:5];
+                    NSArray *fileComponents = [filePath componentsSeparatedByString:@"."];
+                if (fileComponents.count == 2) {
+                    NSString *firstPart = fileComponents[0];
+                    NSString *secondPart = fileComponents[1];
+                    
+                    subModle.url = [[NSBundle mainBundle] pathForResource:firstPart ofType:secondPart];
+                }
+            }
             [streams addObject:subModle];
         }
+
         if([dic objectForKey:@"subtitleElements"]){
             for(NSDictionary *subDic in dic[@"subtitleElements"]){
                 QSubtitleElement *subtitleEle = [[QSubtitleElement alloc]init];

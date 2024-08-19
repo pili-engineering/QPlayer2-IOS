@@ -135,16 +135,34 @@ QIMediaItemCommandNotAllowListener
         //获取 streamElements 字段数据
         for (NSDictionary *elDic in dic[@"streamElements"]) {
             NSString * urlstr = [ [NSString stringWithFormat:@"%@",[elDic valueForKey:@"url"]] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-            //注释掉即不使用 miku 
+            
+            //注释掉即不使用 miku
 //            NSURL * url = [[[QNMikuClientManager sharedInstance] getMikuClient] makeProxyURL:urlstr];
-            [modleBuilder addStreamElementWithUserType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"userType"]]
-                             urlType:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"urlType"]].intValue
-                             url:       urlstr
-                             quality:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"quality"]].intValue
-                             isSelected:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"isSelected"]].intValue == 0?NO : YES
-                             backupUrl: [NSString stringWithFormat:@"%@",[elDic valueForKey:@"backupUrl"]]
-                             referer:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"referer"]]
-                             renderType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"renderType"]].intValue];
+            if ([urlstr hasPrefix:@"file:"]) {
+                NSString *filePath = [urlstr substringFromIndex:5];
+                NSArray *fileComponents = [filePath componentsSeparatedByString:@"."];
+                if (fileComponents.count == 2) {
+                    NSString *firstPart = fileComponents[0];
+                    NSString *secondPart = fileComponents[1];
+                    [modleBuilder addStreamElementWithUserType:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"userType"]]
+                                                       urlType:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"urlType"]].intValue
+                                                           url:   [[NSBundle mainBundle] pathForResource:firstPart ofType:secondPart]
+                                                       quality:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"quality"]].intValue
+                                                    isSelected:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"isSelected"]].intValue == 0?NO : YES
+                                                     backupUrl:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"backupUrl"]]
+                                                       referer:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"referer"]]
+                                                    renderType:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"renderType"]].intValue];
+                }
+            }else{
+                [modleBuilder addStreamElementWithUserType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"userType"]]
+                                 urlType:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"urlType"]].intValue
+                                 url:       urlstr
+                                 quality:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"quality"]].intValue
+                                 isSelected:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"isSelected"]].intValue == 0?NO : YES
+                                 backupUrl: [NSString stringWithFormat:@"%@",[elDic valueForKey:@"backupUrl"]]
+                                 referer:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"referer"]]
+                                 renderType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"renderType"]].intValue];
+            }
         }
         //创建 QMediaModel
         QMediaModel *model = [modleBuilder build];
