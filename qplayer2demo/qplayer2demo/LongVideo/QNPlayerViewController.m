@@ -1261,7 +1261,7 @@ QIPlayerVideoDataListener
     scanButton.layer.cornerRadius = 1;
     [scanButton setImage:[UIImage imageNamed:@"pl_scan"] forState:UIControlStateNormal];
     [scanButton addTarget:self action:@selector(scanCodeAction:) forControlEvents:UIControlEventTouchDown];
-//    [headerView addSubview:scanButton];
+    [headerView addSubview:scanButton];
     return headerView;
 }
 
