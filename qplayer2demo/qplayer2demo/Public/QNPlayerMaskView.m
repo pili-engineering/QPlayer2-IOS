@@ -275,7 +275,11 @@ QIPlayerSubtitleListener
                 }
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"切换扬声器恢复播放" selIndex:(int)(type-1100)];
             }
-            
+            else if (type >= 1200 && type <= 1203){
+                
+                [weakSelf.mPlayer.renderHandler setMirrorType:(QPlayerMirror)(type-1200)];
+                [[QDataHandle shareInstance] setSelConfiguraKey:@"镜像" selIndex:(int)(type-1200)];
+            }
             if (startPosition) {
                 int satartPod = [startPosition intValue];
                 
@@ -412,6 +416,10 @@ QIPlayerSubtitleListener
         }
         else if ([configureModel.mConfiguraKey containsString:@"切换扬声器恢复播放"]) {
             [_mSettingView setChangeDefault:(ChangeButtonType)(index+1100)];
+            
+        }
+        else if ([configureModel.mConfiguraKey containsString:@"镜像"]) {
+            [_mSettingView setChangeDefault:(ChangeButtonType)(index+1200)];
             
         }
     }

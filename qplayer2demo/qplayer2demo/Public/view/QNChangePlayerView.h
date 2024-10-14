@@ -48,7 +48,12 @@ typedef NS_ENUM(NSInteger, ChangeButtonType){
     BUTTON_TYPE_VIDEO_DATA_NV12,               //NV12
     
     BUTTON_TYPE_IN_SPEAKER_RESUME = 1100,         //切换扬声器恢复播放
-    BUTTON_TYPE_IN_SPEAKER_NOT_RESUME               //切换扬声器不恢复播放
+    BUTTON_TYPE_IN_SPEAKER_NOT_RESUME,               //切换扬声器不恢复播放
+    
+    BUTTON_TYPE_MIRROR_NONE = 1200,         //无镜像
+    BUTTON_TYPE_MIRROR_X,               //横向
+    BUTTON_TYPE_MIRROR_Y,               //垂直
+    BUTTON_TYPE_MIRROR_X_Y,               //横向和垂直
     
 };
 NS_ASSUME_NONNULL_BEGIN

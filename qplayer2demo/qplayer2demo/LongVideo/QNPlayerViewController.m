@@ -1078,6 +1078,9 @@ QIPlayerVideoDataListener
                 [self.mPlayerView.controlHandler shouldContinuePlayAfterSwitchInSpeaker:NO];
             }
         }
+        else if ([configureModel.mConfiguraKey containsString:@"镜像"]){
+            [self.mPlayerView.renderHandler setMirrorType:(QPlayerMirror)index];
+        }
         else if ([configureModel.mConfiguraKey containsString:@"清晰度切换"]){
             self.mImmediatelyType =(int)index;
         }

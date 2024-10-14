@@ -23,6 +23,7 @@
     QNChangePlayerView *mSubtitlePlayerView;
     QNChangePlayerView *mVideoDataTypePlayerView;
     QNChangePlayerView *mInSpeakerResumeView;
+    QNChangePlayerView *mMirrorView;
     void (^changePlayerViewCallback)(ChangeButtonType type , NSString * startPosition,BOOL selected);
     void (^speedViewCallback)(SpeedUIButtonType type);
 }
@@ -131,6 +132,12 @@
         case BUTTON_TYPE_IN_SPEAKER_NOT_RESUME:
             [mInSpeakerResumeView setDefault:type];
             break;
+        case BUTTON_TYPE_MIRROR_X:
+        case BUTTON_TYPE_MIRROR_Y:
+        case BUTTON_TYPE_MIRROR_NONE:
+        case BUTTON_TYPE_MIRROR_X_Y:
+            [mMirrorView setDefault:type];
+            break;
         default:
             NSLog(@"设置出错");
             break;
@@ -160,7 +167,7 @@
 }
 -(void)addScrollView:(CGRect)frame{
 //    self = [[UIScrollView alloc]initWithFrame:frame];
-    self.contentSize = CGSizeMake(frame.size.width, 1400);
+    self.contentSize = CGSizeMake(frame.size.width, 1600);
 //    self.backgroundColor = [UIColor clearColor];
     self.userInteractionEnabled = YES;
     self.scrollEnabled = YES;
@@ -232,6 +239,10 @@
     [self addLine:CGRectMake(5, 1268, self.frame.size.width, 2)];
     
     [self addInSpeakerResume:CGRectMake(0, 1265, 350, 90)];
+    
+    [self addLine:CGRectMake(5, 1373, self.frame.size.width, 2)];
+    
+    [self addMirrorView:CGRectMake(0, 1375, 350, 90)];
     
 }
 -(void)addImmediately:(CGRect)frame{
@@ -372,6 +383,16 @@
     [mInSpeakerResumeView addButtonText:@"暂停" frame:CGRectMake(125, 50, 60, 20) type:BUTTON_TYPE_IN_SPEAKER_NOT_RESUME target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
     [mInSpeakerResumeView setDefault:BUTTON_TYPE_IN_SPEAKER_RESUME];
     [self addSubview:mInSpeakerResumeView];
+}
+-(void)addMirrorView:(CGRect)frame{
+    mMirrorView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mMirrorView setTitleLabelText:@"镜像" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mMirrorView addButtonText:@"无" frame:CGRectMake(10, 50, 60, 20) type:BUTTON_TYPE_MIRROR_NONE target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mMirrorView addButtonText:@"横向" frame:CGRectMake(105, 50, 90, 20) type:BUTTON_TYPE_MIRROR_X target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mMirrorView addButtonText:@"竖直" frame:CGRectMake(200, 50, 90, 20) type:BUTTON_TYPE_MIRROR_Y target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mMirrorView addButtonText:@"横向和竖直" frame:CGRectMake(295, 50, 90, 20) type:BUTTON_TYPE_MIRROR_X_Y target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mMirrorView setDefault:BUTTON_TYPE_MIRROR_NONE];
+    [self addSubview:mMirrorView];
 }
 -(void)addVideoDataType:(CGRect)frame{
     mVideoDataTypePlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
