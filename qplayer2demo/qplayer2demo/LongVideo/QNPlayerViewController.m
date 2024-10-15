@@ -919,6 +919,11 @@ QIPlayerVideoDataListener
 -(void)reOpenPlayPlayerMaskView:(QNPlayerMaskView *)playerMaskView{
     QMediaModel *model = self.mPlayerModels[self.mSelectedIndex];
     [self.mPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
+    if (model.streamElements[0].renderType == QPLAYER_RENDER_TYPE_PANORAMA_EQUIRECT_ANGULAR) {
+        [self.mMaskView setIsVR:YES];
+    }else{
+        [self.mMaskView setIsVR:NO];
+    }
     [self.mMaskView setPlayButtonState:YES];
 
 }
@@ -1245,6 +1250,11 @@ QIPlayerVideoDataListener
 //    }
     [self.mPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     [self.mMaskView setPlayButtonState:NO];
+    if (model.streamElements[0].renderType == QPLAYER_RENDER_TYPE_PANORAMA_EQUIRECT_ANGULAR) {
+        [self.mMaskView setIsVR:YES];
+    }else{
+        [self.mMaskView setIsVR:NO];
+    }
     [self judgeWeatherIsLiveWithURL:selectedURL];
     
 }

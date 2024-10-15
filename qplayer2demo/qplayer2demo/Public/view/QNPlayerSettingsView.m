@@ -23,18 +23,23 @@
     QNChangePlayerView *mSubtitlePlayerView;
     QNChangePlayerView *mVideoDataTypePlayerView;
     QNChangePlayerView *mInSpeakerResumeView;
+    QNChangePlayerView *mRotationView;
     QNChangePlayerView *mMirrorView;
     void (^changePlayerViewCallback)(ChangeButtonType type , NSString * startPosition,BOOL selected);
+    void (^sliderChangeCallback)(sliderType type , int value);
     void (^speedViewCallback)(SpeedUIButtonType type);
+    UILabel *mRotationLabel;
+    UISlider *mRotationSlider;
 }
 
--(instancetype)initChangePlayerViewCallBack:(void (^)(ChangeButtonType type , NSString * startPosition,BOOL selected) )back{
+-(instancetype)initChangePlayerViewCallBack:(void (^)(ChangeButtonType type , NSString * startPosition,BOOL selected) )back sliderChangeCallback:(void (^)(sliderType type , int value))sliderBack{
     self = [super init];
     if (self) {
         self.frame = CGRectMake(ScreenWidth-390, 0, 390, ScreenHeight);
         self.backgroundColor = [UIColor blackColor];
         self.alpha =0.8;
         changePlayerViewCallback = back;
+        sliderChangeCallback = sliderBack;
         [self addScrollView:CGRectMake(0, 0, 390, ScreenHeight)];
         
 //        self.userInteractionEnabled = YES;
@@ -244,6 +249,10 @@
     
     [self addMirrorView:CGRectMake(0, 1375, 350, 90)];
     
+    [self addLine:CGRectMake(5, 1478, self.frame.size.width, 2)];
+    
+    [self addRotation:CGRectMake(0, 1485, 350, 90)];
+    
 }
 -(void)addImmediately:(CGRect)frame{
     mImmediatelyPlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
@@ -383,6 +392,31 @@
     [mInSpeakerResumeView addButtonText:@"暂停" frame:CGRectMake(125, 50, 60, 20) type:BUTTON_TYPE_IN_SPEAKER_NOT_RESUME target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
     [mInSpeakerResumeView setDefault:BUTTON_TYPE_IN_SPEAKER_RESUME];
     [self addSubview:mInSpeakerResumeView];
+}
+-(void)addRotation:(CGRect)frame{
+    mRotationView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mRotationView setTitleLabelText:@"旋转" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    mRotationLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 10, 100, 30)];
+    mRotationLabel.text = @"0";
+    mRotationLabel.textColor = [UIColor whiteColor];
+    mRotationLabel.font = [UIFont systemFontOfSize:13];
+    [mRotationView addSubview:mRotationLabel];
+    mRotationSlider = [[UISlider alloc]initWithFrame:CGRectMake(10, 50, frame.size.width - 20, 30)];
+    mRotationSlider.maximumValue = 360;
+    mRotationSlider.minimumValue = 0;
+    [mRotationSlider addTarget:self action:@selector(rotationSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    
+    [mRotationView addSubview:mRotationSlider];
+    [self addSubview:mRotationView];
+}
+
+-(void)setRotationSliderValue:(int)value{
+    mRotationSlider.value = value;
+}
+
+-(void)rotationSliderValueChanged:(UISlider *)slider{
+    mRotationLabel.text = [NSString stringWithFormat:@"%d",(int)slider.value];
+    sliderChangeCallback(SLIDER_TYPE_ROTATION,(int)slider.value);
 }
 -(void)addMirrorView:(CGRect)frame{
     mMirrorView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];

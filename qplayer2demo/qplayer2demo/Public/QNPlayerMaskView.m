@@ -47,6 +47,7 @@ QIPlayerSubtitleListener
 @property (nonatomic)float mRotateY;
 /** 手势参数**/
 @property (nonatomic)BOOL mIsRotate;
+@property (nonatomic)BOOL mIsVR;
 
 @property (nonatomic, assign) float mCurrentTime;
 
@@ -83,6 +84,7 @@ QIPlayerSubtitleListener
 - (id)initWithFrame:(CGRect)frame player:(QPlayerView *)player isLiving:(BOOL)isLiving{
     if (self = [super initWithFrame:frame]) {
         self.mPlayer = player;
+        self.mIsVR = false;
         self.mSubtitleEnable = false;
         [self.mPlayer.controlHandler addPlayerQualityListener:self];
         [self.mPlayer.controlHandler addPlayerAuthenticationListener:self];
@@ -204,7 +206,7 @@ QIPlayerSubtitleListener
                 [weakSelf.mPlayer.controlHandler  setSeekMode:(QPlayerSeek)(type-300)];
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"Seek" selIndex:(int)(type-300)];
             }else if(type < 402){
-                [weakSelf.mPlayer.controlHandler setStartAction:(QPlayerStart)(type-400)];;;
+                [weakSelf.mPlayer.controlHandler setStartAction:(QPlayerStart)(type-400)];
                 
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"Start Action" selIndex:(int)(type-400)];
             }
@@ -276,7 +278,6 @@ QIPlayerSubtitleListener
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"切换扬声器恢复播放" selIndex:(int)(type-1100)];
             }
             else if (type >= 1200 && type <= 1203){
-                
                 [weakSelf.mPlayer.renderHandler setMirrorType:(QPlayerMirror)(type-1200)];
                 [[QDataHandle shareInstance] setSelConfiguraKey:@"镜像" selIndex:(int)(type-1200)];
             }
@@ -288,6 +289,10 @@ QIPlayerSubtitleListener
             }
             
             [[QDataHandle shareInstance] saveConfigurations];
+        } sliderChangeCallback:^(sliderType type, int value) {
+            if (type == SLIDER_TYPE_ROTATION) {
+                [self.mPlayer.renderHandler setRotation:value];
+            }
         }];
         _mSettingView.hidden = YES;
         [self addSubview:_mSettingView];
@@ -422,6 +427,10 @@ QIPlayerSubtitleListener
             [_mSettingView setChangeDefault:(ChangeButtonType)(index+1200)];
             
         }
+        else if ([configureModel.mConfiguraKey containsString:@"rotation"]) {
+            [_mSettingView setRotationSliderValue:(int)index];
+            
+        }
     }
 }
 
@@ -481,6 +490,9 @@ QIPlayerSubtitleListener
     }];
 }
 
+- (void)setIsVR:(BOOL)isVR{
+    self.mIsVR = isVR;
+}
 - (CGFloat)receiveComparison {
     if (PL_SCREEN_WIDTH == 375) {
         return 1.18;
@@ -775,6 +787,9 @@ QIPlayerSubtitleListener
  */
 - (void)panAction:(UIPanGestureRecognizer *)pan {
     // 根据上次和本次移动的位置，算出一个速率的point
+    if (self.mIsVR == false) {
+        return;
+    }
     if(pan.state == UIGestureRecognizerStateBegan){
         self.mIsRotate = true;
     }else if(pan.state == UIGestureRecognizerStateEnded){

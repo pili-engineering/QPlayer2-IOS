@@ -56,6 +56,10 @@ typedef NS_ENUM(NSInteger, ChangeButtonType){
     BUTTON_TYPE_MIRROR_X_Y,               //横向和垂直
     
 };
+
+typedef NS_ENUM(NSInteger, sliderType){
+    SLIDER_TYPE_ROTATION = 0
+};
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QNChangePlayerView : UIView
