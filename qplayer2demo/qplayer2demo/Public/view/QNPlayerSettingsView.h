@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///“设置视频” 悬浮框
 ///type 当前点击事件对应的button
 ///startPosition 起播位置
--(instancetype)initChangePlayerViewCallBack:(void (^)(ChangeButtonType type , NSString * startPosition,BOOL selected) )callback sliderChangeCallback:(void (^)(sliderType type , int value))sliderBack;
+-(instancetype)initChangePlayerViewCallBack:(void (^)(ChangeButtonType type , NSString * startPosition,BOOL selected) )callback sliderChangeCallback:(void (^)(sliderType type , double value))sliderBack;
 
 
 ///设置倍速悬浮框

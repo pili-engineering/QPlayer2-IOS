@@ -24,15 +24,18 @@
     QNChangePlayerView *mVideoDataTypePlayerView;
     QNChangePlayerView *mInSpeakerResumeView;
     QNChangePlayerView *mRotationView;
+    QNChangePlayerView *mScaleView;
     QNChangePlayerView *mMirrorView;
     void (^changePlayerViewCallback)(ChangeButtonType type , NSString * startPosition,BOOL selected);
-    void (^sliderChangeCallback)(sliderType type , int value);
+    void (^sliderChangeCallback)(sliderType type , double value);
     void (^speedViewCallback)(SpeedUIButtonType type);
     UILabel *mRotationLabel;
     UISlider *mRotationSlider;
+    UILabel *mScaleLabel;
+    UISlider *mScaleSlider;
 }
 
--(instancetype)initChangePlayerViewCallBack:(void (^)(ChangeButtonType type , NSString * startPosition,BOOL selected) )back sliderChangeCallback:(void (^)(sliderType type , int value))sliderBack{
+-(instancetype)initChangePlayerViewCallBack:(void (^)(ChangeButtonType type , NSString * startPosition,BOOL selected) )back sliderChangeCallback:(void (^)(sliderType type , double value))sliderBack{
     self = [super init];
     if (self) {
         self.frame = CGRectMake(ScreenWidth-390, 0, 390, ScreenHeight);
@@ -172,7 +175,7 @@
 }
 -(void)addScrollView:(CGRect)frame{
 //    self = [[UIScrollView alloc]initWithFrame:frame];
-    self.contentSize = CGSizeMake(frame.size.width, 1600);
+    self.contentSize = CGSizeMake(frame.size.width, 1700);
 //    self.backgroundColor = [UIColor clearColor];
     self.userInteractionEnabled = YES;
     self.scrollEnabled = YES;
@@ -252,6 +255,11 @@
     [self addLine:CGRectMake(5, 1478, self.frame.size.width, 2)];
     
     [self addRotation:CGRectMake(0, 1485, 350, 90)];
+    
+    [self addLine:CGRectMake(5, 1583, self.frame.size.width, 2)];
+    
+    [self addScale:CGRectMake(0, 1595, 350, 90)];
+    
     
 }
 -(void)addImmediately:(CGRect)frame{
@@ -405,6 +413,7 @@
     mRotationSlider.maximumValue = 360;
     mRotationSlider.minimumValue = 0;
     [mRotationSlider addTarget:self action:@selector(rotationSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [mRotationSlider addTarget:self action:@selector(rotationSliderValueChanged:) forControlEvents:UIControlEventTouchUpOutside];
     
     [mRotationView addSubview:mRotationSlider];
     [self addSubview:mRotationView];
@@ -416,7 +425,34 @@
 
 -(void)rotationSliderValueChanged:(UISlider *)slider{
     mRotationLabel.text = [NSString stringWithFormat:@"%d",(int)slider.value];
-    sliderChangeCallback(SLIDER_TYPE_ROTATION,(int)slider.value);
+    sliderChangeCallback(SLIDER_TYPE_ROTATION,slider.value);
+}
+-(void)addScale:(CGRect)frame{
+    mScaleView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mScaleView setTitleLabelText:@"缩放" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    mScaleLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 10, 100, 30)];
+    mScaleLabel.text = @"1";
+    mScaleLabel.textColor = [UIColor whiteColor];
+    mScaleLabel.font = [UIFont systemFontOfSize:13];
+    [mScaleView addSubview:mScaleLabel];
+    mScaleSlider = [[UISlider alloc]initWithFrame:CGRectMake(10, 50, frame.size.width - 20, 30)];
+    mScaleSlider.maximumValue = 2;
+    mScaleSlider.minimumValue = 0;
+    mScaleSlider.value = 1;
+    [mScaleSlider addTarget:self action:@selector(scaleSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [mScaleSlider addTarget:self action:@selector(scaleSliderValueChanged:) forControlEvents:UIControlEventTouchUpOutside];
+    
+    [mScaleView addSubview:mScaleSlider];
+    [self addSubview:mScaleView];
+}
+
+-(void)setScaleSliderValue:(int)value{
+    mScaleSlider.value = value;
+}
+
+-(void)scaleSliderValueChanged:(UISlider *)slider{
+    mScaleLabel.text = [NSString stringWithFormat:@"%.2lf",slider.value];
+    sliderChangeCallback(SLIDER_TYPE_SCALE,slider.value);
 }
 -(void)addMirrorView:(CGRect)frame{
     mMirrorView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];

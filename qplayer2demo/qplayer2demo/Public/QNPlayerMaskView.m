@@ -289,9 +289,11 @@ QIPlayerSubtitleListener
             }
             
             [[QDataHandle shareInstance] saveConfigurations];
-        } sliderChangeCallback:^(sliderType type, int value) {
+        } sliderChangeCallback:^(sliderType type, double value) {
             if (type == SLIDER_TYPE_ROTATION) {
-                [self.mPlayer.renderHandler setRotation:value];
+                [self.mPlayer.renderHandler setRotation:(int)value];
+            }else if(type == SLIDER_TYPE_SCALE){
+                [self.mPlayer.renderHandler setScale:(float)value];
             }
         }];
         _mSettingView.hidden = YES;

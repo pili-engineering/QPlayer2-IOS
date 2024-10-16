@@ -58,7 +58,8 @@ typedef NS_ENUM(NSInteger, ChangeButtonType){
 };
 
 typedef NS_ENUM(NSInteger, sliderType){
-    SLIDER_TYPE_ROTATION = 0
+    SLIDER_TYPE_ROTATION = 0,
+    SLIDER_TYPE_SCALE = 1
 };
 NS_ASSUME_NONNULL_BEGIN
 
