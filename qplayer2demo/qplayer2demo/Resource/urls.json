@@ -127,6 +127,23 @@
             }
         ]
     },
+    
+    {
+        
+        "isLive": 0,
+        "streamElements": [
+            {
+                "userType": "",
+                "urlType": 1,
+                "url": "http://demovideos.qiniushawn.top/second8.mp3",
+                "quality": 0,
+                "isSelected": 1,
+                "backupUrl": "",
+                "referer": "",
+                
+            }
+        ]
+    },
     {
         
         "isLive": 0,
@@ -705,7 +722,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "https://sdk-release.qnsdk.com/4K_3840%2A1920.m4s",
+                "url": "http://demovideos.qiniushawn.top/4K_3840_1920.m4s",
                 "quality": 1920,
                 "isSelected": 1,
                 "backupUrl": "",
