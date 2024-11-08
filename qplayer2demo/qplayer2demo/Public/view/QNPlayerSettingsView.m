@@ -412,8 +412,7 @@
     mRotationSlider = [[UISlider alloc]initWithFrame:CGRectMake(10, 50, frame.size.width - 20, 30)];
     mRotationSlider.maximumValue = 360;
     mRotationSlider.minimumValue = 0;
-    [mRotationSlider addTarget:self action:@selector(rotationSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
-    [mRotationSlider addTarget:self action:@selector(rotationSliderValueChanged:) forControlEvents:UIControlEventTouchUpOutside];
+    [mRotationSlider addTarget:self action:@selector(rotationSliderValueChanged:) forControlEvents:UIControlEventAllTouchEvents];
     
     [mRotationView addSubview:mRotationSlider];
     [self addSubview:mRotationView];
@@ -439,8 +438,7 @@
     mScaleSlider.maximumValue = 2;
     mScaleSlider.minimumValue = 0;
     mScaleSlider.value = 1;
-    [mScaleSlider addTarget:self action:@selector(scaleSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
-    [mScaleSlider addTarget:self action:@selector(scaleSliderValueChanged:) forControlEvents:UIControlEventTouchUpOutside];
+    [mScaleSlider addTarget:self action:@selector(scaleSliderValueChanged:) forControlEvents:UIControlEventAllTouchEvents];
     
     [mScaleView addSubview:mScaleSlider];
     [self addSubview:mScaleView];
