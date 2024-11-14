@@ -9,9 +9,9 @@ Qplayer2是一款跨平台的播放器SDK,除了基础的播放器能力外，�
  Platform | Build Status
  -------- | ------------
  Android | https://github.com/pili-engineering/QPlayer2-Android 
- IOS | Last Version: 1.4.3 
+ IOS | Last Version: 1.5.0 
  Windows | https://github.com/pili-engineering/QPlayer2-Windows 
- HarmonyOS NEXT | 敬请期待 
+ HarmonyOS NEXT | https://github.com/pili-engineering/QPlayer2-HarmonyOS-NEXT 
  Mac | 敬请期待 
  Linux | 敬请期待 
 ### qplayer2-core 功能列表
@@ -34,6 +34,7 @@ Qplayer2是一款跨平台的播放器SDK,除了基础的播放器能力外，�
 | 后台播放              | 支持设置是否开启后台播放                                     |                                  |
 | 预加载                | 提前加载点播视频，获得更好的首帧体验                         |                                  |
 | 截图                  | 自动转换成jpeg格式，可以展示在UI上，也可存放到相册           |                                  |
+| 缩放/旋转/镜像        | 方便用户对视频画面进行一些自定义操作                         |                                  |
 | 静音播放              | 针对视频的静音，不影响系统声音                               |                                  |
 | 字幕                  | 支持srt字幕文件加载并根据时间回调当前时间的文案给上层        |                                  |
 | DRM                   | 支持HLS 私有加密/通用加密 2种方式，支持 MP4 CENC-AES-CTR 加密，支持七牛私有 MP4 加密方式 |                                  |
@@ -49,7 +50,7 @@ Qplayer2是一款跨平台的播放器SDK,除了基础的播放器能力外，�
 ##### 引入依赖
 
 ```groovy
-pod 'qplayer2-core', '1.4.3'
+pod 'qplayer2-core', '1.5.0'
 ```
 
 
