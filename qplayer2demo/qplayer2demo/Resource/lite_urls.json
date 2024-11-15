@@ -6,25 +6,7 @@
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/shortvideo/nike.mp4",
-                "quality": 1080,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    
-    {
-         
-        "isLive": 0,
-        "coverImageName":"super",
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/shortvideo/super.mp4",
+                "url": "file:nike.mp4",
                 "quality": 1080,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -34,65 +16,13 @@
         ]
     },
     {
-         
         "isLive": 0,
-        "coverImageName":"兔子",
+        "coverImageName":"nike",
         "streamElements": [
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/shortvideo/兔子.mp4",
-                "quality": 960,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-         
-        "isLive": 0,
-        "coverImageName":"喷泉",
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/shortvideo/喷泉.mp4",
-                "quality": 720,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-         
-        "isLive": 0,
-        "coverImageName":"桃花",
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/shortvideo/桃花.mp4",
-                "quality": 0,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-        
-        "isLive": 0,
-        "coverImageName":"特效",
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/shortvideo/特效.mp4",
+                "url": "file:nike.mp4",
                 "quality": 1080,
                 "isSelected": 1,
                 "backupUrl": "",
@@ -102,66 +32,14 @@
         ]
     },
     {
-         
         "isLive": 0,
-        "coverImageName":"狗",
+        "coverImageName":"nike",
         "streamElements": [
             {
                 "userType": "",
                 "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/shortvideo/狗.mp4",
-                "quality": 360,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-         
-        "isLive": 0,
-        "coverImageName":"猫",
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/shortvideo/猫.mp4",
-                "quality": 360,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-         
-        "isLive": 0,
-        "coverImageName":"翻跟斗",
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/shortvideo/翻跟斗.mp4",
-                "quality": 360,
-                "isSelected": 1,
-                "backupUrl": "",
-                "referer": "",
-                 
-            }
-        ]
-    },
-    {
-         
-        "isLive": 0,
-        "coverImageName":"迪斯尼",
-        "streamElements": [
-            {
-                "userType": "",
-                "urlType": 0,
-                "url": "http://demo-videos.qnsdk.com/shortvideo/迪斯尼.mp4",
-                "quality": 360,
+                "url": "file:nike.mp4",
+                "quality": 1080,
                 "isSelected": 1,
                 "backupUrl": "",
                 "referer": "",

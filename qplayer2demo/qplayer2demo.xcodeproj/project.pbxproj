@@ -52,20 +52,13 @@
 		50B1F4B1289CC62D0074E02D /* pl_clip.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F46C289CC62D0074E02D /* pl_clip.png */; };
 		50B1F4B2289CC62D0074E02D /* urls.json in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F46D289CC62D0074E02D /* urls.json */; };
 		50B1F4B3289CC62D0074E02D /* launch_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F46E289CC62D0074E02D /* launch_image.jpg */; };
-		50B1F4B4289CC62D0074E02D /* audiovorbis.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F46F289CC62D0074E02D /* audiovorbis.ogg */; };
 		50B1F4B5289CC62D0074E02D /* pl_origin.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F470289CC62D0074E02D /* pl_origin.png */; };
 		50B1F4B6289CC62D0074E02D /* lite_urls.json in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F471289CC62D0074E02D /* lite_urls.json */; };
 		50B1F4B7289CC62D0074E02D /* pl_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F472289CC62D0074E02D /* pl_close.png */; };
 		50B1F4B8289CC62D0074E02D /* pl_stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F473289CC62D0074E02D /* pl_stop.png */; };
 		50B1F4B9289CC62D0074E02D /* pl_minVolume.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F474289CC62D0074E02D /* pl_minVolume.png */; };
 		50B1F4BA289CC62D0074E02D /* pl_shoot.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F475289CC62D0074E02D /* pl_shoot.png */; };
-		50B1F4BB289CC62D0074E02D /* gotham.mkv in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F476289CC62D0074E02D /* gotham.mkv */; };
 		50B1F4BC289CC62D0074E02D /* pl_fullScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F477289CC62D0074E02D /* pl_fullScreen.png */; };
-		50B1F4BD289CC62D0074E02D /* source264_flv.flv in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F479289CC62D0074E02D /* source264_flv.flv */; };
-		50B1F4BE289CC62D0074E02D /* source265_flv.flv in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F47A289CC62D0074E02D /* source265_flv.flv */; };
-		50B1F4BF289CC62D0074E02D /* source265_mp4.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F47B289CC62D0074E02D /* source265_mp4.mp4 */; };
-		50B1F4C0289CC62D0074E02D /* source264_mp4.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F47C289CC62D0074E02D /* source264_mp4.mp4 */; };
-		50B1F4C1289CC62D0074E02D /* source_aac.aac in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F47D289CC62D0074E02D /* source_aac.aac */; };
 		50B1F4C2289CC62D0074E02D /* pl_max_blue_volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F47E289CC62D0074E02D /* pl_max_blue_volume.png */; };
 		50B1F4C3289CC62D0074E02D /* pl_rotate@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B1F47F289CC62D0074E02D /* pl_rotate@3x.png */; };
 		50B1F4C5289CC62D0074E02D /* QNHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B1F483289CC62D0074E02D /* QNHomeViewController.m */; };
@@ -74,6 +67,8 @@
 		BA0FD0BB2B480048009C9390 /* NSDataToCVPixelBufferRefHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0FD0BA2B480048009C9390 /* NSDataToCVPixelBufferRefHelper.m */; };
 		BA3E5B032A8CB85F00032327 /* MikuDelivery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA3E5B012A8CB85800032327 /* MikuDelivery.framework */; };
 		BA3E5B042A8CB85F00032327 /* MikuDelivery.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA3E5B012A8CB85800032327 /* MikuDelivery.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BA4203842C7325D4004983FE /* qiniu-2023-1080p.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BA4203832C7325D4004983FE /* qiniu-2023-1080p.mp4 */; };
+		BA4203882C732A86004983FE /* nike.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BA4203872C732A86004983FE /* nike.mp4 */; };
 		BA67ABB02A6FE23000BE06FA /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA67ABAF2A6FE22F00BE06FA /* CoreAudio.framework */; };
 		BA78ED972A85CDA4001DE624 /* QNSamplePlayerWithQRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78ED962A85CDA4001DE624 /* QNSamplePlayerWithQRenderView.m */; };
 		BA78EDA12A8631C1001DE624 /* QNMediaItemContextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78EDA02A8631C1001DE624 /* QNMediaItemContextManager.m */; };
@@ -82,7 +77,6 @@
 		BA78EDAA2A89FAFE001DE624 /* QNShortVideoPlayerViewCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78EDA92A89FAFE001DE624 /* QNShortVideoPlayerViewCache.m */; };
 		BA78EDB02A8A205A001DE624 /* QNMikuClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA78EDAF2A8A205A001DE624 /* QNMikuClientManager.m */; };
 		BA8977B62A6E52EB007C1F84 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA8977B52A6E52EB007C1F84 /* CoreMedia.framework */; };
-		BAD375082BD0CBB200C04D12 /* QNotificationCenterHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD375072BD0CBB200C04D12 /* QNotificationCenterHelper.m */; };
 		BAD4CFDE2AD642B900D7F9FC /* qplayer2demoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD4CFDD2AD642B900D7F9FC /* qplayer2demoUITests.m */; };
 		BAD4CFE02AD642B900D7F9FC /* qplayer2demoUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD4CFDF2AD642B900D7F9FC /* qplayer2demoUITestsLaunchTests.m */; };
 /* End PBXBuildFile section */
@@ -181,20 +175,13 @@
 		50B1F46C289CC62D0074E02D /* pl_clip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pl_clip.png; sourceTree = "<group>"; };
 		50B1F46D289CC62D0074E02D /* urls.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = urls.json; sourceTree = "<group>"; };
 		50B1F46E289CC62D0074E02D /* launch_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = launch_image.jpg; sourceTree = "<group>"; };
-		50B1F46F289CC62D0074E02D /* audiovorbis.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = audiovorbis.ogg; sourceTree = "<group>"; };
 		50B1F470289CC62D0074E02D /* pl_origin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pl_origin.png; sourceTree = "<group>"; };
 		50B1F471289CC62D0074E02D /* lite_urls.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = lite_urls.json; sourceTree = "<group>"; };
 		50B1F472289CC62D0074E02D /* pl_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pl_close.png; sourceTree = "<group>"; };
 		50B1F473289CC62D0074E02D /* pl_stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pl_stop.png; sourceTree = "<group>"; };
 		50B1F474289CC62D0074E02D /* pl_minVolume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pl_minVolume.png; sourceTree = "<group>"; };
 		50B1F475289CC62D0074E02D /* pl_shoot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pl_shoot.png; sourceTree = "<group>"; };
-		50B1F476289CC62D0074E02D /* gotham.mkv */ = {isa = PBXFileReference; lastKnownFileType = file; path = gotham.mkv; sourceTree = "<group>"; };
 		50B1F477289CC62D0074E02D /* pl_fullScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pl_fullScreen.png; sourceTree = "<group>"; };
-		50B1F479289CC62D0074E02D /* source264_flv.flv */ = {isa = PBXFileReference; lastKnownFileType = file; path = source264_flv.flv; sourceTree = "<group>"; };
-		50B1F47A289CC62D0074E02D /* source265_flv.flv */ = {isa = PBXFileReference; lastKnownFileType = file; path = source265_flv.flv; sourceTree = "<group>"; };
-		50B1F47B289CC62D0074E02D /* source265_mp4.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = source265_mp4.mp4; sourceTree = "<group>"; };
-		50B1F47C289CC62D0074E02D /* source264_mp4.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = source264_mp4.mp4; sourceTree = "<group>"; };
-		50B1F47D289CC62D0074E02D /* source_aac.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = source_aac.aac; sourceTree = "<group>"; };
 		50B1F47E289CC62D0074E02D /* pl_max_blue_volume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pl_max_blue_volume.png; sourceTree = "<group>"; };
 		50B1F47F289CC62D0074E02D /* pl_rotate@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pl_rotate@3x.png"; sourceTree = "<group>"; };
 		50B1F480289CC62D0074E02D /* QNAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNAppDelegate.h; sourceTree = "<group>"; };
@@ -204,12 +191,15 @@
 		977927EE29B71BE5006E7931 /* QNDoublePlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDoublePlayerViewController.h; sourceTree = "<group>"; };
 		977927EF29B71BF1006E7931 /* QNDoublePlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDoublePlayerViewController.m; sourceTree = "<group>"; };
 		B2BDA3706EA1C6372228C6C3 /* Pods-qplayer2demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-qplayer2demo.debug.xcconfig"; path = "Target Support Files/Pods-qplayer2demo/Pods-qplayer2demo.debug.xcconfig"; sourceTree = "<group>"; };
+		BA02BEFB2C18302E002DB213 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA0FD0B32B43B822009C9390 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA0FD0B92B480048009C9390 /* NSDataToCVPixelBufferRefHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSDataToCVPixelBufferRefHelper.h; sourceTree = "<group>"; };
 		BA0FD0BA2B480048009C9390 /* NSDataToCVPixelBufferRefHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDataToCVPixelBufferRefHelper.m; sourceTree = "<group>"; };
 		BA1855D32A5C08BC009BD367 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA3E5B012A8CB85800032327 /* MikuDelivery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MikuDelivery.framework; sourceTree = "<group>"; };
 		BA40090E2AC565DF00059A15 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA4203832C7325D4004983FE /* qiniu-2023-1080p.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "qiniu-2023-1080p.mp4"; sourceTree = "<group>"; };
+		BA4203872C732A86004983FE /* nike.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = nike.mp4; sourceTree = "<group>"; };
 		BA44EB8E2A936A2700AE54A8 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA4823782AD3A7AB009F43AA /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA576B172A8B1537008BD482 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -229,11 +219,10 @@
 		BA7F4C8A2B9EA22E005FDE98 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA8977B52A6E52EB007C1F84 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		BA908F322A5E53120080E10A /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAA6BEC82CBCF1ED00B7AC1C /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAAD19762A65450000DB96FF /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAC57C682AB84F7C006F2F8D /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAD374FF2BCE85BA00C04D12 /* qplayer2_core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = qplayer2_core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BAD375062BD0CBB200C04D12 /* QNotificationCenterHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNotificationCenterHelper.h; sourceTree = "<group>"; };
-		BAD375072BD0CBB200C04D12 /* QNotificationCenterHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNotificationCenterHelper.m; sourceTree = "<group>"; };
 		BAD4CFDB2AD642B900D7F9FC /* qplayer2demoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = qplayer2demoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAD4CFDD2AD642B900D7F9FC /* qplayer2demoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = qplayer2demoUITests.m; sourceTree = "<group>"; };
 		BAD4CFDF2AD642B900D7F9FC /* qplayer2demoUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = qplayer2demoUITestsLaunchTests.m; sourceTree = "<group>"; };
@@ -294,8 +283,6 @@
 				977927EE29B71BE5006E7931 /* QNDoublePlayerViewController.h */,
 				50B1F436289CC62D0074E02D /* QNPublicHeader.h */,
 				977927EF29B71BF1006E7931 /* QNDoublePlayerViewController.m */,
-				BAD375062BD0CBB200C04D12 /* QNotificationCenterHelper.h */,
-				BAD375072BD0CBB200C04D12 /* QNotificationCenterHelper.m */,
 				50B1F45B289CC62D0074E02D /* Resource */,
 				50B1F458289CC62D0074E02D /* ScanCode */,
 				50B1F43A289CC62D0074E02D /* toast */,
@@ -393,36 +380,23 @@
 				50B1F468289CC62D0074E02D /* pl_up.png */,
 				50B1F469289CC62D0074E02D /* pl_down.png */,
 				50B1F46A289CC62D0074E02D /* pl_min_blue_volume.png */,
+				BA4203872C732A86004983FE /* nike.mp4 */,
 				50B1F46B289CC62D0074E02D /* LOGO.png */,
 				50B1F46C289CC62D0074E02D /* pl_clip.png */,
 				50B1F46D289CC62D0074E02D /* urls.json */,
 				50B1F46E289CC62D0074E02D /* launch_image.jpg */,
-				50B1F46F289CC62D0074E02D /* audiovorbis.ogg */,
 				50B1F470289CC62D0074E02D /* pl_origin.png */,
 				50B1F471289CC62D0074E02D /* lite_urls.json */,
 				50B1F472289CC62D0074E02D /* pl_close.png */,
 				50B1F473289CC62D0074E02D /* pl_stop.png */,
+				BA4203832C7325D4004983FE /* qiniu-2023-1080p.mp4 */,
 				50B1F474289CC62D0074E02D /* pl_minVolume.png */,
 				50B1F475289CC62D0074E02D /* pl_shoot.png */,
-				50B1F476289CC62D0074E02D /* gotham.mkv */,
 				50B1F477289CC62D0074E02D /* pl_fullScreen.png */,
-				50B1F478289CC62D0074E02D /* testSrc */,
 				50B1F47E289CC62D0074E02D /* pl_max_blue_volume.png */,
 				50B1F47F289CC62D0074E02D /* pl_rotate@3x.png */,
 			);
 			path = Resource;
-			sourceTree = "<group>";
-		};
-		50B1F478289CC62D0074E02D /* testSrc */ = {
-			isa = PBXGroup;
-			children = (
-				50B1F479289CC62D0074E02D /* source264_flv.flv */,
-				50B1F47A289CC62D0074E02D /* source265_flv.flv */,
-				50B1F47B289CC62D0074E02D /* source265_mp4.mp4 */,
-				50B1F47C289CC62D0074E02D /* source264_mp4.mp4 */,
-				50B1F47D289CC62D0074E02D /* source_aac.aac */,
-			);
-			path = testSrc;
 			sourceTree = "<group>";
 		};
 		BA78ED902A83784C001DE624 /* ShortVideo */ = {
@@ -511,6 +485,8 @@
 		CA90BF8B289B846C0087543B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BAA6BEC82CBCF1ED00B7AC1C /* qplayer2_core.framework */,
+				BA02BEFB2C18302E002DB213 /* qplayer2_core.framework */,
 				BAD374FF2BCE85BA00C04D12 /* qplayer2_core.framework */,
 				BA7F4C8A2B9EA22E005FDE98 /* qplayer2_core.framework */,
 				BA0FD0B32B43B822009C9390 /* qplayer2_core.framework */,
@@ -627,7 +603,6 @@
 			files = (
 				50B1F4B7289CC62D0074E02D /* pl_close.png in Resources */,
 				50B1F4A4289CC62D0074E02D /* pl_back.png in Resources */,
-				50B1F4BF289CC62D0074E02D /* source265_mp4.mp4 in Resources */,
 				50B1F4A6289CC62D0074E02D /* pl_scan.png in Resources */,
 				50B1F497289CC62D0074E02D /* Main.storyboard in Resources */,
 				50B1F4AC289CC62D0074E02D /* pl_delete.png in Resources */,
@@ -635,33 +610,29 @@
 				50B1F4AF289CC62D0074E02D /* pl_min_blue_volume.png in Resources */,
 				50B1F494289CC62D0074E02D /* Assets.xcassets in Resources */,
 				50B1F4B3289CC62D0074E02D /* launch_image.jpg in Resources */,
-				50B1F4C1289CC62D0074E02D /* source_aac.aac in Resources */,
 				50B1F4A1289CC62D0074E02D /* qiniu.png in Resources */,
 				50B1F4A3289CC62D0074E02D /* pl_forward.png in Resources */,
 				50B1F4C2289CC62D0074E02D /* pl_max_blue_volume.png in Resources */,
 				50B1F4AA289CC62D0074E02D /* pl_setting.png in Resources */,
 				50B1F496289CC62D0074E02D /* LaunchScreen.storyboard in Resources */,
 				50B1F4BA289CC62D0074E02D /* pl_shoot.png in Resources */,
-				50B1F4BE289CC62D0074E02D /* source265_flv.flv in Resources */,
 				50B1F4B5289CC62D0074E02D /* pl_origin.png in Resources */,
 				50B1F4B6289CC62D0074E02D /* lite_urls.json in Resources */,
 				50B1F4C3289CC62D0074E02D /* pl_rotate@3x.png in Resources */,
 				50B1F4B0289CC62D0074E02D /* LOGO.png in Resources */,
 				50B1F4B8289CC62D0074E02D /* pl_stop.png in Resources */,
-				50B1F4B4289CC62D0074E02D /* audiovorbis.ogg in Resources */,
-				50B1F4BB289CC62D0074E02D /* gotham.mkv in Resources */,
 				50B1F4AE289CC62D0074E02D /* pl_down.png in Resources */,
 				50B1F4AB289CC62D0074E02D /* pl_round.png in Resources */,
 				50B1F4B1289CC62D0074E02D /* pl_clip.png in Resources */,
-				50B1F4C0289CC62D0074E02D /* source264_mp4.mp4 in Resources */,
 				50B1F4A2289CC62D0074E02D /* pl_smallScreen.png in Resources */,
 				50B1F4A8289CC62D0074E02D /* pl_backward.png in Resources */,
+				BA4203842C7325D4004983FE /* qiniu-2023-1080p.mp4 in Resources */,
 				50B1F4B9289CC62D0074E02D /* pl_minVolume.png in Resources */,
 				50B1F4AD289CC62D0074E02D /* pl_up.png in Resources */,
-				50B1F4BD289CC62D0074E02D /* source264_flv.flv in Resources */,
 				50B1F4A7289CC62D0074E02D /* pl_maxVolume.png in Resources */,
 				50B1F4B2289CC62D0074E02D /* urls.json in Resources */,
 				50B1F4A9289CC62D0074E02D /* pl_mirror.png in Resources */,
+				BA4203882C732A86004983FE /* nike.mp4 in Resources */,
 				50B1F4A5289CC62D0074E02D /* pl_play.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -739,7 +710,6 @@
 				50B1F489289CC62D0074E02D /* QNPlayerSettingsView.m in Sources */,
 				50B1F48E289CC62D0074E02D /* QNClassModel.m in Sources */,
 				50B1F48D289CC62D0074E02D /* QNPlayerConfigViewController.m in Sources */,
-				BAD375082BD0CBB200C04D12 /* QNotificationCenterHelper.m in Sources */,
 				BA78ED972A85CDA4001DE624 /* QNSamplePlayerWithQRenderView.m in Sources */,
 				5076C9612906ADC3007763E7 /* QNPlayerShortVideoMaskView.m in Sources */,
 				50B1F491289CC62D0074E02D /* QNToastView.m in Sources */,
@@ -952,7 +922,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -989,11 +959,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.3;
+				MARKETING_VERSION = 1.5.0;
 				PODS_PODFILE_DIR_PATH = "${SRCROOT}/.";
 				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.qplayer2demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_BITCODE_FROM_COPIED_FILES = NO;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1012,7 +983,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1050,11 +1021,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.3;
+				MARKETING_VERSION = 1.5.0;
 				PODS_PODFILE_DIR_PATH = "${SRCROOT}/.";
 				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.qplayer2demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_BITCODE_FROM_COPIED_FILES = NO;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;

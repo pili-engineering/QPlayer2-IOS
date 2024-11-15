@@ -13,7 +13,6 @@
 #import "QNSamplePlayerWithQRenderView.h"
 #import "QNMikuClientManager.h"
 #import "QNToastView.h"
-#import "QNotificationCenterHelper.h"
 static NSString *status[] = {
     @"Unknow",
     @"Preparing",
@@ -51,7 +50,6 @@ QIMediaItemCommandNotAllowListener
 @property (nonatomic, strong) QNToastView *mToastView;
 @property (nonatomic, assign) int mModelsNum;
 @property (nonatomic, assign) int mCurrentPlayingNum;
-@property (nonatomic, strong) QNotificationCenterHelper* mNotifi;
 
 @end
 
@@ -69,7 +67,6 @@ QIMediaItemCommandNotAllowListener
     _mToastView = nil;
     _mCurrentCell = nil;
     self.mPlayer = nil;
-    self.mNotifi = nil;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -138,16 +135,34 @@ QIMediaItemCommandNotAllowListener
         //获取 streamElements 字段数据
         for (NSDictionary *elDic in dic[@"streamElements"]) {
             NSString * urlstr = [ [NSString stringWithFormat:@"%@",[elDic valueForKey:@"url"]] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-            //注释掉即不使用 miku 
+            
+            //注释掉即不使用 miku
 //            NSURL * url = [[[QNMikuClientManager sharedInstance] getMikuClient] makeProxyURL:urlstr];
-            [modleBuilder addStreamElementWithUserType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"userType"]]
-                             urlType:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"urlType"]].intValue
-                             url:       urlstr
-                             quality:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"quality"]].intValue
-                             isSelected:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"isSelected"]].intValue == 0?NO : YES
-                             backupUrl: [NSString stringWithFormat:@"%@",[elDic valueForKey:@"backupUrl"]]
-                             referer:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"referer"]]
-                             renderType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"renderType"]].intValue];
+            if ([urlstr hasPrefix:@"file:"]) {
+                NSString *filePath = [urlstr substringFromIndex:5];
+                NSArray *fileComponents = [filePath componentsSeparatedByString:@"."];
+                if (fileComponents.count == 2) {
+                    NSString *firstPart = fileComponents[0];
+                    NSString *secondPart = fileComponents[1];
+                    [modleBuilder addStreamElementWithUserType:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"userType"]]
+                                                       urlType:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"urlType"]].intValue
+                                                           url:   [[NSBundle mainBundle] pathForResource:firstPart ofType:secondPart]
+                                                       quality:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"quality"]].intValue
+                                                    isSelected:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"isSelected"]].intValue == 0?NO : YES
+                                                     backupUrl:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"backupUrl"]]
+                                                       referer:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"referer"]]
+                                                    renderType:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"renderType"]].intValue];
+                }
+            }else{
+                [modleBuilder addStreamElementWithUserType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"userType"]]
+                                 urlType:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"urlType"]].intValue
+                                 url:       urlstr
+                                 quality:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"quality"]].intValue
+                                 isSelected:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"isSelected"]].intValue == 0?NO : YES
+                                 backupUrl: [NSString stringWithFormat:@"%@",[elDic valueForKey:@"backupUrl"]]
+                                 referer:   [NSString stringWithFormat:@"%@",[elDic valueForKey:@"referer"]]
+                                 renderType:[NSString stringWithFormat:@"%@",[elDic valueForKey:@"renderType"]].intValue];
+            }
         }
         //创建 QMediaModel
         QMediaModel *model = [modleBuilder build];
@@ -171,7 +186,6 @@ QIMediaItemCommandNotAllowListener
     
     _mToastView = [[QNToastView alloc]initWithFrame:CGRectMake(0, PL_SCREEN_HEIGHT - 350, 200, 300)];
     [self.view addSubview:_mToastView];
-    self.mNotifi = [[QNotificationCenterHelper alloc]initWithPlayerContext:self.mPlayer.mPlayerContext];
 
     
 }
@@ -344,8 +358,6 @@ QIMediaItemCommandNotAllowListener
         if(_mCurrentCell == nil){
             _mCurrentCell = cell;
             self.mPlayer = [self.mShortVideoPlayerViewCache fetchPlayerView:0];
-            self.mNotifi = nil;
-            self.mNotifi = [[QNotificationCenterHelper alloc]initWithPlayerContext:self.mPlayer.mPlayerContext];
              [self.mShortVideoPlayerViewCache changePosition:0];
              [self playerContextAllCallBack];
             _mCurrentCell.mPlayerView = self.mPlayer;
@@ -358,8 +370,6 @@ QIMediaItemCommandNotAllowListener
         //拿取下一个cell所需要的播放器
         self.mPlayer = [self.mShortVideoPlayerViewCache fetchPlayerView:[cell.mModelKey intValue]];
         
-        self.mNotifi = nil;
-        self.mNotifi = [[QNotificationCenterHelper alloc]initWithPlayerContext:self.mPlayer.mPlayerContext];
         //添加listener
         [self playerContextAllCallBack];
         //切换当前正在播放的 playItem 位置

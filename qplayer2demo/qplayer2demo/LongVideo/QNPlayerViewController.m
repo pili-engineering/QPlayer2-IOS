@@ -26,7 +26,6 @@
 #import "NSDataToCVPixelBufferRefHelper.h"
 #import <Photos/Photos.h>
 #import <PhotosUI/PhotosUI.h>
-#import "QNotificationCenterHelper.h"
 #define PL_PLAYER_VIDEO_ROOT_FOLDER @"PLPlayerFloder"
 #define GET_PL_PLAYER_VIDEO_FOLDER(folderName) [PL_PLAYER_VIDEO_ROOT_FOLDER stringByAppendingPathComponent:folderName]
 #define PL_PLAYER_VIDEO_REVERSER GET_PL_PLAYER_VIDEO_FOLDER(@"PLPlayerCacheFile")
@@ -94,7 +93,6 @@ QIPlayerVideoDataListener
 @property (nonatomic, assign) NSInteger mFirstVideoTime;
 @property (nonatomic, assign) int mSEINum;
 @property (nonatomic, strong) NSString *mSEIString;
-@property (nonatomic, strong) QNotificationCenterHelper* mNotifi;
 @property (nonatomic, assign) BOOL mIsStartPush;
 @property (nonatomic, assign) int mVideoHeight;
 @property (nonatomic, assign) int mVideoWidth;
@@ -110,7 +108,6 @@ QIPlayerVideoDataListener
         self.mSession.delegate = nil;
         self.mSession = nil;
     }
-    self.mNotifi = nil;
     NSLog(@"QNPlayerViewController dealloc");
 }
 
@@ -178,14 +175,24 @@ QIPlayerVideoDataListener
         BOOL isReconstructTimeLine =  [[dic valueForKey:@"isReconstructTimeLine"] intValue]==0? NO:YES;
         QMediaModelBuilder *modleBuilder = [[QMediaModelBuilder alloc] initWithIsLive:islive];
 //        [modle setValuesForKeysWithDictionary:dic];
-            
         NSMutableArray <QStreamElement*> *streams = [NSMutableArray array];
         NSMutableArray <QSubtitleElement*> *subtitiles = [NSMutableArray array];
         for (NSDictionary *elDic in dic[@"streamElements"]) {
             QStreamElement *subModle = [[QStreamElement alloc] init];
             [subModle setValuesForKeysWithDictionary:elDic];
+            if ([subModle.url hasPrefix:@"file:"]) {
+                NSString *filePath = [subModle.url substringFromIndex:5];
+                    NSArray *fileComponents = [filePath componentsSeparatedByString:@"."];
+                if (fileComponents.count == 2) {
+                    NSString *firstPart = fileComponents[0];
+                    NSString *secondPart = fileComponents[1];
+                    
+                    subModle.url = [[NSBundle mainBundle] pathForResource:firstPart ofType:secondPart];
+                }
+            }
             [streams addObject:subModle];
         }
+
         if([dic objectForKey:@"subtitleElements"]){
             for(NSDictionary *subDic in dic[@"subtitleElements"]){
                 QSubtitleElement *subtitleEle = [[QSubtitleElement alloc]init];
@@ -247,7 +254,6 @@ QIPlayerVideoDataListener
     [self.view addSubview:self.mToastView];
     [self playerContextAllCallBack];
     
-    self.mNotifi = [[QNotificationCenterHelper alloc]initWithPlayerView:self.mPlayerView];
     [self.mPlayerView.controlHandler setLogLevel:LOG_INFO];
 }
 
@@ -414,7 +420,6 @@ QIPlayerVideoDataListener
 #pragma mark - PlayerListenerDelegate
 
 -(void)playerContextAllCallBack{
-
     [self.mPlayerView.controlHandler addPlayerStateListener:self];
     [self.mPlayerView.controlHandler addPlayerBufferingChangeListener:self];
     [self.mPlayerView.controlHandler addPlayerQualityListener:self];
@@ -924,6 +929,11 @@ QIPlayerVideoDataListener
 -(void)reOpenPlayPlayerMaskView:(QNPlayerMaskView *)playerMaskView{
     QMediaModel *model = self.mPlayerModels[self.mSelectedIndex];
     [self.mPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
+    if (model.streamElements[0].renderType == QPLAYER_RENDER_TYPE_PANORAMA_EQUIRECT_ANGULAR) {
+        [self.mMaskView setIsVR:YES];
+    }else{
+        [self.mMaskView setIsVR:NO];
+    }
     [self.mMaskView setPlayButtonState:YES];
 
 }
@@ -1075,6 +1085,17 @@ QIPlayerVideoDataListener
                 [self.mPlayerView.controlHandler setBackgroundPlayEnable:NO];
             }
         }
+        else if ([configureModel.mConfiguraKey containsString:@"切换扬声器恢复播放"]){
+            if (index == 0) {
+                [self.mPlayerView.controlHandler shouldContinuePlayAfterSwitchInSpeaker:YES];
+            }
+            else{
+                [self.mPlayerView.controlHandler shouldContinuePlayAfterSwitchInSpeaker:NO];
+            }
+        }
+        else if ([configureModel.mConfiguraKey containsString:@"镜像"]){
+            [self.mPlayerView.renderHandler setMirrorType:(QPlayerMirror)index];
+        }
         else if ([configureModel.mConfiguraKey containsString:@"清晰度切换"]){
             self.mImmediatelyType =(int)index;
         }
@@ -1093,6 +1114,9 @@ QIPlayerVideoDataListener
                     [self.mPlayerView.controlHandler setSubtitle:@"英文"];
                 }
             }
+        }
+        else if ([configureModel.mConfiguraKey containsString:@"静音"]){
+            [self.mPlayerView.controlHandler setMute:index == 0 ? false : true];
         }
     }
 }
@@ -1239,6 +1263,11 @@ QIPlayerVideoDataListener
 //    }
     [self.mPlayerView.controlHandler playMediaModel:model startPos:[[QDataHandle shareInstance] getConfiguraPostion]];
     [self.mMaskView setPlayButtonState:NO];
+    if (model.streamElements[0].renderType == QPLAYER_RENDER_TYPE_PANORAMA_EQUIRECT_ANGULAR) {
+        [self.mMaskView setIsVR:YES];
+    }else{
+        [self.mMaskView setIsVR:NO];
+    }
     [self judgeWeatherIsLiveWithURL:selectedURL];
     
 }

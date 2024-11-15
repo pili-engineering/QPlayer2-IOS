@@ -22,17 +22,27 @@
     QNChangePlayerView *mImmediatelyPlayerView;
     QNChangePlayerView *mSubtitlePlayerView;
     QNChangePlayerView *mVideoDataTypePlayerView;
+    QNChangePlayerView *mInSpeakerResumeView;
+    QNChangePlayerView *mRotationView;
+    QNChangePlayerView *mScaleView;
+    QNChangePlayerView *mMirrorView;
     void (^changePlayerViewCallback)(ChangeButtonType type , NSString * startPosition,BOOL selected);
+    void (^sliderChangeCallback)(sliderType type , double value);
     void (^speedViewCallback)(SpeedUIButtonType type);
+    UILabel *mRotationLabel;
+    UISlider *mRotationSlider;
+    UILabel *mScaleLabel;
+    UISlider *mScaleSlider;
 }
 
--(instancetype)initChangePlayerViewCallBack:(void (^)(ChangeButtonType type , NSString * startPosition,BOOL selected) )back{
+-(instancetype)initChangePlayerViewCallBack:(void (^)(ChangeButtonType type , NSString * startPosition,BOOL selected) )back sliderChangeCallback:(void (^)(sliderType type , double value))sliderBack{
     self = [super init];
     if (self) {
         self.frame = CGRectMake(ScreenWidth-390, 0, 390, ScreenHeight);
         self.backgroundColor = [UIColor blackColor];
         self.alpha =0.8;
         changePlayerViewCallback = back;
+        sliderChangeCallback = sliderBack;
         [self addScrollView:CGRectMake(0, 0, 390, ScreenHeight)];
         
 //        self.userInteractionEnabled = YES;
@@ -126,6 +136,16 @@
         case BUTTON_TYPE_VIDEO_DATA_YUV420P:
             [mVideoDataTypePlayerView setDefault:type];
             break;
+        case BUTTON_TYPE_IN_SPEAKER_RESUME:
+        case BUTTON_TYPE_IN_SPEAKER_NOT_RESUME:
+            [mInSpeakerResumeView setDefault:type];
+            break;
+        case BUTTON_TYPE_MIRROR_X:
+        case BUTTON_TYPE_MIRROR_Y:
+        case BUTTON_TYPE_MIRROR_NONE:
+        case BUTTON_TYPE_MIRROR_X_Y:
+            [mMirrorView setDefault:type];
+            break;
         default:
             NSLog(@"设置出错");
             break;
@@ -155,7 +175,7 @@
 }
 -(void)addScrollView:(CGRect)frame{
 //    self = [[UIScrollView alloc]initWithFrame:frame];
-    self.contentSize = CGSizeMake(frame.size.width, 1290);
+    self.contentSize = CGSizeMake(frame.size.width, 1700);
 //    self.backgroundColor = [UIColor clearColor];
     self.userInteractionEnabled = YES;
     self.scrollEnabled = YES;
@@ -223,6 +243,23 @@
     [self addLine:CGRectMake(5, 1163, self.frame.size.width, 2)];
     
     [self addVideoDataType:CGRectMake(0, 1165, 350, 90)];
+    
+    [self addLine:CGRectMake(5, 1268, self.frame.size.width, 2)];
+    
+    [self addInSpeakerResume:CGRectMake(0, 1265, 350, 90)];
+    
+    [self addLine:CGRectMake(5, 1373, self.frame.size.width, 2)];
+    
+    [self addMirrorView:CGRectMake(0, 1375, 350, 90)];
+    
+    [self addLine:CGRectMake(5, 1478, self.frame.size.width, 2)];
+    
+    [self addRotation:CGRectMake(0, 1485, 350, 90)];
+    
+    [self addLine:CGRectMake(5, 1583, self.frame.size.width, 2)];
+    
+    [self addScale:CGRectMake(0, 1595, 350, 90)];
+    
     
 }
 -(void)addImmediately:(CGRect)frame{
@@ -355,6 +392,75 @@
     [mSubtitlePlayerView addButtonText:@"英文" frame:CGRectMake(240, 50, 60, 20) type:BUTTON_TYPE_SUBTITLE_ENGLISH target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
     [mSubtitlePlayerView setDefault:BUTTON_TYPE_SUBTITLE_CLOSE];
     [self addSubview:mSubtitlePlayerView];
+}
+-(void)addInSpeakerResume:(CGRect)frame{
+    mInSpeakerResumeView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mInSpeakerResumeView setTitleLabelText:@"切换扬声器继续播放" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mInSpeakerResumeView addButtonText:@"播放" frame:CGRectMake(10, 50, 60, 20) type:BUTTON_TYPE_IN_SPEAKER_RESUME target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mInSpeakerResumeView addButtonText:@"暂停" frame:CGRectMake(125, 50, 60, 20) type:BUTTON_TYPE_IN_SPEAKER_NOT_RESUME target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mInSpeakerResumeView setDefault:BUTTON_TYPE_IN_SPEAKER_RESUME];
+    [self addSubview:mInSpeakerResumeView];
+}
+-(void)addRotation:(CGRect)frame{
+    mRotationView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mRotationView setTitleLabelText:@"旋转" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    mRotationLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 10, 100, 30)];
+    mRotationLabel.text = @"0";
+    mRotationLabel.textColor = [UIColor whiteColor];
+    mRotationLabel.font = [UIFont systemFontOfSize:13];
+    [mRotationView addSubview:mRotationLabel];
+    mRotationSlider = [[UISlider alloc]initWithFrame:CGRectMake(10, 50, frame.size.width - 20, 30)];
+    mRotationSlider.maximumValue = 360;
+    mRotationSlider.minimumValue = 0;
+    [mRotationSlider addTarget:self action:@selector(rotationSliderValueChanged:) forControlEvents:UIControlEventAllTouchEvents];
+    
+    [mRotationView addSubview:mRotationSlider];
+    [self addSubview:mRotationView];
+}
+
+-(void)setRotationSliderValue:(int)value{
+    mRotationSlider.value = value;
+}
+
+-(void)rotationSliderValueChanged:(UISlider *)slider{
+    mRotationLabel.text = [NSString stringWithFormat:@"%d",(int)slider.value];
+    sliderChangeCallback(SLIDER_TYPE_ROTATION,slider.value);
+}
+-(void)addScale:(CGRect)frame{
+    mScaleView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mScaleView setTitleLabelText:@"缩放" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    mScaleLabel = [[UILabel alloc]initWithFrame:CGRectMake(140, 10, 100, 30)];
+    mScaleLabel.text = @"1";
+    mScaleLabel.textColor = [UIColor whiteColor];
+    mScaleLabel.font = [UIFont systemFontOfSize:13];
+    [mScaleView addSubview:mScaleLabel];
+    mScaleSlider = [[UISlider alloc]initWithFrame:CGRectMake(10, 50, frame.size.width - 20, 30)];
+    mScaleSlider.maximumValue = 2;
+    mScaleSlider.minimumValue = 0;
+    mScaleSlider.value = 1;
+    [mScaleSlider addTarget:self action:@selector(scaleSliderValueChanged:) forControlEvents:UIControlEventAllTouchEvents];
+    
+    [mScaleView addSubview:mScaleSlider];
+    [self addSubview:mScaleView];
+}
+
+-(void)setScaleSliderValue:(int)value{
+    mScaleSlider.value = value;
+}
+
+-(void)scaleSliderValueChanged:(UISlider *)slider{
+    mScaleLabel.text = [NSString stringWithFormat:@"%.2lf",slider.value];
+    sliderChangeCallback(SLIDER_TYPE_SCALE,slider.value);
+}
+-(void)addMirrorView:(CGRect)frame{
+    mMirrorView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];
+    [mMirrorView setTitleLabelText:@"镜像" frame:CGRectMake(10, 10, 120, 30) textColor:[UIColor whiteColor]];
+    [mMirrorView addButtonText:@"无" frame:CGRectMake(10, 50, 60, 20) type:BUTTON_TYPE_MIRROR_NONE target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mMirrorView addButtonText:@"横向" frame:CGRectMake(105, 50, 90, 20) type:BUTTON_TYPE_MIRROR_X target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mMirrorView addButtonText:@"竖直" frame:CGRectMake(200, 50, 90, 20) type:BUTTON_TYPE_MIRROR_Y target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mMirrorView addButtonText:@"横向和竖直" frame:CGRectMake(295, 50, 90, 20) type:BUTTON_TYPE_MIRROR_X_Y target:self selector:@selector(changePlayerViewClick:) selectorTag:@selector(changePlayerViewClickTag:)];
+    [mMirrorView setDefault:BUTTON_TYPE_MIRROR_NONE];
+    [self addSubview:mMirrorView];
 }
 -(void)addVideoDataType:(CGRect)frame{
     mVideoDataTypePlayerView = [[QNChangePlayerView alloc]initWithFrame:frame backgroudColor:[UIColor clearColor]];

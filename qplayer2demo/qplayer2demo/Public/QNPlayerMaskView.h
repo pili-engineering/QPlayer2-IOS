@@ -90,6 +90,7 @@
  */
 -(void)gyroscopeEnd;
 
+- (void)setIsVR:(BOOL)isVR;
 /**
 返回解码类型
  */
