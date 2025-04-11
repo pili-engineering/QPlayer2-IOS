@@ -148,8 +148,11 @@
     [_videoPreviewLayer removeFromSuperlayer];
 }
 
+
+
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
 
+// 扫描二维码后逻辑处理
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
     // 判断是否有数据
     if (metadataObjects != nil && [metadataObjects count] > 0) {
@@ -159,53 +162,137 @@
             NSLog(@"input QR: %@", [metadataObj stringValue]);
             self.scanResult = [metadataObj stringValue];
             [self performSelectorOnMainThread:@selector(stopScanQrCode) withObject:nil waitUntilDone:NO];
-            
-            if (![_scanResult hasPrefix:@"http://"] && ![_scanResult hasPrefix:@"https://"] && ![_scanResult hasPrefix:@"rtmp://"] && ![_scanResult hasPrefix:@"srt://"]) {
-                UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"错误" message:@"播放地址不规范，目前支持 http(s) 与 rtmp 协议！" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    if ([self.delegate respondsToSelector:@selector(scanQRResult:isLive:)]) {
-                        [self.delegate scanQRResult:nil isLive:NO];
-                    }
-                    [self.timer invalidate];
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                }];
-                [alertVc addAction:sureAction];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self presentViewController:alertVc animated:YES completion:nil];
-                });
-                
-            } else {
-                NSURL *URL = [NSURL URLWithString:self.scanResult];
-                NSString *scheme = URL.scheme;
-                NSString *pathExtension = URL.pathExtension;
-                BOOL isLive;
-                if (([scheme isEqualToString:@"rtmp"] && ![pathExtension isEqualToString:@"pili"]) ||
-                    ([scheme isEqualToString:@"http"] && [pathExtension isEqualToString:@"flv"]) || ([scheme isEqualToString:@"srt"])) {
-                    isLive = YES;
-                } else {
-                    isLive = NO;
-                }
-                UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:self.scanResult preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    [self startScanQrCode];
-                }];
-                UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [self.timer invalidate];
-                    [self.navigationController popViewControllerAnimated:YES];
-                    if (self.delegate && [self.delegate respondsToSelector:@selector(scanQRResult:isLive:)]) {
-                        [self.delegate scanQRResult:self.scanResult isLive:isLive];
-                    }
-                }];
-                [alertVc addAction:cancelAction];
-                [alertVc addAction:sureAction];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self presentViewController:alertVc animated:YES completion:nil];
-                });
-                
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self presentSelectionAlertWithUrl:self.scanResult];
+                        });
         }
     }
 }
+
+- (void)presentSelectionAlertWithUrl:(NSString *)url {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择选项"
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+
+    // 直播或点播选择
+    __block NSInteger selectedIndex = 0; // 默认选择 0代表点播
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"0 代表点播，1代表直播";
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+
+    // URL展示
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"URL";
+        textField.text = url;
+        textField.userInteractionEnabled = NO; // 只读
+    }];
+
+    // 清晰度选择
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"清晰度填入 1080/720/540/360";
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+
+    // 取消按钮
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:cancelAction];
+
+    // 确定按钮
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString *isLive = alertController.textFields[0].text; // 获取直播/点播选择
+        NSString *quality = alertController.textFields[2].text; // 获取清晰度选择
+        [self saveToJSONWithUrl:url isLive:isLive quality:quality];
+        
+        // 返回上一个视图
+        [self.navigationController popViewControllerAnimated:YES];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(scanQRResult:isLive:)]) {
+                               [self.delegate scanQRResult:self.scanResult isLive:isLive];
+                          }
+    }];
+    [alertController addAction:okAction];
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:alertController animated:YES completion:nil];
+    });
+}
+
+- (void)saveToJSONWithUrl:(NSString *)url isLive:(NSString *)isLive quality:(NSString *)quality {
+    // 创建字典以符合 JSON 结构
+    NSDictionary *streamElement = @{
+        @"userType": @"", // 根据需要填充
+        @"urlType": @(0), // 根据需要设置
+        @"url": url,
+        @"quality": @(quality.intValue), // 假设 quality 是 NSInteger 类型
+        @"isSelected": @(1), // 默认选择
+        @"backupUrl": @"", // 如果有备用 URL，填入
+        @"referer": @"" // 如果有 referer，填入
+    };
+
+    NSDictionary *data = @{
+        @"isLive": @(isLive ? [isLive isEqualToString:@"直播"] : YES), // 根据选项设置
+        @"streamElements": @[streamElement]
+    };
+
+    //读取json文件
+    NSString *documentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *path = [documentsDir stringByAppendingPathComponent:@"urls.json"];
+
+    // 检查文件是否存在
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        // 如果文件不存在，创建一个空文件
+        [[NSData data] writeToFile:path atomically:YES];
+        
+        // 拷贝原有文件内容到新创建的json文件（原有json是可读文件，所以需要先拷贝，无法直接在里面做写入）
+        NSString *sourcePath = [[NSBundle mainBundle] pathForResource:@"urls" ofType:@"json"]; // 读取原有json路径
+        NSData *sourceData = [NSData dataWithContentsOfFile:sourcePath];
+        if (sourceData) {
+            NSError *error;
+            // 将源数据写入目标文件
+            BOOL success = [sourceData writeToFile:path atomically:YES];
+            if (success) {
+                NSLog(@"Successfully copied content to %@", path);
+            } else {
+                NSLog(@"Failed to write data to file: %@", error.localizedDescription);
+            }
+        } else {
+            NSLog(@"Failed to read source file at path: %@", sourcePath);
+        }
+    }
+    
+    // 写入二维码数据到json文件
+    // 读取新的JSON 数据
+    NSData *existingData = [NSData dataWithContentsOfFile:path];
+    NSMutableArray *jsonArray;
+    
+    if (existingData) {
+        NSError *error;
+        jsonArray = [NSJSONSerialization JSONObjectWithData:existingData options:NSJSONReadingMutableContainers error:&error];
+
+        if (error) {
+            NSLog(@"Error reading JSON: %@", error.localizedDescription);
+            return;
+        }
+    } else {
+        // 如果文件为空，初始化一个空的可变数组
+        jsonArray = [NSMutableArray array];
+    }
+    
+    // 更新数据到数组并写回文件
+    [jsonArray addObject:data]; // 将整个 data 字典添加到数组中
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonArray options:NSJSONWritingPrettyPrinted error:&error];
+
+    if (jsonData) {
+        [jsonData writeToFile:path atomically:YES];
+        NSLog(@"Data saved to %@", path);
+    } else {
+        NSLog(@"Error serializing data to JSON: %@", error.localizedDescription);
+    }
+
+}
+
 
 - (void)moveScanLayer:(NSTimer *)timer {
     CGRect layerFrame = _scanLayer.frame;
@@ -219,9 +306,5 @@
         }];
     }
 }
-
-//- (BOOL)shouldAutorotate {
-//    return NO;
-//}
 
 @end
